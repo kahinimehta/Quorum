@@ -1,0 +1,6 @@
+anthropic
+pydantic
+streamlit
+scipy
+numpy
+python-dotenv
