@@ -57,7 +57,15 @@ def cmd_pull(a):
         validate_pull=not a.no_validate,
         strict_pull=a.strict_pull,
         pubtator_sample=0 if a.no_pubtator else a.pubtator_sample,
+        with_fulltext=a.with_fulltext,
+        include_preprints=a.preprints,
     )
+
+
+def cmd_enrich_fulltext(a):
+    from agents.literature_agent import enrich_with_fulltext
+
+    enrich_with_fulltext(DB if not is_postgres() else None, limit=a.limit)
 
 
 def cmd_pull_grants(a):
@@ -185,13 +193,13 @@ def main():
         sp.add_argument("--prompt", default=None, dest="query", help="alias for --query")
         sp.add_argument("--gene", default=None, help="optional gene filter for article search")
         sp.add_argument("--since", type=int, default=2020)
-        sp.add_argument("--max", type=int, default=10)
+        sp.add_argument("--max", type=int, default=150)
 
     d = sub.add_parser("demo", help="run literature agent offline")
     add_run_args(d)
     d.set_defaults(fn=cmd_demo)
 
-    pl = sub.add_parser("pull", help="pull real evidence via BioMCP + Nebius")
+    pl = sub.add_parser("pull", help="two-stage pull: PubMed (+ optional bioRxiv) + trials")
     add_run_args(pl)
     pl.add_argument("--no-validate", action="store_true", help="skip extraction QA after pull")
     pl.add_argument("--strict-pull", action="store_true",
@@ -199,7 +207,24 @@ def main():
     pl.add_argument("--pubtator-sample", type=int, default=50,
                     help="PubTator grounding sample size (0=skip)")
     pl.add_argument("--no-pubtator", action="store_true", help="skip PubTator grounding")
+    pl.add_argument(
+        "--with-fulltext",
+        action="store_true",
+        help="download OA Methods/Results/Discussion (PMC → EPMC → Unpaywall)",
+    )
+    pl.add_argument(
+        "--include-preprints", "--preprints",
+        type=int, default=0, dest="preprints", metavar="N",
+        help="stage 2: also pull up to N bioRxiv preprints (title-deduped vs published)",
+    )
     pl.set_defaults(fn=cmd_pull)
+
+    ef = sub.add_parser(
+        "enrich-with-fulltext",
+        help="backfill section excerpts on existing literature rows",
+    )
+    ef.add_argument("--limit", type=int, default=50)
+    ef.set_defaults(fn=cmd_enrich_fulltext)
 
     sc = sub.add_parser("scan", help="incremental scan (low-cost)")
     add_run_args(sc)

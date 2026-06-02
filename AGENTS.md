@@ -32,8 +32,12 @@ cp .env.example .env          # SUPABASE_DATABASE_URL and/or NEBIUS_*
 python3 cli.py build           # local SQLite, or Supabase if URL is set
 python3 cli.py validate        # FK / schema sanity checks
 python3 cli.py demo            # offline literature-agent run (safe demo path)
-python3 cli.py pull            # live: BioMCP (PubMed + ClinicalTrials.gov) + LLM extract
-python3 cli.py pull --query "GBA GCase lysosomal"  # refine search with --query/--prompt
+python3 cli.py pull            # two-stage: PubMed (+ optional bioRxiv) + trials
+python3 cli.py pull --max 150  # published papers (default max)
+python3 cli.py pull --include-preprints 50   # also pull bioRxiv preprints
+python3 cli.py pull --with-fulltext          # OA Methods/Results/Discussion excerpts
+python3 cli.py enrich-with-fulltext --limit 50
+python3 cli.py pull --query "GBA GCase lysosomal"
 python3 cli.py pull-grants     # NIH RePORTER grants into evidence
 python3 cli.py scan --max 5    # incremental scan (skips LLM for known source_ids)
 python3 cli.py show [table]    # inspect tables
@@ -46,7 +50,7 @@ its own table. The backend serves the final tables to the dashboard.
 
 | # | Agent | Reads | Writes |
 |---|-------|-------|--------|
-| 1 | Literature Synthesis | external: PubMed/trials via BioMCP | `evidence`, `subgroup_evidence`, `scan_state` — code: `agents/literature_agent.py` |
+| 1 | Literature Synthesis | external: PubMed/bioRxiv (E-utilities/API or MCP) + trials via BioMCP | `evidence`, `subgroup_evidence`, `scan_state` — code: `agents/literature_agent.py`, `ingestion/published_pull.py` |
 | 2 | Patient Subgroup | `evidence` | `subgroups` |
 | 3 | Treatment Connection | `subgroups`, `evidence` | `treatment_connections`, `connection_evidence` |
 | 4 | Evidence Scoring (skeptic) | `treatment_connections`, `evidence` | `evidence_strength` col + `agent_outputs` |
@@ -60,7 +64,7 @@ runs. The dashboard reads `agent_outputs` to show the "agent trace".
 Schema is in `neurodiscover/schema.sql` (SQLite) and `neurodiscover/schema.pg.sql` (Postgres). See [`docs/DATABASE.md`](docs/DATABASE.md).
 
 - `evidence` — one row per source. `source_type` is `literature` | `trial` | `grant`.
-  Includes `doi`, `access_status` (`open` | `abstract_only` | `restricted`).
+  Includes `doi`, `access_status`, `access_type` (`published_oa` | `published_paywalled` | `preprint`), `is_preprint`.
   `UNIQUE(source_type, source_id)` dedups re-pulls.
 - `subgroups` — the patient subgroups.
 - `treatment_connections` — subgroup -> mechanism -> treatment, plus score columns.

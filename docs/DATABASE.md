@@ -53,9 +53,27 @@ Manuscripts, trials, and grants share this table via `source_type`.
 | `evidence_snippet` | TEXT | Agent 1 | dashboard | ≤15 word citation line |
 | `url` | TEXT | Agent 1 | dashboard | PubMed or ClinicalTrials.gov link |
 | `doi` | TEXT | Agent 1 | backend | Secondary stable id |
-| `access_status` | TEXT | Agent 1 | Agent 4, dashboard | `open` \| `abstract_only` \| `restricted` |
+| `access_status` | TEXT | Agent 1 | Agent 4, dashboard | `open` \| `abstract_only` \| `restricted` \| `error` \| `unknown` (synced from `access_type`) |
+| `abstract` | TEXT | Agent 1 | Agent 4 | Full abstract from PubMed/BioMCP |
+| `methods_text` | TEXT | Agent 1 | **Agent 4** | Methods excerpt (~2k chars) when OA full text fetched |
+| `results_text` | TEXT | Agent 1 | **Agent 4** | Results excerpt |
+| `discussion_text` | TEXT | Agent 1 | **Agent 4** | Discussion excerpt (~1k chars) |
+| `access_type` | TEXT | Agent 1 | Agent 4 | `published_oa` \| `published_paywalled` \| `preprint` \| `error` \| `unknown` |
+| `full_text_url` | TEXT | Agent 1 | dashboard | OA / preprint full-text link |
+| `is_preprint` | INTEGER/BOOLEAN | Agent 1 | Agent 4 | `1`/`true` for bioRxiv preprints |
+| `publication_year` | INTEGER | Agent 1 | Agent 4 | Explicit year from pull (mirrors `year`) |
 | `pulled_at` | TEXT | DB default | backend | First insert time |
 | `last_scanned_at` | TEXT | Agent 1 | scan logic | Updated on incremental scan hits |
+
+**Light processing (Agent 1):** LLM extracts only `subgroup`, `mechanism`, `treatment`, `key_result`, `evidence_snippet`. `study_type` / `sample_size` are left for Agent 4 to parse from `methods_text` / `results_text` when present.
+
+**Existing DBs:** run migrations in order:
+1. [`migrations/001_evidence_light_processing.sql`](../neurodiscover/migrations/001_evidence_light_processing.sql)
+2. [`migrations/002_evidence_mcp_metadata.sql`](../neurodiscover/migrations/002_evidence_mcp_metadata.sql)
+
+Or `python3 cli.py build` locally for a fresh SQLite DB.
+
+See [`LITERATURE_PULL.md`](LITERATURE_PULL.md) for two-stage pull details.
 
 **Dedup:** `UNIQUE(source_type, source_id)` — re-pulls insert with `INSERT OR IGNORE`.
 

@@ -25,7 +25,16 @@ CREATE TABLE evidence (
     evidence_snippet TEXT,                      -- short verbatim line for the dashboard citation
     url              TEXT,
     doi              TEXT,                      -- secondary stable id when PMID missing
-    access_status    TEXT CHECK (access_status IN ('open','abstract_only','restricted')),
+    access_status    TEXT CHECK (access_status IN ('open','abstract_only','restricted','error','unknown')),
+    abstract         TEXT,                      -- BioMCP abstract (always when available)
+    methods_text     TEXT,                      -- excerpt for Agent 4 (open-access)
+    results_text     TEXT,
+    discussion_text  TEXT,
+    access_type      TEXT CHECK (access_type IN (
+                       'published_oa','published_paywalled','preprint','error','unknown')),
+    full_text_url    TEXT,                      -- OA / preprint full-text link
+    is_preprint      INTEGER NOT NULL DEFAULT 0, -- SQLite boolean: 1 = bioRxiv preprint
+    publication_year INTEGER,                   -- explicit year from pull (mirrors year)
     pulled_at        TEXT DEFAULT (datetime('now')),
     last_scanned_at  TEXT,                      -- updated on each incremental scan hit
     UNIQUE (source_type, source_id)             -- dedup: same source pulled twice = one row
