@@ -8,7 +8,7 @@ Supabase (team): set SUPABASE_DATABASE_URL=postgresql://...
 Commands:
     python cli.py build
     python cli.py init-supabase    # first-time: apply schema.pg.sql
-    python cli.py demo | pull | scan | pull-grants | validate | show | query
+    python cli.py demo | pull | scan | research | pull-grants | validate | show | query
     python cli.py spot-check | validate-extraction | validate-pubtator
 """
 import argparse
@@ -86,6 +86,18 @@ def cmd_scan(a):
         validate_pull=not a.no_validate,
         strict_pull=False,
         pubtator_sample=0,
+    )
+
+
+def cmd_research(a):
+    from agents.research_agent import run as run_research
+
+    run_research(
+        DB if not is_postgres() else None,
+        a.goal,
+        max_steps=a.max_steps,
+        disease=a.disease,
+        since_year=a.since,
     )
 
 
@@ -230,6 +242,13 @@ def main():
     add_run_args(sc)
     sc.add_argument("--no-validate", action="store_true", help="skip extraction QA")
     sc.set_defaults(fn=cmd_scan)
+
+    rs = sub.add_parser("research", help="ReAct evidence research agent (goal-driven)")
+    rs.add_argument("--goal", required=True, help="research goal in plain language")
+    rs.add_argument("--max-steps", type=int, default=8)
+    rs.add_argument("--disease", default="Parkinson disease")
+    rs.add_argument("--since", type=int, default=2020)
+    rs.set_defaults(fn=cmd_research)
 
     pg = sub.add_parser("pull-grants", help="pull NIH grants into evidence")
     pg.add_argument("--query", default=None,
