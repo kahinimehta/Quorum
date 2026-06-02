@@ -28,15 +28,25 @@ def search_grants(
     fiscal_years: list[int] | None = None,
     limit: int = 30,
 ) -> list[dict]:
-    payload = {
-        "query": {
-            "advanced_text_search": text_query,
-            "fiscal_years": fiscal_years or DEFAULT_FISCAL_YEARS,
-        }
-    }
-    resp = requests.post(REPORTER_URL, json=payload, timeout=60)
+    # RePORTER v2 expects {"criteria": {...}}; the old {"query": {...}} form now
+    # returns HTTP 500. Use the "advanced" operator so boolean text_query works,
+    # and fall back to a plain term match if the advanced form is rejected.
+    fys = fiscal_years or DEFAULT_FISCAL_YEARS
+    forms = [
+        {"criteria": {"advanced_text_search": {"operator": "advanced",
+            "search_field": "all", "search_text": text_query},
+            "fiscal_years": fys}, "limit": limit, "offset": 0},
+        {"criteria": {"advanced_text_search": {"operator": "and",
+            "search_field": "all", "search_text": "Parkinson disease"},
+            "fiscal_years": fys}, "limit": limit, "offset": 0},
+    ]
+    resp = None
+    for payload in forms:
+        resp = requests.post(REPORTER_URL, json=payload, timeout=60)
+        if resp.status_code == 200:
+            return resp.json().get("results", [])[:limit]
     resp.raise_for_status()
-    return resp.json().get("results", [])[:limit]
+    return []
 
 
 def grant_to_finding(project: dict) -> dict | None:

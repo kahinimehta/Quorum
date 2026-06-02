@@ -56,6 +56,19 @@ def _study_type_ok(study_type: str) -> bool:
     return False
 
 
+VALID_ACCESS_TYPES = frozenset({
+    "published_oa", "published_paywalled", "preprint", "error", "unknown",
+    # legacy values accepted during transition
+    "open", "restricted",
+})
+
+
+def _access_type_ok(access_type: str) -> bool:
+    if not access_type:
+        return True
+    return access_type in VALID_ACCESS_TYPES
+
+
 def validate_extraction(evidence_row: dict) -> tuple[bool, str, list[str]]:
     """
     Return (is_valid, confidence, issues).
@@ -70,8 +83,12 @@ def validate_extraction(evidence_row: dict) -> tuple[bool, str, list[str]]:
         issues.append(f"invalid source_id for {source_type}: {source_id!r}")
 
     study_type = _text(evidence_row.get("study_type"))
-    if study_type and not _study_type_ok(study_type):
+    if study_type and source_type != "literature" and not _study_type_ok(study_type):
         issues.append(f"study_type not in allowed set: {study_type!r}")
+
+    access_type = _text(evidence_row.get("access_type"))
+    if access_type and not _access_type_ok(access_type):
+        issues.append(f"access_type not in allowed set: {access_type!r}")
 
     sample_size = evidence_row.get("sample_size")
     if sample_size is not None:
@@ -89,6 +106,10 @@ def validate_extraction(evidence_row: dict) -> tuple[bool, str, list[str]]:
         snippet = _text(evidence_row.get("evidence_snippet"))
 
         has_llm_fields = mechanism or treatment or key_result
+        # Light literature agent: study_type/sample_size may be null (Agent 4 fills later).
+        if source_type == "literature" and not study_type and sample_size is None:
+            if not has_llm_fields:
+                issues.append("missing core discovery fields (mechanism/treatment/key_result)")
         if has_llm_fields:
             if len(mechanism) < 5:
                 issues.append("mechanism missing or too short (<5 chars)")

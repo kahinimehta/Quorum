@@ -47,7 +47,30 @@ FINDING_FIELDS = [
     "source_type", "source_id", "title", "year", "venue", "subgroup",
     "mechanism", "treatment", "key_result", "study_type", "sample_size",
     "evidence_snippet", "url", "doi", "access_status",
+    "abstract", "methods_text", "results_text", "discussion_text",
+    "access_type", "full_text_url", "is_preprint", "publication_year",
 ]
+
+DISCOVERY_FIELDS = (
+    "subgroup", "mechanism", "treatment", "key_result", "evidence_snippet",
+)
+
+LIGHT_EXTRACT_PROMPT = """You are extracting the core discovery signal from a Parkinson's \
+disease paper for a subgroup-treatment discovery system.
+
+Extract ONLY these five fields (do NOT extract study design, sample size, p-values, or quality):
+  subgroup         patient subgroup (e.g. "GBA-mutation Parkinson disease"); prefer when applicable:
+                   {subgroup_names}
+  mechanism        biological mechanism, short phrase
+  treatment        treatment or intervention tested, short phrase
+  key_result       main finding in at most 2 sentences
+  evidence_snippet exact short quote from the abstract or methods below (max 20 words)
+
+Return ONLY a JSON object with keys: subgroup, mechanism, treatment, key_result, evidence_snippet.
+
+Paper text:
+{source_text}
+"""
 
 EXTRACT_PROMPT = """You are extracting structured findings from a biomedical source for a \
 Parkinson's disease subgroup-treatment discovery system.
@@ -79,8 +102,8 @@ def _biomcp_executable() -> str:
     found = shutil.which("biomcp")
     if found:
         return found
-    here = os.path.dirname(os.path.abspath(__file__))
-    venv_bin = os.path.join(here, ".venv", "bin", "biomcp")
+    package_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    venv_bin = os.path.join(package_dir, ".venv", "bin", "biomcp")
     if os.path.isfile(venv_bin):
         return venv_bin
     return "biomcp"
@@ -148,7 +171,7 @@ def _source_id_from_item(source_type: str, item: dict) -> str | None:
         if doi:
             return str(doi)
     if source_type == "trial":
-        for key in ("nct_id", "nctId", "NCTId", "id"):
+        for key in ("nct_id", "nctId", "NCTId", "NCT Number", "id"):
             val = item.get(key)
             if val:
                 return str(val).upper().replace("NCT:", "").strip()
@@ -161,6 +184,53 @@ def _normalize_nct(raw: str) -> str:
     if raw.startswith("NCT"):
         return raw
     return f"NCT{raw}" if raw.isdigit() else raw
+
+
+def _normalize_trial_item(item: dict) -> dict:
+    """BioMCP's `trial search --json` returns human-readable keys
+    ('NCT Number', 'Study Title', 'Brief Summary', 'Enrollment', 'Start Date', ...).
+    Map them to the snake_case keys the rest of this module reads, otherwise every
+    trial is silently rejected for "no id"."""
+    if not isinstance(item, dict):
+        return item
+    m = dict(item)
+
+    def pick(*keys):
+        for k in keys:
+            v = item.get(k)
+            if v not in (None, ""):
+                return v
+        return None
+
+    nct = pick("NCT Number", "nct_id", "nctId", "NCTId")
+    if nct:
+        m["nct_id"] = nct
+    title = pick("Study Title", "title", "brief_title")
+    if title:
+        m["title"] = title
+    url = pick("Study URL", "url")
+    if url:
+        m["url"] = url
+    summary = pick("Brief Summary", "abstract", "summary")
+    if summary:
+        m["abstract"] = summary
+    enrollment = pick("Enrollment")
+    if enrollment:
+        try:
+            m["sample_size"] = int(str(enrollment).strip())
+        except (TypeError, ValueError):
+            pass
+    start = pick("Start Date", "Completion Date")
+    if start and str(start)[:4].isdigit():
+        m["year"] = int(str(start)[:4])
+    return m
+
+
+def _access_status_from_type(access_type: str | None) -> str:
+    """Map access_type to legacy access_status for the backend."""
+    from agents.access_types import access_status_from_type
+
+    return access_status_from_type(access_type)
 
 
 def _infer_access_status(item: dict, source_type: str) -> str:
@@ -219,10 +289,9 @@ def _article_search_cmd(disease: str, query: str | None, gene: str | None) -> li
 
 
 def _trial_search_cmd(disease: str, query: str | None) -> list[str]:
-    cmd = _biomcp_cmd("trial", "search", "--condition", disease, "--json")
-    if query:
-        cmd.extend(["--keyword", query])
-    return cmd
+    # NOTE: `biomcp trial search` does NOT accept --keyword (exits non-zero),
+    # so refined queries only narrow the article search; trials use --condition.
+    return _biomcp_cmd("trial", "search", "--condition", disease, "--json")
 
 
 def pull_biomcp(
@@ -241,7 +310,10 @@ def pull_biomcp(
     ]
     for source_type, cmd in searches:
         data = _run_biomcp(cmd)
-        items = _filter_since(_normalize_items(data), since_year)
+        items = _normalize_items(data)
+        if source_type == "trial":
+            items = [_normalize_trial_item(it) for it in items]
+        items = _filter_since(items, since_year)
         for it in items[:max_items]:
             raw.append({"source_type": source_type, "raw": it})
     return raw
@@ -273,6 +345,8 @@ def enrich_raw_item(raw_item: dict) -> dict | None:
     detail = fetch_biomcp_detail(source_type, meta["source_id"])
     if detail:
         item.update({k: v for k, v in detail.items() if v is not None})
+        if source_type == "trial":
+            item = _normalize_trial_item(item)
         meta = _metadata_from_item(source_type, item)
 
     if not meta["source_id"]:
@@ -280,8 +354,31 @@ def enrich_raw_item(raw_item: dict) -> dict | None:
     return {"source_type": source_type, "raw": item, "meta": meta}
 
 
-# ---------- 2. EXTRACT via Nebius LLM ----------------------------------
-def extract_finding(raw_item: dict, use_llm: bool = True) -> dict | None:
+# ---------- 2. EXTRACT (light discovery + optional full text) ------------
+def _build_discovery_context(meta: dict, abstract: str, methods_text: str | None) -> str:
+    parts = []
+    if meta.get("title"):
+        parts.append(f"Title: {meta['title']}")
+    if abstract:
+        parts.append(f"Abstract:\n{abstract[:5000]}")
+    if methods_text:
+        parts.append(f"Methods excerpt:\n{methods_text[:2500]}")
+    return "\n\n".join(parts)[:7500]
+
+
+def _coerce_sample_size(finding: dict) -> None:
+    ss = finding.get("sample_size")
+    if ss is not None and not isinstance(ss, int):
+        digits = "".join(ch for ch in str(ss) if ch.isdigit())
+        finding["sample_size"] = int(digits) if digits else None
+
+
+def extract_finding(
+    raw_item: dict,
+    use_llm: bool = True,
+    *,
+    with_fulltext: bool = False,
+) -> dict | None:
     """Turn one enriched source into a structured finding dict."""
     source_type = raw_item["source_type"]
     item = raw_item["raw"]
@@ -289,25 +386,83 @@ def extract_finding(raw_item: dict, use_llm: bool = True) -> dict | None:
     if not meta.get("source_id"):
         return None
 
-    # Prefer title + abstract for LLM context (not entire JSON blob).
     abstract = item.get("abstract") or item.get("abstractText") or item.get("summary") or ""
-    source_text = json.dumps(
-        {"title": meta.get("title"), "abstract": abstract, "year": meta.get("year"),
-         "journal": meta.get("venue"), "access_status": meta.get("access_status")},
-        ensure_ascii=False,
-    )[:6000]
-
     finding = {f: None for f in FINDING_FIELDS}
     finding.update(meta)
+    finding["abstract"] = abstract[:8000] if abstract else None
+    finding["publication_year"] = meta.get("publication_year") or meta.get("year")
+    finding["is_preprint"] = 1 if bool(meta.get("is_preprint")) else 0
 
-    if use_llm:
-        llm = _llm_extract(source_type, source_text)
-        if llm:
-            for k in ("subgroup", "mechanism", "treatment", "key_result",
-                      "study_type", "sample_size", "evidence_snippet"):
-                if llm.get(k) is not None:
-                    finding[k] = llm[k]
+    if finding.get("sample_size") is None and item.get("sample_size") is not None:
+        finding["sample_size"] = item.get("sample_size")
 
+    precomputed_ft = raw_item.get("ft")
+    pmid_digits = str(meta["source_id"]).replace("PMID:", "").strip()
+    if precomputed_ft:
+        finding.update(precomputed_ft)
+        finding["access_status"] = _access_status_from_type(precomputed_ft.get("access_type"))
+        if precomputed_ft.get("full_text_url") and not finding.get("url"):
+            finding["url"] = precomputed_ft["full_text_url"]
+    elif source_type == "literature" and pmid_digits.isdigit():
+        from agents.fulltext import resolve_published_access
+
+        ft = resolve_published_access(
+            pmid_digits,
+            doi=meta.get("doi"),
+            with_fulltext=with_fulltext,
+        )
+        finding.update(ft)
+        finding["access_status"] = _access_status_from_type(ft.get("access_type"))
+        if ft.get("full_text_url") and not finding.get("url"):
+            finding["url"] = ft["full_text_url"]
+    elif source_type == "literature":
+        finding["access_type"] = "unknown"
+        finding["access_status"] = meta.get("access_status") or "abstract_only"
+
+    if not use_llm:
+        _coerce_sample_size(finding)
+        return finding
+
+    if source_type == "literature":
+        ctx = _build_discovery_context(meta, abstract, finding.get("methods_text"))
+        llm = None
+        for attempt in range(2):
+            llm = _llm_extract_discovery(ctx)
+            if llm:
+                break
+            if attempt == 0:
+                print(
+                    f"[warn] discovery extract retry PMID {meta['source_id']}",
+                    file=sys.stderr,
+                )
+        if not llm:
+            _coerce_sample_size(finding)
+            return finding  # metadata-only row when LLM unavailable
+        for k in DISCOVERY_FIELDS:
+            if llm.get(k) is not None:
+                finding[k] = llm[k]
+        _coerce_sample_size(finding)
+        return finding
+
+    source_text = json.dumps(
+        {
+            "title": meta.get("title"),
+            "abstract": abstract,
+            "year": meta.get("year"),
+            "journal": meta.get("venue"),
+            "access_status": meta.get("access_status"),
+        },
+        ensure_ascii=False,
+    )[:6000]
+    llm = _llm_extract(source_type, source_text)
+    if llm:
+        for k in (
+            "subgroup", "mechanism", "treatment", "key_result",
+            "study_type", "sample_size", "evidence_snippet",
+        ):
+            if llm.get(k) is not None:
+                finding[k] = llm[k]
+    _coerce_sample_size(finding)
     return finding
 
 
@@ -328,6 +483,13 @@ def _format_extract_prompt(source_type: str, source_text: str) -> str:
         source_text=source_text,
         subgroup_names=", ".join(SEED_SUBGROUP_NAMES),
         study_types=", ".join(STUDY_TYPES),
+    )
+
+
+def _format_discovery_prompt(source_text: str) -> str:
+    return LIGHT_EXTRACT_PROMPT.format(
+        source_text=source_text,
+        subgroup_names=", ".join(SEED_SUBGROUP_NAMES),
     )
 
 
@@ -393,6 +555,60 @@ def _llm_extract(source_type: str, source_text: str) -> dict | None:
     return _nebius_extract(source_type, source_text)
 
 
+def _ollama_discovery(source_text: str) -> dict | None:
+    try:
+        from ollama import Client
+    except ImportError:
+        print("[warn] ollama package not installed; pip install ollama", file=sys.stderr)
+        return None
+    host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+    model = os.environ.get("OLLAMA_MODEL", "mistral")
+    try:
+        client = Client(host=host)
+        resp = client.chat(
+            model=model,
+            messages=[{"role": "user", "content": _format_discovery_prompt(source_text)}],
+            options={"temperature": 0},
+        )
+        content = resp.get("message", {}).get("content") or ""
+        return _parse_llm_json(content.strip())
+    except Exception as exc:  # noqa: BLE001
+        print(f"[warn] Ollama discovery extraction failed: {exc}", file=sys.stderr)
+        return None
+
+
+def _nebius_discovery(source_text: str) -> dict | None:
+    api_key = os.environ.get("NEBIUS_API_KEY")
+    base_url = os.environ.get("NEBIUS_BASE_URL")
+    model = os.environ.get("NEBIUS_MODEL")
+    if not (api_key and base_url and model):
+        print("[warn] NEBIUS_* env not set; skipping Nebius extraction", file=sys.stderr)
+        return None
+    try:
+        from openai import OpenAI
+
+        client = OpenAI(api_key=api_key, base_url=base_url)
+        resp = client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": _format_discovery_prompt(source_text)}],
+            temperature=0,
+        )
+        return _parse_llm_json(resp.choices[0].message.content.strip())
+    except Exception as exc:  # noqa: BLE001
+        print(f"[warn] Nebius discovery extraction failed: {exc}", file=sys.stderr)
+        return None
+
+
+def _llm_extract_discovery(source_text: str) -> dict | None:
+    backend = _resolve_extract_backend()
+    if backend == "none":
+        print("[warn] EXTRACT_BACKEND=none; skipping LLM extraction", file=sys.stderr)
+        return None
+    if backend == "ollama":
+        return _ollama_discovery(source_text)
+    return _nebius_discovery(source_text)
+
+
 # ---------- 3. WRITE to DB ---------------------------------------------
 def evidence_exists(conn, source_type: str, source_id: str) -> bool:
     conn.execute(
@@ -413,9 +629,15 @@ def upsert_evidence(conn, finding: dict) -> bool:
     """Insert one finding. UNIQUE(source_type, source_id) dedups. Returns True if new."""
     from db import is_postgres
 
+    row = dict(finding)
+    if is_postgres():
+        row["is_preprint"] = bool(row.get("is_preprint"))
+    else:
+        row["is_preprint"] = 1 if row.get("is_preprint") else 0
+
     cols = ", ".join(FINDING_FIELDS)
     qs = ", ".join("?" for _ in FINDING_FIELDS)
-    vals = tuple(finding.get(k) for k in FINDING_FIELDS) + (_now_iso(),)
+    vals = tuple(row.get(k) for k in FINDING_FIELDS) + (_now_iso(),)
     if is_postgres():
         conn.execute(
             f"INSERT INTO evidence ({cols}, last_scanned_at) VALUES ({qs}, ?) "
@@ -486,6 +708,50 @@ def log_trace(conn, run_id, step, summary, payload=None):
 
 
 # ---------- orchestration ----------------------------------------------
+def enrich_with_fulltext(db_path, limit: int = 50) -> None:
+    """Backfill methods/results/discussion on existing literature PMIDs."""
+    from agents.fulltext import resolve_access_and_sections
+    from db import backend_label, connect
+
+    updated = 0
+    with connect(db_path) as conn:
+        conn.execute(
+            "SELECT evidence_id, source_id FROM evidence "
+            "WHERE source_type = 'literature' AND methods_text IS NULL "
+            "ORDER BY evidence_id LIMIT ?",
+            (limit * 4,),
+        )
+        candidates = [
+            r for r in conn.fetchall()
+            if str(r["source_id"]).replace("PMID:", "").strip().isdigit()
+        ][:limit]
+
+        for row in candidates:
+            pmid = str(row["source_id"]).replace("PMID:", "").strip()
+            ft = resolve_access_and_sections(pmid, with_fulltext=True)
+            if not any((ft.get("methods_text"), ft.get("results_text"), ft.get("discussion_text"))):
+                continue
+            from agents.access_types import normalize_access_type
+
+            at = normalize_access_type(ft.get("access_type"))
+            conn.execute(
+                "UPDATE evidence SET methods_text = ?, results_text = ?, discussion_text = ?, "
+                "access_type = ?, full_text_url = ?, access_status = ? WHERE evidence_id = ?",
+                (
+                    ft.get("methods_text"),
+                    ft.get("results_text"),
+                    ft.get("discussion_text"),
+                    at,
+                    ft.get("full_text_url"),
+                    _access_status_from_type(at),
+                    row["evidence_id"],
+                ),
+            )
+            updated += 1
+        conn.commit()
+    print(f"[enrich] {backend_label()} — updated {updated} rows with full-text sections")
+
+
 def run(
     db_path,
     disease,
@@ -499,6 +765,8 @@ def run(
     validate_pull=True,
     strict_pull=False,
     pubtator_sample=50,
+    with_fulltext: bool = False,
+    include_preprints: int = 0,
 ):
     from db import backend_label, connect
 
@@ -527,17 +795,48 @@ def run(
             except (ValueError, TypeError):
                 pass
 
-        raw_hits = pull_biomcp(
-            disease, effective_since, max_items, query=query, gene=gene,
+        from ingestion.biorxiv_pull import normalize_title, pull_preprints
+        from ingestion.published_pull import pull_published
+
+        published_enriched, pub_stats = pull_published(
+            disease, effective_since, max_items,
+            query=query, gene=gene, with_fulltext=with_fulltext,
         )
+        trial_hits = pull_biomcp(disease, effective_since, max_items, query=query, gene=gene)
+        trial_enriched = []
+        for hit in trial_hits:
+            if hit["source_type"] != "trial":
+                continue
+            e = enrich_raw_item(hit)
+            if e:
+                trial_enriched.append(e)
+
+        preprint_enriched: list[dict] = []
+        preprint_stats: dict = {}
+        published_titles = {
+            normalize_title(e.get("meta", {}).get("title") or e.get("raw", {}).get("title"))
+            for e in published_enriched
+        }
+        published_titles.discard("")
+
+        if include_preprints > 0:
+            preprint_enriched, preprint_stats = pull_preprints(
+                disease, effective_since, include_preprints,
+                published_titles, query=query,
+            )
+
+        all_enriched = published_enriched + preprint_enriched + trial_enriched
         log_trace(
             conn, run_id, 1,
-            f"Pulled {len(raw_hits)} raw sources via BioMCP for {disease}.",
+            f"Two-stage pull: {len(published_enriched)} published, "
+            f"{len(preprint_enriched)} preprints, {len(trial_enriched)} trials.",
             {
                 "since_year": effective_since,
                 "incremental": incremental,
                 "query": query,
                 "gene": gene,
+                "published_stats": pub_stats,
+                "preprint_stats": preprint_stats,
             },
         )
 
@@ -546,15 +845,21 @@ def run(
         touched = 0
         rejected = 0
         validation_dropped = 0
+        extract_failed = 0
+        access_counts = {
+            "published_oa": 0,
+            "published_paywalled": 0,
+            "preprint": 0,
+            "error": 0,
+            "unknown": 0,
+        }
+        with_sections = 0
         new_findings: list[dict] = []
 
-        for hit in raw_hits:
-            enriched = enrich_raw_item(hit)
-            if not enriched:
-                rejected += 1
-                continue
-
-            meta = enriched["meta"]
+        for enriched in all_enriched:
+            meta = enriched.get("meta") or _metadata_from_item(
+                enriched["source_type"], enriched["raw"],
+            )
             st, sid = meta["source_type"], meta["source_id"]
 
             if evidence_exists(conn, st, sid):
@@ -563,10 +868,21 @@ def run(
                 touched += 1
                 continue
 
-            finding = extract_finding(enriched, use_llm=True)
+            finding = extract_finding(enriched, use_llm=True, with_fulltext=with_fulltext)
             if not finding:
                 rejected += 1
+                extract_failed += 1
                 continue
+
+            from agents.access_types import normalize_access_type
+
+            at = normalize_access_type(finding.get("access_type"))
+            finding["access_type"] = at
+            finding["access_status"] = _access_status_from_type(at)
+            if at in access_counts:
+                access_counts[at] += 1
+            if finding.get("methods_text") or finding.get("results_text"):
+                with_sections += 1
 
             if validate_pull:
                 from validation.consistency import validate_extraction
@@ -612,6 +928,11 @@ def run(
             "query": query,
             "gene": gene,
             "extract_backend": _resolve_extract_backend(),
+            "with_fulltext": with_fulltext,
+            "include_preprints": include_preprints,
+            "access_counts": access_counts,
+            "with_sections": with_sections,
+            "extract_failed": extract_failed,
             "validation": validation_summary,
         }
         log_trace(conn, run_id, 2,
@@ -625,7 +946,22 @@ def run(
             )
         conn.commit()
         mode = "scan" if incremental else "pull"
-        print(f"[{mode}] {backend_label()} — stored {new} new, skipped {skipped}. run_id={run_id}")
+        lit_new = sum(1 for f in new_findings if f.get("source_type") == "literature")
+        pre_new = sum(1 for f in new_findings if f.get("is_preprint"))
+        core_ok = sum(
+            1 for f in new_findings
+            if f.get("mechanism") and f.get("treatment") and f.get("key_result")
+        )
+        print(
+            f"[{mode}] {backend_label()} — stored {new} new, skipped {skipped}. run_id={run_id}\n"
+            f"  Literature: {lit_new} new ({pre_new} preprints) | "
+            f"OA {access_counts['published_oa']} | "
+            f"paywalled {access_counts['published_paywalled']} | "
+            f"preprint {access_counts['preprint']} | "
+            f"error {access_counts['error']} | "
+            f"sections {with_sections} | core fields {core_ok}/{new} | "
+            f"extract failures {extract_failed}"
+        )
 
 
 if __name__ == "__main__":

@@ -49,11 +49,16 @@ class DbConnection:
 
     def executescript(self, script: str) -> None:
         if self.postgres:
-            for stmt in script.split(";"):
-                stmt = stmt.strip()
-                if not stmt or stmt.startswith("--"):
-                    continue
-                self._raw.execute(stmt)
+            for chunk in script.split(";"):
+                # strip comment-only lines rather than skipping the whole
+                # statement, which usually begins with a leading "-- ..." block
+                # (otherwise every commented CREATE TABLE is silently dropped).
+                stmt = "\n".join(
+                    ln for ln in chunk.splitlines()
+                    if not ln.strip().startswith("--")
+                ).strip()
+                if stmt:
+                    self._raw.execute(stmt)
         else:
             self._raw.executescript(script)
 

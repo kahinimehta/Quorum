@@ -34,13 +34,18 @@ VALUES (?, ?, ?, ?, ?);
 ### CLI (Person 3 data layer)
 
 ```bash
-python3 cli.py pull --disease "Parkinson disease" --max 10
-python3 cli.py pull --query "GBA GCase lysosomal" --gene GBA   # refines BioMCP --keyword
-python3 cli.py pull-grants --limit 30                         # NIH RePORTER → evidence (grant)
-python3 cli.py scan --max 5                                   # incremental; skips LLM for known ids
+python3 cli.py pull --disease "Parkinson disease" --max 150          # stage 1: published (default)
+python3 cli.py pull --max 50 --include-preprints 20                  # + bioRxiv preprints
+python3 cli.py pull --max 50 --with-fulltext                         # OA: PMC → EPMC → Unpaywall sections
+python3 cli.py enrich-with-fulltext --limit 50                       # backfill sections on existing rows
+python3 cli.py pull --query "GBA GCase lysosomal" --gene GBA
+python3 cli.py pull-grants --limit 30
+python3 cli.py scan --max 5
 ```
 
-`EXTRACT_BACKEND=nebius|ollama|none` selects LLM for structured extraction (not search).
+See [`LITERATURE_PULL.md`](LITERATURE_PULL.md) for MCP env vars (`PUBMED_MCP_COMMAND`, `BIORXIV_MCP_COMMAND`, `UNPAYWALL_EMAIL`).
+
+`EXTRACT_BACKEND=nebius|ollama|none` selects LLM for **core discovery** fields on literature (5 fields). Trials still use the fuller prompt (`study_type`, `sample_size`).
 
 ### INSERT `evidence`
 
@@ -49,17 +54,22 @@ Required on live pull: `source_type`, `source_id` (real PMID/DOI/NCT only — no
 Recommended populated fields:
 
 ```
-source_type, source_id, title, year, venue, subgroup, mechanism, treatment,
-key_result, study_type, sample_size, evidence_snippet, url, doi, access_status
+source_type, source_id, title, year, publication_year, venue, abstract, subgroup, mechanism, treatment,
+key_result, evidence_snippet, access_type, access_status, full_text_url, is_preprint,
+methods_text, results_text, discussion_text, url, doi
 ```
 
-### `access_status` values
+Literature rows may omit `study_type` / `sample_size` until Agent 4 parses methods/results.
 
-| Value | Meaning |
-|-------|---------|
-| `open` | PMC / open-access full text likely available |
-| `abstract_only` | Abstract in PubMed, full text paywalled |
-| `restricted` | Metadata only |
+### `access_type` / `access_status` values
+
+| `access_type` | `access_status` | Meaning |
+|---------------|-----------------|---------|
+| `published_oa` | `open` | OA full text available |
+| `published_paywalled` | `restricted` | Abstract/metadata only |
+| `preprint` | `abstract_only` | bioRxiv preprint |
+| `error` | `error` | Lookup failed |
+| `unknown` | `unknown` | Unclassified |
 
 ### Auto-link `subgroup_evidence`
 

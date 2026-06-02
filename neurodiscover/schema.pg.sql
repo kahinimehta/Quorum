@@ -18,7 +18,16 @@ CREATE TABLE IF NOT EXISTS evidence (
     evidence_snippet TEXT,
     url              TEXT,
     doi              TEXT,
-    access_status    TEXT CHECK (access_status IN ('open','abstract_only','restricted')),
+    access_status    TEXT CHECK (access_status IN ('open','abstract_only','restricted','error','unknown')),
+    abstract         TEXT,
+    methods_text     TEXT,
+    results_text     TEXT,
+    discussion_text  TEXT,
+    access_type      TEXT CHECK (access_type IN (
+                       'published_oa','published_paywalled','preprint','error','unknown')),
+    full_text_url    TEXT,
+    is_preprint      BOOLEAN NOT NULL DEFAULT false,
+    publication_year INTEGER,
     pulled_at        TIMESTAMPTZ DEFAULT NOW(),
     last_scanned_at  TIMESTAMPTZ,
     UNIQUE (source_type, source_id)
