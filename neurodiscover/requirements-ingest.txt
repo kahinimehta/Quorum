@@ -1,0 +1,11 @@
+# Ingestion-only dependencies (literature pull + extraction + PDF scraping).
+# Install ONLY where you RUN the pull (HPC / a dev box) — NOT needed for the
+# demo/MVP, which just reads Supabase via the lean requirements.txt (psycopg).
+#
+#   pip install -r requirements.txt -r requirements-ingest.txt
+
+biomcp-python      # PubMed + ClinicalTrials.gov search (trials path)
+openai             # OpenAI-compatible client for Nebius extraction (or Ollama)
+requests           # NIH RePORTER grants
+docling            # scientific PDF -> structured sections (Unpaywall/bioRxiv full text)
+# ollama           # optional: local LLM extraction on a GPU box (HPC); skip if using Nebius

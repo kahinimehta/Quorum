@@ -24,21 +24,28 @@ UNPAYWALL_API = "https://api.unpaywall.org/v2"
 USER_AGENT = "NeuroDiscover/1.0 (hackathon; mailto:team@example.com)"
 SECTION_LIMITS = {"methods": 2000, "results": 2000, "discussion": 1000}
 
+# Headings tolerate leading markdown #'s and section numbering ("## Methods", "2. Methods")
+# so the same patterns work on XML-stripped text AND Docling markdown output.
+_H = r"\n[#>\s]*(?:\d+(?:\.\d+)*\.?\s+)?"
 SECTION_PATTERNS = {
     "methods": re.compile(
-        r"\n\s*(?:methods|materials\s+and\s+methods)\s*[:\.]?\s*\n",
+        _H + r"(?:methods|materials\s+and\s+methods|patients\s+and\s+methods|"
+        r"subjects\s+and\s+methods|experimental\s+(?:procedures|section|methods))"
+        r"\s*[:\.]?\s*\n",
         re.IGNORECASE,
     ),
     "results": re.compile(
-        r"\n\s*(?:results|findings)\s*[:\.]?\s*\n",
+        _H + r"(?:results|findings|results\s+and\s+discussion)\s*[:\.]?\s*\n",
         re.IGNORECASE,
     ),
     "discussion": re.compile(
-        r"\n\s*(?:discussion|conclusions?)\s*[:\.]?\s*\n",
+        _H + r"(?:discussion|conclusions?|concluding\s+remarks)\s*[:\.]?\s*\n",
         re.IGNORECASE,
     ),
     "next_section": re.compile(
-        r"\n\s*(?:introduction|background|results|discussion|conclusions?|references|acknowledg)",
+        _H + r"(?:introduction|background|results|discussion|conclusions?|references|"
+        r"acknowledg|methods|materials|funding|author\s+contributions|data\s+availability|"
+        r"supplementary|abbreviations)",
         re.IGNORECASE,
     ),
 }
@@ -168,6 +175,61 @@ def unpaywall_lookup(doi: str) -> tuple[str | None, str | None]:
         return None, str(exc)
 
 
+def _looks_like_pdf_url(url: str) -> bool:
+    u = url.lower()
+    return u.endswith(".pdf") or "/pdf" in u or "type=printable" in u
+
+
+_DOCLING_CONVERTER = None
+
+
+def _docling_pdf_to_markdown(url: str) -> str | None:
+    """Parse a scientific PDF into section-headed markdown via Docling.
+
+    INGESTION-ONLY and OPTIONAL: docling is imported lazily so the demo/MVP (which
+    only reads Supabase) never needs it. If docling isn't installed, we skip PDF
+    parsing gracefully (the row keeps its abstract). Install via requirements-ingest.txt.
+    """
+    global _DOCLING_CONVERTER
+    try:
+        if _DOCLING_CONVERTER is None:
+            from docling.document_converter import DocumentConverter, PdfFormatOption
+            from docling.datamodel.base_models import InputFormat
+            from docling.datamodel.pipeline_options import PdfPipelineOptions
+            # Digital scientific PDFs are text-based: skip OCR + table structure.
+            # This drops the heavy OCR/vision models (much lower memory + faster) and
+            # is plenty for extracting Methods/Results/Discussion text.
+            opts = PdfPipelineOptions()
+            opts.do_ocr = False
+            opts.do_table_structure = False
+            _DOCLING_CONVERTER = DocumentConverter(
+                format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=opts)}
+            )
+    except ImportError:
+        print("[warn] docling not installed; skipping PDF parse "
+              "(pip install -r requirements-ingest.txt)", file=sys.stderr)
+        return None
+    try:
+        result = _DOCLING_CONVERTER.convert(url)
+        return result.document.export_to_markdown()
+    except Exception as exc:  # noqa: BLE001
+        print(f"[warn] docling parse failed for {url}: {exc}", file=sys.stderr)
+        return None
+
+
+def _fetch_source_text(url: str) -> str | None:
+    """Return full-text (XML/HTML as text, or PDF→markdown via Docling). Non-http
+    inputs are treated as already-fetched text."""
+    if not url.startswith("http"):
+        return url
+    if _looks_like_pdf_url(url):
+        return _docling_pdf_to_markdown(url)
+    body = _http_get(url, timeout=45)
+    if body[:5] == "%PDF-":  # PDF served without a .pdf URL
+        return _docling_pdf_to_markdown(url)
+    return body
+
+
 def fetch_and_parse_sections(
     pmid: str,
     full_text_url: str | None = None,
@@ -208,7 +270,10 @@ def fetch_and_parse_sections(
     last_err = None
     for _label, url in sources:
         try:
-            body = _http_get(url, timeout=45) if url.startswith("http") else url
+            body = _fetch_source_text(url)
+            if not body:
+                last_err = "no body fetched"
+                continue
             sections = _parse_sections_from_text(body)
             if any(sections.values()):
                 return (
@@ -224,14 +289,19 @@ def fetch_and_parse_sections(
     return None, None, None, "error", last_err
 
 
-def fetch_preprint_sections(jatsxml_url: str | None, abstract: str | None = None) -> dict[str, Any]:
-    """Fetch bioRxiv JATS XML and extract sections; fall back to abstract-only."""
+def fetch_preprint_sections(
+    jatsxml_url: str | None,
+    abstract: str | None = None,
+    pdf_url: str | None = None,
+) -> dict[str, Any]:
+    """Extract preprint sections: try JATS XML, then the PDF via Docling (bioRxiv
+    often 403s the JATS endpoint but serves the PDF), else fall back to abstract."""
     out: dict[str, Any] = {
         "methods_text": None,
         "results_text": None,
         "discussion_text": None,
         "access_type": "preprint",
-        "full_text_url": jatsxml_url,
+        "full_text_url": jatsxml_url or pdf_url,
     }
     if jatsxml_url:
         try:
@@ -242,6 +312,14 @@ def fetch_preprint_sections(jatsxml_url: str | None, abstract: str | None = None
                 return out
         except Exception as exc:  # noqa: BLE001
             print(f"[warn] preprint JATS fetch: {exc}", file=sys.stderr)
+    if pdf_url:  # bioRxiv PDF via Docling (works when JATS is blocked)
+        md = _docling_pdf_to_markdown(pdf_url)
+        if md:
+            sections = _parse_sections_from_text(md)
+            if any(sections.values()):
+                out.update(sections)
+                out["full_text_url"] = pdf_url
+                return out
     if abstract:
         out["results_text"] = abstract[:2000]
     return out

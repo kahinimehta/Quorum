@@ -61,7 +61,11 @@ def pull_preprints(
         if not doi:
             continue
         year = article.get("year")
-        ft = fetch_preprint_sections(article.get("jatsxml"), article.get("abstract"))
+        page_url = article.get("url")
+        pdf_url = f"{page_url}.full.pdf" if page_url else None
+        ft = fetch_preprint_sections(
+            article.get("jatsxml"), article.get("abstract"), pdf_url=pdf_url,
+        )
         meta = {
             "source_type": "literature",
             "source_id": doi,
