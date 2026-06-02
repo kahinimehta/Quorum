@@ -7,6 +7,11 @@ alwaysApply: true
 
 # NeuroDiscover database contract
 
+**DB STATUS: LIVE** — Supabase already holds 307 real evidence rows (228 papers, 39 trials,
+40 grants) + the 5 subgroups and links. Set the Session-pooler `SUPABASE_DATABASE_URL` and
+read; the data is ready. **Never run `cli.py build` on Supabase — it truncates all tables.**
+Use `scan`/`pull` to add evidence.
+
 Before reading or writing discovery data:
 
 1. **Canonical store:** Local SQLite `neurodiscover/neurodiscover.db` (gitignored), **or** team **Supabase Postgres** when `SUPABASE_DATABASE_URL` is set in `.env`. See [`docs/SUPABASE.md`](docs/SUPABASE.md).

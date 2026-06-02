@@ -1,5 +1,11 @@
 # NeuroDiscover (Quorum) — agent context
 
+> **🟢 DB STATUS: LIVE.** Supabase already holds **307 real evidence rows** (228 papers,
+> 39 trials, 40 NIH grants), plus the 5 subgroups and their evidence links. **Just set the
+> Session-pooler `SUPABASE_DATABASE_URL` (see [`docs/SUPABASE.md`](docs/SUPABASE.md)) and
+> `SELECT` — the data is ready to query.** Do **NOT** run `cli.py build` (it truncates every
+> table); use `cli.py scan` / `pull` only to *add* more evidence.
+
 Multi-agent system for the NextGen BioAgents Hackathon. It discovers hidden
 Parkinson's disease patient subgroups and subgroup -> treatment connections,
 then ranks them by `confidence = evidence_strength*0.55 + commercial_potential*0.45`.
