@@ -496,6 +496,9 @@ def run(
     *,
     query=None,
     gene=None,
+    validate_pull=True,
+    strict_pull=False,
+    pubtator_sample=50,
 ):
     from db import backend_label, connect
 
@@ -542,6 +545,8 @@ def run(
         skipped = 0
         touched = 0
         rejected = 0
+        validation_dropped = 0
+        new_findings: list[dict] = []
 
         for hit in raw_hits:
             enriched = enrich_raw_item(hit)
@@ -563,9 +568,37 @@ def run(
                 rejected += 1
                 continue
 
+            if validate_pull:
+                from validation.consistency import validate_extraction
+
+                ok, _conf, issues = validate_extraction(finding)
+                if not ok and strict_pull:
+                    validation_dropped += 1
+                    rejected += 1
+                    continue
+
             if upsert_evidence(conn, finding):
                 link_subgroup_evidence(conn, finding)
+                new_findings.append(finding)
                 new += 1
+
+        validation_summary = None
+        if validate_pull and new_findings:
+            from validation.report import print_validation_report
+            from validation.consistency import batch_validate
+
+            batch_result = batch_validate(new_findings)
+            pubtator_result = None
+            if pubtator_sample > 0:
+                from validation.pubtator import batch_pubtator_verify
+
+                pubtator_result = batch_pubtator_verify(new_findings, sample_size=pubtator_sample)
+            validation_summary = print_validation_report(
+                new_findings,
+                batch_result=batch_result,
+                pubtator_result=pubtator_result,
+                dropped=validation_dropped,
+            )
 
         update_scan_state(conn, disease, run_id)
         payload = {
@@ -573,15 +606,23 @@ def run(
             "skipped_duplicates": skipped,
             "touched_existing": touched,
             "rejected_no_id": rejected,
+            "validation_dropped": validation_dropped,
             "since_year": effective_since,
             "incremental": incremental,
             "query": query,
             "gene": gene,
             "extract_backend": _resolve_extract_backend(),
+            "validation": validation_summary,
         }
         log_trace(conn, run_id, 2,
                   f"Stored {new} new evidence rows ({skipped} existing skipped, {rejected} rejected).",
                   payload)
+        if validation_summary:
+            log_trace(
+                conn, run_id, 3,
+                "Extraction validation report recorded.",
+                validation_summary,
+            )
         conn.commit()
         mode = "scan" if incremental else "pull"
         print(f"[{mode}] {backend_label()} — stored {new} new, skipped {skipped}. run_id={run_id}")

@@ -9,6 +9,7 @@ Commands:
     python cli.py build
     python cli.py init-supabase    # first-time: apply schema.pg.sql
     python cli.py demo | pull | scan | pull-grants | validate | show | query
+    python cli.py spot-check | validate-extraction | validate-pubtator
 """
 import argparse
 import os
@@ -26,8 +27,8 @@ except Exception:  # noqa: BLE001
 from db import backend_label, connect, is_postgres, schema_file  # noqa: E402
 from paths import default_db_path, seed_path  # noqa: E402
 from seed import build as build_db, init_schema  # noqa: E402
-from literature_agent import run as run_agent  # noqa: E402
-from grants_pull import run as run_grants  # noqa: E402
+from agents.literature_agent import run as run_agent  # noqa: E402
+from ingestion.grants_pull import run as run_grants  # noqa: E402
 from db_validate import validate  # noqa: E402
 
 DB = default_db_path()
@@ -50,13 +51,18 @@ def cmd_demo(a):
 
 
 def cmd_pull(a):
-    run_agent(DB if not is_postgres() else None, a.disease, a.since, a.max,
-              demo=False, incremental=False, query=a.query, gene=a.gene)
+    run_agent(
+        DB if not is_postgres() else None, a.disease, a.since, a.max,
+        demo=False, incremental=False, query=a.query, gene=a.gene,
+        validate_pull=not a.no_validate,
+        strict_pull=a.strict_pull,
+        pubtator_sample=0 if a.no_pubtator else a.pubtator_sample,
+    )
 
 
 def cmd_pull_grants(a):
     import requests
-    from grants_pull import DEFAULT_QUERY
+    from ingestion.grants_pull import DEFAULT_QUERY
     q = a.query or DEFAULT_QUERY
     try:
         run_grants(DB if not is_postgres() else None, q, a.limit)
@@ -66,8 +72,63 @@ def cmd_pull_grants(a):
 
 
 def cmd_scan(a):
-    run_agent(DB if not is_postgres() else None, a.disease, a.since, a.max,
-              demo=False, incremental=True, query=a.query, gene=a.gene)
+    run_agent(
+        DB if not is_postgres() else None, a.disease, a.since, a.max,
+        demo=False, incremental=True, query=a.query, gene=a.gene,
+        validate_pull=not a.no_validate,
+        strict_pull=False,
+        pubtator_sample=0,
+    )
+
+
+def cmd_validate_extraction(a):
+    from validation.consistency import batch_validate
+
+    with connect(DB if not is_postgres() else None) as conn:
+        conn.execute(
+            "SELECT source_type, source_id, title, mechanism, treatment, key_result, "
+            "study_type, sample_size, evidence_snippet FROM evidence"
+        )
+        rows = conn.fetchall()
+    result = batch_validate([dict(r) for r in rows])
+    print(f"Evidence rows: {result['total']}")
+    print(f"Passed consistency: {result['passed']} ({result['pass_rate']:.0%})")
+    print(f"Failed: {result['failed']}")
+    for fail in result["failed_rows"][:10]:
+        print(f"  {fail['source_id']}: {fail['issues']}")
+    if result["pass_rate"] < 0.7:
+        sys.exit(1)
+
+
+def cmd_validate_pubtator(a):
+    from validation.pubtator import batch_pubtator_verify
+
+    with connect(DB if not is_postgres() else None) as conn:
+        conn.execute(
+            "SELECT source_type, source_id, title, mechanism, treatment, key_result, "
+            "study_type, sample_size, subgroup FROM evidence WHERE source_type = 'literature'"
+        )
+        rows = [dict(r) for r in conn.fetchall()]
+    out = batch_pubtator_verify(rows, sample_size=a.sample)
+    print(f"Sampled: {out['sampled']}")
+    print(f"Average overlap: {out['average_overlap']:.2f} ({out['confidence']})")
+    print(f"genes={out['genes_avg']:.2f} diseases={out['diseases_avg']:.2f} chemicals={out['chemicals_avg']:.2f}")
+
+
+def cmd_spot_check(a):
+    from validation.spot_check import export_spot_check, score_spot_check
+    from pathlib import Path
+
+    out = Path(a.output)
+    if a.score:
+        score_spot_check(out)
+        return
+    export_spot_check(
+        DB if not is_postgres() else None,
+        count=a.count,
+        mode=a.sample,
+        output=out,
+    )
 
 
 def cmd_validate(a):
@@ -132,10 +193,17 @@ def main():
 
     pl = sub.add_parser("pull", help="pull real evidence via BioMCP + Nebius")
     add_run_args(pl)
+    pl.add_argument("--no-validate", action="store_true", help="skip extraction QA after pull")
+    pl.add_argument("--strict-pull", action="store_true",
+                    help="do not insert rows that fail consistency checks")
+    pl.add_argument("--pubtator-sample", type=int, default=50,
+                    help="PubTator grounding sample size (0=skip)")
+    pl.add_argument("--no-pubtator", action="store_true", help="skip PubTator grounding")
     pl.set_defaults(fn=cmd_pull)
 
     sc = sub.add_parser("scan", help="incremental scan (low-cost)")
     add_run_args(sc)
+    sc.add_argument("--no-validate", action="store_true", help="skip extraction QA")
     sc.set_defaults(fn=cmd_scan)
 
     pg = sub.add_parser("pull-grants", help="pull NIH grants into evidence")
@@ -145,6 +213,20 @@ def main():
     pg.set_defaults(fn=cmd_pull_grants)
 
     sub.add_parser("validate", help="FK and schema sanity checks").set_defaults(fn=cmd_validate)
+
+    ve = sub.add_parser("validate-extraction", help="consistency checks on all evidence rows")
+    ve.set_defaults(fn=cmd_validate_extraction)
+
+    vp = sub.add_parser("validate-pubtator", help="PubTator3 entity overlap on literature PMIDs")
+    vp.add_argument("--sample", type=int, default=50)
+    vp.set_defaults(fn=cmd_validate_pubtator)
+
+    sp = sub.add_parser("spot-check", help="sample papers for manual extraction QA")
+    sp.add_argument("--count", type=int, default=15)
+    sp.add_argument("--sample", choices=("random", "low-confidence"), default="random")
+    sp.add_argument("--output", default="spot_check_results.csv")
+    sp.add_argument("--score", action="store_true", help="score filled CSV")
+    sp.set_defaults(fn=cmd_spot_check)
 
     sh = sub.add_parser("show", help="inspect tables")
     sh.add_argument("table", nargs="?", default=None)

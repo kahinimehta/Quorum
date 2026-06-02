@@ -18,6 +18,7 @@ but all share the database below.
 | [`queries.sql`](queries.sql) | Person 2 — copy-paste SELECTs |
 | [`docs/SUPABASE.md`](docs/SUPABASE.md) | Team shared live DB (free tier) |
 | [`docs/PERSON2_BACKEND.md`](docs/PERSON2_BACKEND.md) | Person 2 Supabase connection |
+| [`docs/VALIDATION.md`](docs/VALIDATION.md) | Extraction QA after pull |
 
 **Canonical store:** SQLite locally, or **Supabase Postgres** when `SUPABASE_DATABASE_URL` is set. Table is **`evidence`**, not `papers`.
 
@@ -45,7 +46,7 @@ its own table. The backend serves the final tables to the dashboard.
 
 | # | Agent | Reads | Writes |
 |---|-------|-------|--------|
-| 1 | Literature Synthesis | external: PubMed/trials via BioMCP | `evidence`, `subgroup_evidence`, `scan_state` |
+| 1 | Literature Synthesis | external: PubMed/trials via BioMCP | `evidence`, `subgroup_evidence`, `scan_state` — code: `agents/literature_agent.py` |
 | 2 | Patient Subgroup | `evidence` | `subgroups` |
 | 3 | Treatment Connection | `subgroups`, `evidence` | `treatment_connections`, `connection_evidence` |
 | 4 | Evidence Scoring (skeptic) | `treatment_connections`, `evidence` | `evidence_strength` col + `agent_outputs` |

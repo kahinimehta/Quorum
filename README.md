@@ -27,15 +27,23 @@ python3 cli.py demo    # safe offline demo
 
 ```
 Quorum/
-  AGENTS.md              # agent instructions (read first)
-  docs/                  # DATABASE, AGENT_IO, SUPABASE, BACKEND_QUERIES
-  queries.sql            # SQL for Person 2
-  neurodiscover/         # Python package: schema, cli, agents
-    schema.sql
-    cli.py
-    literature_agent.py
-    agents/              # Person 4 agent modules
-    models/schemas.py    # API DTOs (not the DB schema)
+  AGENTS.md
+  docs/                  # DATABASE, AGENT_IO, SUPABASE, VALIDATION, …
+  queries.sql
+  neurodiscover/
+    cli.py               # entry point — run all commands from here
+    schema.sql, schema.pg.sql, seed_data.json
+    db.py, seed.py, paths.py, db_validate.py
+    agents/
+      literature_agent.py    # Agent 1 (literature synthesis)
+    ingestion/
+      grants_pull.py         # NIH RePORTER grants
+    validation/
+      consistency.py, pubtator.py, spot_check.py, report.py
+    scripts/
+      export_team_keys.py
+    models/
+      schemas.py             # Person 2 API DTOs (not DB schema)
 ```
 
 ## Team
