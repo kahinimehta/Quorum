@@ -1,6 +1,6 @@
-anthropic
-pydantic
-streamlit
-scipy
-numpy
-python-dotenv
+# Runtime deps. sqlite3 is in the Python standard library.
+biomcp-python      # unified PubMed + ClinicalTrials.gov pulls
+openai             # OpenAI-compatible client, pointed at Nebius
+python-dotenv      # optional: auto-load .env
+psycopg[binary]    # Supabase / PostgreSQL when SUPABASE_DATABASE_URL is set
+requests           # NIH RePORTER grants pull

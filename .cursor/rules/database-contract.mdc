@@ -1,0 +1,21 @@
+---
+description: Database blackboard contract for all NeuroDiscover agents and backend
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# NeuroDiscover database contract
+
+Before reading or writing discovery data:
+
+1. **Canonical store:** Local SQLite `neurodiscover/neurodiscover.db` (gitignored), **or** team **Supabase Postgres** when `SUPABASE_DATABASE_URL` is set in `.env`. See [`docs/SUPABASE.md`](docs/SUPABASE.md).
+2. **Schema source of truth:** `neurodiscover/schema.sql` (SQLite), `neurodiscover/schema.pg.sql` (Postgres), and [`docs/DATABASE.md`](docs/DATABASE.md).
+3. **Table name is `evidence`**, not `papers`. Do not use MongoDB collection names from the old working doc unless Person 2 explicitly mirrors SQL columns.
+4. **Per-agent I/O:** Read [`docs/AGENT_IO.md`](docs/AGENT_IO.md) for your agent's exact SELECT/INSERT/UPDATE targets before implementing writes.
+5. **Never invent** PMIDs, DOIs, or NCT ids. Use only ids returned by BioMCP or seed `DEMO-*` placeholders in demo mode.
+6. **Every agent run** must append at least one row to `agent_outputs` with a shared `run_id` across the pipeline.
+7. **Do not rename columns** without updating `schema.sql`, `schema.pg.sql`, `docs/DATABASE.md`, and `docs/AGENT_IO.md`.
+8. After schema or seed changes, run `python3 cli.py validate` from `neurodiscover/`.
+9. **Do not commit** `.env`, `*.db`, or database passwords. Share `SUPABASE_DATABASE_URL` via 1Password/Discord only.
+10. **Pydantic models** in `neurodiscover/models/schemas.py` are API DTOs — map them to SQL columns in the backend; they are not the database schema.

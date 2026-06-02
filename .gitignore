@@ -1,0 +1,12 @@
+.env
+*.db
+neurodiscover.db
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+*.swp
+database.md
+personal/
+*.log

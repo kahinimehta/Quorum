@@ -1,0 +1,34 @@
+{
+  "_note": "DEMO data. The biology (subgroups, mechanisms, treatments) reflects real Parkinson's research directions, but source_id values are placeholders (DEMO-*). Run literature_agent.py to backfill real PMIDs / NCT ids, or hand-verify before the demo. Do not present DEMO ids to judges as real.",
+
+  "subgroups": [
+    { "name": "GBA-mutation PD",        "defining_features": "GBA1 variant carriers; reduced glucocerebrosidase (GCase) activity; earlier onset, faster cognitive decline", "notes": "Most common genetic risk factor for PD." },
+    { "name": "LRRK2 PD",               "defining_features": "LRRK2 variant carriers (e.g. G2019S); elevated LRRK2 kinase activity; often milder, more benign motor course", "notes": "Frequent in certain populations." },
+    { "name": "Alpha-synuclein-high PD","defining_features": "High alpha-synuclein aggregation / seeding activity on seed amplification assays", "notes": "Targetable by anti-aggregation and immunotherapy approaches." },
+    { "name": "Inflammation-high PD",   "defining_features": "Elevated neuroinflammatory markers; activated microglia signature", "notes": "Candidate for immunomodulation." },
+    { "name": "Rapid motor progressors","defining_features": "Fast UPDRS-III progression; poorer levodopa-adjusted trajectory", "notes": "Heterogeneous; combination strategies proposed." }
+  ],
+
+  "evidence": [
+    { "source_type": "literature", "source_id": "DEMO-PMID-001", "title": "GCase activity and lysosomal dysfunction in GBA-associated Parkinson's", "year": 2023, "venue": "Demo Journal of Neurology", "subgroup": "GBA-mutation PD", "mechanism": "lysosomal dysfunction", "treatment": "GCase activation", "key_result": "Reduced GCase activity correlates with faster progression in GBA carriers; pharmacological GCase enhancement rescues lysosomal function in preclinical models.", "study_type": "preclinical + cohort", "sample_size": 120, "evidence_snippet": "GCase enhancement restored lysosomal function.", "url": null },
+    { "source_type": "trial",      "source_id": "DEMO-NCT-001", "title": "Ambroxol as a GCase chaperone in GBA-PD", "year": 2024, "venue": "ClinicalTrials.gov", "subgroup": "GBA-mutation PD", "mechanism": "lysosomal dysfunction", "treatment": "GCase activation", "key_result": "Phase 2 evaluating a GCase chaperone in GBA-mutation Parkinson's; target engagement reported in CSF.", "study_type": "Phase 2", "sample_size": 75, "evidence_snippet": "Target engagement observed in CSF.", "url": null },
+
+    { "source_type": "literature", "source_id": "DEMO-PMID-002", "title": "LRRK2 kinase hyperactivity as a therapeutic target", "year": 2022, "venue": "Demo Journal of Neuroscience", "subgroup": "LRRK2 PD", "mechanism": "kinase pathway", "treatment": "LRRK2 inhibition", "key_result": "LRRK2 inhibition reduces kinase activity and normalizes lysosomal markers in preclinical PD models.", "study_type": "mouse", "sample_size": 40, "evidence_snippet": "LRRK2 inhibition normalized lysosomal markers.", "url": null },
+    { "source_type": "trial",      "source_id": "DEMO-NCT-002", "title": "Small-molecule LRRK2 inhibitor in LRRK2-PD", "year": 2024, "venue": "ClinicalTrials.gov", "subgroup": "LRRK2 PD", "mechanism": "kinase pathway", "treatment": "LRRK2 inhibition", "key_result": "Phase 2 of an oral LRRK2 inhibitor in LRRK2-associated PD; safety and biomarker readouts ongoing.", "study_type": "Phase 2", "sample_size": 90, "evidence_snippet": "Safety and biomarker readouts ongoing.", "url": null },
+
+    { "source_type": "literature", "source_id": "DEMO-PMID-003", "title": "Alpha-synuclein aggregation and clearance strategies", "year": 2023, "venue": "Demo Journal of Movement Disorders", "subgroup": "Alpha-synuclein-high PD", "mechanism": "protein aggregation", "treatment": "clearance therapy", "key_result": "Promoting alpha-synuclein clearance reduces aggregate burden in models with high seeding activity.", "study_type": "preclinical", "sample_size": 30, "evidence_snippet": "Clearance reduced aggregate burden.", "url": null },
+    { "source_type": "trial",      "source_id": "DEMO-NCT-003", "title": "Anti-alpha-synuclein immunotherapy", "year": 2024, "venue": "ClinicalTrials.gov", "subgroup": "Alpha-synuclein-high PD", "mechanism": "protein aggregation", "treatment": "clearance therapy", "key_result": "Phase 2 immunotherapy targeting aggregated alpha-synuclein; enrichment for high-seeding subgroup under study.", "study_type": "Phase 2", "sample_size": 150, "evidence_snippet": "Enrichment for high-seeding subgroup.", "url": null },
+
+    { "source_type": "literature", "source_id": "DEMO-PMID-004", "title": "Microglial activation drives neurodegeneration in a PD subset", "year": 2022, "venue": "Demo Journal of Neuroinflammation", "subgroup": "Inflammation-high PD", "mechanism": "neuroinflammation", "treatment": "microglial modulation", "key_result": "Microglial modulation reduces inflammatory markers and slows neuronal loss in inflammation-high models.", "study_type": "mouse", "sample_size": 36, "evidence_snippet": "Modulation slowed neuronal loss.", "url": null },
+
+    { "source_type": "literature", "source_id": "DEMO-PMID-005", "title": "Predictors of rapid motor progression in PD", "year": 2023, "venue": "Demo Journal of Neurology", "subgroup": "Rapid motor progressors", "mechanism": "neuroprotection", "treatment": "combination strategy", "key_result": "Rapid progressors show distinct trajectories; combination neuroprotective strategies proposed but unproven.", "study_type": "cohort", "sample_size": 200, "evidence_snippet": "Distinct rapid-progression trajectories identified.", "url": null }
+  ],
+
+  "treatment_connections": [
+    { "subgroup_name": "GBA-mutation PD",         "mechanism": "lysosomal dysfunction", "treatment": "GCase activation",      "supporting_source_ids": ["DEMO-PMID-001","DEMO-NCT-001"] },
+    { "subgroup_name": "LRRK2 PD",                "mechanism": "kinase pathway",        "treatment": "LRRK2 inhibition",     "supporting_source_ids": ["DEMO-PMID-002","DEMO-NCT-002"] },
+    { "subgroup_name": "Alpha-synuclein-high PD", "mechanism": "protein aggregation",   "treatment": "clearance therapy",    "supporting_source_ids": ["DEMO-PMID-003","DEMO-NCT-003"] },
+    { "subgroup_name": "Inflammation-high PD",    "mechanism": "neuroinflammation",     "treatment": "microglial modulation","supporting_source_ids": ["DEMO-PMID-004"] },
+    { "subgroup_name": "Rapid motor progressors", "mechanism": "neuroprotection",       "treatment": "combination strategy", "supporting_source_ids": ["DEMO-PMID-005"] }
+  ]
+}

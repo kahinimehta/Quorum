@@ -1,3 +1,10 @@
+"""
+API / DTO models for JSON responses (Person 2 backend, Person 5 dashboard).
+
+The SQLite blackboard contract is canonical — see repo docs/DATABASE.md and
+neurodiscover/schema.sql. Map API fields to DB columns in the backend layer;
+do not treat these Pydantic models as the database schema.
+"""
 from datetime import datetime
 from typing import Any
 
