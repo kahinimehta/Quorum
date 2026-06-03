@@ -4,3 +4,6 @@ openai             # OpenAI-compatible client, pointed at Nebius
 python-dotenv      # optional: auto-load .env
 psycopg[binary]    # Supabase / PostgreSQL when SUPABASE_DATABASE_URL is set
 requests           # NIH RePORTER grants pull
+fastapi
+uvicorn
+pydantic
