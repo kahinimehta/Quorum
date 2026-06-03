@@ -1,0 +1,607 @@
+{
+  "project_title": "Parkinson's disease pipeline — NIH R01 research proposal",
+  "central_hypothesis": "We hypothesize that, in Parkinson's disease patients, a jointly measured panel spanning lysosomal-glucocerebrosidase genotype/activity, gut-microbiome and metabolomic features, and peripheral monocyte/exosome profiles will define subgroups that differ in their candidacy for mechanism-specific disease-modifying interventions; we will test whether such multi-tissue stratification distinguishes patients in whom a lysosomal-targeting agent engages its target without clinical benefit from those flagged by GBA pre-clinical risk markers, gut-axis features, and peripheral immune signatures.",
+  "sections": [
+    {
+      "name": "significance",
+      "serves_dimension": "F1",
+      "evidence_ids": [
+        "literature:40587145",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:41981587",
+        "literature:39496848",
+        "literature:40079755, literature:40298214"
+      ],
+      "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority."
+    },
+    {
+      "name": "innovation",
+      "serves_dimension": "F1",
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40587145",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:40273394",
+        "literature:41981587",
+        "literature:39496848",
+        "literature:28598856, literature:40587145",
+        "literature:40079755, literature:40298214, literature:40273394"
+      ],
+      "text": "The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies."
+    }
+  ],
+  "aims": [
+    {
+      "id": "aim-1",
+      "hypothesis": "We will investigate whether a single, harmonized multi-tissue assay can co-measure GBA genotype/glucocerebrosidase (GCase) enzymatic activity, gut-microbiome/plasma-metabolomic features, and peripheral monocyte/exosome profiles in the same prospectively enrolled PD participants, and we will examine whether these three domains can be jointly captured at analytic quality sufficient to define candidate cross-tissue feature clusters that differentiate PD cases from controls. This is an exploratory feasibility/biomarker-establishment objective; no causal or progression-modifying claim is made.",
+      "rationale": "Three partially independent peripheral axes have each been implicated in PD but have not been co-measured in one cohort with a unified protocol. GBA mutations are described as the single largest risk factor for idiopathic PD and offer a window onto pre-clinical disease, and GCase is a tractable, measurable target in patients, as shown by demonstrated β-glucocerebrosidase target engagement in a clinical trial. The gut-brain axis is implicated through prodromal GI involvement and rostral alpha-synuclein spread, and plasma metabolomic/gut-microbiota differences have been reported in PD cohorts. Peripherally, monocytes show altered composition and metabolic reprogramming while exosomes act as periphery-brain messengers. Prior multi-tissue proteomic/genomic efforts and gut-microbiota biomarker programs establish that each domain is independently assayable; the open question this aim addresses is whether they can be unified in one specimen-collection and analytic pipeline. Lysosomal-function relevance to PD is further supported by ongoing mechanistic programs.",
+      "approach": "Design: prospective single-protocol observational cohort. We will enroll n=240 (160 PD meeting MDS clinical criteria + 80 age/sex-matched controls), powered (alpha=0.05, two-sided, 80%) to detect a moderate standardized between-group difference (Cohen's d≈0.45) in any single continuous domain readout with Benjamini-Hochberg FDR control across features. At one baseline visit we collect: (1) blood for GBA targeted sequencing of common/known pathogenic variants plus a dried-blood-spot/leukocyte GCase activity fluorometric assay (4-MU substrate), run in duplicate with inter-plate QC standards; (2) stool for shotgun metagenomic sequencing and paired plasma for untargeted LC-MS metabolomics, including a caffeine-metabolite targeted panel given prior PD signal; (3) peripheral blood for flow-cytometric/CyTOF monocyte subset immunophenotyping (classical/intermediate/non-classical, phagocytic markers) and plasma exosome isolation (size-exclusion + nanoparticle tracking) with exosomal alpha-synuclein and cargo profiling. The unifying deliverable is a locked SOP for synchronized aliquoting, batch-randomized processing, and a shared sample-ID schema linking all three domains per participant. Analysis: per-domain QC and normalization, then multi-omic integration (e.g., MOFA/sparse multiblock factor analysis) to derive cross-tissue feature clusters; case-control discrimination assessed by penalized regression with nested cross-validation (report AUC with 95% CI, no over-fit claims). Expertise/resources assumed (F3): a CLIA-adjacent genetics lab for GBA/GCase, a metagenomics core, an LC-MS metabolomics core, a CyTOF/flow core, exosome-isolation capability, a movement-disorders clinic for prospective enrollment, and a biostatistician/multi-omics analyst — capacities consistent with the multi-tissue proteomic/genomic and gut-microbiota programs cited.",
+      "expected_outcomes": "Primary feasibility outcome: completed tri-domain datasets for ≥90% of enrolled participants with pre-specified QC pass rates (GCase assay CV <15%; metagenomic reads ≥10M/sample; metabolomic internal-standard recovery within tolerance; monocyte panels with viable events ≥50,000). We expect to deliver a locked, reproducible co-measurement SOP and an integrated per-participant feature matrix. Exploratory analytic outcome: identification of ≥1 candidate cross-tissue feature cluster distinguishing PD from controls (target discrimination AUC reported with 95% CI; FDR<0.10 for any individual feature differences). Because evidence here is unscored, results will be framed as hypothesis-generating candidate signals and effect-size estimates to power confirmatory aims, not as established associations.",
+      "pitfalls_alternatives": "Pitfall 1 — batch/site confounding across three orthogonal assay platforms could obscure true signal; contingency: batch-randomized processing, embedded technical replicates and reference standards, and ComBat-style batch correction with sensitivity analyses excluding low-QC samples. Pitfall 2 — recruitment of GBA-variant carriers may be too sparse to stratify, since pathogenic GBA variants are individually rare; contingency: enrich enrollment via genetic pre-screening and, if carrier counts remain low, treat GCase activity as a continuous variable rather than relying on genotype strata. Pitfall 3 — exosome isolation yield and plasma alpha-synuclein quantitation are technically variable; contingency: pre-validate two orthogonal isolation methods (SEC vs ultracentrifugation) and report only readouts meeting NTA/Western QC, deferring underperforming markers. Pitfall 4 — diet/medication (including caffeine and dopaminergic therapy) confounds microbiome/metabolome; contingency: collect standardized diet/medication logs and include them as covariates. Pitfall 5 — multi-omic integration may over-fit at this sample size; contingency: restrict to nested cross-validation, report calibrated uncertainty, and explicitly scope this aim to feasibility and effect-size estimation rather than confirmatory discrimination.",
+      "citation_ids": [
+        "literature:28598856",
+        "literature:40587145",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:41981587",
+        "literature:40273394",
+        "grant:U01DK140923",
+        "grant:R01DK135440",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "grant:R01NS118146"
+      ]
+    },
+    {
+      "id": "aim-2",
+      "hypothesis": "We will investigate whether integrating cross-axis biomarkers — gut-metabolomic features (e.g., caffeine and its downstream metabolites), 16S/shotgun microbiome composition, lysosomal/glucocerebrosidase-pathway readouts, and peripheral-immune (monocyte phenotype, exosomal markers) measures — can partition a PD cohort into reproducible, internally validated patient subgroups that are distinguishable from controls and from one another. Whether any such subgroups exist, whether they are stable across analytical methods, and whether they bear any relationship to clinical features are entirely open questions to be determined by this work; no relationship between any single axis and clinical severity is assumed or asserted at the outset.",
+      "rationale": "Convergent but unscored evidence indicates that PD is biologically heterogeneous along several peripheral axes that may co-vary at the patient level. Plasma metabolomics work reports altered caffeine-metabolism profiles in PD relative to controls, and gut-brain-axis reviews describe a candidate prodromal subgroup with gastrointestinal-origin pathology. Peripheral immune findings describe altered monocyte composition and exosome-mediated periphery-brain communication, while GBA/lysosomal biology is the single largest genetic risk axis and a pre-clinical window. Because these signals have been studied largely in isolation, it remains an open, exploratory question whether they co-segregate into reproducible multi-axis subgroups — the rationale for a joint, unsupervised partitioning analysis rather than another single-axis study.",
+      "approach": "Cross-sectional discovery + replication design. We will enroll a discovery cohort (n≈200 PD, n≈80 controls; powered to detect ≥2 subgroups each ≥15% prevalence with silhouette stability) and an independent replication cohort (n≈150 PD). Per participant we will collect: (i) fasting plasma untargeted LC-MS/MS metabolomics with targeted quantification of caffeine and metabolites (paraxanthine, theobromine, theophylline); (ii) stool 16S rRNA and shotgun metagenomic sequencing; (iii) lysosomal/GBA-axis readouts — GBA genotyping plus blood β-glucocerebrosidase enzyme activity and glucosylsphingosine; (iv) peripheral-immune profiling — flow-cytometry monocyte subset composition and plasma exosome-associated markers. Analysis: features are batch-corrected, scaled, and integrated via similarity network fusion / multi-omic factor analysis followed by consensus clustering; cluster number is selected by consensus and silhouette criteria, then frozen and applied to the replication cohort. Reproducibility is the primary endpoint, quantified by adjusted Rand index between discovery and replication assignments and by bootstrap cluster-stability. Subgroups will be described against clinical metadata (MDS-UPDRS) descriptively only, with no causal/association inference. Multiple-comparison control by Benjamini-Hochberg (FDR<0.05). Expertise/resources assumed (F3): metabolomics core with validated caffeine-metabolite assay, microbiome sequencing and bioinformatics pipeline, a GBA genotyping/enzymology lab, flow-cytometry/exosome immunology capacity, a deeply phenotyped PD biobank with two independent cohorts, and a statistician experienced in multi-omic integration.",
+      "expected_outcomes": "We expect to derive ≥2 candidate multi-axis subgroups in the discovery cohort that survive replication with adjusted Rand index ≥0.4 and bootstrap cluster-stability ≥0.7, with at least one subgroup enriched for altered caffeine-metabolite profiles and/or low β-glucocerebrosidase/elevated glucosylsphingosine, and at least one distinguished by monocyte/exosomal immune features. As exploratory output we will report subgroup-defining feature loadings (effect sizes with 95% CIs, FDR<0.05) and descriptive clinical profiles. A null result — features failing to produce reproducible partitions — is also informative and will be reported.",
+      "pitfalls_alternatives": "Pitfalls: (1) cross-axis signals may be dominated by confounders (diet/caffeine intake, levodopa, GI transit) that drive clustering rather than disease biology; we will collect dietary/medication covariates and run sensitivity clustering with these residualized. (2) Clusters may not replicate (low Rand index), reflecting overfitting or batch effects; contingency is to reduce dimensionality to pre-specified candidate axes, apply harmonization (e.g., ComBat), and, if discrete clusters are unstable, switch to a continuous-axis (factor-score) model treating heterogeneity as a gradient rather than categories. (3) Modalities differ in completeness (stool/exosome assay dropout); we will use multi-omic methods tolerant of missing blocks and impute only above a per-participant completeness threshold. (4) Underpowered rare subgroups; if a candidate prodromal/GI subgroup is too small, we will enrich the replication cohort by oversampling GBA carriers and high-GI-symptom participants. (5) Risk of over-interpretation from unscored data — all clinical relationships will be reported descriptively, framed as hypothesis-generating, with prospective validation deferred to future work.",
+      "citation_ids": [
+        "literature:40273394",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:41981587",
+        "literature:28598856"
+      ]
+    },
+    {
+      "id": "aim-3",
+      "hypothesis": "We will investigate whether the multi-tissue stratification framework developed in Aims 1–2 can define a priori PD subgroups — primarily GBA-pathway/lysosomal-burden-high vs. -low strata — and, if such strata are identified, whether stratum membership and the magnitude of target engagement by a lysosomal-targeting agent (ambroxol, a β-glucocerebrosidase chaperone) co-vary in any systematic way. Whether strata of this kind can be identified, whether stratum membership relates to target engagement in any direction or magnitude, and whether any such relationship could inform enrichment strategies for future mechanism-specific trials are all open questions this aim is designed to investigate; no directional relationship between stratum membership and target engagement is assumed at the outset.",
+      "rationale": "Ambroxol demonstrated pharmacodynamic target engagement (increased β-glucocerebrosidase levels) in a randomized PD-dementia trial, yet showed no detectable group differences on primary or secondary clinical outcomes — a pattern consistent with an unenriched, mechanistically heterogeneous population diluting any true effect. Because GBA mutations are the single largest genetic risk factor for PD and the pathway offers a tractable, pre-clinical-identifiable therapeutic window, an explicit stratification step before engaging the lysosomal pathway is a logical next test. Field reviews identify biomarker-guided targeted therapies and trial enrichment as research priorities. This aim leverages those observations only to motivate an exploratory test of whether multi-tissue stratification can identify the subgroups in which engagement is greatest; it does not assert that engagement will alter disease course.",
+      "approach": "Design: prospective, single-center pharmacodynamic (engagement-focused) study, not a powered efficacy trial. Participants (n≈90, target ~30 per stratum) drawn from the Aim 1–2 cohort are classified by the multi-tissue framework into lysosomal/GBA-pathway strata (high vs. intermediate vs. low) using the genotype, peripheral-tissue, and proteomic features developed earlier; investigators delivering drug and running assays are blinded to stratum. All participants receive high-dose oral ambroxol over a 24-week open-label engagement window. Primary readout: change in β-glucocerebrosidase enzymatic activity and protein level in accessible compartments (peripheral blood mononuclear cells/monocytes and CSF), measured at baseline, 12, and 24 weeks by validated fluorometric activity assay and immunoassay, mirroring the engagement endpoint used in. Secondary pharmacodynamic readouts: CSF/plasma glucosylceramide and glucosylsphingosine substrate levels by LC-MS/MS and exploratory α-synuclein species. Analysis: linear mixed-effects models of biomarker trajectory with stratum × time interaction as the prespecified test of differential engagement; effect estimates with 95% CIs reported; correction for multiple compartments via false-discovery rate. Feasibility leverages established multi-tissue proteomic/genomic infrastructure, lysosomal-function expertise, and Gaucher/GBA clinical and assay expertise. F3 — this approach assumes access to: a deeply phenotyped multi-tissue PD cohort with banked CSF/PBMCs and longitudinal follow-up; a validated, reproducible β-glucocerebrosidase activity/immunoassay pipeline and LC-MS/MS sphingolipid platform; clinical-trial regulatory, pharmacy, and blinding infrastructure for an investigational disease-modifying agent; and statistical/biostatistics support for mixed-effects modeling of biomarker trajectories.",
+      "expected_outcomes": "If the framework captures lysosomal-pathway biology, we expect a detectable stratum × time interaction, with the lysosomal-burden-high stratum showing the largest β-glucocerebrosidase activity increase from baseline (target effect of interest: ≥30–50% relative increase in the high stratum vs. a smaller change in the low stratum), with the interaction term reaching p<0.05 (FDR-adjusted). Substrate readouts (glucosylceramide/glucosylsphingosine) would be expected to move directionally consistent with enzyme engagement in the high stratum. A null or uniform engagement across strata is an equally informative exploratory result, indicating the stratification does not partition engagement and should not be used for enrichment. Deliverable: an estimated engagement effect size per stratum to power future mechanism-specific trials. Consistent with the unscored, exploratory evidence base and the absence of clinical benefit in, no claim of clinical disease modification is made.",
+      "pitfalls_alternatives": "Pitfall 1 — engagement without stratum separation: ambroxol may raise β-glucocerebrosidase across all strata, yielding no interaction. Contingency: pivot the primary analysis to substrate-level and downstream lysosomal/α-synuclein readouts, which may differentiate strata even when enzyme induction is uniform, and report engagement magnitude per stratum regardless. Pitfall 2 — peripheral compartments may not reflect CNS engagement, and CSF sampling limits N. Contingency: prioritize paired CSF where consented, treat peripheral measures as exploratory surrogates, and pre-register the compartment hierarchy. Pitfall 3 — the multi-tissue strata from Aims 1–2 may misclassify or have weak separation, biasing the interaction test. Contingency: perform sensitivity analyses treating the lysosomal-burden score as a continuous covariate rather than discrete strata, and incorporate GBA genotype as an orthogonal anchor. Pitfall 4 — open-label design and small per-stratum N risk false-positive/negative interaction estimates. Contingency: blind assayers, prespecify the model, and frame all estimates as hypothesis-generating effect sizes for trial enrichment rather than confirmatory efficacy, consistent with the exploratory evidence grade and the prior null clinical trial.",
+      "citation_ids": [
+        "literature:40587145",
+        "literature:28598856",
+        "literature:39496848",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "literature:40587145",
+      "authors": [],
+      "year": 2025,
+      "title": "Ambroxol as a Treatment for Parkinson Disease Dementia: A Randomized Clinical Trial.",
+      "venue": "JAMA neurology",
+      "resolvable_id": "40587145",
+      "key_finding": "No evidence to suggest differences between groups on primary or secondary outcomes. Ambroxol demonstrated target engagement by increasing β-glucocerebrosidase levels.",
+      "real": true
+    },
+    {
+      "id": "literature:28598856",
+      "authors": [],
+      "year": 2017,
+      "title": "Glucocerebrosidase Mutations in Parkinson Disease.",
+      "venue": "Journal of Parkinson's disease",
+      "resolvable_id": "28598856",
+      "key_finding": "GBA mutations are the single largest risk factor for development of idiopathic PD. The clinical similarity with idiopathic PD and the chance to identify PD at a pre-clinical stage provides a unique opportunity to research therapeutic options for early PD.",
+      "real": true
+    },
+    {
+      "id": "literature:40079755",
+      "authors": [],
+      "year": 2025,
+      "title": "The Gut-Brain Axis in Parkinson disease: Emerging Concepts and Therapeutic Implications.",
+      "venue": "Movement disorders clinical practice",
+      "resolvable_id": "40079755",
+      "key_finding": "Mounting evidence suggests a subgroup of PD patients present with prodromal symptoms reflecting initial accumulation and later spread of pathological alpha-synuclein rostrally from the gastrointestinal tract. Treatments targeting the gut-brain axis could potentially slow disease progression or even prevent disease onset.",
+      "real": true
+    },
+    {
+      "id": "literature:40298214",
+      "authors": [],
+      "year": 2025,
+      "title": "Parkinson Disease and the Gut: A Primer for Gastroenterologists.",
+      "venue": "The American journal of gastroenterology",
+      "resolvable_id": "40298214",
+      "key_finding": "Gastrointestinal symptoms and dysfunction are common in PD, may promote neuroinflammation and alpha-synuclein aggregation, and could potentially serve as a site for early diagnosis and disease-modifying treatment.",
+      "real": true
+    },
+    {
+      "id": "literature:41981587",
+      "authors": [],
+      "year": 2026,
+      "title": "Peripheral immunochemical considerations in Parkinson disease: sources, targets and crosstalk mechanisms.",
+      "venue": "Journal of translational medicine",
+      "resolvable_id": "41981587",
+      "key_finding": "Monocytes exhibit altered composition, impaired phagocytic capacity, and metabolic reprogramming that sustain inflammation and alpha-synuclein aggregation. Exosomes act as mediators of communication between the periphery and the brain, contributing to the dissemination of alpha-synuclein.",
+      "real": true
+    },
+    {
+      "id": "literature:39496848",
+      "authors": [],
+      "year": 2024,
+      "title": "Parkinson disease therapy: current strategies and future research priorities.",
+      "venue": "Nature reviews. Neurology",
+      "resolvable_id": "39496848",
+      "key_finding": "Research priorities are slowing disease progression through biomarkers and targeted therapies, and enhancing symptomatic treatments for PD.",
+      "real": true
+    },
+    {
+      "id": "literature:40273394",
+      "authors": [],
+      "year": 2025,
+      "title": "Investigating Plasma Metabolomics and Gut Microbiota Changes Associated With Parkinson Disease: A Focus on Caffeine Metabolism.",
+      "venue": "Neurology",
+      "resolvable_id": "40273394",
+      "key_finding": "Significantly lower caffeine metabolism in PD patients, with serum levels of caffeine and its metabolites negatively correlating with motor severity.",
+      "real": true
+    },
+    {
+      "id": "grant:U01DK140923",
+      "authors": [],
+      "year": 2025,
+      "title": "The Bidirectional Gut-Microbiota-Brain Axis in Parkinson’s disease: integrating mechanistic biomarkers of disease severity and progression",
+      "venue": "NIH",
+      "resolvable_id": "U01DK140923",
+      "key_finding": "NIH grant awarded $214,082",
+      "real": true
+    },
+    {
+      "id": "grant:R01DK135440",
+      "authors": [],
+      "year": 2025,
+      "title": "Parkinson Disease Neural Circuitry and Gastrointestinal Pathobiology",
+      "venue": "NIH",
+      "resolvable_id": "R01DK135440",
+      "key_finding": "NIH grant awarded $610,734",
+      "real": true
+    },
+    {
+      "id": "grant:R01NS125317",
+      "authors": [],
+      "year": 2025,
+      "title": "Chloride Homeostasis in Lysosomal Function and Parkinson's Disease",
+      "venue": "NIH",
+      "resolvable_id": "R01NS125317",
+      "key_finding": "NIH grant awarded $604,578",
+      "real": true
+    },
+    {
+      "id": "grant:ZIAHG200336",
+      "authors": [],
+      "year": 2025,
+      "title": "Genetic and clinical studies of Gaucher disease and other lysosomal disorders",
+      "venue": "NIH",
+      "resolvable_id": "ZIAHG200336",
+      "key_finding": "NIH grant awarded $3,290,257",
+      "real": true
+    },
+    {
+      "id": "grant:R01NS118146",
+      "authors": [],
+      "year": 2025,
+      "title": "Multi-tissue High-throughput Proteomic and Genomic Study in Parkinson's Disease",
+      "venue": "NIH",
+      "resolvable_id": "R01NS118146",
+      "key_finding": "NIH grant awarded $581,271",
+      "real": true
+    }
+  ],
+  "obligations": [
+    {
+      "id": "F1-1",
+      "dimension": "F1",
+      "requirement": "Significance section names the specific barrier to progress in Parkinson's disease drug discovery, biomarker validation, or therapeutic development pipeline and states why resolving it matters to the field, with >=1 corpus citation.",
+      "satisfied_by": [
+        "significance"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40079755, literature:40298214",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic+code(>=1 evidence_id)"
+    },
+    {
+      "id": "F1-2",
+      "dimension": "F1",
+      "requirement": "A single central hypothesis for the Parkinson's disease pipeline intervention is stated explicitly and follows logically from the named gap.",
+      "satisfied_by": [
+        "central-hypothesis"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40587145",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F1-3",
+      "dimension": "F1",
+      "requirement": "Innovation section names the specific departure from current concepts, methods, or practice in Parkinson's disease research (e.g., novel target, assay, model, mechanism, or patient stratification—not a generic 'novel' claim).",
+      "satisfied_by": [
+        "innovation"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:28598856, literature:40587145",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40079755, literature:40298214, literature:40273394",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-1/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'We hypothesize that [target/mechanism] will reduce [pathology/symptom] in [model/population]').",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01DK135440",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:U01DK140923",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587",
+        "literature:R01NS118146 is a grant—replaced below"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-1/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'We hypothesize that [target/mechanism] will reduce [pathology/symptom] in [model/population]').",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-1/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'We hypothesize that [target/mechanism] will reduce [pathology/symptom] in [model/population]').",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40587145; literature:39496848"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-2/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1's approach section names the key methods and design (e.g., cell/animal model, assay type, sample size, statistical test, timeline) at enough specificity to judge rigor; does not state goals alone.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01DK135440",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:U01DK140923",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587",
+        "literature:R01NS118146 is a grant—replaced below"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-2/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2's approach section names the key methods and design (e.g., cell/animal model, assay type, sample size, statistical test, timeline) at enough specificity to judge rigor; does not state goals alone.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-2/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3's approach section names the key methods and design (e.g., cell/animal model, assay type, sample size, statistical test, timeline) at enough specificity to judge rigor; does not state goals alone.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40587145; literature:39496848"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-3/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 includes a pitfalls and alternative-strategies paragraph that identifies >=1 potential failure mode and >=1 contingency approach.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01DK135440",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:U01DK140923",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587",
+        "literature:R01NS118146 is a grant—replaced below"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-3/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 includes a pitfalls and alternative-strategies paragraph that identifies >=1 potential failure mode and >=1 contingency approach.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-3/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 includes a pitfalls and alternative-strategies paragraph that identifies >=1 potential failure mode and >=1 contingency approach.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40587145; literature:39496848"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-4/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 states expected outcomes (e.g., quantitative readout, effect size, statistical significance threshold) tied to its hypothesis.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01DK135440",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:U01DK140923",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587",
+        "literature:R01NS118146 is a grant—replaced below"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-4/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 states expected outcomes (e.g., quantitative readout, effect size, statistical significance threshold) tied to its hypothesis.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-4/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 states expected outcomes (e.g., quantitative readout, effect size, statistical significance threshold) tied to its hypothesis.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40587145; literature:39496848"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F3-1/aim-1",
+      "dimension": "F3",
+      "requirement": "Aim 1 surfaces the specific expertise (e.g., Parkinson's disease modeling, target validation, biomarker development) and resources (e.g., transgenic lines, patient cohorts, equipment) its approach assumes, for investigator and environment confirmation.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-1/aim-2",
+      "dimension": "F3",
+      "requirement": "Aim 2 surfaces the specific expertise (e.g., Parkinson's disease modeling, target validation, biomarker development) and resources (e.g., transgenic lines, patient cohorts, equipment) its approach assumes, for investigator and environment confirmation.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-1/aim-3",
+      "dimension": "F3",
+      "requirement": "Aim 3 surfaces the specific expertise (e.g., Parkinson's disease modeling, target validation, biomarker development) and resources (e.g., transgenic lines, patient cohorts, equipment) its approach assumes, for investigator and environment confirmation.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-2",
+      "dimension": "F3",
+      "requirement": "The agent does not assert F3 sufficiency for the Parkinson's disease pipeline proposal; self_score defaults to insufficient pending external confirmation.",
+      "satisfied_by": [],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "X-1",
+      "dimension": "X",
+      "requirement": "Every empirical claim in the Parkinson's disease pipeline proposal carries an evidence_id and every citation is in the corpus (inv-1).",
+      "satisfied_by": [
+        "references"
+      ],
+      "evidence_ids": [
+        "literature:40587145",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:41981587",
+        "literature:39496848",
+        "literature:40273394",
+        "grant:U01DK140923",
+        "grant:R01DK135440",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "grant:R01NS118146"
+      ],
+      "self_score": null,
+      "status": "satisfied",
+      "notes": "decided by inv-1 (citation integrity, code)"
+    },
+    {
+      "id": "X-2",
+      "dimension": "X",
+      "requirement": "No claim's assertiveness exceeds the rung its evidence grade permits (inv-3).",
+      "satisfied_by": [],
+      "evidence_ids": [],
+      "self_score": null,
+      "status": "at_risk",
+      "notes": "decided by inv-3 (overclaim ladder, code)"
+    }
+  ],
+  "revision_round": 2
+}

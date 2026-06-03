@@ -1,0 +1,492 @@
+{
+  "grounding_report": {
+    "n_references": 12,
+    "all_in_source_set": true,
+    "orphan_ids": [],
+    "resolve_rate": null
+  },
+  "obligation_ledger": [
+    {
+      "id": "F1-1",
+      "dimension": "F1",
+      "requirement": "Significance section names the specific barrier to progress in Parkinson's disease drug discovery, biomarker validation, or therapeutic development pipeline and states why resolving it matters to the field, with >=1 corpus citation.",
+      "satisfied_by": [
+        "significance"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40079755, literature:40298214",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic+code(>=1 evidence_id)"
+    },
+    {
+      "id": "F1-2",
+      "dimension": "F1",
+      "requirement": "A single central hypothesis for the Parkinson's disease pipeline intervention is stated explicitly and follows logically from the named gap.",
+      "satisfied_by": [
+        "central-hypothesis"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40587145",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F1-3",
+      "dimension": "F1",
+      "requirement": "Innovation section names the specific departure from current concepts, methods, or practice in Parkinson's disease research (e.g., novel target, assay, model, mechanism, or patient stratification—not a generic 'novel' claim).",
+      "satisfied_by": [
+        "innovation"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:28598856, literature:40587145",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40079755, literature:40298214, literature:40273394",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-1/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'We hypothesize that [target/mechanism] will reduce [pathology/symptom] in [model/population]').",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01DK135440",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:U01DK140923",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587",
+        "literature:R01NS118146 is a grant—replaced below"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-1/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'We hypothesize that [target/mechanism] will reduce [pathology/symptom] in [model/population]').",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-1/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'We hypothesize that [target/mechanism] will reduce [pathology/symptom] in [model/population]').",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40587145; literature:39496848"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-2/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1's approach section names the key methods and design (e.g., cell/animal model, assay type, sample size, statistical test, timeline) at enough specificity to judge rigor; does not state goals alone.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01DK135440",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:U01DK140923",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587",
+        "literature:R01NS118146 is a grant—replaced below"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-2/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2's approach section names the key methods and design (e.g., cell/animal model, assay type, sample size, statistical test, timeline) at enough specificity to judge rigor; does not state goals alone.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-2/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3's approach section names the key methods and design (e.g., cell/animal model, assay type, sample size, statistical test, timeline) at enough specificity to judge rigor; does not state goals alone.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40587145; literature:39496848"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-3/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 includes a pitfalls and alternative-strategies paragraph that identifies >=1 potential failure mode and >=1 contingency approach.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01DK135440",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:U01DK140923",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587",
+        "literature:R01NS118146 is a grant—replaced below"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-3/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 includes a pitfalls and alternative-strategies paragraph that identifies >=1 potential failure mode and >=1 contingency approach.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-3/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 includes a pitfalls and alternative-strategies paragraph that identifies >=1 potential failure mode and >=1 contingency approach.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40587145; literature:39496848"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-4/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 states expected outcomes (e.g., quantitative readout, effect size, statistical significance threshold) tied to its hypothesis.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01DK135440",
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:U01DK140923",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:41981587",
+        "literature:R01NS118146 is a grant—replaced below"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-4/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 states expected outcomes (e.g., quantitative readout, effect size, statistical significance threshold) tied to its hypothesis.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:41981587"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-4/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 states expected outcomes (e.g., quantitative readout, effect size, statistical significance threshold) tied to its hypothesis.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "grant:R01NS118146",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40587145; literature:39496848"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F3-1/aim-1",
+      "dimension": "F3",
+      "requirement": "Aim 1 surfaces the specific expertise (e.g., Parkinson's disease modeling, target validation, biomarker development) and resources (e.g., transgenic lines, patient cohorts, equipment) its approach assumes, for investigator and environment confirmation.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-1/aim-2",
+      "dimension": "F3",
+      "requirement": "Aim 2 surfaces the specific expertise (e.g., Parkinson's disease modeling, target validation, biomarker development) and resources (e.g., transgenic lines, patient cohorts, equipment) its approach assumes, for investigator and environment confirmation.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-1/aim-3",
+      "dimension": "F3",
+      "requirement": "Aim 3 surfaces the specific expertise (e.g., Parkinson's disease modeling, target validation, biomarker development) and resources (e.g., transgenic lines, patient cohorts, equipment) its approach assumes, for investigator and environment confirmation.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-2",
+      "dimension": "F3",
+      "requirement": "The agent does not assert F3 sufficiency for the Parkinson's disease pipeline proposal; self_score defaults to insufficient pending external confirmation.",
+      "satisfied_by": [],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "X-1",
+      "dimension": "X",
+      "requirement": "Every empirical claim in the Parkinson's disease pipeline proposal carries an evidence_id and every citation is in the corpus (inv-1).",
+      "satisfied_by": [
+        "references"
+      ],
+      "evidence_ids": [
+        "literature:40587145",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:41981587",
+        "literature:39496848",
+        "literature:40273394",
+        "grant:U01DK140923",
+        "grant:R01DK135440",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "grant:R01NS118146"
+      ],
+      "self_score": null,
+      "status": "satisfied",
+      "notes": "decided by inv-1 (citation integrity, code)"
+    },
+    {
+      "id": "X-2",
+      "dimension": "X",
+      "requirement": "No claim's assertiveness exceeds the rung its evidence grade permits (inv-3).",
+      "satisfied_by": [],
+      "evidence_ids": [],
+      "self_score": null,
+      "status": "at_risk",
+      "notes": "decided by inv-3 (overclaim ladder, code)"
+    }
+  ],
+  "calibration": {
+    "internal_scores": {
+      "F1": 7,
+      "F2": 4,
+      "F3": 6
+    },
+    "external_scores": null,
+    "mae": null,
+    "rank_corr": null,
+    "segment_scores": {
+      "aim-1": {
+        "dimension": "F2",
+        "score": 5,
+        "justification": "aim aim-1: grounded and calibrated"
+      },
+      "aim-2": {
+        "dimension": "F2",
+        "score": 5,
+        "justification": "aim aim-2: grounded and calibrated"
+      },
+      "aim-3": {
+        "dimension": "F2",
+        "score": 2,
+        "justification": "aim aim-3: 1 overclaim(s), 0 fabricated citation(s)"
+      }
+    }
+  },
+  "overclaim_check": [
+    {
+      "claim": "significance",
+      "claim_level": "L1",
+      "evidence_grade": "minimal",
+      "permitted_level": "L1",
+      "ok": true,
+      "unscored": true,
+      "note": ""
+    },
+    {
+      "claim": "central-hypothesis",
+      "claim_level": "L1",
+      "evidence_grade": "minimal",
+      "permitted_level": "L1",
+      "ok": true,
+      "unscored": true,
+      "note": ""
+    },
+    {
+      "claim": "innovation",
+      "claim_level": "L1",
+      "evidence_grade": "minimal",
+      "permitted_level": "L1",
+      "ok": true,
+      "unscored": true,
+      "note": ""
+    },
+    {
+      "claim": "aim-1::hypothesis",
+      "claim_level": "L1",
+      "evidence_grade": "minimal",
+      "permitted_level": "L1",
+      "ok": true,
+      "unscored": true,
+      "note": ""
+    },
+    {
+      "claim": "aim-2::hypothesis",
+      "claim_level": "L1",
+      "evidence_grade": "minimal",
+      "permitted_level": "L1",
+      "ok": true,
+      "unscored": true,
+      "note": ""
+    },
+    {
+      "claim": "aim-3::hypothesis",
+      "claim_level": "L2",
+      "evidence_grade": "minimal",
+      "permitted_level": "L1",
+      "ok": false,
+      "unscored": true,
+      "note": "level(L2) > permitted(L1) for unscored→minimal evidence"
+    }
+  ],
+  "unit_tests": [
+    {
+      "name": "inv-1 reference integrity",
+      "passed": true,
+      "detail": "orphan_ids=[]"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+# Minimal project metadata for the Conclusion Update Agent (CUA).
+# Deps are intentionally minimal: the agent is a closed-world reasoner (design §1, principle 6) —
+# anthropic (LLM roles), pydantic (typed contract objects), httpx (Grounder resolve + RePORTER eval),
+# pytest (offline invariants, contract §3). No retrieval / web-search stack: writers never gather.
+# psycopg (INT-1, adaption.md #17): Postgres driver so the INT-2 adapter can read a live Supabase DB
+# read-only; sqlite3 is stdlib for local. Import-only — opens NO connection at import, so offline
+# determinism holds; a DB connection is established only when the adapter is given a URL (INT-2/3).
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cua"
+version = "0.1.0"
+description = "Conclusion Update Agent — terminal agent of the autonomous-research pipeline, bound to an NIH grant Task."
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40",   # LLM roles (contract §1.5, §2.4 model_ids)
+    "pydantic>=2.6",     # typed contract objects (contract §1.1–1.10)
+    "httpx>=0.27",       # Grounder DOI/PMID resolve (contract §4) + RePORTER eval (test-review part B)
+    "pytest>=8.0",       # offline hard invariants (contract §3; test-review part A)
+    "psycopg[binary]>=3.1",  # Postgres driver for the INT-2 DB-read adapter (adaption.md #17); import-only, no connect at import
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

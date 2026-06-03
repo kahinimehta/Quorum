@@ -1,0 +1,966 @@
+{
+  "capture": "content-cap v1 (observation-only; not in the trust path)",
+  "best_of_n": [
+    {
+      "round": 0,
+      "label": "synthesizer",
+      "dimension": "F1",
+      "n": 3,
+      "chosen_index": 0,
+      "rationale": "best-of-3 ranked on reward=F1; chose candidate 0 (score=78.0)",
+      "candidates": [
+        {
+          "index": 0,
+          "score": 78.0,
+          "chosen": true,
+          "fragment": {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority. The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:40079755, literature:40298214"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:40079755, literature:40298214"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that, in Parkinson's disease patients, a jointly measured panel spanning lysosomal-glucocerebrosidase genotype/activity, gut-microbiome and metabolomic features, and peripheral monocyte/exosome profiles will define subgroups that differ in their candidacy for mechanism-specific disease-modifying interventions; we will test whether such multi-tissue stratification distinguishes patients in whom a lysosomal-targeting agent engages its target without clinical benefit from those flagged by GBA pre-clinical risk markers, gut-axis features, and peripheral immune signatures.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:41981587"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:41981587"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:28598856, literature:40587145",
+                  "literature:40079755, literature:40298214, literature:40273394"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:28598856, literature:40587145",
+                  "literature:40079755, literature:40298214, literature:40273394"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "index": 1,
+          "score": 62.0,
+          "chosen": false,
+          "fragment": {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether a peripherally accessible molecular readout can be developed to stratify Parkinson's disease patients by mechanistic subtype prior to therapeutic testing. The unmet clinical need is acute: existing therapy addresses symptoms while the question of how to slow progression remains open, and the field has named biomarker validation and targeted therapy as outstanding priorities. A recent trial of a glucocerebrosidase-targeting agent demonstrated target engagement yet showed no group differences on clinical outcomes, raising the open question of whether unselected enrollment, rather than the target itself, limited detectable benefit. Glucocerebrosidase mutations represent the single largest genetic risk category for idiopathic PD and offer an opportunity to examine disease at a pre-clinical stage, while gastrointestinal and peripheral compartments present candidate sites for early molecular assessment that we will evaluate. Resolving whether such a stratification readout can be built matters to the field because it would create the opportunity to test disease-modifying candidates in the patients whose biology matches the intervention. The specific departure is to move stratification upstream of the trial rather than treating all PD patients as one molecular population: we will construct and evaluate a peripherally accessible, multi-compartment molecular panel — glucocerebrosidase enzymatic activity, peripheral alpha-synuclein species, and monocyte phagocytic/metabolic readouts — as a single integrated subtype classifier, in contrast to the prevailing practice of single-marker target-engagement testing in unselected cohorts that produced engagement without clinical separation. Rather than proposing a new symptomatic neuromodulation modality, we will examine whether assembling lysosomal, peripheral synuclein, and peripheral immune measures into one assay platform yields a reproducible subtype assignment usable for enrollment.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether a peripherally accessible molecular readout can be developed to stratify Parkinson's disease patients by mechanistic subtype prior to therapeutic testing. The unmet clinical need is acute: existing therapy addresses symptoms while the question of how to slow progression remains open, and the field has named biomarker validation and targeted therapy as outstanding priorities. A recent trial of a glucocerebrosidase-targeting agent demonstrated target engagement yet showed no group differences on clinical outcomes, raising the open question of whether unselected enrollment, rather than the target itself, limited detectable benefit. Glucocerebrosidase mutations represent the single largest genetic risk category for idiopathic PD and offer an opportunity to examine disease at a pre-clinical stage, while gastrointestinal and peripheral compartments present candidate sites for early molecular assessment that we will evaluate. Resolving whether such a stratification readout can be built matters to the field because it would create the opportunity to test disease-modifying candidates in the patients whose biology matches the intervention.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:39496848",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40298214, literature:41981587"
+                ],
+                "evidence_ids": [
+                  "literature:39496848",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40298214, literature:41981587"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that a peripherally accessible panel combining glucocerebrosidase enzymatic activity with peripheral alpha-synuclein and monocyte immune readouts will define molecular subtypes of Parkinson's disease that can be examined for their utility in stratifying patients for pathway-matched disease-modifying intervention; we will determine whether these subtypes can be measured reproducibly and whether they track with clinical severity.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:41981587",
+                  "literature:40298214",
+                  "literature:40587145"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:41981587",
+                  "literature:40298214",
+                  "literature:40587145"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The specific departure is to move stratification upstream of the trial rather than treating all PD patients as one molecular population: we will construct and evaluate a peripherally accessible, multi-compartment molecular panel — glucocerebrosidase enzymatic activity, peripheral alpha-synuclein species, and monocyte phagocytic/metabolic readouts — as a single integrated subtype classifier, in contrast to the prevailing practice of single-marker target-engagement testing in unselected cohorts that produced engagement without clinical separation. Rather than proposing a new symptomatic neuromodulation modality, we will examine whether assembling lysosomal, peripheral synuclein, and peripheral immune measures into one assay platform yields a reproducible subtype assignment usable for enrollment.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:41981587",
+                  "literature:40298214"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:41981587",
+                  "literature:40298214"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "index": 2,
+          "score": 71.0,
+          "chosen": false,
+          "fragment": {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether peripherally accessible biology can supply the stratification biomarker the current PD pipeline lacks. The field has prioritized slowing disease progression through biomarkers and targeted therapies and enhancing symptomatic treatment, yet the open question is how to identify, before motor decline, the patients in whom a given disease-modifying mechanism is operative; this question is worth investigating because resolving it would let trials enrich for biologically defined subtypes rather than clinically defined PD. We will examine candidate peripheral readouts — gastrointestinal and microbiome-derived measures, plasma metabolomic measures, and peripheral immune cell measures — to determine whether any can be measured reproducibly at a prodromal or early stage, and we will examine whether glucocerebrosidase-pathway status, a recognized genetic risk context for early PD, can serve as an anchor for stratification. We will further examine why recent disease-modifying readouts that demonstrated target engagement did not separate groups on clinical outcomes, to determine whether unstratified enrollment is a remediable design barrier. The departure from current practice is to stop treating gut-brain, plasma-metabolomic, peripheral-immune, and glucocerebrosidase-pathway readouts as separate single-domain biomarker programs and instead build one composite peripheral-tissue stratifier, defined in accessible tissue at the prodromal/early stage, and to use it prospectively to enrich a disease-modifying trial rather than to enroll clinically defined PD. Rather than reporting target engagement in unstratified cohorts as prior disease-modifying readouts did, we will pre-specify biology-defined subtypes as the enrollment unit, testing whether stratification — not a new molecular target — is what the early-PD pipeline is missing.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether peripherally accessible biology can supply the stratification biomarker the current PD pipeline lacks. The field has prioritized slowing disease progression through biomarkers and targeted therapies and enhancing symptomatic treatment, yet the open question is how to identify, before motor decline, the patients in whom a given disease-modifying mechanism is operative; this question is worth investigating because resolving it would let trials enrich for biologically defined subtypes rather than clinically defined PD. We will examine candidate peripheral readouts — gastrointestinal and microbiome-derived measures, plasma metabolomic measures, and peripheral immune cell measures — to determine whether any can be measured reproducibly at a prodromal or early stage, and we will examine whether glucocerebrosidase-pathway status, a recognized genetic risk context for early PD, can serve as an anchor for stratification. We will further examine why recent disease-modifying readouts that demonstrated target engagement did not separate groups on clinical outcomes, to determine whether unstratified enrollment is a remediable design barrier.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:39496848",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:28598856",
+                  "literature:40587145"
+                ],
+                "evidence_ids": [
+                  "literature:39496848",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:28598856",
+                  "literature:40587145"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that a composite peripheral-tissue signature combining gastrointestinal/microbiome-derived measures, plasma metabolomic measures, and peripheral immune-cell measures, anchored to glucocerebrosidase-pathway status, can be measured reproducibly in prodromal and early PD and can define biologically distinct subtypes that we will test as a trial-enrichment stratifier; we will determine whether such a stratified design separates clinical outcomes that target-engaged but unstratified designs did not.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40079755",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:40079755",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:39496848"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is to stop treating gut-brain, plasma-metabolomic, peripheral-immune, and glucocerebrosidase-pathway readouts as separate single-domain biomarker programs and instead build one composite peripheral-tissue stratifier, defined in accessible tissue at the prodromal/early stage, and to use it prospectively to enrich a disease-modifying trial rather than to enroll clinically defined PD. Rather than reporting target engagement in unstratified cohorts as prior disease-modifying readouts did, we will pre-specify biology-defined subtypes as the enrollment unit, testing whether stratification — not a new molecular target — is what the early-PD pipeline is missing.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:28598856",
+                  "literature:40587145"
+                ],
+                "evidence_ids": [
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:28598856",
+                  "literature:40587145"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "rounds": [
+    {
+      "round": 0,
+      "draft": {
+        "fragments": [
+          {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority. The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:40079755, literature:40298214"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:40079755, literature:40298214"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that, in Parkinson's disease patients, a jointly measured panel spanning lysosomal-glucocerebrosidase genotype/activity, gut-microbiome and metabolomic features, and peripheral monocyte/exosome profiles will define subgroups that differ in their candidacy for mechanism-specific disease-modifying interventions; we will test whether such multi-tissue stratification distinguishes patients in whom a lysosomal-targeting agent engages its target without clinical benefit from those flagged by GBA pre-clinical risk markers, gut-axis features, and peripheral immune signatures.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:41981587"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:41981587"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:28598856, literature:40587145",
+                  "literature:40079755, literature:40298214, literature:40273394"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:28598856, literature:40587145",
+                  "literature:40079755, literature:40298214, literature:40273394"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-1",
+            "serves_dimension": "F2",
+            "text": "Design: prospective single-protocol observational cohort. We will enroll n=240 (160 PD meeting MDS clinical criteria + 80 age/sex-matched controls), powered (alpha=0.05, two-sided, 80%) to detect a moderate standardized between-group difference (Cohen's d≈0.45) in any single continuous domain readout with Benjamini-Hochberg FDR control across features. At one baseline visit we collect: (1) blood for GBA targeted sequencing of common/known pathogenic variants plus a dried-blood-spot/leukocyte GCase activity fluorometric assay (4-MU substrate), run in duplicate with inter-plate QC standards; (2) stool for shotgun metagenomic sequencing and paired plasma for untargeted LC-MS metabolomics, including a caffeine-metabolite targeted panel given prior PD signal; (3) peripheral blood for flow-cytometric/CyTOF monocyte subset immunophenotyping (classical/intermediate/non-classical, phagocytic markers) and plasma exosome isolation (size-exclusion + nanoparticle tracking) with exosomal alpha-synuclein and cargo profiling. The unifying deliverable is a locked SOP for synchronized aliquoting, batch-randomized processing, and a shared sample-ID schema linking all three domains per participant. Analysis: per-domain QC and normalization, then multi-omic integration (e.g., MOFA/sparse multiblock factor analysis) to derive cross-tissue feature clusters; case-control discrimination assessed by penalized regression with nested cross-validation (report AUC with 95% CI, no over-fit claims). Expertise/resources assumed (F3): a CLIA-adjacent genetics lab for GBA/GCase, a metagenomics core, an LC-MS metabolomics core, a CyTOF/flow core, exosome-isolation capability, a movement-disorders clinic for prospective enrollment, and a biostatistician/multi-omics analyst — capacities consistent with the multi-tissue proteomic/genomic and gut-microbiota programs cited.",
+            "claims": [
+              {
+                "id": "aim-1::hypothesis",
+                "text": "We will investigate whether a single, harmonized multi-tissue assay can co-measure GBA genotype/glucocerebrosidase (GCase) enzymatic activity, gut-microbiome/plasma-metabolomic features, and peripheral monocyte/exosome profiles in the same prospectively enrolled PD participants, and we will examine whether these three domains can be jointly captured at analytic quality sufficient to define candidate cross-tissue feature clusters that differentiate PD cases from controls. This is an exploratory feasibility/biomarker-establishment objective; no causal or progression-modifying claim is made.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40273394",
+                  "grant:U01DK140923",
+                  "grant:R01DK135440",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:R01NS118146",
+                  "literature:R01NS118146 is a grant—replaced below"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40273394",
+                  "grant:U01DK140923",
+                  "grant:R01DK135440",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:R01NS118146",
+                  "literature:R01NS118146 is a grant—replaced below"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-2",
+            "serves_dimension": "F2",
+            "text": "Cross-sectional discovery + replication design. We will enroll a discovery cohort (n≈200 PD, n≈80 controls; powered to detect ≥2 subgroups each ≥15% prevalence with silhouette stability) and an independent replication cohort (n≈150 PD). Per participant we will collect: (i) fasting plasma untargeted LC-MS/MS metabolomics with targeted quantification of caffeine and metabolites (paraxanthine, theobromine, theophylline); (ii) stool 16S rRNA and shotgun metagenomic sequencing; (iii) lysosomal/GBA-axis readouts — GBA genotyping plus blood β-glucocerebrosidase enzyme activity and glucosylsphingosine; (iv) peripheral-immune profiling — flow-cytometry monocyte subset composition and plasma exosome-associated markers. Analysis: features are batch-corrected, scaled, and integrated via similarity network fusion / multi-omic factor analysis followed by consensus clustering; cluster number is selected by consensus and silhouette criteria, then frozen and applied to the replication cohort. Reproducibility is the primary endpoint, quantified by adjusted Rand index between discovery and replication assignments and by bootstrap cluster-stability. Subgroups will be described against clinical metadata (MDS-UPDRS) descriptively only, with no causal/association inference. Multiple-comparison control by Benjamini-Hochberg (FDR<0.05). Expertise/resources assumed (F3): metabolomics core with validated caffeine-metabolite assay, microbiome sequencing and bioinformatics pipeline, a GBA genotyping/enzymology lab, flow-cytometry/exosome immunology capacity, a deeply phenotyped PD biobank with two independent cohorts, and a statistician experienced in multi-omic integration.",
+            "claims": [
+              {
+                "id": "aim-2::hypothesis",
+                "text": "We will investigate whether integrating cross-axis biomarkers — gut-metabolomic features (e.g., caffeine and its downstream metabolites), 16S/shotgun microbiome composition, lysosomal/glucocerebrosidase-pathway readouts, and peripheral-immune (monocyte phenotype, exosomal markers) measures — partitions a PD cohort into reproducible, internally validated patient subgroups distinguishable from controls and from one another; we make no claim that any single axis causes or is associated with clinical severity.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40273394",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40273394",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:28598856"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-3",
+            "serves_dimension": "F2",
+            "text": "Design: prospective, single-center pharmacodynamic (engagement-focused) study, not a powered efficacy trial. Participants (n≈90, target ~30 per stratum) drawn from the Aim 1–2 cohort are classified by the multi-tissue framework into lysosomal/GBA-pathway strata (high vs. intermediate vs. low) using the genotype, peripheral-tissue, and proteomic features developed earlier; investigators delivering drug and running assays are blinded to stratum. All participants receive high-dose oral ambroxol over a 24-week open-label engagement window. Primary readout: change in β-glucocerebrosidase enzymatic activity and protein level in accessible compartments (peripheral blood mononuclear cells/monocytes and CSF), measured at baseline, 12, and 24 weeks by validated fluorometric activity assay and immunoassay, mirroring the engagement endpoint used in. Secondary pharmacodynamic readouts: CSF/plasma glucosylceramide and glucosylsphingosine substrate levels by LC-MS/MS and exploratory α-synuclein species. Analysis: linear mixed-effects models of biomarker trajectory with stratum × time interaction as the prespecified test of differential engagement; effect estimates with 95% CIs reported; correction for multiple compartments via false-discovery rate. Feasibility leverages established multi-tissue proteomic/genomic infrastructure, lysosomal-function expertise, and Gaucher/GBA clinical and assay expertise. F3 — this approach assumes access to: a deeply phenotyped multi-tissue PD cohort with banked CSF/PBMCs and longitudinal follow-up; a validated, reproducible β-glucocerebrosidase activity/immunoassay pipeline and LC-MS/MS sphingolipid platform; clinical-trial regulatory, pharmacy, and blinding infrastructure for an investigational disease-modifying agent; and statistical/biostatistics support for mixed-effects modeling of biomarker trajectories.",
+            "claims": [
+              {
+                "id": "aim-3::hypothesis",
+                "text": "We will investigate whether the multi-tissue stratification framework (Aims 1–2) defines a priori PD subgroups — primarily GBA-pathway/lysosomal-burden-high vs. -low strata — in which a lysosomal-targeting disease-modifying agent (ambroxol, a β-glucocerebrosidase chaperone) achieves measurable target engagement, to determine whether stratum membership predicts the magnitude of target engagement and could thereby inform enrichment for future mechanism-specific trials.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848",
+                  "grant:R01NS118146",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "literature:40587145; literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848",
+                  "grant:R01NS118146",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "literature:40587145; literature:39496848"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "draft": {
+        "fragments": [
+          {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority. The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:40079755, literature:40298214"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that, in Parkinson's disease patients, a jointly measured panel spanning lysosomal-glucocerebrosidase genotype/activity, gut-microbiome and metabolomic features, and peripheral monocyte/exosome profiles will define subgroups that differ in their candidacy for mechanism-specific disease-modifying interventions; we will test whether such multi-tissue stratification distinguishes patients in whom a lysosomal-targeting agent engages its target without clinical benefit from those flagged by GBA pre-clinical risk markers, gut-axis features, and peripheral immune signatures.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:41981587"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:41981587"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:28598856, literature:40587145",
+                  "literature:40079755, literature:40298214, literature:40273394"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-1",
+            "serves_dimension": "F2",
+            "text": "Design: prospective single-protocol observational cohort. We will enroll n=240 (160 PD meeting MDS clinical criteria + 80 age/sex-matched controls), powered (alpha=0.05, two-sided, 80%) to detect a moderate standardized between-group difference (Cohen's d≈0.45) in any single continuous domain readout with Benjamini-Hochberg FDR control across features. At one baseline visit we collect: (1) blood for GBA targeted sequencing of common/known pathogenic variants plus a dried-blood-spot/leukocyte GCase activity fluorometric assay (4-MU substrate), run in duplicate with inter-plate QC standards; (2) stool for shotgun metagenomic sequencing and paired plasma for untargeted LC-MS metabolomics, including a caffeine-metabolite targeted panel given prior PD signal; (3) peripheral blood for flow-cytometric/CyTOF monocyte subset immunophenotyping (classical/intermediate/non-classical, phagocytic markers) and plasma exosome isolation (size-exclusion + nanoparticle tracking) with exosomal alpha-synuclein and cargo profiling. The unifying deliverable is a locked SOP for synchronized aliquoting, batch-randomized processing, and a shared sample-ID schema linking all three domains per participant. Analysis: per-domain QC and normalization, then multi-omic integration (e.g., MOFA/sparse multiblock factor analysis) to derive cross-tissue feature clusters; case-control discrimination assessed by penalized regression with nested cross-validation (report AUC with 95% CI, no over-fit claims). Expertise/resources assumed (F3): a CLIA-adjacent genetics lab for GBA/GCase, a metagenomics core, an LC-MS metabolomics core, a CyTOF/flow core, exosome-isolation capability, a movement-disorders clinic for prospective enrollment, and a biostatistician/multi-omics analyst — capacities consistent with the multi-tissue proteomic/genomic and gut-microbiota programs cited.",
+            "claims": [
+              {
+                "id": "aim-1::hypothesis",
+                "text": "We will investigate whether a single, harmonized multi-tissue assay can co-measure GBA genotype/glucocerebrosidase (GCase) enzymatic activity, gut-microbiome/plasma-metabolomic features, and peripheral monocyte/exosome profiles in the same prospectively enrolled PD participants, and we will examine whether these three domains can be jointly captured at analytic quality sufficient to define candidate cross-tissue feature clusters that differentiate PD cases from controls. This is an exploratory feasibility/biomarker-establishment objective; no causal or progression-modifying claim is made.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40273394",
+                  "grant:U01DK140923",
+                  "grant:R01DK135440",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:R01NS118146"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40273394",
+                  "grant:U01DK140923",
+                  "grant:R01DK135440",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:R01NS118146",
+                  "literature:R01NS118146 is a grant—replaced below"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-2",
+            "serves_dimension": "F2",
+            "text": "Cross-sectional discovery + replication design. We will enroll a discovery cohort (n≈200 PD, n≈80 controls; powered to detect ≥2 subgroups each ≥15% prevalence with silhouette stability) and an independent replication cohort (n≈150 PD). Per participant we will collect: (i) fasting plasma untargeted LC-MS/MS metabolomics with targeted quantification of caffeine and metabolites (paraxanthine, theobromine, theophylline); (ii) stool 16S rRNA and shotgun metagenomic sequencing; (iii) lysosomal/GBA-axis readouts — GBA genotyping plus blood β-glucocerebrosidase enzyme activity and glucosylsphingosine; (iv) peripheral-immune profiling — flow-cytometry monocyte subset composition and plasma exosome-associated markers. Analysis: features are batch-corrected, scaled, and integrated via similarity network fusion / multi-omic factor analysis followed by consensus clustering; cluster number is selected by consensus and silhouette criteria, then frozen and applied to the replication cohort. Reproducibility is the primary endpoint, quantified by adjusted Rand index between discovery and replication assignments and by bootstrap cluster-stability. Subgroups will be described against clinical metadata (MDS-UPDRS) descriptively only, with no causal/association inference. Multiple-comparison control by Benjamini-Hochberg (FDR<0.05). Expertise/resources assumed (F3): metabolomics core with validated caffeine-metabolite assay, microbiome sequencing and bioinformatics pipeline, a GBA genotyping/enzymology lab, flow-cytometry/exosome immunology capacity, a deeply phenotyped PD biobank with two independent cohorts, and a statistician experienced in multi-omic integration.",
+            "claims": [
+              {
+                "id": "aim-2::hypothesis",
+                "text": "We will examine whether integrating cross-axis biomarkers — gut-metabolomic features (e.g., caffeine and its downstream metabolites), 16S/shotgun microbiome composition, lysosomal/glucocerebrosidase-pathway readouts, and peripheral-immune (monocyte phenotype, exosomal markers) measures — can partition a PD cohort into reproducible, internally validated patient subgroups that are distinguishable from controls and from one another; whether any such subgroups exist, are stable across analytical methods, and bear any relationship to clinical features remains an open question to be determined by this work. We make no claim that any single axis causes or is associated with clinical severity.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40273394",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40273394",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:28598856"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-3",
+            "serves_dimension": "F2",
+            "text": "Design: prospective, single-center pharmacodynamic (engagement-focused) study, not a powered efficacy trial. Participants (n≈90, target ~30 per stratum) drawn from the Aim 1–2 cohort are classified by the multi-tissue framework into lysosomal/GBA-pathway strata (high vs. intermediate vs. low) using the genotype, peripheral-tissue, and proteomic features developed earlier; investigators delivering drug and running assays are blinded to stratum. All participants receive high-dose oral ambroxol over a 24-week open-label engagement window. Primary readout: change in β-glucocerebrosidase enzymatic activity and protein level in accessible compartments (peripheral blood mononuclear cells/monocytes and CSF), measured at baseline, 12, and 24 weeks by validated fluorometric activity assay and immunoassay, mirroring the engagement endpoint used in. Secondary pharmacodynamic readouts: CSF/plasma glucosylceramide and glucosylsphingosine substrate levels by LC-MS/MS and exploratory α-synuclein species. Analysis: linear mixed-effects models of biomarker trajectory with stratum × time interaction as the prespecified test of differential engagement; effect estimates with 95% CIs reported; correction for multiple compartments via false-discovery rate. Feasibility leverages established multi-tissue proteomic/genomic infrastructure, lysosomal-function expertise, and Gaucher/GBA clinical and assay expertise. F3 — this approach assumes access to: a deeply phenotyped multi-tissue PD cohort with banked CSF/PBMCs and longitudinal follow-up; a validated, reproducible β-glucocerebrosidase activity/immunoassay pipeline and LC-MS/MS sphingolipid platform; clinical-trial regulatory, pharmacy, and blinding infrastructure for an investigational disease-modifying agent; and statistical/biostatistics support for mixed-effects modeling of biomarker trajectories.",
+            "claims": [
+              {
+                "id": "aim-3::hypothesis",
+                "text": "We will examine whether the multi-tissue stratification framework developed in Aims 1–2 can define a priori PD subgroups — primarily GBA-pathway/lysosomal-burden-high vs. -low strata — and, if such strata are identified, whether stratum membership and the magnitude of target engagement by a lysosomal-targeting agent (ambroxol, a β-glucocerebrosidase chaperone) co-vary in any systematic way. Whether stratum membership relates to target engagement, and whether such a relationship could inform enrichment strategies for future mechanism-specific trials, are open questions this aim is designed to investigate; no directional relationship is assumed at the outset.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848",
+                  "grant:R01NS118146",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848",
+                  "grant:R01NS118146",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "literature:40587145; literature:39496848"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "draft": {
+        "fragments": [
+          {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority. The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether an integrated, multi-tissue biomarker framework can define which Parkinson's disease patients are appropriate candidates for mechanism-specific disease-modifying trials. This question is worth investigating because a recent randomized lysosomal-targeting trial (ambroxol) demonstrated biochemical target engagement — increased beta-glucocerebrosidase levels — yet showed no group differences on clinical outcomes, raising the unresolved question of whether unstratified enrollment, rather than the lysosomal target, limits trial success; because GBA mutations represent the single largest genetic risk factor and offer a window for identifying PD at a pre-clinical stage; because the gut and its microbiome are proposed sites for early diagnosis and disease-modifying intervention whose value in patient selection remains untested; and because peripheral monocyte and exosome biology has been described as a candidate route of periphery-to-brain communication that has not been evaluated as a stratification tool. Determining whether these axes can be jointly measured to enrich trial populations would address an unmet need in the PD therapeutic pipeline, where slowing progression through validated biomarkers and targeted therapies is a stated research priority.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:40079755, literature:40298214"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that, in Parkinson's disease patients, a jointly measured panel spanning lysosomal-glucocerebrosidase genotype/activity, gut-microbiome and metabolomic features, and peripheral monocyte/exosome profiles will define subgroups that differ in their candidacy for mechanism-specific disease-modifying interventions; we will test whether such multi-tissue stratification distinguishes patients in whom a lysosomal-targeting agent engages its target without clinical benefit from those flagged by GBA pre-clinical risk markers, gut-axis features, and peripheral immune signatures.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:41981587"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:41981587"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is to treat patient stratification, not target identity, as the primary experimental variable in the PD disease-modification pipeline: rather than testing a single mechanism in an unselected cohort, we will build a unified multi-tissue assay that co-measures lysosomal-glucocerebrosidase status, gut-microbiome/metabolomic features, and peripheral monocyte/exosome profiles in the same participants — a cross-axis stratification instrument that has not previously been assembled, directly addressing the field's call to slow progression via validated biomarkers and targeted therapies.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:39496848",
+                  "literature:28598856, literature:40587145",
+                  "literature:40079755, literature:40298214, literature:40273394"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-1",
+            "serves_dimension": "F2",
+            "text": "Design: prospective single-protocol observational cohort. We will enroll n=240 (160 PD meeting MDS clinical criteria + 80 age/sex-matched controls), powered (alpha=0.05, two-sided, 80%) to detect a moderate standardized between-group difference (Cohen's d≈0.45) in any single continuous domain readout with Benjamini-Hochberg FDR control across features. At one baseline visit we collect: (1) blood for GBA targeted sequencing of common/known pathogenic variants plus a dried-blood-spot/leukocyte GCase activity fluorometric assay (4-MU substrate), run in duplicate with inter-plate QC standards; (2) stool for shotgun metagenomic sequencing and paired plasma for untargeted LC-MS metabolomics, including a caffeine-metabolite targeted panel given prior PD signal; (3) peripheral blood for flow-cytometric/CyTOF monocyte subset immunophenotyping (classical/intermediate/non-classical, phagocytic markers) and plasma exosome isolation (size-exclusion + nanoparticle tracking) with exosomal alpha-synuclein and cargo profiling. The unifying deliverable is a locked SOP for synchronized aliquoting, batch-randomized processing, and a shared sample-ID schema linking all three domains per participant. Analysis: per-domain QC and normalization, then multi-omic integration (e.g., MOFA/sparse multiblock factor analysis) to derive cross-tissue feature clusters; case-control discrimination assessed by penalized regression with nested cross-validation (report AUC with 95% CI, no over-fit claims). Expertise/resources assumed (F3): a CLIA-adjacent genetics lab for GBA/GCase, a metagenomics core, an LC-MS metabolomics core, a CyTOF/flow core, exosome-isolation capability, a movement-disorders clinic for prospective enrollment, and a biostatistician/multi-omics analyst — capacities consistent with the multi-tissue proteomic/genomic and gut-microbiota programs cited.",
+            "claims": [
+              {
+                "id": "aim-1::hypothesis",
+                "text": "We will investigate whether a single, harmonized multi-tissue assay can co-measure GBA genotype/glucocerebrosidase (GCase) enzymatic activity, gut-microbiome/plasma-metabolomic features, and peripheral monocyte/exosome profiles in the same prospectively enrolled PD participants, and we will examine whether these three domains can be jointly captured at analytic quality sufficient to define candidate cross-tissue feature clusters that differentiate PD cases from controls. This is an exploratory feasibility/biomarker-establishment objective; no causal or progression-modifying claim is made.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40273394",
+                  "grant:U01DK140923",
+                  "grant:R01DK135440",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:R01NS118146"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40273394",
+                  "grant:U01DK140923",
+                  "grant:R01DK135440",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:R01NS118146",
+                  "literature:R01NS118146 is a grant—replaced below"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-2",
+            "serves_dimension": "F2",
+            "text": "Cross-sectional discovery + replication design. We will enroll a discovery cohort (n≈200 PD, n≈80 controls; powered to detect ≥2 subgroups each ≥15% prevalence with silhouette stability) and an independent replication cohort (n≈150 PD). Per participant we will collect: (i) fasting plasma untargeted LC-MS/MS metabolomics with targeted quantification of caffeine and metabolites (paraxanthine, theobromine, theophylline); (ii) stool 16S rRNA and shotgun metagenomic sequencing; (iii) lysosomal/GBA-axis readouts — GBA genotyping plus blood β-glucocerebrosidase enzyme activity and glucosylsphingosine; (iv) peripheral-immune profiling — flow-cytometry monocyte subset composition and plasma exosome-associated markers. Analysis: features are batch-corrected, scaled, and integrated via similarity network fusion / multi-omic factor analysis followed by consensus clustering; cluster number is selected by consensus and silhouette criteria, then frozen and applied to the replication cohort. Reproducibility is the primary endpoint, quantified by adjusted Rand index between discovery and replication assignments and by bootstrap cluster-stability. Subgroups will be described against clinical metadata (MDS-UPDRS) descriptively only, with no causal/association inference. Multiple-comparison control by Benjamini-Hochberg (FDR<0.05). Expertise/resources assumed (F3): metabolomics core with validated caffeine-metabolite assay, microbiome sequencing and bioinformatics pipeline, a GBA genotyping/enzymology lab, flow-cytometry/exosome immunology capacity, a deeply phenotyped PD biobank with two independent cohorts, and a statistician experienced in multi-omic integration.",
+            "claims": [
+              {
+                "id": "aim-2::hypothesis",
+                "text": "We will investigate whether integrating cross-axis biomarkers — gut-metabolomic features (e.g., caffeine and its downstream metabolites), 16S/shotgun microbiome composition, lysosomal/glucocerebrosidase-pathway readouts, and peripheral-immune (monocyte phenotype, exosomal markers) measures — can partition a PD cohort into reproducible, internally validated patient subgroups that are distinguishable from controls and from one another. Whether any such subgroups exist, whether they are stable across analytical methods, and whether they bear any relationship to clinical features are entirely open questions to be determined by this work; no relationship between any single axis and clinical severity is assumed or asserted at the outset.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40273394",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40273394",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:28598856"
+                ]
+              }
+            ]
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-3",
+            "serves_dimension": "F2",
+            "text": "Design: prospective, single-center pharmacodynamic (engagement-focused) study, not a powered efficacy trial. Participants (n≈90, target ~30 per stratum) drawn from the Aim 1–2 cohort are classified by the multi-tissue framework into lysosomal/GBA-pathway strata (high vs. intermediate vs. low) using the genotype, peripheral-tissue, and proteomic features developed earlier; investigators delivering drug and running assays are blinded to stratum. All participants receive high-dose oral ambroxol over a 24-week open-label engagement window. Primary readout: change in β-glucocerebrosidase enzymatic activity and protein level in accessible compartments (peripheral blood mononuclear cells/monocytes and CSF), measured at baseline, 12, and 24 weeks by validated fluorometric activity assay and immunoassay, mirroring the engagement endpoint used in. Secondary pharmacodynamic readouts: CSF/plasma glucosylceramide and glucosylsphingosine substrate levels by LC-MS/MS and exploratory α-synuclein species. Analysis: linear mixed-effects models of biomarker trajectory with stratum × time interaction as the prespecified test of differential engagement; effect estimates with 95% CIs reported; correction for multiple compartments via false-discovery rate. Feasibility leverages established multi-tissue proteomic/genomic infrastructure, lysosomal-function expertise, and Gaucher/GBA clinical and assay expertise. F3 — this approach assumes access to: a deeply phenotyped multi-tissue PD cohort with banked CSF/PBMCs and longitudinal follow-up; a validated, reproducible β-glucocerebrosidase activity/immunoassay pipeline and LC-MS/MS sphingolipid platform; clinical-trial regulatory, pharmacy, and blinding infrastructure for an investigational disease-modifying agent; and statistical/biostatistics support for mixed-effects modeling of biomarker trajectories.",
+            "claims": [
+              {
+                "id": "aim-3::hypothesis",
+                "text": "We will investigate whether the multi-tissue stratification framework developed in Aims 1–2 can define a priori PD subgroups — primarily GBA-pathway/lysosomal-burden-high vs. -low strata — and, if such strata are identified, whether stratum membership and the magnitude of target engagement by a lysosomal-targeting agent (ambroxol, a β-glucocerebrosidase chaperone) co-vary in any systematic way. Whether strata of this kind can be identified, whether stratum membership relates to target engagement in any direction or magnitude, and whether any such relationship could inform enrichment strategies for future mechanism-specific trials are all open questions this aim is designed to investigate; no directional relationship between stratum membership and target engagement is assumed at the outset.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848",
+                  "grant:R01NS118146",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848",
+                  "grant:R01NS118146",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "literature:40587145; literature:39496848"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "reviser_hedges": [
+    {
+      "round": 0,
+      "hedges": [
+        {
+          "claim_id": "aim-2::hypothesis",
+          "before": "We will investigate whether integrating cross-axis biomarkers — gut-metabolomic features (e.g., caffeine and its downstream metabolites), 16S/shotgun microbiome composition, lysosomal/glucocerebrosidase-pathway readouts, and peripheral-immune (monocyte phenotype, exosomal markers) measures — partitions a PD cohort into reproducible, internally validated patient subgroups distinguishable from controls and from one another; we make no claim that any single axis causes or is associated with clinical severity.",
+          "after": "We will examine whether integrating cross-axis biomarkers — gut-metabolomic features (e.g., caffeine and its downstream metabolites), 16S/shotgun microbiome composition, lysosomal/glucocerebrosidase-pathway readouts, and peripheral-immune (monocyte phenotype, exosomal markers) measures — can partition a PD cohort into reproducible, internally validated patient subgroups that are distinguishable from controls and from one another; whether any such subgroups exist, are stable across analytical methods, and bear any relationship to clinical features remains an open question to be determined by this work. We make no claim that any single axis causes or is associated with clinical severity."
+        },
+        {
+          "claim_id": "aim-3::hypothesis",
+          "before": "We will investigate whether the multi-tissue stratification framework (Aims 1–2) defines a priori PD subgroups — primarily GBA-pathway/lysosomal-burden-high vs. -low strata — in which a lysosomal-targeting disease-modifying agent (ambroxol, a β-glucocerebrosidase chaperone) achieves measurable target engagement, to determine whether stratum membership predicts the magnitude of target engagement and could thereby inform enrichment for future mechanism-specific trials.",
+          "after": "We will examine whether the multi-tissue stratification framework developed in Aims 1–2 can define a priori PD subgroups — primarily GBA-pathway/lysosomal-burden-high vs. -low strata — and, if such strata are identified, whether stratum membership and the magnitude of target engagement by a lysosomal-targeting agent (ambroxol, a β-glucocerebrosidase chaperone) co-vary in any systematic way. Whether stratum membership relates to target engagement, and whether such a relationship could inform enrichment strategies for future mechanism-specific trials, are open questions this aim is designed to investigate; no directional relationship is assumed at the outset."
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "hedges": [
+        {
+          "claim_id": "aim-2::hypothesis",
+          "before": "We will examine whether integrating cross-axis biomarkers — gut-metabolomic features (e.g., caffeine and its downstream metabolites), 16S/shotgun microbiome composition, lysosomal/glucocerebrosidase-pathway readouts, and peripheral-immune (monocyte phenotype, exosomal markers) measures — can partition a PD cohort into reproducible, internally validated patient subgroups that are distinguishable from controls and from one another; whether any such subgroups exist, are stable across analytical methods, and bear any relationship to clinical features remains an open question to be determined by this work. We make no claim that any single axis causes or is associated with clinical severity.",
+          "after": "We will investigate whether integrating cross-axis biomarkers — gut-metabolomic features (e.g., caffeine and its downstream metabolites), 16S/shotgun microbiome composition, lysosomal/glucocerebrosidase-pathway readouts, and peripheral-immune (monocyte phenotype, exosomal markers) measures — can partition a PD cohort into reproducible, internally validated patient subgroups that are distinguishable from controls and from one another. Whether any such subgroups exist, whether they are stable across analytical methods, and whether they bear any relationship to clinical features are entirely open questions to be determined by this work; no relationship between any single axis and clinical severity is assumed or asserted at the outset."
+        },
+        {
+          "claim_id": "aim-3::hypothesis",
+          "before": "We will examine whether the multi-tissue stratification framework developed in Aims 1–2 can define a priori PD subgroups — primarily GBA-pathway/lysosomal-burden-high vs. -low strata — and, if such strata are identified, whether stratum membership and the magnitude of target engagement by a lysosomal-targeting agent (ambroxol, a β-glucocerebrosidase chaperone) co-vary in any systematic way. Whether stratum membership relates to target engagement, and whether such a relationship could inform enrichment strategies for future mechanism-specific trials, are open questions this aim is designed to investigate; no directional relationship is assumed at the outset.",
+          "after": "We will investigate whether the multi-tissue stratification framework developed in Aims 1–2 can define a priori PD subgroups — primarily GBA-pathway/lysosomal-burden-high vs. -low strata — and, if such strata are identified, whether stratum membership and the magnitude of target engagement by a lysosomal-targeting agent (ambroxol, a β-glucocerebrosidase chaperone) co-vary in any systematic way. Whether strata of this kind can be identified, whether stratum membership relates to target engagement in any direction or magnitude, and whether any such relationship could inform enrichment strategies for future mechanism-specific trials are all open questions this aim is designed to investigate; no directional relationship between stratum membership and target engagement is assumed at the outset."
+        }
+      ]
+    }
+  ],
+  "critique": [
+    {
+      "round": 0,
+      "decision": "revise",
+      "dimension_scores": {
+        "F1": {
+          "score": 1,
+          "justification": "see above [code penalties: -6 fabricated-citation]",
+          "spans": [
+            "drop-orphan:literature:28598856, literature:40587145",
+            "drop-orphan:literature:40079755, literature:40298214",
+            "drop-orphan:literature:40079755, literature:40298214, literature:40273394"
+          ]
+        },
+        "F2": {
+          "score": 1,
+          "justification": "Approach is methodologically specific across all three aims (designs, sample sizes, power assumptions, assays, integration methods MOFA/SNF/consensus clustering, mixed-effects models, FDR control) — satisfying F2-1, F2-2, and F2-4 well. However F2-3 (pitfalls + alternative-strategies with >=1 failure mode and >=1 contingency) is NOT met for any aim: none of aim-1/2/3 contains a pitfalls-and-alternatives paragraph. This is a structural gap on a gated requirement across all three aims, which holds the factor below its bar. Calibration is otherwise good (explicit no-causal/no-overfit disclaimers). [code penalties: -6 overclaim, -6 fabricated-citation]",
+          "spans": [
+            "drop-orphan:literature:40587145; literature:39496848",
+            "drop-orphan:literature:R01NS118146 is a grant—replaced below",
+            "hedge:aim-2::hypothesis:L1",
+            "hedge:aim-3::hypothesis:L1"
+          ]
+        },
+        "F3": {
+          "score": 5,
+          "justification": "Each aim surfaces specific assumed expertise and resources (CLIA-adjacent genetics/GCase lab, metagenomics core, LC-MS metabolomics, CyTOF/flow, exosome isolation, MDS clinic, biostatistician; replication biobank; CSF/PBMC banking, trial/pharmacy/blinding infrastructure), satisfying F3-1 for all aims. F3-2 is respected — the draft frames resources as 'assumed' and makes no self-sufficiency assertion. Not scored or gated per policy; capped by the citation-grounding defects that also bleed into aim-1/aim-3 resource-justification citations.",
+          "spans": []
+        }
+      },
+      "segment_scores": {
+        "aim-1": {
+          "dimension": "F2",
+          "score": 2,
+          "justification": "aim aim-1: 0 overclaim(s), 1 fabricated citation(s)"
+        },
+        "aim-2": {
+          "dimension": "F2",
+          "score": 2,
+          "justification": "aim aim-2: 1 overclaim(s), 0 fabricated citation(s)"
+        },
+        "aim-3": {
+          "dimension": "F2",
+          "score": 1,
+          "justification": "aim aim-3: 1 overclaim(s), 1 fabricated citation(s)"
+        }
+      },
+      "flagged_obligations": [
+        "X-1",
+        "X-2",
+        "F2-3/aim-1",
+        "F2-3/aim-2",
+        "F2-3/aim-3"
+      ]
+    },
+    {
+      "round": 1,
+      "decision": "revise",
+      "dimension_scores": {
+        "F1": {
+          "score": 7,
+          "justification": "F1-1 names a specific barrier (unstratified enrollment in PD disease-modifying trials, exemplified by the ambroxol target-engagement-without-clinical-benefit result) and states why it matters, with multiple corpus citations. F1-2 states an explicit single central hypothesis that follows from the named gap. F1-3 names a concrete departure: treating patient stratification rather than target identity as the primary variable via a unified cross-axis multi-tissue assay. Claims are grade=minimal/unscored, permitted<=L1, and the prose stays appropriately hedged ('proposed', 'has not been evaluated', 'unresolved question') — calibrated, no overclaim, all citations in-corpus.",
+          "spans": []
+        },
+        "F2": {
+          "score": 1,
+          "justification": "Approach is strong on design, methods, sample size, power, and statistics for all three aims (F2-1, F2-2 well met; F2-4 expected outcomes/effect sizes/thresholds present and tied to hypotheses). However, NONE of the three aims includes a pitfalls and alternative-strategies paragraph identifying a failure mode plus a contingency — F2-3/aim-1, F2-3/aim-2, F2-3/aim-3 are all unmet. This is a structural gap across every aim that gates the factor. Hypotheses are well-calibrated to exploratory/feasibility framing with appropriate no-causal-claim disclaimers. [code penalties: -6 overclaim]",
+          "spans": [
+            "hedge:aim-2::hypothesis:L1",
+            "hedge:aim-3::hypothesis:L1"
+          ]
+        },
+        "F3": {
+          "score": 5,
+          "justification": "duplicate guard",
+          "spans": []
+        }
+      },
+      "segment_scores": {
+        "aim-1": {
+          "dimension": "F2",
+          "score": 5,
+          "justification": "aim aim-1: grounded and calibrated"
+        },
+        "aim-2": {
+          "dimension": "F2",
+          "score": 2,
+          "justification": "aim aim-2: 1 overclaim(s), 0 fabricated citation(s)"
+        },
+        "aim-3": {
+          "dimension": "F2",
+          "score": 2,
+          "justification": "aim aim-3: 1 overclaim(s), 0 fabricated citation(s)"
+        }
+      },
+      "flagged_obligations": [
+        "X-2",
+        "F2-3/aim-1",
+        "F2-3/aim-2",
+        "F2-3/aim-3"
+      ]
+    },
+    {
+      "round": 2,
+      "decision": "revise",
+      "dimension_scores": {
+        "F1": {
+          "score": 7,
+          "justification": "F1: scored",
+          "spans": []
+        },
+        "F2": {
+          "score": 4,
+          "justification": "F2: scored [code penalties: -3 overclaim]",
+          "spans": [
+            "hedge:aim-3::hypothesis:L1"
+          ]
+        },
+        "F3": {
+          "score": 6,
+          "justification": "",
+          "spans": []
+        }
+      },
+      "segment_scores": {
+        "aim-1": {
+          "dimension": "F2",
+          "score": 5,
+          "justification": "aim aim-1: grounded and calibrated"
+        },
+        "aim-2": {
+          "dimension": "F2",
+          "score": 5,
+          "justification": "aim aim-2: grounded and calibrated"
+        },
+        "aim-3": {
+          "dimension": "F2",
+          "score": 2,
+          "justification": "aim aim-3: 1 overclaim(s), 0 fabricated citation(s)"
+        }
+      },
+      "flagged_obligations": [
+        "X-2",
+        "F2-3/aim-1",
+        "F2-3/aim-2",
+        "F2-3/aim-3"
+      ]
+    }
+  ]
+}
