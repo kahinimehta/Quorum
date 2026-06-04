@@ -1,6 +1,6 @@
-# Publishes built Jekyll site to https://neurodiscover.github.io (org/user Pages root).
-# Requires GitHub org/user "neurodiscover" and repo "neurodiscover.github.io".
-# Add repository secret NEURODISCOVER_PAGES_TOKEN (PAT with contents:write on that repo).
+# Publishes built Jekyll site to https://neurodiscover.github.io (org Pages root).
+# Requires repo neurodiscover/neurodiscover.github.io (public) and secret
+# NEURODISCOVER_PAGES_TOKEN (classic PAT scope: repo — or fine-grained Contents: read/write).
 
 name: Deploy docs to neurodiscover.github.io
 
@@ -15,11 +15,12 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: docs
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Quorum
+        uses: actions/checkout@v4
+        with:
+          # Required for cross-repo deploy — otherwise checkout's GITHUB_TOKEN wins over PAT.
+          persist-credentials: false
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -29,9 +30,13 @@ jobs:
           working-directory: docs
 
       - name: Build with Jekyll
+        working-directory: docs
         run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
+
+      - name: Verify build output
+        run: test -f docs/_site/index.html
 
       - name: Deploy to neurodiscover.github.io
         uses: JamesIves/github-pages-deploy-action@v4

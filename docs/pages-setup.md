@@ -26,8 +26,25 @@ The application source code stays in [kahinimehta/Quorum](https://github.com/kah
 1. Create GitHub org (or user) **`neurodiscover`**
 2. Create repository **`neurodiscover.github.io`** (public)
 3. In **kahinimehta/Quorum** → Settings → Secrets → Actions, add:
-   - `NEURODISCOVER_PAGES_TOKEN` — PAT with `contents:write` on `neurodiscover/neurodiscover.github.io`
+   - `NEURODISCOVER_PAGES_TOKEN` — see token options below
 4. Enable GitHub Pages on the org repo: **Settings → Pages → Source: Deploy from branch → `main` / root**
+
+### PAT options (if deploy fails with 403)
+
+**Option A — Classic token (most reliable for cross-repo push)**
+
+1. GitHub → Settings → Developer settings → **Tokens (classic)** → Generate
+2. Scope: **`repo`** (full control of private repositories)
+3. Save as secret `NEURODISCOVER_PAGES_TOKEN` in Quorum
+
+**Option B — Fine-grained token**
+
+1. Resource owner: **`neurodiscover`**
+2. Repository: **`neurodiscover.github.io`** only
+3. **Contents:** Read and write
+4. **Metadata:** Read-only (usually auto-included)
+
+The deploy workflow uses `persist-credentials: false` on checkout so the PAT is not overridden by the default `GITHUB_TOKEN`.
 
 ---
 
