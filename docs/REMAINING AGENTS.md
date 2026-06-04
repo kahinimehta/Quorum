@@ -1,44 +1,30 @@
-# Remaining Agents
+# Downstream agents (integrated)
 
-This branch adds the downstream discovery agents for NeuroDiscover AI.
+Agents 2–6 run in-process via `neurodiscover/orchestrator.py` after literature synthesis (Agent 1).
 
-## Agents added
-
-1. Patient Subgroup Agent  
-2. Treatment Connection Agent  
-3. Evidence Scoring / Skeptic Agent  
-4. Commercial Discovery Agent  
-
-## Purpose
-
-These agents work downstream of the Literature Synthesis Agent. They consume evidence rows from the canonical `evidence` table and convert those rows into ranked subgroup-treatment opportunities.
+| Agent | Module |
+|-------|--------|
+| Patient Subgroup | `agents/patient_subgroup_agent.py` |
+| Treatment Connection | `agents/treatment_connection_agent.py` |
+| Evidence Scoring | `agents/evidence_scoring_agent.py` |
+| Commercial Discovery | `agents/commercial_discovery_agent.py` |
+| Conclusion Update | scores → `recommendations` in orchestrator |
 
 ## Input
 
-Evidence rows may include:
-
-- subgroup
-- mechanism
-- treatment
-- source_id
-- source_type
-- title
-- summary
+Evidence rows from the `evidence` table (subgroup, mechanism, treatment, source_id, title, etc.).
 
 ## Output
 
-The downstream agents produce:
-
-- patient subgroups
-- subgroup-treatment connections
-- evidence strength scores
-- commercial potential scores
-- final confidence scores
-- Prioritize / Monitor / Reject recommendations
+- `subgroups`, `treatment_connections`, `connection_evidence`
+- `evidence_strength`, `commercial_potential` on connections
+- `recommendations` with Prioritize / Monitor / Reject tiers
+- `agent_outputs` trace rows per run
 
 ## Scoring
 
-The system uses the team formula:
+```
+confidence = evidence_strength × 0.55 + commercial_potential × 0.45
+```
 
-```text
-confidence = evidence_strength * 0.55 + commercial_potential * 0.45
+See [`AGENT_IO.md`](AGENT_IO.md) and [`DASHBOARD.md`](DASHBOARD.md).

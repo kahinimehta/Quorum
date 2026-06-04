@@ -24,6 +24,8 @@ but all share the database below.
 | [`queries.sql`](queries.sql) | Person 2 — copy-paste SELECTs |
 | [`docs/SUPABASE.md`](docs/SUPABASE.md) | Team shared live DB (free tier) |
 | [`docs/PERSON2_BACKEND.md`](docs/PERSON2_BACKEND.md) | Person 2 Supabase connection |
+| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard + API UI |
+| [`docs/PERSON2_API_ENDPOINTS.md`](docs/PERSON2_API_ENDPOINTS.md) | FastAPI route list |
 | [`docs/VALIDATION.md`](docs/VALIDATION.md) | Extraction QA after pull |
 | [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard architecture + quick verify |
 | [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Run UI in &lt; 5 min (no Supabase keys OK) |
@@ -60,7 +62,13 @@ make dashboard
 # → http://127.0.0.1:8080  (Ctrl+C to stop)
 ```
 
-Same as `python3 cli.py dashboard` or `./dashboard`. Leave `SUPABASE_DATABASE_URL` unset for local demo. Details: [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md).
+Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip). Leave `SUPABASE_DATABASE_URL` unset for local demo.
+
+| Doc | Purpose |
+|-----|---------|
+| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Architecture + UI map |
+| [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Step-by-step |
+| [`docs/BACKEND_QUERIES.md`](docs/BACKEND_QUERIES.md) | API JSON shapes |
 
 ## Architecture: 6 agents, database is the blackboard
 The pipeline runs in order. Each agent READS what the previous wrote and WRITES

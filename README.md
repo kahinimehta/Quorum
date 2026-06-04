@@ -21,6 +21,7 @@ cp .env.example .env
 python3 cli.py build
 python3 cli.py validate
 python3 cli.py demo    # safe offline demo
+make dashboard       # local demo + API + UI (http://127.0.0.1:8080)
 ```
 
 ## Repo layout
@@ -44,7 +45,13 @@ Quorum/
       export_team_keys.py
     models/
       schemas.py             # Person 2 API DTOs (not DB schema)
+    api_server.py            # FastAPI dashboard backend (:5000)
+    orchestrator.py          # Agents 1→6 pipeline for POST /api/run-discovery
+    frontend/
+      index.html             # Dashboard UI
 ```
+
+Dashboard docs: [`docs/DASHBOARD.md`](docs/DASHBOARD.md).
 
 ## Team
 

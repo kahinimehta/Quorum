@@ -4,13 +4,15 @@
 **Full SQL:** [`queries.sql`](../queries.sql)  
 **Schema:** [`DATABASE.md`](DATABASE.md)
 
-## Connection (Flask example)
+## Connection (Python example)
 
 ```python
 import sqlite3
 conn = sqlite3.connect("neurodiscover.db")
 conn.row_factory = sqlite3.Row
 ```
+
+Implemented server: `neurodiscover/api_server.py` (FastAPI). See [`PERSON2_API_ENDPOINTS.md`](PERSON2_API_ENDPOINTS.md).
 
 No MongoDB required. If you mirror to Atlas, use field names from the MongoDB mapping table in `DATABASE.md`. Collection: **`evidence`**, not `papers`.
 
@@ -151,9 +153,20 @@ Trigger the agent pipeline (`orchestrator.py`).
 {
   "run_id": "a1b2c3d4",
   "recommendations": [{ "subgroup": "...", "treatment": "...", "confidence": 75.7, "tier": "Monitor", "rationale": "..." }],
-  "steps": [{ "agentName": "Literature Synthesis Agent", "stepOrder": 1, "summary": "...", "createdAt": "..." }]
+  "agent_outputs": [{ "agentName": "Literature Synthesis Agent", "stepOrder": 1, "summary": "...", "createdAt": "..." }],
+  "steps": [],
+  "synthetic_cohort": [{ "patient_id": "Patient A", "subgroup": "...", "confidence": 82.5, "is_synthetic": true }],
+  "runStats": {
+    "mode": "demo",
+    "maxPapersRequested": 5,
+    "processed": { "literature": 5, "trial": 0, "grant": 0, "total": 5 },
+    "databaseTotals": { "literature": 228, "trial": 39, "grant": 40, "total": 307 },
+    "added": { "literature": 0, "trial": 0, "grant": 0, "total": 0 }
+  }
 }
 ```
+
+`steps` is an alias of `agent_outputs`.
 
 ---
 
@@ -164,8 +177,23 @@ Used when the frontend does not set `SUPABASE_URL` / `SUPABASE_ANON_KEY`.
 ### GET /api/stats
 
 ```json
-{ "literature": 228, "trial": 39, "grant": 40, "subgroups": 5 }
+{
+  "literature": 228,
+  "trial": 39,
+  "grant": 40,
+  "subgroups": 5,
+  "connections": 5,
+  "totalEvidence": 307,
+  "lastScanAt": "2026-06-02T14:32:00",
+  "lastRunId": "a1b2c3d4",
+  "database": "sqlite",
+  "supabaseConfigured": false
+}
 ```
+
+### GET /api/run-stats?run_id=a1b2c3d4
+
+Same `runStats` object shape as in `POST /api/run-discovery` (for revisiting a past run in the UI).
 
 ### GET /api/evidence?offset=0&limit=15
 
@@ -176,7 +204,18 @@ Used when the frontend does not set `SUPABASE_URL` / `SUPABASE_ANON_KEY`.
 ### GET /api/runs?limit=5
 
 ```json
-{ "runs": [{ "runId": "abc123", "steps": 6, "startedAt": "..." }] }
+{
+  "runs": [{
+    "runId": "abc123",
+    "steps": 6,
+    "startedAt": "...",
+    "mode": "demo",
+    "recommendations": 5,
+    "syntheticProfiles": 5,
+    "status": "Complete",
+    "evidenceNote": "5 papers (demo)"
+  }]
+}
 ```
 
 ### GET /api/agents?run_id=abc123

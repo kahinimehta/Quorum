@@ -30,7 +30,7 @@ def _popen(cmd: list[str], **kwargs) -> subprocess.Popen:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Start NeuroDiscover dashboard (API + UI)")
-    parser.add_argument("--port-api", type=int, default=5000, help="Flask/FastAPI port")
+    parser.add_argument("--port-api", type=int, default=5000, help="FastAPI port")
     parser.add_argument("--port-ui", type=int, default=8080, help="Static frontend port")
     parser.add_argument("--skip-install", action="store_true", help="Skip pip install -r requirements.txt")
     parser.add_argument("--skip-build", action="store_true", help="Skip local sqlite build")

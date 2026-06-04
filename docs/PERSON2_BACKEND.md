@@ -1,6 +1,6 @@
 # Person 2 — Backend API on Supabase
 
-Quick handoff for Kahii / Alia building the Express/Flask API.
+Quick handoff for the dashboard API (`neurodiscover/api_server.py`, FastAPI).
 
 ## Connection
 
@@ -45,7 +45,7 @@ Example discover payload shape:
 1. **Local / no keys:** omit `SUPABASE_DATABASE_URL`, run `python3 cli.py build`, then `python3 api_server.py`.
 2. **Team Supabase:** get `SUPABASE_DATABASE_URL` from Person 3 — **do not** run `build` on shared DB.
 3. Confirm tables: `python3 cli.py validate`.
-4. Routes implemented in `neurodiscover/api_server.py` — see [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md).
+4. Routes in `neurodiscover/api_server.py` — see [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md) and [`PERSON2_API_ENDPOINTS.md`](PERSON2_API_ENDPOINTS.md).
 
 ## Quick verify
 
