@@ -3,6 +3,9 @@ name: Deploy documentation to GitHub Pages
 on:
   push:
     branches: [main, kahini/dashboard]
+    paths:
+      - "docs/**"
+      - ".github/workflows/deploy-docs.yml"
   workflow_dispatch:
 
 permissions:

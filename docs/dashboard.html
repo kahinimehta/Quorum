@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard — NeuroDiscover AI</title>
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body class="site-body" data-page="dashboard">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+  <div class="site-layout">
+    <aside class="site-sidebar" id="siteSidebar" aria-label="Documentation menu"></aside>
+    <div class="site-panel">
+      <header class="page-hero">
+        <h1>Dashboard</h1>
+        <p class="lead">Interactive UI for pipeline runs, KPIs, ranked treatments, synthetic cohort, and agent trace.</p>
+      </header>
+      <main class="page-main" id="main-content">
+        <div class="callout">
+          <strong>Not hosted on GitHub Pages.</strong> The dashboard is a local app (HTML + Python API). Clone the repo and run it on your machine.
+        </div>
+        <div class="card">
+          <h2>One-command start</h2>
+          <pre><code>cd neurodiscover
+pip install -r requirements.txt
+cp .env.example .env   # optional: SUPABASE_DATABASE_URL
+make dashboard</code></pre>
+          <ul>
+            <li>Dashboard UI: <code>http://127.0.0.1:8080</code></li>
+            <li>API: <code>http://127.0.0.1:5000</code></li>
+            <li>Source: <code>neurodiscover/frontend/index.html</code></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>What you can do</h2>
+          <ul>
+            <li><strong>Step 1</strong> — Run demo, incremental scan, or full pipeline with <code>max_papers</code></li>
+            <li><strong>Step 2</strong> — View ranked recommendations, hypotheses, evidence table, synthetic patients</li>
+            <li><strong>Recent runs</strong> — Click a run to see Complete vs Partial with agent counts (e.g. <code>3/6</code>)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>More documentation</h2>
+          <ul>
+            <li><a href="DASHBOARD.md">DASHBOARD.md</a></li>
+            <li><a href="../neurodiscover/frontend/QUICKSTART.md">QUICKSTART.md</a> (in repo)</li>
+            <li><a href="workflow.html">Workflow</a> · <a href="api.html">API</a></li>
+          </ul>
+        </div>
+      </main>
+      <footer class="site-footer">Safe demo: pre-run <code>pull</code> on stage; use <code>demo</code> mode live.</footer>
+    </div>
+  </div>
+  <script src="assets/site.js"></script>
+</body>
+</html>

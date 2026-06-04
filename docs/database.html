@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Database — NeuroDiscover AI</title>
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body class="site-body" data-page="database">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+  <div class="site-layout">
+    <aside class="site-sidebar" id="siteSidebar" aria-label="Documentation menu"></aside>
+    <div class="site-panel">
+      <header class="page-hero">
+        <h1>Database</h1>
+        <p class="lead">SQLite locally or Supabase Postgres for the team — table <code>evidence</code>, not <code>papers</code>.</p>
+      </header>
+      <main class="page-main" id="main-content">
+        <div class="card">
+          <h2>Core tables</h2>
+          <table class="data-table">
+            <thead><tr><th>Table</th><th>Role</th></tr></thead>
+            <tbody>
+              <tr><td><code>evidence</code></td><td>One row per source (literature, trial, grant)</td></tr>
+              <tr><td><code>subgroups</code></td><td>Patient subgroups discovered from evidence</td></tr>
+              <tr><td><code>treatment_connections</code></td><td>Subgroup → mechanism → treatment + scores</td></tr>
+              <tr><td><code>recommendations</code></td><td>Final ranked outputs per run</td></tr>
+              <tr><td><code>agent_outputs</code></td><td>Append-only agent trace (<code>run_id</code>)</td></tr>
+              <tr><td><code>subgroup_evidence</code>, <code>connection_evidence</code></td><td>Many-to-many links</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h2>Evidence row highlights</h2>
+          <ul>
+            <li><code>source_type</code> — <code>literature</code> | <code>trial</code> | <code>grant</code></li>
+            <li><code>source_id</code> — PMID, NCT id, or grant id (never invented)</li>
+            <li><code>access_type</code> — <code>published_oa</code>, <code>published_paywalled</code>, <code>preprint</code></li>
+            <li>Unique on <code>(source_type, source_id)</code> for dedup on re-pull</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Schema sources</h2>
+          <ul>
+            <li><a href="DATABASE.md">DATABASE.md</a> — full contract</li>
+            <li><a href="AGENT_IO.md">AGENT_IO.md</a> — per-agent SELECT/INSERT targets</li>
+            <li><a href="SUPABASE.md">SUPABASE.md</a> — team shared live DB</li>
+            <li><code>neurodiscover/schema.sql</code> and <code>schema.pg.sql</code> in the repo</li>
+          </ul>
+          <pre><code>cd neurodiscover
+python3 cli.py validate</code></pre>
+        </div>
+      </main>
+      <footer class="site-footer">Do not run <code>cli.py build</code> on team Supabase.</footer>
+    </div>
+  </div>
+  <script src="assets/site.js"></script>
+</body>
+</html>

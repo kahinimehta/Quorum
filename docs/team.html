@@ -6,53 +6,53 @@
   <title>Team — NeuroDiscover AI</title>
   <link rel="stylesheet" href="assets/site.css" />
 </head>
-<body>
-  <header class="site-header">
-    <h1>Team</h1>
-    <p>Quorum — NeuroDiscover AI</p>
-  </header>
-  <nav class="site-nav">
-    <a href="index.html">Overview</a>
-    <a href="workflow.html">Workflow</a>
-    <a href="decisions.html">Decisions</a>
-    <a href="team.html" class="active">Team</a>
-    <a href="guides.html">Guides</a>
-    <a href="../neurodiscover/frontend/index.html">Dashboard</a>
-  </nav>
-  <main>
-    <div class="card team-grid">
-      <div class="team-member">
-        <span class="role-pill">Data · Dashboard · Pipeline</span>
-        <h3>Kahini Mehta</h3>
-        <p>3rd-year PhD, Columbia Neurobiology &amp; Behavior. Works with human single-neuron data, MRI, and computational modeling (Bayesian and ML). Based in NYC; passionate about open science and reproducible methods.</p>
-        <p><strong>On this project:</strong> database contract, orchestrator, FastAPI backend, dashboard UI, synthetic cohort layer, and integration testing.</p>
-      </div>
-      <div class="team-member">
-        <span class="role-pill">Literature · Data infrastructure</span>
-        <h3>Ayelet Peres</h3>
-        <p>Postdoc, Yale School of Medicine — computational immunology, immunogenomics, and AI for large biological datasets. Interested in natural-language interfaces for databases and tools that accelerate insight from data.</p>
-        <p><strong>On this project:</strong> Literature Synthesis Agent (Agent 1), PubMed/trials ingestion, schema, Supabase setup, and validation patterns.</p>
-      </div>
-      <div class="team-member">
-        <span class="role-pill">Agents · ML</span>
-        <h3>Amy He</h3>
-        <p>Research scientist at Topos Bio (SF) — foundation models for drug discovery. Background in AI/ML and biochemistry. Focus on agent infrastructure, observability, and semantic layers in life sciences.</p>
-        <p><strong>On this project:</strong> Downstream discovery agents (subgroups, connections, scoring, commercial signals) and agent design patterns.</p>
-      </div>
-      <div class="team-member">
-        <span class="role-pill">Agentic workflows</span>
-        <h3>William Yakah</h3>
-        <p>5th-year PhD, Nutritional &amp; Metabolic Biology (Columbia). Studies cholesterol transport in pregnancy and fetal neurodevelopment. Co-founder of <strong>LabShare</strong> (institutional research resource sharing). NYC-based; interested in research agents that supercharge scientists' computer work.</p>
-        <p><strong>On this project:</strong> Workflow ideas, demo narrative, and cross-agent usability.</p>
-      </div>
-      <div class="team-member">
-        <span class="role-pill">Strategy · Life sciences</span>
-        <h3>Alia Merchant</h3>
-        <p>Healthcare &amp; life sciences strategy (MBA, MSIT). Experience with bioventure programs, Nucleate, and hackathon leadership (e.g. HSIL Hackathon 2026, Enventure).</p>
-        <p><strong>On this project:</strong> Product framing, stakeholder story, backend/API alignment with dashboard consumers, and demo readiness.</p>
-      </div>
+<body class="site-body" data-page="team">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+  <div class="site-layout">
+    <aside class="site-sidebar" id="siteSidebar" aria-label="Documentation menu"></aside>
+    <div class="site-panel">
+      <header class="page-hero">
+        <h1>Team</h1>
+        <p class="lead">Quorum — NeuroDiscover AI at the NextGen BioAgents Hackathon.</p>
+      </header>
+      <main class="page-main" id="main-content">
+        <div class="card team-grid">
+          <div class="team-member">
+            <span class="role-pill">Data · Dashboard · Pipeline</span>
+            <h3>Kahini Mehta</h3>
+            <p>PhD, Columbia Neurobiology &amp; Behavior. Human single-neuron data, MRI, and computational modeling (Bayesian and ML). NYC-based; open science and reproducible methods.</p>
+            <p><strong>On this project:</strong> database contract, orchestrator, FastAPI backend, dashboard UI, synthetic cohort, integration testing.</p>
+          </div>
+          <div class="team-member">
+            <span class="role-pill">Literature · Data infrastructure</span>
+            <h3>Ayelet Peres</h3>
+            <p>Postdoc, Yale — computational immunology and AI for large biological datasets. NL interfaces for databases.</p>
+            <p><strong>On this project:</strong> Literature Synthesis Agent (Agent 1), PubMed/trials ingestion, schema, Supabase setup, validation.</p>
+          </div>
+          <div class="team-member">
+            <span class="role-pill">Agents · ML</span>
+            <h3>Amy He</h3>
+            <p>Research scientist, Topos Bio — foundation models for drug discovery. Agent infrastructure and semantic layers in life sciences.</p>
+            <p><strong>On this project:</strong> Downstream discovery agents (subgroups, connections, scoring, commercial signals).</p>
+          </div>
+          <div class="team-member">
+            <span class="role-pill">Agentic workflows</span>
+            <h3>William Yakah</h3>
+            <p>PhD, Columbia — cholesterol transport, fetal neurodevelopment. Co-founder of <strong>LabShare</strong>. Research agents for scientists' computer work.</p>
+            <p><strong>On this project:</strong> Workflow ideas, demo narrative, cross-agent usability.</p>
+          </div>
+          <div class="team-member">
+            <span class="role-pill">Strategy · Life sciences</span>
+            <h3>Alia Merchant</h3>
+            <p>Healthcare &amp; life sciences strategy (MBA, MSIT). Bioventure programs, Nucleate, hackathon leadership.</p>
+            <p><strong>On this project:</strong> Product framing, stakeholder story, API alignment, demo readiness.</p>
+          </div>
+        </div>
+      </main>
+      <footer class="site-footer">NeuroDiscover · Quorum</footer>
     </div>
-  </main>
-  <footer>NeuroDiscover · Quorum</footer>
+  </div>
+  <script src="assets/site.js"></script>
 </body>
 </html>
