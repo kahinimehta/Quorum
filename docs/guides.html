@@ -6,36 +6,34 @@
   <title>Guides — NeuroDiscover AI</title>
   <link rel="stylesheet" href="assets/site.css" />
 </head>
-<body>
-  <header class="site-header">
-    <h1>Developer guides</h1>
-    <p>Run, verify, and extend NeuroDiscover</p>
-  </header>
-  <nav class="site-nav">
-    <a href="index.html">Overview</a>
-    <a href="workflow.html">Workflow</a>
-    <a href="decisions.html">Decisions</a>
-    <a href="team.html">Team</a>
-    <a href="guides.html" class="active">Guides</a>
-    <a href="../neurodiscover/frontend/index.html">Dashboard</a>
-  </nav>
-  <main>
-    <div class="card">
-      <h2>Dashboard</h2>
-      <pre>cd neurodiscover && make dashboard</pre>
-      <p>Docs: <a href="DASHBOARD.md">DASHBOARD.md</a>, <a href="../neurodiscover/frontend/QUICKSTART.md">QUICKSTART.md</a></p>
-    </div>
-    <div class="card">
-      <h2>CLI (data &amp; agents)</h2>
-      <pre>python3 cli.py build      # local DB only
+<body class="site-body" data-page="guides">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+  <div class="site-layout">
+    <aside class="site-sidebar" id="siteSidebar" aria-label="Documentation menu"></aside>
+    <div class="site-panel">
+      <header class="page-hero">
+        <h1>Developer guides</h1>
+        <p class="lead">Run, verify, and extend NeuroDiscover — CLI, API, Supabase, and publishing docs.</p>
+      </header>
+      <main class="page-main" id="main-content">
+        <div class="card">
+          <h2>Dashboard</h2>
+          <pre><code>cd neurodiscover && make dashboard</code></pre>
+          <p>See <a href="dashboard.html">Dashboard guide</a>, <a href="DASHBOARD.md">DASHBOARD.md</a>.</p>
+        </div>
+        <div class="card">
+          <h2>CLI (data &amp; agents)</h2>
+          <pre><code>python3 cli.py build      # local DB only — truncates tables
 python3 cli.py validate
 python3 cli.py demo
 python3 cli.py scan --max 5
-python3 cli.py pull --max 150</pre>
-    </div>
-    <div class="card">
-      <h2>API verify</h2>
-      <pre>curl -s http://127.0.0.1:5000/api/stats
+python3 cli.py pull --max 150</code></pre>
+          <div class="callout"><strong>Team Supabase:</strong> never run <code>build</code> on the shared live DB.</div>
+        </div>
+        <div class="card">
+          <h2>API verify</h2>
+          <pre><code>curl -s http://127.0.0.1:5000/api/stats
 curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' \
   -d '{"mode":"demo","max_papers":5}'</pre>
@@ -71,7 +69,7 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
       <p>Use only one option (Actions <em>or</em> branch deploy). If both are enabled, prefer Actions so deploys match CI.</p>
       <p>First-time setup: the repo needs <strong>Pages</strong> enabled on the free plan; no extra secrets are required for the docs workflow.</p>
     </div>
-  </main>
-  <footer>NeuroDiscover · Quorum</footer>
+  </div>
+  <script src="assets/site.js"></script>
 </body>
 </html>

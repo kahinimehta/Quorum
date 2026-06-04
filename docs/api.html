@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>API — NeuroDiscover AI</title>
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body class="site-body" data-page="api">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+  <div class="site-layout">
+    <aside class="site-sidebar" id="siteSidebar" aria-label="Documentation menu"></aside>
+    <div class="site-panel">
+      <header class="page-hero">
+        <h1>API</h1>
+        <p class="lead">FastAPI backend at <code>http://127.0.0.1:5000</code> — started automatically by <code>make dashboard</code>.</p>
+      </header>
+      <main class="page-main" id="main-content">
+        <div class="card">
+          <h2>Key endpoints</h2>
+          <table class="data-table">
+            <thead><tr><th>Method</th><th>Path</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>GET</td><td><code>/api/stats</code></td><td>DB counts, last scan</td></tr>
+              <tr><td>GET</td><td><code>/api/discover/parkinsons</code></td><td>Subgroups, connections, recommendations</td></tr>
+              <tr><td>GET</td><td><code>/api/agents?run_id=</code></td><td>Agent trace for a run</td></tr>
+              <tr><td>GET</td><td><code>/api/runs</code></td><td>Recent runs with status</td></tr>
+              <tr><td>GET</td><td><code>/api/run-stats?run_id=</code></td><td>This run vs database totals</td></tr>
+              <tr><td>POST</td><td><code>/api/run-discovery</code></td><td>Run pipeline (demo / scan / full)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h2>Run discovery (demo)</h2>
+          <pre><code>curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' \
+  -d '{"mode":"demo","max_papers":5}'</code></pre>
+        </div>
+        <div class="card">
+          <h2>Full contract</h2>
+          <ul>
+            <li><a href="BACKEND_QUERIES.md">BACKEND_QUERIES.md</a> — SQL + JSON shapes</li>
+            <li><a href="PERSON2_API_ENDPOINTS.md">PERSON2_API_ENDPOINTS.md</a> — endpoint list</li>
+            <li><a href="PERSON2_BACKEND.md">PERSON2_BACKEND.md</a> — Supabase connection notes</li>
+            <li><code>queries.sql</code> in repo root — copy-paste SELECTs</li>
+          </ul>
+        </div>
+      </main>
+      <footer class="site-footer"><a href="dashboard.html">Dashboard guide</a></footer>
+    </div>
+  </div>
+  <script src="assets/site.js"></script>
+</body>
+</html>
