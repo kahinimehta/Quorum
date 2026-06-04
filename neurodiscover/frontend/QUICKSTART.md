@@ -27,8 +27,9 @@ That single command will:
 2. Build local `neurodiscover.db` if needed (skipped when `SUPABASE_DATABASE_URL` is set)
 3. Run the offline demo pipeline (agents + synthetic cohort data)
 4. Start the API on port **5000** and the UI on port **8080**
+5. Open **http://127.0.0.1:8080** in your **default browser** automatically
 
-Then open **http://127.0.0.1:8080** — press **Ctrl+C** in the terminal to stop both servers.
+Press **Ctrl+C** in the terminal to stop both servers.
 
 ### Rerunning with different settings
 
