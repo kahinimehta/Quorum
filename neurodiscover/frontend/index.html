@@ -1020,10 +1020,11 @@
       }
     }
 
-    async function loadResults(runId) {
+    async function loadResults(runId, runPayload) {
+      runPayload = runPayload || {};
       let connections = [];
-      let recommendations = [];
-      let steps = [];
+      let recommendations = runPayload.recommendations || [];
+      let steps = runPayload.steps || [];
 
       if (sb) {
         const { data: tc } = await sb.from('treatment_connections').select('connection_id,mechanism,treatment,evidence_strength,commercial_potential,subgroups(name)');
@@ -1039,26 +1040,34 @@
             tier: tierFromConfidence(conf),
           };
         });
-        let rq = sb.from('recommendations').select('*').order('confidence', { ascending: false }).limit(5);
-        const { data: recs } = await rq;
-        recommendations = recs || [];
-        let sq = sb.from('agent_outputs').select('*').order('output_id', { ascending: true });
-        if (runId) sq = sq.eq('run_id', runId);
-        else sq = sq.order('output_id', { ascending: false }).limit(20);
-        const { data: st } = await sq;
-        steps = (st || []).map(s => ({
-          agentName: s.agent_name,
-          stepOrder: s.step_order,
-          summary: s.summary,
-          createdAt: s.created_at,
-        }));
+        if (!recommendations.length) {
+          let rq = sb.from('recommendations').select('*').order('confidence', { ascending: false });
+          if (runId) rq = rq.eq('run_id', runId);
+          const { data: recs } = await rq.limit(10);
+          recommendations = recs || [];
+        }
+        if (!steps.length) {
+          let sq = sb.from('agent_outputs').select('*').order('output_id', { ascending: true });
+          if (runId) sq = sq.eq('run_id', runId);
+          else sq = sq.order('output_id', { ascending: false }).limit(20);
+          const { data: st } = await sq;
+          steps = (st || []).map(s => ({
+            agentName: s.agent_name,
+            stepOrder: s.step_order,
+            summary: s.summary,
+            createdAt: s.created_at,
+          }));
+        }
       } else {
         const agUrl = runId
           ? `${API_BASE}/api/agents?run_id=${encodeURIComponent(runId)}`
           : `${API_BASE}/api/agents`;
+        const recUrl = runId
+          ? `${API_BASE}/api/recommendations?run_id=${encodeURIComponent(runId)}`
+          : `${API_BASE}/api/recommendations`;
         const [d, rec, ag] = await Promise.all([
           fetch(`${API_BASE}/api/discover/parkinsons`).then(r => r.json()),
-          fetch(`${API_BASE}/api/recommendations`).then(r => r.json()),
+          fetch(recUrl).then(r => r.json()),
           fetch(agUrl).then(r => r.json()),
         ]);
         connections = (d.treatmentConnections || []).map(c => ({
@@ -1068,12 +1077,18 @@
           confidence: c.confidence,
           tier: tierFromConfidence(c.confidence || 0),
         }));
-        recommendations = (rec.recommendations || []).slice(0, 5);
-        steps = ag.steps || [];
-        if (ag.runId) latestRunId = ag.runId;
+        if (!recommendations.length) {
+          recommendations = rec.recommendations || [];
+        }
+        if (!steps.length) {
+          steps = ag.steps || [];
+          if (ag.runId) latestRunId = ag.runId;
+        }
       }
 
-      if (runId) {
+      if (runPayload.synthetic_cohort && runPayload.synthetic_cohort.length) {
+        syntheticCohort = runPayload.synthetic_cohort;
+      } else if (runId) {
         syntheticCohort = await fetchSyntheticCohort(runId);
       }
       if (!syntheticCohort.length && recommendations.length) {
@@ -1243,13 +1258,17 @@
         latestRunId = data.run_id;
         updateRunMeta(latestRunId);
         syntheticCohort = data.synthetic_cohort || [];
+        const steps = data.agent_outputs || data.steps || [];
         status.textContent = `Done — run ${data.run_id} · ${syntheticCohort.length} synthetic profiles`;
-        updateStepper(data.agent_outputs || data.steps);
+        updateStepper(steps);
         await loadRecentRuns();
         await loadCounts();
         showView('results');
-        if (syntheticCohort.length) renderSyntheticCohort(syntheticCohort);
-        await loadResults(latestRunId);
+        await loadResults(latestRunId, {
+          recommendations: data.recommendations,
+          steps,
+          synthetic_cohort: syntheticCohort,
+        });
       } catch (e) {
         status.textContent = 'Error: ' + e.message;
       } finally {

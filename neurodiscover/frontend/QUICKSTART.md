@@ -30,6 +30,15 @@ That single command will:
 
 Then open **http://127.0.0.1:8080** — press **Ctrl+C** in the terminal to stop both servers.
 
+### Rerunning with different settings
+
+`make dashboard` only runs **one** offline demo at startup. To try new options (mode, keyword, max papers, preprints, etc.):
+
+1. Keep `make dashboard` running (or start it once).
+2. Open the **Pipeline Setup** tab, change the form, and click **Run Discovery Pipeline** or **Incremental Scan**.
+
+The **Discovery Dashboard** refreshes for that run: new `run_id`, ranked outputs, synthetic cohort (regenerated from that run’s recommendations), and agent trace. Scores on `treatment_connections` are updated in place; evidence rows accumulate when you use **full** or **scan** (not replaced in demo mode).
+
 **Leave `SUPABASE_DATABASE_URL` unset** in `.env` for the safe local laptop demo (never `build` on the team Supabase DB).
 
 Optional flags:

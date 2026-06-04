@@ -283,16 +283,33 @@ def get_agents(run_id: str | None = None):
 
 
 @app.get("/api/recommendations")
-def get_recommendations():
-    rows = _query(
-        f"""
-        SELECT r.subgroup, r.treatment, r.confidence, r.tier, r.rationale,
-               tc.mechanism
-        FROM recommendations r
-        LEFT JOIN treatment_connections tc ON tc.connection_id = r.connection_id
-        ORDER BY {_order_desc('r.confidence')}
-        """
-    )
+def get_recommendations(run_id: str | None = None):
+    if run_id:
+        rows = _query(
+            f"""
+            SELECT r.subgroup, r.treatment, r.confidence, r.tier, r.rationale,
+                   tc.mechanism
+            FROM recommendations r
+            LEFT JOIN treatment_connections tc ON tc.connection_id = r.connection_id
+            WHERE r.run_id = ?
+            ORDER BY {_order_desc('r.confidence')}
+            """,
+            (run_id,),
+        )
+    else:
+        rows = _query(
+            f"""
+            SELECT r.subgroup, r.treatment, r.confidence, r.tier, r.rationale,
+                   tc.mechanism
+            FROM recommendations r
+            LEFT JOIN treatment_connections tc ON tc.connection_id = r.connection_id
+            WHERE r.run_id = (
+                SELECT run_id FROM recommendations
+                ORDER BY rec_id DESC LIMIT 1
+            )
+            ORDER BY {_order_desc('r.confidence')}
+            """
+        )
     recommendations = [
         {
             "subgroup": r["subgroup"],
