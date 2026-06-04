@@ -3,18 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NeuroDiscover AI</title>
+  <title>NeuroDiscover AI · Quorum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #0f2044;
+      --navy-light: #1a3270;
       --primary: #2563eb;
       --secondary: #0d9488;
-      --amber: #f59e0b;
-      --bg: #f1f5f9;
+      --amber: #d97706;
+      --purple: #7c3aed;
+      --red: #dc2626;
+      --bg: #eef2f7;
       --card: #ffffff;
       --border: #e2e8f0;
-      --text: #1e293b;
+      --text: #0f172a;
       --muted: #64748b;
+      --shadow: 0 1px 3px rgba(15,32,68,0.08), 0 4px 12px rgba(15,32,68,0.04);
     }
     * { box-sizing: border-box; }
     body {
@@ -25,17 +31,31 @@
       line-height: 1.5;
     }
     header {
-      background: var(--navy);
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
       color: #fff;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.5rem 0.85rem;
+    }
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 0.75rem;
     }
-    header h1 { margin: 0; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
-    header h1 span { color: #93c5fd; font-weight: 400; }
+    .brand-block { display: flex; align-items: center; gap: 0.85rem; }
+    .brand-mark {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #0d9488);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1rem;
+    }
+    header h1 { margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+    header .subtitle { margin: 0.15rem 0 0; font-size: 0.8rem; color: #94a3b8; font-weight: 400; }
+    header h1 span { color: #93c5fd; font-weight: 500; }
+    .header-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
     .badge {
       display: inline-flex;
       align-items: center;
@@ -52,13 +72,37 @@
       background: #34d399;
       box-shadow: 0 0 6px #34d399;
     }
+    .kpi-strip {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .kpi-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+    }
+    @media (max-width: 800px) { .kpi-inner { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-item {
+      text-align: center;
+      padding: 0.5rem;
+      border-radius: 8px;
+      background: var(--bg);
+    }
+    .kpi-item .val { font-size: 1.35rem; font-weight: 700; color: var(--navy); }
+    .kpi-item .lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
     nav.tabs {
       display: flex;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem 0;
+      gap: 0.25rem;
+      padding: 0 1.5rem;
       background: var(--navy);
       border-top: 1px solid rgba(255,255,255,0.08);
+      max-width: 100%;
     }
+    nav.tabs .tabs-inner { max-width: 1400px; margin: 0 auto; display: flex; width: 100%; }
     nav.tabs button {
       background: transparent;
       border: none;
@@ -83,9 +127,18 @@
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1rem;
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
       margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
     }
     .card h2, .card h3 { margin: 0 0 0.75rem; font-size: 0.95rem; color: var(--navy); }
     .tiles {
@@ -216,24 +269,124 @@
       margin-bottom: 1rem;
     }
     .pager { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.75rem; }
-    .results-wide { grid-column: 1 / -1; max-width: 1400px; margin: 0 auto; padding: 0 1.5rem 2rem; }
-    .flow-diagram { margin-bottom: 1rem; }
-    .flow-row { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 0.5rem; }
+    .results-wide { max-width: 1400px; margin: 0 auto; padding: 1rem 1.5rem 2.5rem; }
+    .pipeline-v2 {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .pipeline-v2 h2 { margin: 0 0 1rem; font-size: 1rem; color: var(--navy); }
+    .pipe-stage { margin-bottom: 0.75rem; }
+    .pipe-stage-title {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .flow-arrow {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 0.15rem 0;
+    }
     .flow-box {
-      padding: 0.45rem 0.65rem;
+      padding: 0.5rem 0.75rem;
       border-radius: 8px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
       border: 1px solid var(--border);
       text-align: center;
-      min-width: 90px;
+      min-width: 100px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
-    .flow-input { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-    .flow-agent { background: #f5f3ff; color: #5b21b6; border-color: #ddd6fe; }
-    .flow-out-syn { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
-    .flow-out-rank { background: #fffbeb; color: #b45309; border-color: #fde68a; }
-    .flow-out-hyp { background: #f0fdf4; color: #166534; border-color: #86efac; }
-    .flow-footer { font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 0.5rem; }
+    .flow-input { background: #eff6ff; color: #1e40af; border-color: #93c5fd; }
+    .flow-agent { background: #f5f3ff; color: #5b21b6; border-color: #c4b5fd; }
+    .flow-out-syn { background: #f0fdf4; color: #15803d; border-color: #86efac; min-width: 120px; }
+    .flow-out-rank { background: #fffbeb; color: #b45309; border-color: #fcd34d; min-width: 120px; }
+    .flow-out-hyp { background: #f0f9ff; color: #0369a1; border-color: #7dd3fc; min-width: 120px; }
+    .flow-footer {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--border);
+    }
+    .outputs-three {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    @media (max-width: 1100px) { .outputs-three { grid-template-columns: 1fr; } }
+    .output-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      min-height: 320px;
+    }
+    .output-panel-head {
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-syn .output-panel-head { background: #f0fdf4; border-top: 3px solid #22c55e; }
+    .panel-rank .output-panel-head { background: #fffbeb; border-top: 3px solid var(--amber); }
+    .panel-hyp .output-panel-head { background: #eff6ff; border-top: 3px solid var(--primary); }
+    .output-panel-body { padding: 0.75rem 0.85rem 1rem; }
+    .cohort-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+    @media (min-width: 1100px) {
+      .cohort-grid { grid-template-columns: 1fr; }
+    }
+    .rank-list-item {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 0.5rem;
+      align-items: start;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .rank-list-item:last-child { border-bottom: none; }
+    .rank-num {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .conf-big { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+    .audit-section { margin-top: 1.25rem; }
+    .audit-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 900px) { .audit-grid { grid-template-columns: 1fr; } }
     .syn-banner {
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
@@ -248,9 +401,9 @@
     .syn-card {
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 0.85rem;
-      margin-bottom: 0.75rem;
-      background: #fff;
+      padding: 0.75rem;
+      background: #fafafa;
+      font-size: 0.72rem;
     }
     .syn-head { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.65rem; }
     .syn-avatar {
@@ -328,17 +481,39 @@
 </head>
 <body>
   <header>
-    <h1>NeuroDiscover <span>AI</span></h1>
-    <span class="badge live" id="dbBadge">Connecting…</span>
+    <div class="header-inner">
+      <div class="brand-block">
+        <div class="brand-mark">Q</div>
+        <div>
+          <h1>Quorum · NeuroDiscover <span>AI</span></h1>
+          <p class="subtitle">Parkinson disease · multi-agent discovery command center</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span class="badge live" id="dbBadge">Connecting…</span>
+        <span class="badge" id="runIdChip" style="display:none;">Run —</span>
+      </div>
+    </div>
   </header>
+  <div class="kpi-strip">
+    <div class="kpi-inner">
+      <div class="kpi-item"><div class="val" id="kpiLit">—</div><div class="lbl">Papers</div></div>
+      <div class="kpi-item"><div class="val" id="kpiTrial">—</div><div class="lbl">Trials</div></div>
+      <div class="kpi-item"><div class="val" id="kpiGrant">—</div><div class="lbl">Grants</div></div>
+      <div class="kpi-item"><div class="val" id="kpiSg">—</div><div class="lbl">Subgroups</div></div>
+      <div class="kpi-item"><div class="val" id="kpiConn">5</div><div class="lbl">Connections</div></div>
+    </div>
+  </div>
   <nav class="tabs">
-    <button type="button" class="active" data-view="input">Run Configuration</button>
-    <button type="button" data-view="results">Results</button>
+    <div class="tabs-inner">
+      <button type="button" data-view="input">Pipeline Setup</button>
+      <button type="button" class="active" data-view="results">Discovery Dashboard</button>
+    </div>
   </nav>
 
   <div id="configHint" class="config-hint hidden" style="margin:1rem 1.5rem 0; max-width:1400px;"></div>
 
-  <div id="viewInput" class="layout">
+  <div id="viewInput" class="layout hidden">
     <aside>
       <div class="card">
         <h2>Database</h2>
@@ -419,81 +594,100 @@
     </main>
   </div>
 
-  <div id="viewResults" class="hidden">
+  <div id="viewResults">
     <div class="results-wide">
-      <div class="card flow-diagram">
-        <h2>Discovery architecture</h2>
-        <div class="flow-row">
-          <span class="flow-box flow-input">Literature</span>
-          <span class="flow-box flow-input">Clinical Trials</span>
-          <span class="flow-box flow-input">Grants</span>
-          <span class="flow-box flow-input">Biomarkers &amp; Omics</span>
+      <section class="pipeline-v2">
+        <h2>Discovery pipeline</h2>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Data inputs</div>
+          <div class="flow-row">
+            <span class="flow-box flow-input">Literature</span>
+            <span class="flow-box flow-input">Clinical Trials</span>
+            <span class="flow-box flow-input">Grants</span>
+            <span class="flow-box flow-input">Biomarkers &amp; Omics</span>
+          </div>
         </div>
-        <div class="flow-row">
-          <span class="flow-box flow-agent">Literature Synthesis</span>
-          <span class="flow-box flow-agent">Patient Subgroup</span>
-          <span class="flow-box flow-agent">Treatment Connection</span>
+        <div class="flow-arrow">▼</div>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Multi-agent pipeline</div>
+          <div class="flow-row">
+            <span class="flow-box flow-agent">① Literature</span>
+            <span class="flow-box flow-agent">② Subgroups</span>
+            <span class="flow-box flow-agent">③ Connections</span>
+          </div>
+          <div class="flow-row" style="margin-top:0.35rem;">
+            <span class="flow-box flow-agent">④ Evidence</span>
+            <span class="flow-box flow-agent">⑤ Commercial</span>
+            <span class="flow-box flow-agent">⑥ Conclusion</span>
+          </div>
         </div>
-        <div class="flow-row">
-          <span class="flow-box flow-agent">Evidence Scoring</span>
-          <span class="flow-box flow-agent">Commercial Discovery</span>
-          <span class="flow-box flow-agent">Conclusion Update</span>
-        </div>
-        <div class="flow-row">
-          <span class="flow-box flow-out-syn">Synthetic Cohort</span>
-          <span class="flow-box flow-out-rank">Ranked Outputs</span>
-          <span class="flow-box flow-out-hyp">Research Hypotheses</span>
+        <div class="flow-arrow">▼</div>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Discovery outputs</div>
+          <div class="flow-row">
+            <span class="flow-box flow-out-syn">Synthetic Cohort</span>
+            <span class="flow-box flow-out-rank">Ranked Outputs</span>
+            <span class="flow-box flow-out-hyp">Research Hypotheses</span>
+          </div>
         </div>
         <p class="flow-footer">Discovery logic = public evidence only · Synthetic data = safe visualization only · no HIPAA, no PHI, no real records</p>
-      </div>
+      </section>
 
-      <div class="two-col">
-        <div>
-          <div class="syn-banner">⚗ Synthetic Cohort — Synthea-style profiles · no real patient data · no PHI · no HIPAA</div>
-          <div id="syntheticCohort"></div>
+      <div class="outputs-three">
+        <div class="output-panel panel-syn">
+          <div class="output-panel-head">⚗ Synthetic Cohort</div>
+          <div class="output-panel-body">
+            <div class="syn-banner">Synthea-style profiles · no real patient data · no PHI · no HIPAA</div>
+            <div id="syntheticCohort" class="cohort-grid"></div>
+          </div>
         </div>
-        <div>
-          <div class="card">
-            <h2>Ranked outputs</h2>
-            <p style="font-size:0.8rem;color:var(--muted);margin:0 0 0.75rem;">
+        <div class="output-panel panel-rank">
+          <div class="output-panel-head">Ranked Outputs</div>
+          <div class="output-panel-body">
+            <p style="font-size:0.68rem;color:var(--muted);margin:0 0 0.5rem;">
               confidence = evidence_strength × 0.55 + commercial_potential × 0.45
             </p>
             <div id="confidenceBars"></div>
             <div id="topRecs"></div>
           </div>
-          <div class="card">
-            <h2>Research hypotheses</h2>
-            <p style="font-size:0.75rem;color:var(--muted);">Top Prioritize-tier proposals with auditable citations</p>
+        </div>
+        <div class="output-panel panel-hyp">
+          <div class="output-panel-head">Research Hypotheses</div>
+          <div class="output-panel-body">
+            <p style="font-size:0.68rem;color:var(--muted);margin:0 0 0.5rem;">Prioritize tier · auditable citations</p>
             <div id="hypotheses"></div>
-          </div>
-          <div class="card">
-            <h2>Continuous update</h2>
+            <div class="section-label" style="margin-top:0.75rem;">Continuous update</div>
             <div id="continuousUpdate"></div>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <h2>Agent run trace</h2>
-        <ul class="timeline" id="agentTimeline"></ul>
-      </div>
-      <div class="card">
-        <h2>Evidence preview</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
-              <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th>
-            </tr>
-          </thead>
-          <tbody id="evidenceTable"></tbody>
-        </table>
-        <div class="pager">
-          <button type="button" class="btn btn-secondary" id="evPrev">Prev</button>
-          <span id="evPageLabel">Page 1</span>
-          <button type="button" class="btn btn-secondary" id="evNext">Next</button>
+      <section class="audit-section">
+        <div class="section-label">Audit &amp; provenance</div>
+        <div class="audit-grid">
+          <div class="card">
+            <h2>Agent run trace</h2>
+            <ul class="timeline" id="agentTimeline"></ul>
+          </div>
+          <div class="card">
+            <h2>Evidence library</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
+                  <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th>
+                </tr>
+              </thead>
+              <tbody id="evidenceTable"></tbody>
+            </table>
+            <div class="pager">
+              <button type="button" class="btn btn-secondary" id="evPrev">Prev</button>
+              <span id="evPageLabel">Page 1</span>
+              <button type="button" class="btn btn-secondary" id="evNext">Next</button>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   </div>
 
@@ -549,25 +743,65 @@
       return { data, count };
     }
 
+    function syncKpi(lit, trial, grant, sg, conn) {
+      const pairs = [
+        ['cntLit', 'kpiLit', lit],
+        ['cntTrial', 'kpiTrial', trial],
+        ['cntGrant', 'kpiGrant', grant],
+        ['cntSg', 'kpiSg', sg],
+      ];
+      pairs.forEach(([a, b, v]) => {
+        const val = String(v ?? '—');
+        const elA = document.getElementById(a);
+        const elB = document.getElementById(b);
+        if (elA) elA.textContent = val;
+        if (elB) elB.textContent = val;
+      });
+      if (conn != null) {
+        const k = document.getElementById('kpiConn');
+        if (k) k.textContent = String(conn);
+      }
+    }
+
+    function updateRunMeta(runId) {
+      const chip = document.getElementById('runIdChip');
+      if (!chip) return;
+      if (runId) {
+        chip.style.display = 'inline-flex';
+        chip.textContent = `Run ${runId}`;
+      } else {
+        chip.style.display = 'none';
+      }
+    }
+
     async function loadCounts() {
       try {
+        let lit = 0, trial = 0, grant = 0, sg = 0, conn = 5;
         if (sb) {
           const types = ['literature', 'trial', 'grant'];
           for (const t of types) {
             const { count } = await sb.from('evidence').select('*', { count: 'exact', head: true }).eq('source_type', t);
-            const el = t === 'literature' ? 'cntLit' : t === 'trial' ? 'cntTrial' : 'cntGrant';
-            document.getElementById(el).textContent = count ?? '0';
+            if (t === 'literature') lit = count ?? 0;
+            if (t === 'trial') trial = count ?? 0;
+            if (t === 'grant') grant = count ?? 0;
           }
-          const { count: sg } = await sb.from('subgroups').select('*', { count: 'exact', head: true });
-          document.getElementById('cntSg').textContent = sg ?? '0';
+          const { count: sgc } = await sb.from('subgroups').select('*', { count: 'exact', head: true });
+          sg = sgc ?? 0;
+          const { count: cc } = await sb.from('treatment_connections').select('*', { count: 'exact', head: true });
+          conn = cc ?? 5;
         } else {
           const r = await fetch(`${API_BASE}/api/stats`);
           const s = await r.json();
-          document.getElementById('cntLit').textContent = s.literature ?? '0';
-          document.getElementById('cntTrial').textContent = s.trial ?? '0';
-          document.getElementById('cntGrant').textContent = s.grant ?? '0';
-          document.getElementById('cntSg').textContent = s.subgroups ?? '0';
+          lit = s.literature ?? 0;
+          trial = s.trial ?? 0;
+          grant = s.grant ?? 0;
+          sg = s.subgroups ?? 0;
+          try {
+            const d = await fetch(`${API_BASE}/api/discover/parkinsons`).then(x => x.json());
+            conn = (d.treatmentConnections || []).length || 5;
+          } catch (e) { /* keep default */ }
         }
+        syncKpi(lit, trial, grant, sg, conn);
       } catch (e) {
         document.getElementById('dbBadge').textContent = 'Offline';
       }
@@ -878,21 +1112,25 @@
 
       const top = document.getElementById('topRecs');
       top.innerHTML = '';
-      (recommendations.length ? recommendations : connections.slice(0, 5)).forEach((r, i) => {
-        const card = document.createElement('div');
-        card.className = 'rec-card';
+      const ranked = (recommendations.length ? recommendations : connections).slice(0, 5);
+      ranked.forEach((r, i) => {
         const conf = r.confidence ?? 0;
         const tier = r.tier || tierFromConfidence(conf);
+        const color = subgroupColor(r.subgroup);
         const patientTag = patientBySubgroup[r.subgroup]
           ? `<span class="pill-patient">⚗ ${escapeHtml(patientBySubgroup[r.subgroup])}</span>` : '';
-        card.innerHTML = `
-          <div class="rank">#${i + 1} ${patientTag}</div>
-          <h4>${escapeHtml(r.treatment)}</h4>
-          <p style="margin:0.25rem 0;font-size:0.85rem;">${escapeHtml(r.subgroup)} · ${escapeHtml(r.mechanism || '—')}</p>
-          <p style="font-size:0.8rem;color:var(--muted);">${escapeHtml(r.rationale || '')}</p>
-          <span class="tier tier-${tier}">${tier}</span>
-          <strong style="margin-left:0.5rem;">${conf}</strong>`;
-        top.appendChild(card);
+        const row = document.createElement('div');
+        row.className = 'rank-list-item';
+        row.innerHTML = `
+          <div class="rank-num" style="background:${color}">${i + 1}</div>
+          <div>
+            <strong style="font-size:0.82rem;">${escapeHtml(r.treatment)}</strong> ${patientTag}
+            <div style="font-size:0.72rem;color:var(--muted);">${escapeHtml(r.subgroup)}</div>
+            <div style="font-size:0.7rem;">${escapeHtml(r.mechanism || '—')}</div>
+            <span class="tier tier-${tier}">${tier}</span>
+          </div>
+          <div class="conf-big">${conf}</div>`;
+        top.appendChild(row);
       });
 
       renderHypotheses(recommendations.length ? recommendations : connections);
@@ -1003,6 +1241,7 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || res.statusText);
         latestRunId = data.run_id;
+        updateRunMeta(latestRunId);
         syntheticCohort = data.synthetic_cohort || [];
         status.textContent = `Done — run ${data.run_id} · ${syntheticCohort.length} synthetic profiles`;
         updateStepper(data.agent_outputs || data.steps);
@@ -1053,10 +1292,8 @@
           hasRecs = (d.recommendations || []).length > 0;
         }
       } catch (e) { /* ignore */ }
-      if (hasRecs) {
-        showView('results');
-        await loadResults(latestRunId);
-      }
+      showView(hasRecs ? 'results' : 'input');
+      if (hasRecs) await loadResults(latestRunId);
     }
     boot();
   </script>

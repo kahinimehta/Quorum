@@ -69,11 +69,14 @@ After Agent 6 (Conclusion Update), `synthetic_cohort.generate_synthetic_cohort(r
 - Included in `POST /api/run-discovery` → `synthetic_cohort[]`
 - `GET /api/synthetic-cohort?run_id=<id>` regenerates the same shape
 
-**UI (results view)**
+**UI (Discovery Dashboard — v2 layout)**
 
-- Left column: synthetic patient cards + green safety banner
-- Right column: ranked outputs (linked via ⚗ Patient A–E pills), research hypotheses, continuous-update chart
-- Top: three-row architecture diagram (inputs → agents → outputs)
+- **Header + KPI strip:** evidence counts and connection total
+- **Pipeline block:** data inputs → numbered agents → three output targets
+- **Three columns:** Synthetic Cohort | Ranked Outputs | Research Hypotheses (+ continuous update)
+- **Audit row:** agent trace + evidence library
+
+See [`../neurodiscover/frontend/MOCKUP_V2.md`](../neurodiscover/frontend/MOCKUP_V2.md) for mockup PDF parity notes.
 
 No HIPAA scope: no real records, no PHI, no clinical identifiers.
 
