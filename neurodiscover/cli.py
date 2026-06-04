@@ -9,6 +9,7 @@ Commands:
     python cli.py build
     python cli.py init-supabase    # first-time: apply schema.pg.sql
     python cli.py demo | pull | scan | pull-grants | validate | show | query
+    python cli.py dashboard          # one command: local demo + API + UI
     python cli.py spot-check | validate-extraction | validate-pubtator
 """
 import argparse
@@ -177,6 +178,27 @@ def cmd_query(a):
             print(r)
 
 
+def cmd_dashboard(a):
+    from launch_dashboard import main as launch_main
+
+    argv = []
+    if getattr(a, "skip_install", False):
+        argv.append("--skip-install")
+    if getattr(a, "skip_build", False):
+        argv.append("--skip-build")
+    if getattr(a, "skip_pipeline", False):
+        argv.append("--skip-pipeline")
+    if getattr(a, "fresh", False):
+        argv.append("--fresh")
+    if getattr(a, "port_api", None):
+        argv.extend(["--port-api", str(a.port_api)])
+    if getattr(a, "port_ui", None):
+        argv.extend(["--port-ui", str(a.port_ui)])
+    if getattr(a, "no_browser", False):
+        argv.append("--no-browser")
+    raise SystemExit(launch_main(argv))
+
+
 def main():
     p = argparse.ArgumentParser(prog="cli.py")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -261,6 +283,19 @@ def main():
     q = sub.add_parser("query", help="run a read SQL query")
     q.add_argument("sql")
     q.set_defaults(fn=cmd_query)
+
+    dash = sub.add_parser(
+        "dashboard",
+        help="one command: install deps, local build, demo pipeline, API + UI servers",
+    )
+    dash.add_argument("--port-api", type=int, default=5000)
+    dash.add_argument("--port-ui", type=int, default=8080)
+    dash.add_argument("--skip-install", action="store_true")
+    dash.add_argument("--skip-build", action="store_true")
+    dash.add_argument("--skip-pipeline", action="store_true")
+    dash.add_argument("--fresh", action="store_true", help="rebuild local neurodiscover.db")
+    dash.add_argument("--no-browser", action="store_true", help="do not open the UI in a browser")
+    dash.set_defaults(fn=cmd_dashboard)
 
     a = p.parse_args()
     if is_postgres():

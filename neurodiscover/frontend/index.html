@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeuroDiscover AI · Quorum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f2044;
+      --navy-light: #1a3270;
+      --primary: #2563eb;
+      --secondary: #0d9488;
+      --amber: #d97706;
+      --purple: #7c3aed;
+      --red: #dc2626;
+      --bg: #eef2f7;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --shadow: 0 1px 3px rgba(15,32,68,0.08), 0 4px 12px rgba(15,32,68,0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: #fff;
+      padding: 1rem 1.5rem 0.85rem;
+    }
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .brand-block { display: flex; align-items: center; gap: 0.85rem; }
+    .brand-mark {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #0d9488);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1rem;
+    }
+    header h1 { margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+    header .subtitle { margin: 0.15rem 0 0; font-size: 0.8rem; color: #94a3b8; font-weight: 400; }
+    header h1 span { color: #93c5fd; font-weight: 500; }
+    .header-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: rgba(255,255,255,0.12);
+    }
+    .badge.live::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 6px #34d399;
+    }
+    .kpi-strip {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .kpi-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+    }
+    @media (max-width: 800px) { .kpi-inner { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-item {
+      text-align: center;
+      padding: 0.55rem 0.5rem;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+    .kpi-item .val { font-size: 1.35rem; font-weight: 700; color: var(--navy); }
+    .kpi-item .lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .kpi-item .kpi-sub { font-size: 0.6rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.2; }
+    .kpi-item.run-context { border-color: #93c5fd; background: #eff6ff; }
+    .kpi-item.run-context .val { color: var(--primary); }
+    .evidence-summary-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .evidence-summary-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      align-items: center;
+      font-size: 0.78rem;
+    }
+    .es-col { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; }
+    .es-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.25rem;
+    }
+    .es-col.es-run { padding: 0.35rem 0.65rem; border-radius: 8px; background: #eff6ff; border: 1px solid #bfdbfe; }
+    .es-col.es-run .es-val { font-weight: 700; color: var(--primary); }
+    .es-col.es-db .es-val { font-weight: 600; color: var(--navy); }
+    .es-sep { color: #cbd5e1; }
+    .run-status-strip {
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 1.5rem;
+      font-size: 0.85rem;
+    }
+    .run-status-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem 1rem;
+    }
+    .run-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .run-status-pill::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .run-status-strip.idle { background: #f8fafc; }
+    .run-status-strip.idle .run-status-pill { background: #e2e8f0; color: #475569; }
+    .run-status-strip.idle .run-status-pill::before { background: #94a3b8; }
+    .run-status-strip.running { background: #eff6ff; }
+    .run-status-strip.running .run-status-pill { background: #dbeafe; color: #1d4ed8; }
+    .run-status-strip.running .run-status-pill::before { background: #3b82f6; animation: pulse-dot 1s ease infinite; }
+    .run-status-strip.complete { background: #f0fdf4; }
+    .run-status-strip.complete .run-status-pill { background: #dcfce7; color: #166534; }
+    .run-status-strip.complete .run-status-pill::before { background: #22c55e; }
+    .run-status-strip.partial { background: #fffbeb; }
+    .run-status-strip.partial .run-status-pill { background: #fef3c7; color: #b45309; }
+    .run-status-strip.partial .run-status-pill::before { background: #f59e0b; }
+    .run-status-strip.error { background: #fef2f2; }
+    .run-status-strip.error .run-status-pill { background: #fee2e2; color: #b91c1c; }
+    .run-status-strip.error .run-status-pill::before { background: #ef4444; }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+    .run-status-detail { color: var(--text); flex: 1; min-width: 200px; line-height: 1.4; }
+    .run-status-meta { font-size: 0.72rem; color: var(--muted); }
+    .run-status-box {
+      margin-top: 0.85rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+    }
+    .run-status-box.running { border-color: #93c5fd; background: #eff6ff; }
+    .run-status-box.complete { border-color: #86efac; background: #f0fdf4; }
+    .run-status-box.error { border-color: #fca5a5; background: #fef2f2; }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .status-badge.complete { background: #dcfce7; color: #166534; }
+    .status-badge.partial { background: #fef3c7; color: #b45309; }
+    .status-badge.running { background: #dbeafe; color: #1d4ed8; }
+    .tab-nav {
+      background: #fff;
+      border-bottom: 2px solid var(--border);
+      padding: 1rem 1.5rem 1.25rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 14px rgba(15, 32, 68, 0.08);
+    }
+    .tab-nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 700px) { .tab-nav-inner { grid-template-columns: 1fr; } }
+    .tab-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      text-align: left;
+      padding: 1rem 1.15rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.1s;
+      font-family: inherit;
+    }
+    .tab-btn:hover {
+      border-color: #93c5fd;
+      background: #f0f9ff;
+    }
+    .tab-btn.active {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #eff6ff 0%, #fff 100%);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+      transform: translateY(-1px);
+    }
+    .tab-btn.active .tab-step {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+    }
+    .tab-btn.active .tab-title { color: var(--navy); }
+    .tab-step {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #e2e8f0;
+      color: var(--navy);
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tab-text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+    .tab-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .tab-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .tab-btn-results.active { border-color: #22c55e; background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); box-shadow: 0 4px 16px rgba(34, 197, 94, 0.18); }
+    .tab-btn-results.active .tab-step { background: #16a34a; }
+    .view-page-title {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .view-page-title span { font-weight: 400; color: var(--muted); font-size: 0.85rem; display: block; margin-top: 0.2rem; }
+    .run-hero {
+      border-left: 4px solid var(--primary);
+      background: linear-gradient(90deg, #eff6ff 0%, #fff 12%);
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1rem;
+      padding: 1rem 1.5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .card h2, .card h3 { margin: 0 0 0.75rem; font-size: 0.95rem; color: var(--navy); }
+    .tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .tile {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 0.65rem;
+      text-align: center;
+    }
+    .tile .n { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+    .tile .l { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
+    .chip {
+      display: block;
+      padding: 0.5rem 0.65rem;
+      margin-bottom: 0.4rem;
+      background: var(--bg);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      border-left: 3px solid var(--secondary);
+    }
+    .chip strong { display: block; font-size: 0.85rem; }
+    .chip small { color: var(--muted); }
+    .stepper { list-style: none; padding: 0; margin: 0; }
+    .stepper li {
+      position: relative;
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      font-size: 0.8rem;
+      border-left: 2px solid var(--border);
+      margin-left: 0.4rem;
+    }
+    .stepper li::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 0.65rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .stepper li.done::before { background: var(--secondary); }
+    .stepper li.active::before { background: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.25); }
+    label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--muted); }
+    input[type=text], input[type=number] {
+      width: 100%;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    input:disabled { background: #f8fafc; color: var(--muted); }
+    .row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem; }
+    .row label.inline { font-weight: 400; display: flex; align-items: center; gap: 0.35rem; margin: 0; }
+    input[type=range] { width: 100%; accent-color: var(--primary); }
+    .range-val { font-size: 0.85rem; color: var(--primary); font-weight: 600; }
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+    }
+    .run-hero .btn-primary { width: 100%; max-width: 320px; padding: 0.75rem 1.5rem; font-size: 1rem; }
+    .btn-primary:disabled { opacity: 0.6; cursor: wait; }
+    .btn-secondary { background: #fff; color: var(--primary); border: 1px solid var(--primary); margin-left: 0.5rem; }
+    .actions { margin-top: 1rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    th, td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; }
+    .type-badge {
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .type-literature { background: #dbeafe; color: #1d4ed8; }
+    .type-trial { background: #ccfbf1; color: #0f766e; }
+    .type-grant { background: #fef3c7; color: #b45309; }
+    .access-open { color: #059669; }
+    .access-abstract { color: var(--amber); }
+    .access-restricted { color: #dc2626; }
+    .bar-row { margin-bottom: 0.65rem; }
+    .bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem; }
+    .bar-track { height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 5px; transition: width 0.4s ease; }
+    .bar-fill.prioritize { background: var(--primary); }
+    .bar-fill.monitor { background: var(--amber); }
+    .bar-fill.reject { background: #94a3b8; }
+    .rec-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .rec-card .rank { font-size: 0.75rem; color: var(--muted); }
+    .rec-card h4 { margin: 0.25rem 0; font-size: 1rem; }
+    .tier {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .tier-Prioritize { background: #dbeafe; color: var(--primary); }
+    .tier-Monitor { background: #fef3c7; color: #b45309; }
+    .timeline li {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .timeline li strong { color: var(--navy); }
+    .hidden { display: none !important; }
+    .config-hint {
+      font-size: 0.8rem;
+      color: #1e40af;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      margin-bottom: 0;
+      line-height: 1.45;
+    }
+    .pager { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.75rem; }
+    .results-wide { max-width: 1400px; margin: 0 auto; padding: 1rem 1.5rem 2.5rem; }
+    .pipeline-v2 {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--navy);
+    }
+    .pipeline-v2 h2 { margin: 0 0 1rem; font-size: 1.05rem; color: var(--navy); font-weight: 700; }
+    .pipe-stage { margin-bottom: 0.75rem; }
+    .pipe-stage-title {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .flow-arrow {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 0.15rem 0;
+    }
+    .flow-box {
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      text-align: center;
+      min-width: 100px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .flow-input { background: #eff6ff; color: #1e40af; border-color: #93c5fd; }
+    .flow-agent { background: #f5f3ff; color: #5b21b6; border-color: #c4b5fd; }
+    .flow-out-syn { background: #f0fdf4; color: #15803d; border-color: #86efac; min-width: 120px; }
+    .flow-out-rank { background: #fffbeb; color: #b45309; border-color: #fcd34d; min-width: 120px; }
+    .flow-out-hyp { background: #f0f9ff; color: #0369a1; border-color: #7dd3fc; min-width: 120px; }
+    .flow-footer {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--border);
+    }
+    .outputs-three {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    @media (max-width: 1100px) { .outputs-three { grid-template-columns: 1fr; } }
+    .output-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      min-height: 320px;
+    }
+    .output-panel-head {
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-syn .output-panel-head { background: #f0fdf4; border-top: 3px solid #22c55e; }
+    .panel-rank .output-panel-head { background: #fffbeb; border-top: 3px solid var(--amber); }
+    .panel-hyp .output-panel-head { background: #eff6ff; border-top: 3px solid var(--primary); }
+    .output-panel-body { padding: 0.75rem 0.85rem 1rem; }
+    .cohort-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+    @media (min-width: 1100px) {
+      .cohort-grid { grid-template-columns: 1fr; }
+    }
+    .rank-list-item {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 0.5rem;
+      align-items: start;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .rank-list-item:last-child { border-bottom: none; }
+    .rank-num {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .conf-big { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+    .audit-section { margin-top: 1.25rem; }
+    .audit-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 900px) { .audit-grid { grid-template-columns: 1fr; } }
+    .syn-banner {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 1000px) { .two-col { grid-template-columns: 1fr; } }
+    .syn-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
+      background: #fff;
+      font-size: 0.72rem;
+      box-shadow: 0 1px 4px rgba(15, 32, 68, 0.05);
+    }
+    .syn-head { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.65rem; }
+    .syn-avatar {
+      width: 48px; height: 48px;
+      font-size: 1.15rem;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .pill-syn {
+      background: #dcfce7;
+      color: #166534;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+    }
+    .pill-phi {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+    }
+    .syn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .syn-grid label { font-size: 0.65rem; color: var(--muted); margin: 0; }
+    .syn-opp {
+      background: var(--bg);
+      border-radius: 6px;
+      padding: 0.5rem;
+      font-size: 0.78rem;
+    }
+    .pill-patient {
+      background: #dcfce7;
+      color: #166534;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.12rem 0.4rem;
+      border-radius: 999px;
+      margin-left: 0.35rem;
+    }
+    .hyp-card {
+      border: 1px solid var(--border);
+      border-left-width: 4px;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 0.65rem;
+      background: #fff;
+    }
+    .cite-pill {
+      display: inline-block;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 0.68rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      margin: 0.15rem 0.25rem 0 0;
+      text-decoration: none;
+    }
+    .delta-up { color: #059669; font-size: 0.75rem; font-weight: 600; }
+    .update-bar { margin-bottom: 0.45rem; }
+    .badge-pill-blue { background: rgba(59, 130, 246, 0.22); }
+    .badge-pill-amber { background: rgba(251, 191, 36, 0.22); color: #fde68a; }
+    .badge-pill-db { background: rgba(15, 23, 42, 0.35); font-size: 0.75rem; }
+    .scan-meta { font-size: 0.72rem; color: var(--muted); margin: 0.5rem 0 0; }
+    .sg-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 0.35rem;
+      vertical-align: middle;
+    }
+    .chip-row { display: flex; align-items: center; gap: 0.35rem; }
+    .stepper li.ready::before { background: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+    .stepper li.running::before { background: #3b82f6; animation: pulse-dot 1s ease infinite; }
+    .stepper li.running { color: var(--primary); font-weight: 600; }
+    .stepper li.idle::before { background: #cbd5e1; }
+    .stepper li.idle { color: var(--muted); opacity: 0.85; }
+    .stepper-run-meta { font-size: 0.72rem; color: var(--muted); font-weight: 400; margin-left: 0.35rem; }
+    .runs-hint { font-size: 0.75rem; color: var(--muted); margin: -0.35rem 0 0.65rem; line-height: 1.4; }
+    .status-cell .status-hint { display: block; font-size: 0.65rem; color: var(--muted); font-weight: 400; margin-top: 0.2rem; max-width: 220px; line-height: 1.3; }
+    .stepper li .step-state { float: right; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
+    .stepper li.done .step-state { color: #059669; }
+    .stepper li.ready .step-state { color: var(--primary); }
+    .stepper li.idle .step-state { color: #94a3b8; }
+    .field-primary {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .field-primary input { flex: 1; margin-bottom: 0; }
+    .tag-primary {
+      font-size: 0.65rem; font-weight: 700;
+      background: #dbeafe; color: #1d4ed8;
+      padding: 0.2rem 0.45rem; border-radius: 4px;
+      white-space: nowrap;
+    }
+    .source-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+    @media (max-width: 700px) { .source-cards { grid-template-columns: 1fr; } }
+    .source-card {
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .source-cards-readonly .source-card { cursor: default; }
+    .source-cards-readonly .source-card:hover { border-color: var(--border); }
+    .source-card .sc-n { font-size: 1.25rem; font-weight: 700; color: var(--navy); }
+    .source-card .sc-l { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; }
+    .segmented {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 0.85rem;
+    }
+    .seg-opt {
+      flex: 1;
+      text-align: center;
+      padding: 0.55rem 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #f8fafc;
+      border-right: 1px solid var(--border);
+      margin: 0;
+      color: var(--muted);
+    }
+    .seg-opt:last-child { border-right: none; }
+    .seg-opt input { position: absolute; opacity: 0; pointer-events: none; }
+    .seg-opt:has(input:checked) {
+      background: var(--primary);
+      color: #fff;
+    }
+    .seg-opt.seg-purple:has(input:checked) {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    }
+    .banner {
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
+      margin-bottom: 0.65rem;
+      line-height: 1.45;
+    }
+    .banner-green { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+    .banner-blue { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+    .btn-run-stack { display: flex; flex-direction: column; gap: 0.5rem; align-items: stretch; max-width: 360px; }
+    .btn-run-stack .btn-primary { max-width: none; width: 100%; }
+    .btn-run-stack .btn-secondary { margin-left: 0; width: 100%; }
+    .runs-table { font-size: 0.75rem; }
+    .runs-table code { font-size: 0.7rem; }
+    .status-complete { color: #059669; font-weight: 600; }
+    .status-partial { color: var(--amber); font-weight: 600; }
+    .results-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .results-pills .badge { background: #fff; color: var(--navy); border: 1px solid var(--border); }
+    .results-pills .badge.ok { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .results-pills .badge.syn { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+    .conf-mini-track { height: 6px; background: var(--border); border-radius: 3px; margin-top: 0.35rem; overflow: hidden; }
+    .conf-mini-fill { height: 100%; background: var(--secondary); border-radius: 3px; }
+    .rec-quote {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: 0.35rem 0;
+      border-left: 2px solid var(--border);
+      padding-left: 0.5rem;
+    }
+    .hyp-num { font-size: 0.7rem; color: var(--muted); font-weight: 700; }
+    .conf-pill {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      margin-left: 0.25rem;
+    }
+    .syn-link-btn {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 1px solid #86efac;
+    }
+    .demo-notice {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .timeline .ts { float: right; font-size: 0.72rem; color: var(--muted); }
+    .evidence-meta { font-size: 0.72rem; color: var(--muted); float: right; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand-block">
+        <div class="brand-mark">Q</div>
+        <div>
+          <h1>Quorum · NeuroDiscover <span>AI</span></h1>
+          <p class="subtitle">Parkinson disease · multi-agent discovery command center</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span class="badge live" id="dbBadge">Connecting…</span>
+        <span class="badge badge-pill-blue" id="evidenceTotalBadge">— Evidence Rows</span>
+        <span class="badge badge-pill-amber" id="synLayerBadge">Synthetic Cohort Layer</span>
+        <span class="badge badge-pill-db" id="dbTypeBadge">—</span>
+        <span class="badge" id="runIdChip" style="display:none;">Run —</span>
+      </div>
+    </div>
+  </header>
+  <div class="kpi-strip">
+    <div class="kpi-inner" id="kpiStrip">
+      <div class="kpi-item" id="kpiBoxLit"><div class="val" id="kpiLit">—</div><div class="lbl">Papers</div><div class="kpi-sub" id="kpiLitSub">in database</div></div>
+      <div class="kpi-item" id="kpiBoxTrial"><div class="val" id="kpiTrial">—</div><div class="lbl">Trials</div><div class="kpi-sub" id="kpiTrialSub">in database</div></div>
+      <div class="kpi-item" id="kpiBoxGrant"><div class="val" id="kpiGrant">—</div><div class="lbl">Grants</div><div class="kpi-sub" id="kpiGrantSub">in database</div></div>
+      <div class="kpi-item" id="kpiBoxSg"><div class="val" id="kpiSg">—</div><div class="lbl">Subgroups</div><div class="kpi-sub" id="kpiSgSub">from this run</div></div>
+      <div class="kpi-item" id="kpiBoxConn"><div class="val" id="kpiConn">5</div><div class="lbl">Connections</div><div class="kpi-sub" id="kpiConnSub">from this run</div></div>
+    </div>
+  </div>
+  <div class="evidence-summary-bar" id="evidenceSummaryBar">
+    <div class="evidence-summary-inner">
+      <div class="es-col es-run hidden" id="esRunCol">
+        <span class="es-label">This run</span>
+        <span><span class="es-val" id="esRunLit">—</span> papers</span>
+        <span class="es-sep">·</span>
+        <span><span class="es-val" id="esRunTrial">—</span> trials</span>
+        <span class="es-sep">·</span>
+        <span><span class="es-val" id="esRunGrant">—</span> grants</span>
+        <span class="es-sep">·</span>
+        <span><strong id="esRunTotal">—</strong> used</span>
+      </div>
+      <div class="es-col es-db">
+        <span class="es-label">In database</span>
+        <span><span class="es-val" id="esDbLit">—</span> papers</span>
+        <span class="es-sep">·</span>
+        <span><span class="es-val" id="esDbTrial">—</span> trials</span>
+        <span class="es-sep">·</span>
+        <span><span class="es-val" id="esDbGrant">—</span> grants</span>
+        <span class="es-sep">·</span>
+        <span><strong id="esDbTotal">—</strong> total</span>
+      </div>
+    </div>
+  </div>
+  <div class="run-status-strip idle" id="globalRunStatus">
+    <div class="run-status-inner">
+      <span class="run-status-pill" id="globalRunStatusPill">Ready</span>
+      <span class="run-status-detail" id="globalRunStatusDetail">Configure a run on Step 1, or open Step 2 to view the latest results.</span>
+      <span class="run-status-meta" id="globalRunStatusMeta"></span>
+    </div>
+  </div>
+  <nav class="tab-nav" aria-label="Dashboard navigation">
+    <div class="tab-nav-inner">
+      <button type="button" class="tab-btn tab-btn-run active" data-view="input">
+        <span class="tab-step">1</span>
+        <span class="tab-text">
+          <span class="tab-title">Configure &amp; Run Pipeline</span>
+          <span class="tab-desc">Choose sources, mode, keywords — then start discovery</span>
+        </span>
+      </button>
+      <button type="button" class="tab-btn tab-btn-results" data-view="results">
+        <span class="tab-step">2</span>
+        <span class="tab-text">
+          <span class="tab-title">Discovery Results</span>
+          <span class="tab-desc">Synthetic cohort, ranked outputs, hypotheses &amp; evidence</span>
+        </span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="configHint" class="config-hint hidden" style="margin:1rem auto 0; max-width:1400px; padding:0 1.5rem;"></div>
+
+  <div id="viewInput" class="hidden">
+    <p class="view-page-title">Step 1 — Configure &amp; Run <span>Launch the multi-agent pipeline with your chosen settings</span></p>
+    <div class="layout">
+    <aside>
+      <div class="card">
+        <h2>Database</h2>
+        <div class="tiles" id="dbTiles">
+          <div class="tile"><div class="n" id="cntLit">—</div><div class="l">Papers</div></div>
+          <div class="tile"><div class="n" id="cntTrial">—</div><div class="l">Trials</div></div>
+          <div class="tile"><div class="n" id="cntGrant">—</div><div class="l">Grants</div></div>
+          <div class="tile"><div class="n" id="cntSg">—</div><div class="l">Subgroups</div></div>
+        </div>
+        <p class="scan-meta" id="lastScanMeta">Last scan: —</p>
+      </div>
+      <div class="card">
+        <h2>Patient subgroups</h2>
+        <div id="subgroupChips"></div>
+      </div>
+      <div class="card">
+        <h2>Agent pipeline <span class="stepper-run-meta" id="stepperRunMeta">—</span></h2>
+        <ol class="stepper" id="pipelineStepper">
+          <li class="idle" data-agent="Literature Synthesis Agent">Literature Synthesis <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Patient Subgroup Agent">Patient Subgroup <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Treatment Connection Agent">Treatment Connection <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Evidence Scoring Agent">Evidence Scoring <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Commercial Discovery Agent">Commercial Discovery <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Conclusion Update Agent">Conclusion Update <span class="step-state">Idle</span></li>
+        </ol>
+      </div>
+    </aside>
+    <main>
+      <div class="card run-hero">
+        <h2>Discovery run configuration</h2>
+        <label>Disease / search query</label>
+        <div class="field-primary">
+          <input type="text" id="disease" value="Parkinson disease" disabled />
+          <span class="tag-primary">Primary</span>
+        </div>
+
+        <label>Additional keyword filter (optional)</label>
+        <input type="text" id="query" placeholder="e.g. GBA GCase lysosomal" />
+
+        <label>Evidence in database</label>
+        <div class="source-cards source-cards-readonly" id="sourceCards">
+          <div class="source-card">
+            <div class="sc-n" id="srcCntPubmed">—</div>
+            <div class="sc-l">PubMed · Literature</div>
+          </div>
+          <div class="source-card">
+            <div class="sc-n" id="srcCntTrials">—</div>
+            <div class="sc-l">ClinicalTrials.gov</div>
+          </div>
+          <div class="source-card">
+            <div class="sc-n" id="srcCntGrants">—</div>
+            <div class="sc-l">NIH RePORTER</div>
+          </div>
+        </div>
+
+        <label>Max papers to pull <span class="range-val" id="maxLabel">150</span> <small style="font-weight:400;color:var(--muted)">(10–500)</small></label>
+        <input type="range" id="maxPapers" min="10" max="500" value="150" step="10" />
+
+        <div class="row">
+          <label class="inline"><input type="checkbox" id="preprints" /> Include preprints (bioRxiv)</label>
+          <label class="inline"><input type="checkbox" id="fulltext" checked /> Include full text (OA only)</label>
+          <label class="inline"><input type="checkbox" id="srcGrants" checked /> NIH grants (full pipeline only)</label>
+        </div>
+
+        <label>Run mode</label>
+        <div class="segmented" role="group" aria-label="Run mode">
+          <label class="seg-opt seg-purple"><input type="radio" name="mode" value="full" /><span>Full Pipeline</span></label>
+          <label class="seg-opt"><input type="radio" name="mode" value="scan" /><span>Incremental Scan</span></label>
+          <label class="seg-opt"><input type="radio" name="mode" value="demo" checked /><span>Demo (offline)</span></label>
+        </div>
+
+        <label>Extraction backend</label>
+        <div class="segmented" role="group" aria-label="Extraction backend">
+          <label class="seg-opt"><input type="radio" name="extract" value="nebius" checked /><span>Nebius (LLM)</span></label>
+          <label class="seg-opt"><input type="radio" name="extract" value="ollama" /><span>Ollama (local)</span></label>
+          <label class="seg-opt"><input type="radio" name="extract" value="none" /><span>None (abstract)</span></label>
+        </div>
+
+        <div class="banner banner-green">
+          <strong>Synthetic cohort layer</strong> — generates up to 5 illustrative patient profiles per subgroup.
+          No real patient data; HIPAA-safe visualization only.
+        </div>
+        <div class="banner banner-blue" id="liveDbBanner">
+          <strong>Live database</strong> — loading connection info…
+        </div>
+
+        <div class="btn-run-stack actions">
+          <button type="button" class="btn btn-primary" id="btnRun">▶ Run Discovery Pipeline</button>
+          <button type="button" class="btn btn-secondary" id="btnScan">Incremental Scan Only</button>
+        </div>
+        <div class="run-status-box idle" id="runStatusBox" aria-live="polite">
+          <div class="run-status-inner" style="padding:0;">
+            <span class="run-status-pill" id="runStatusPill">Ready</span>
+            <span class="run-status-detail" id="runStatus">Click Run Discovery Pipeline to start.</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Recent runs</h2>
+        <p class="runs-hint">
+          <strong>Complete</strong> = all 6 agents ran and recommendations were saved.
+          <strong>Partial</strong> = the run stopped early (some agents missing or no recommendations).
+        </p>
+        <table class="runs-table">
+          <thead>
+            <tr>
+              <th>Run ID</th><th>Date</th><th>Mode</th><th>Evidence</th>
+              <th>Subgroups</th><th>Synthetic</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="recentRuns"></tbody>
+        </table>
+      </div>
+    </main>
+    </div>
+  </div>
+
+  <div id="viewResults" class="hidden">
+    <p class="view-page-title">Step 2 — Discovery Results <span id="resultsSubtitle">Synthetic cohort · ranked treatments · research hypotheses</span></p>
+    <div class="results-wide">
+      <div class="results-pills" id="resultsPills">
+        <span class="badge ok" id="pillPipeline">Pipeline —</span>
+        <span class="badge syn" id="pillSynthetic">— Synthetic Profiles</span>
+        <span class="badge" id="pillSubTreat">— Subgroups · — Treatments</span>
+      </div>
+      <section class="pipeline-v2">
+        <h2>Discovery pipeline</h2>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Data inputs</div>
+          <div class="flow-row">
+            <span class="flow-box flow-input">Literature</span>
+            <span class="flow-box flow-input">Clinical Trials</span>
+            <span class="flow-box flow-input">Grants</span>
+            <span class="flow-box flow-input">Biomarkers &amp; Omics</span>
+          </div>
+        </div>
+        <div class="flow-arrow">▼</div>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Multi-agent pipeline</div>
+          <div class="flow-row">
+            <span class="flow-box flow-agent">① Literature</span>
+            <span class="flow-box flow-agent">② Subgroups</span>
+            <span class="flow-box flow-agent">③ Connections</span>
+          </div>
+          <div class="flow-row" style="margin-top:0.35rem;">
+            <span class="flow-box flow-agent">④ Evidence</span>
+            <span class="flow-box flow-agent">⑤ Commercial</span>
+            <span class="flow-box flow-agent">⑥ Conclusion</span>
+          </div>
+        </div>
+        <div class="flow-arrow">▼</div>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Discovery outputs</div>
+          <div class="flow-row">
+            <span class="flow-box flow-out-syn">Synthetic Cohort</span>
+            <span class="flow-box flow-out-rank">Ranked Outputs</span>
+            <span class="flow-box flow-out-hyp">Research Hypotheses</span>
+          </div>
+        </div>
+        <p class="flow-footer">Discovery logic = public evidence only · Synthetic data = safe visualization only · no HIPAA, no PHI, no real records</p>
+      </section>
+
+      <div class="outputs-three">
+        <div class="output-panel panel-syn">
+          <div class="output-panel-head">⚗ Synthetic Cohort</div>
+          <div class="output-panel-body">
+            <div class="syn-banner">Synthea-style profiles · no real patient data · no PHI · no HIPAA</div>
+            <div id="syntheticCohort" class="cohort-grid"></div>
+          </div>
+        </div>
+        <div class="output-panel panel-rank">
+          <div class="output-panel-head">Ranked Outputs</div>
+          <div class="output-panel-body">
+            <p style="font-size:0.68rem;color:var(--muted);margin:0 0 0.5rem;">
+              confidence = evidence_strength × 0.55 + commercial_potential × 0.45
+            </p>
+            <div id="confidenceBars"></div>
+            <div id="topRecs"></div>
+          </div>
+        </div>
+        <div class="output-panel panel-hyp">
+          <div class="output-panel-head">Research Hypotheses</div>
+          <div class="output-panel-body">
+            <p style="font-size:0.68rem;color:var(--muted);margin:0 0 0.5rem;">Prioritize tier · auditable citations</p>
+            <div id="hypotheses"></div>
+            <div class="section-label" style="margin-top:0.75rem;">Confidence trend (illustrative)</div>
+            <div id="continuousUpdate"></div>
+          </div>
+        </div>
+      </div>
+
+      <section class="audit-section">
+        <div class="section-label">Audit &amp; provenance</div>
+        <div class="audit-grid">
+          <div class="card">
+            <h2>Agent run trace <code id="traceRunId" style="font-size:0.7rem;font-weight:400;"></code></h2>
+            <ul class="timeline" id="agentTimeline"></ul>
+          </div>
+          <div class="card">
+            <h2>Evidence preview <span class="evidence-meta" id="evidenceMeta">—</span></h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
+                  <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th><th>Synthetic link</th>
+                </tr>
+              </thead>
+              <tbody id="evidenceTable"></tbody>
+            </table>
+            <div class="pager">
+              <button type="button" class="btn btn-secondary" id="evPrev">Prev</button>
+              <span id="evPageLabel">Page 1</span>
+              <button type="button" class="btn btn-secondary" id="evNext">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="demo-notice">
+        <strong>Demo data notice.</strong> Rows with <code>DEMO-*</code> source IDs are seed placeholders.
+        Run <code>python3 cli.py pull</code> (not <code>build</code> on team Supabase) to backfill real PMIDs and NCT ids.
+        Synthetic patient profiles contain zero real patient data.
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    const API_BASE = window.NEURODISCOVER_API || 'http://127.0.0.1:5000';
+    const SUPABASE_URL = window.SUPABASE_URL || localStorage.getItem('SUPABASE_URL') || '';
+    const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || localStorage.getItem('SUPABASE_ANON_KEY') || '';
+
+    let sb = null;
+    let useApiFallback = false;
+    let latestRunId = null;
+    let syntheticCohort = [];
+    let patientBySubgroup = {};
+    let evidenceCache = [];
+    let evPage = 0;
+    let evTotal = 0;
+    const EV_PAGE_SIZE = 6;
+    // Illustrative deltas only — not persisted run-over-run history yet
+    const DELTA_PLACEHOLDERS = ['+2.1 ↑', '+0.8 ↑', '-0.4 ↓', '+1.3 ↑', '+0.2 ↑'];
+    const TZ_EASTERN = 'America/New_York';
+    let statsCache = { totalEvidence: 0, subgroups: 0 };
+    let lastRunStats = null;
+    let kpiView = 'database';
+
+    /** DB timestamps are UTC; naive "YYYY-MM-DD HH:MM:SS" strings get a Z suffix. */
+    function parseDbTimestamp(value) {
+      if (value == null || value === '') return null;
+      if (value instanceof Date) return value;
+      const s = String(value).trim();
+      if (!s) return null;
+      if (/[Zz]$/.test(s) || /[+-]\d{2}:\d{2}$/.test(s) || /[+-]\d{4}$/.test(s)) {
+        return new Date(s);
+      }
+      const base = (s.includes('T') ? s : s.replace(' ', 'T')).split('.')[0];
+      return new Date(base + 'Z');
+    }
+
+    function formatEst(isoOrDate, { dateOnly, timeOnly } = {}) {
+      if (!isoOrDate) return '—';
+      try {
+        const d = isoOrDate instanceof Date ? isoOrDate : parseDbTimestamp(isoOrDate);
+        if (!d || Number.isNaN(d.getTime())) return String(isoOrDate);
+        const opts = {
+          timeZone: TZ_EASTERN,
+          timeZoneName: 'short',
+        };
+        if (timeOnly) {
+          return d.toLocaleTimeString('en-US', {
+            ...opts,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true,
+          });
+        }
+        if (dateOnly) {
+          return d.toLocaleDateString('en-US', {
+            timeZone: TZ_EASTERN,
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+          });
+        }
+        return d.toLocaleString('en-US', {
+          ...opts,
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+        });
+      } catch (e) {
+        return String(isoOrDate);
+      }
+    }
+
+    function formatScanTime(iso) {
+      return formatEst(iso);
+    }
+
+    function formatTime(ts) {
+      return formatEst(ts, { timeOnly: true });
+    }
+
+    function setRunStatus(state, pillText, detail, meta) {
+      const states = ['idle', 'running', 'complete', 'partial', 'error'];
+      const norm = states.includes(state) ? state : 'idle';
+      const pillLabels = {
+        idle: 'Ready',
+        running: 'Running',
+        complete: 'Complete',
+        partial: 'Partial',
+        error: 'Failed',
+      };
+      const label = pillText || pillLabels[norm];
+
+      const globalBar = document.getElementById('globalRunStatus');
+      const globalPill = document.getElementById('globalRunStatusPill');
+      const globalDetail = document.getElementById('globalRunStatusDetail');
+      const globalMeta = document.getElementById('globalRunStatusMeta');
+      if (globalBar) {
+        globalBar.className = 'run-status-strip ' + norm;
+        if (globalPill) globalPill.textContent = label;
+        if (globalDetail) globalDetail.textContent = detail || '';
+        if (globalMeta) globalMeta.textContent = meta || '';
+      }
+
+      const box = document.getElementById('runStatusBox');
+      const localPill = document.getElementById('runStatusPill');
+      const localDetail = document.getElementById('runStatus');
+      if (box) box.className = 'run-status-box ' + norm;
+      if (localPill) localPill.textContent = label;
+      if (localDetail) localDetail.textContent = detail || '';
+    }
+
+    function updateEvidenceSummaryBar(rs, dbFallback) {
+      const db = rs?.databaseTotals || dbFallback || {
+        literature: statsCache.literature ?? 0,
+        trial: statsCache.trial ?? 0,
+        grant: statsCache.grant ?? 0,
+        total: statsCache.totalEvidence ?? 0,
+      };
+      const set = (id, v) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = String(v ?? '—');
+      };
+      set('esDbLit', db.literature);
+      set('esDbTrial', db.trial);
+      set('esDbGrant', db.grant);
+      set('esDbTotal', db.total ?? ((db.literature || 0) + (db.trial || 0) + (db.grant || 0)));
+
+      const runCol = document.getElementById('esRunCol');
+      if (!rs) {
+        if (runCol) runCol.classList.add('hidden');
+        return;
+      }
+      const proc = rs.processed || rs.evidenceUsed || {};
+      const runTotal = (proc.literature ?? 0) + (proc.trial ?? 0) + (proc.grant ?? 0);
+      if (runCol) runCol.classList.remove('hidden');
+      set('esRunLit', proc.literature ?? 0);
+      set('esRunTrial', proc.trial ?? 0);
+      set('esRunGrant', proc.grant ?? 0);
+      set('esRunTotal', runTotal);
+    }
+
+    const AGENTS = [
+      'Literature Synthesis Agent',
+      'Patient Subgroup Agent',
+      'Treatment Connection Agent',
+      'Evidence Scoring Agent',
+      'Commercial Discovery Agent',
+      'Conclusion Update Agent',
+    ];
+
+    function initSupabase() {
+      const hint = document.getElementById('configHint');
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+        useApiFallback = true;
+        hint.classList.remove('hidden');
+        hint.innerHTML =
+          '<strong>Local mode (normal for demo).</strong> You did not set browser Supabase keys, so this page loads data through the Python API at '
+          + '<code>' + API_BASE + '</code> — not directly from the cloud. '
+          + 'If you ran <code>make dashboard</code>, that API is already running; ignore any extra terminal step. '
+          + 'Team cloud option (optional): add <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> in the page or localStorage — see QUICKSTART.md.';
+        document.getElementById('dbBadge').textContent = 'DB LIVE';
+        document.getElementById('dbTypeBadge').textContent = 'Local API';
+        return;
+      }
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      document.getElementById('dbBadge').textContent = 'DB LIVE';
+      document.getElementById('dbTypeBadge').textContent = 'Supabase Postgres';
+    }
+
+    async function sbSelect(table, opts = {}) {
+      if (!sb) throw new Error('no supabase');
+      let q = sb.from(table).select(opts.select || '*');
+      if (opts.count) q = q.select(opts.select || '*', { count: 'exact', head: true });
+      if (opts.order) q = q.order(opts.order.col, { ascending: opts.order.asc !== false });
+      if (opts.limit) q = q.limit(opts.limit);
+      if (opts.range) q = q.range(opts.range.from, opts.range.to);
+      const { data, error, count } = await q;
+      if (error) throw error;
+      return { data, count };
+    }
+
+    function setKpiSubtitles(litSub, trialSub, grantSub, sgSub, connSub) {
+      const map = [
+        ['kpiLitSub', litSub],
+        ['kpiTrialSub', trialSub],
+        ['kpiGrantSub', grantSub],
+        ['kpiSgSub', sgSub],
+        ['kpiConnSub', connSub],
+      ];
+      map.forEach(([id, text]) => {
+        const el = document.getElementById(id);
+        if (el && text != null) el.textContent = text;
+      });
+    }
+
+    function setKpiRunContext(isRun) {
+      kpiView = isRun ? 'run' : 'database';
+      document.querySelectorAll('#kpiStrip .kpi-item').forEach(el => {
+        el.classList.toggle('run-context', isRun);
+      });
+    }
+
+    function syncKpi(lit, trial, grant, sg, conn, mirrorSidebar) {
+      const pairs = [
+        ['cntLit', 'kpiLit', lit],
+        ['cntTrial', 'kpiTrial', trial],
+        ['cntGrant', 'kpiGrant', grant],
+        ['cntSg', 'kpiSg', sg],
+      ];
+      pairs.forEach(([a, b, v]) => {
+        const val = String(v ?? '—');
+        const elA = document.getElementById(a);
+        const elB = document.getElementById(b);
+        if (elA) elA.textContent = val;
+        if (elB) elB.textContent = val;
+      });
+      if (conn != null) {
+        const k = document.getElementById('kpiConn');
+        if (k) k.textContent = String(conn);
+      }
+      if (mirrorSidebar) {
+        const src = [
+          ['srcCntPubmed', lit],
+          ['srcCntTrials', trial],
+          ['srcCntGrants', grant],
+        ];
+        src.forEach(([id, v]) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = String(v ?? '—');
+        });
+      }
+    }
+
+    function applyRunStats(rs) {
+      if (!rs) return;
+      lastRunStats = rs;
+      setKpiRunContext(true);
+      const proc = rs.processed || rs.evidenceUsed || {};
+      const db = rs.databaseTotals || {};
+      const added = rs.added || rs.delta || {};
+      const sg = statsCache.subgroups || 5;
+      const conn = (rs.recommendationsCount != null) ? rs.recommendationsCount : proc.total;
+
+      syncKpi(proc.literature ?? 0, proc.trial ?? 0, proc.grant ?? 0, sg, conn, true);
+
+      const mode = (rs.mode || 'run').toUpperCase();
+      const max = rs.maxPapersRequested ?? '—';
+      setKpiSubtitles(
+        `${db.literature ?? 0} in DB · +${added.literature ?? 0} new`,
+        `${db.trial ?? 0} in DB · +${added.trial ?? 0} new`,
+        `${db.grant ?? 0} in DB · +${added.grant ?? 0} new`,
+        `${mode} · max ${max} papers`,
+        `${added.total ?? 0} evidence added`,
+      );
+
+      const total = db.total ?? statsCache.totalEvidence;
+      const eb = document.getElementById('evidenceTotalBadge');
+      if (eb) {
+        const procTotal = (proc.literature ?? 0) + (proc.trial ?? 0) + (proc.grant ?? 0);
+        eb.textContent = `${procTotal} used this run · ${total} in DB`;
+      }
+      const chip = document.getElementById('runIdChip');
+      if (chip && chip.style.display !== 'none') {
+        chip.textContent = `Run ${latestRunId} · ${proc.literature ?? 0} papers`;
+      }
+      updateEvidenceSummaryBar(rs);
+      const addedTotal = added.total ?? 0;
+      const procTotal = (proc.literature ?? 0) + (proc.trial ?? 0) + (proc.grant ?? 0);
+      const traceMeta = analyzeRunTraceFromStats(rs);
+      const statusState = (rs.status || traceMeta.status || 'complete').toLowerCase();
+      const norm = statusState === 'complete' ? 'complete' : 'partial';
+      setRunStatus(
+        norm,
+        rs.statusDetail || traceMeta.detail || (norm === 'complete' ? 'Pipeline complete' : 'Pipeline partial'),
+        `${mode} run ${latestRunId || '—'}: using ${proc.literature ?? 0} papers, `
+          + `${proc.trial ?? 0} trials, ${proc.grant ?? 0} grants (${procTotal} in this run).`,
+        `Agents ${rs.agentsDone ?? traceMeta.done}/${rs.agentsTotal ?? 6} · max ${max} papers · +${addedTotal} new in DB`,
+      );
+    }
+
+    function analyzeRunTraceFromStats(rs) {
+      const done = rs?.agentsDone ?? 0;
+      const total = rs?.agentsTotal ?? 6;
+      const missing = (rs?.agentsMissing || []).join(', ');
+      const recs = rs?.recommendationsCount ?? 0;
+      if (done >= 6 && recs >= 1) {
+        return { status: 'Complete', detail: `All 6 agents finished · ${recs} recommendations` };
+      }
+      if (done >= 6 || recs >= 5) {
+        return { status: 'Complete', detail: rs?.statusDetail || `${done}/6 agents · ${recs} recommendations` };
+      }
+      let detail = `Only ${done}/${total} agents finished`;
+      if (missing) detail += ` — missing: ${missing}`;
+      if (recs === 0) detail += ' · no recommendations saved';
+      return { status: 'Partial', detail: rs?.statusDetail || detail };
+    }
+
+    function applyDatabaseStats(s) {
+      setKpiRunContext(false);
+      lastRunStats = null;
+      const lit = s.literature ?? 0;
+      const trial = s.trial ?? 0;
+      const grant = s.grant ?? 0;
+      const sg = s.subgroups ?? 0;
+      const conn = s.connections ?? 5;
+      const total = s.totalEvidence ?? (lit + trial + grant);
+      syncKpi(lit, trial, grant, sg, conn, true);
+      setKpiSubtitles('in database', 'in database', 'in database', 'in database', 'in database');
+      updateHeaderFromStats(s);
+      updateEvidenceSummaryBar(null, { literature: lit, trial, grant, total });
+      if (!document.getElementById('globalRunStatus')?.classList.contains('running')) {
+        setRunStatus(
+          'idle',
+          'Ready',
+          'Database loaded. Run the pipeline on Step 1 to process a subset (e.g. max papers).',
+          s.lastScanAt ? `Last scan ${formatScanTime(s.lastScanAt)}` : '',
+        );
+      }
+    }
+
+    function updateRunMeta(runId, recCount, synCount) {
+      const chip = document.getElementById('runIdChip');
+      if (chip) {
+        if (runId) {
+          chip.style.display = 'inline-flex';
+          chip.textContent = `Run ${runId}`;
+        } else {
+          chip.style.display = 'none';
+        }
+      }
+      const sub = document.getElementById('resultsSubtitle');
+      if (sub && runId) sub.textContent = `Run ${runId} · synthetic cohort · ranked outputs · audit trace`;
+      const trace = document.getElementById('traceRunId');
+      if (trace) trace.textContent = runId ? `run_id: ${runId}` : '';
+      const nRec = recCount ?? 5;
+      const nSyn = synCount ?? (nRec > 0 ? 5 : 0);
+      const sg = statsCache.subgroups || 5;
+      const pillP = document.getElementById('pillPipeline');
+      const pillS = document.getElementById('pillSynthetic');
+      const pillST = document.getElementById('pillSubTreat');
+      if (pillP) pillP.textContent = nRec > 0 ? '• Pipeline Complete' : '• Pipeline Partial';
+      if (pillS) pillS.textContent = `${nSyn} Synthetic Profiles`;
+      if (pillST) pillST.textContent = `${sg} Subgroups · ${nRec || 5} Treatments`;
+    }
+
+    function updateHeaderFromStats(s) {
+      statsCache = {
+        totalEvidence: s.totalEvidence ?? 0,
+        subgroups: s.subgroups ?? 0,
+        literature: s.literature,
+        trial: s.trial,
+        grant: s.grant,
+      };
+      const total = s.totalEvidence ?? ((s.literature || 0) + (s.trial || 0) + (s.grant || 0));
+      const eb = document.getElementById('evidenceTotalBadge');
+      if (eb && kpiView === 'database') eb.textContent = `${total} Evidence Rows`;
+      const scanEl = document.getElementById('lastScanMeta');
+      if (scanEl) scanEl.textContent = 'Last scan: ' + formatScanTime(s.lastScanAt);
+      const pub = document.getElementById('srcCntPubmed');
+      const tri = document.getElementById('srcCntTrials');
+      const gr = document.getElementById('srcCntGrants');
+      if (pub) pub.textContent = String(s.literature ?? '—');
+      if (tri) tri.textContent = String(s.trial ?? '—');
+      if (gr) gr.textContent = String(s.grant ?? '—');
+      const banner = document.getElementById('liveDbBanner');
+      if (banner) {
+        const dbLabel = s.database || (s.supabaseConfigured ? 'Supabase Postgres' : 'Local SQLite');
+        banner.innerHTML = '<strong>Live DB active</strong> — connected via <code>' + escapeHtml(dbLabel) + '</code>. '
+          + 'Use <em>Incremental Scan</em> to add evidence without truncating tables. '
+          + (s.supabaseConfigured ? '' : 'Browser reads through the Python API at ' + API_BASE + '.');
+      }
+      if (s.supabaseConfigured && document.getElementById('dbTypeBadge')) {
+        document.getElementById('dbTypeBadge').textContent = 'Supabase Postgres';
+      }
+    }
+
+    async function loadCounts() {
+      try {
+        let lit = 0, trial = 0, grant = 0, sg = 0, conn = 5;
+        if (sb) {
+          const types = ['literature', 'trial', 'grant'];
+          for (const t of types) {
+            const { count } = await sb.from('evidence').select('*', { count: 'exact', head: true }).eq('source_type', t);
+            if (t === 'literature') lit = count ?? 0;
+            if (t === 'trial') trial = count ?? 0;
+            if (t === 'grant') grant = count ?? 0;
+          }
+          const { count: sgc } = await sb.from('subgroups').select('*', { count: 'exact', head: true });
+          sg = sgc ?? 0;
+          const { count: cc } = await sb.from('treatment_connections').select('*', { count: 'exact', head: true });
+          conn = cc ?? 5;
+        } else {
+          const r = await fetch(`${API_BASE}/api/stats`);
+          const s = await r.json();
+          lit = s.literature ?? 0;
+          trial = s.trial ?? 0;
+          grant = s.grant ?? 0;
+          sg = s.subgroups ?? 0;
+          conn = s.connections ?? 5;
+          if (s.lastRunId) {
+            latestRunId = latestRunId || s.lastRunId;
+            statsCache.lastRunId = s.lastRunId;
+          }
+          try {
+            if (!conn) {
+              const d = await fetch(`${API_BASE}/api/discover/parkinsons`).then(x => x.json());
+              conn = (d.treatmentConnections || []).length || 5;
+            }
+          } catch (e) { /* keep default */ }
+          applyDatabaseStats({ ...s, connections: conn });
+          return;
+        }
+        if (sb) {
+          const total = lit + trial + grant;
+          applyDatabaseStats({
+            literature: lit, trial, grant, subgroups: sg, totalEvidence: total,
+            connections: conn, lastScanAt: null, database: 'Supabase Postgres', supabaseConfigured: true,
+          });
+          return;
+        }
+      } catch (e) {
+        document.getElementById('dbBadge').textContent = 'Offline';
+      }
+    }
+
+    async function loadSubgroups() {
+      const box = document.getElementById('subgroupChips');
+      box.innerHTML = '';
+      try {
+        let rows = [];
+        if (sb) {
+          const { data: sgs } = await sb.from('subgroups').select('subgroup_id,name,defining_features');
+          for (const s of sgs || []) {
+            const { count } = await sb.from('subgroup_evidence').select('*', { count: 'exact', head: true }).eq('subgroup_id', s.subgroup_id);
+            rows.push({ ...s, evidence_count: count });
+          }
+        } else {
+          const r = await fetch(`${API_BASE}/api/discover/parkinsons`);
+          const d = await r.json();
+          rows = (d.subgroups || []).map(s => ({
+            name: s.name,
+            defining_features: s.definingFeatures,
+            evidence_count: s.evidenceCount,
+          }));
+        }
+        rows.forEach(s => {
+          const d = document.createElement('div');
+          d.className = 'chip';
+          const color = subgroupColor(s.name);
+          const ev = s.evidence_count ?? 0;
+          d.style.borderLeftColor = color;
+          d.innerHTML = `<div class="chip-row"><span class="sg-dot" style="background:${color}"></span><strong>${escapeHtml(s.name)}</strong></div>`
+            + `<small>${escapeHtml(s.defining_features || '—')}</small><br><small>${ev} ev</small>`;
+          box.appendChild(d);
+        });
+      } catch (e) {
+        box.innerHTML = '<small>Could not load subgroups.</small>';
+      }
+    }
+
+    async function loadRecentRuns() {
+      const tbody = document.getElementById('recentRuns');
+      tbody.innerHTML = '';
+      try {
+        let runs = [];
+        if (sb) {
+          const { data } = await sb.from('agent_outputs').select('run_id,created_at').order('output_id', { ascending: false }).limit(200);
+          const map = {};
+          (data || []).forEach(r => {
+            if (!r.run_id) return;
+            if (!map[r.run_id]) map[r.run_id] = { steps: 0, started: r.created_at };
+            map[r.run_id].steps++;
+          });
+          runs = Object.entries(map).slice(0, 5).map(([id, v]) => ({ run_id: id, ...v }));
+        } else {
+          const r = await fetch(`${API_BASE}/api/runs?limit=5`);
+          const d = await r.json();
+          runs = (d.runs || []).map(x => ({
+            run_id: x.runId,
+            steps: x.traceRows || x.steps,
+            started: x.startedAt,
+            mode: x.mode,
+            recommendations: x.recommendations,
+            syntheticProfiles: x.syntheticProfiles,
+            status: x.status,
+            statusDetail: x.statusDetail,
+            agentsDone: x.agentsDone,
+            agentsMissing: x.agentsMissing,
+          }));
+        }
+        runs.forEach(run => {
+          const tr = document.createElement('tr');
+          const date = formatScanTime(run.started);
+          const mode = (run.mode || 'demo').toUpperCase();
+          const recs = run.recommendations ?? run.steps ?? 0;
+          const syn = run.syntheticProfiles ? `✓ ${run.syntheticProfiles} profiles` : '—';
+          const status = run.status || (run.steps >= 6 ? 'Complete' : 'Partial');
+          const statusKey = status === 'Complete' ? 'complete' : 'partial';
+          const evNote = run.evidenceNote || `${recs} recs`;
+          const detail = run.statusDetail || (status === 'Complete'
+            ? 'All 6 agents finished'
+            : `Only ${run.agentsDone ?? '?'}/6 agents`);
+          tr.innerHTML = `<td><code>${escapeHtml(String(run.run_id).slice(0, 8))}</code></td>`
+            + `<td>${date}</td><td>${mode}</td>`
+            + `<td>${escapeHtml(evNote)}</td>`
+            + `<td>${statsCache.subgroups || 5}</td><td>${syn}</td>`
+            + `<td class="status-cell" title="${escapeHtml(detail)}">`
+            + `<span class="status-badge ${statusKey}">${status}</span>`
+            + `<span class="status-hint">${escapeHtml(detail)}</span></td>`;
+          tr.style.cursor = 'pointer';
+          tr.addEventListener('click', async () => {
+            latestRunId = run.run_id;
+            updateRunMeta(latestRunId, recs, run.syntheticProfiles);
+            const stKey = status === 'Complete' ? 'complete' : 'partial';
+            setRunStatus(stKey, status, detail, `Run ${run.run_id} · ${mode} · started ${date}`);
+            await refreshPipelineStepper(run.run_id);
+            try {
+              const rs = await fetch(`${API_BASE}/api/run-stats?run_id=${encodeURIComponent(run.run_id)}`);
+              if (rs.ok) {
+                const d = await rs.json();
+                d.runStats.recommendationsCount = recs;
+                applyRunStats(d.runStats);
+              }
+            } catch (e) { /* keep current kpi */ }
+            showView('results');
+            loadResults(latestRunId);
+          });
+          tbody.appendChild(tr);
+        });
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7">No runs yet</td></tr>';
+      }
+    }
+
+    async function refreshPipelineStepper(runId, steps, mode) {
+      const meta = document.getElementById('stepperRunMeta');
+      if (meta) {
+        meta.textContent = runId
+          ? (mode === 'running' ? `Run ${runId} · in progress…` : `Run ${runId}`)
+          : 'No active run';
+      }
+      if (mode === 'running') {
+        updateStepper([], { running: true });
+        return;
+      }
+      if (steps && steps.length) {
+        updateStepper(steps);
+        return;
+      }
+      if (!runId) {
+        updateStepper([]);
+        return;
+      }
+      try {
+        const ag = await fetch(`${API_BASE}/api/agents?run_id=${encodeURIComponent(runId)}`);
+        const d = await ag.json();
+        updateStepper(d.steps || []);
+      } catch (e) {
+        updateStepper([]);
+      }
+    }
+
+    function updateStepper(steps, opts) {
+      if (opts && opts.running) {
+        document.querySelectorAll('#pipelineStepper li').forEach(li => {
+          li.classList.remove('done', 'ready', 'idle', 'active');
+          li.classList.add('running');
+          const stateEl = li.querySelector('.step-state');
+          if (stateEl) stateEl.textContent = 'Running…';
+        });
+        return;
+      }
+      const completed = new Set((steps || []).map(s => s.agentName));
+      let markedReady = false;
+      document.querySelectorAll('#pipelineStepper li').forEach(li => {
+        li.classList.remove('done', 'ready', 'idle', 'active', 'running');
+        const a = li.dataset.agent;
+        const stateEl = li.querySelector('.step-state');
+        if (completed.has(a)) {
+          li.classList.add('done');
+          if (stateEl) stateEl.textContent = 'Done';
+        } else if (!markedReady && steps && steps.length) {
+          li.classList.add('ready');
+          if (stateEl) stateEl.textContent = 'Next';
+          markedReady = true;
+        } else {
+          li.classList.add('idle');
+          if (stateEl) stateEl.textContent = 'Idle';
+        }
+      });
+    }
+
+    function tierFromConfidence(c) {
+      if (c >= 80) return 'Prioritize';
+      if (c >= 65) return 'Monitor';
+      return 'Reject';
+    }
+
+    function subgroupColor(name) {
+      if (!name) return '#64748b';
+      if (name.includes('GBA')) return '#2563eb';
+      if (name.includes('LRRK2')) return '#0d9488';
+      if (name.includes('Alpha') || name.includes('synuclein')) return '#7c3aed';
+      if (name.includes('Inflamm')) return '#dc2626';
+      if (name.includes('Rapid')) return '#d97706';
+      return '#64748b';
+    }
+
+    function pmidHref(sourceId) {
+      if (!sourceId) return '#';
+      const raw = String(sourceId).replace('PMID:', '').replace('DEMO-PMID-', '').trim();
+      if (/^\d+$/.test(raw)) return `https://pubmed.ncbi.nlm.nih.gov/${raw}/`;
+      return '#';
+    }
+
+    function nctHref(sourceId) {
+      if (!sourceId) return '#';
+      const raw = String(sourceId).replace(/^NCT/i, '').replace('DEMO-NCT-', '').trim();
+      if (/^NCT\d+/i.test(String(sourceId))) return `https://clinicaltrials.gov/study/${String(sourceId).toUpperCase()}`;
+      if (/^\d+/.test(raw)) return `https://clinicaltrials.gov/study/NCT${raw}`;
+      return '#';
+    }
+
+    function quoteFromRationale(text) {
+      if (!text) return '';
+      const m = text.match(/['"]([^'"]{20,120})['"]/);
+      if (m) return m[1];
+      const s = text.split(/(?<=[.!?])\s+/)[0] || text;
+      return s.length > 120 ? s.slice(0, 117) + '…' : s;
+    }
+
+    async function fetchSyntheticCohort(runId) {
+      if (!runId) return [];
+      try {
+        const r = await fetch(`${API_BASE}/api/synthetic-cohort?run_id=${encodeURIComponent(runId)}`);
+        const d = await r.json();
+        return d.synthetic_cohort || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderSyntheticCohort(cohort) {
+      const box = document.getElementById('syntheticCohort');
+      box.innerHTML = '';
+      patientBySubgroup = {};
+      (cohort || []).forEach(p => {
+        patientBySubgroup[p.subgroup] = p.patient_id;
+        const color = p.subgroup_color || subgroupColor(p.subgroup);
+        const card = document.createElement('div');
+        card.className = 'syn-card';
+        card.style.borderLeft = `4px solid ${color}`;
+        const conf = Math.min(100, Number(p.confidence) || 0);
+        const profileShort = (p.key_feature || '').split(';')[0].slice(0, 28) || 'PD subgroup';
+        const profileLine = `${p.synthetic_age}${p.synthetic_sex} · ${profileShort}`;
+        const onset = `~${Math.max(40, (p.synthetic_age || 60) - 8)}y (synthetic)`;
+        card.innerHTML = `
+          <div class="syn-head">
+            <div class="syn-avatar" style="background:${color}">${p.patient_letter || '?'}</div>
+            <div>
+              <strong>${escapeHtml(p.patient_id)}</strong>
+              <span class="pill-syn">Synthetic only</span> <span class="pill-syn" style="background:#ecfdf5;">No PHI</span>
+            </div>
+          </div>
+          <div class="syn-grid">
+            <div><label>Subgroup</label>${escapeHtml(p.subgroup)}</div>
+            <div><label>Profile</label>${escapeHtml(profileLine)}</div>
+            <div><label>Key feature</label>${escapeHtml(p.key_feature || '—')}</div>
+            <div><label>Onset / course</label>${onset}</div>
+          </div>
+          <div class="syn-opp">
+            <strong>Top opportunity</strong> — ${escapeHtml(p.top_opportunity || '—')}
+            <div class="conf-mini-track"><div class="conf-mini-fill" style="width:${conf}%"></div></div>
+            <small>${escapeHtml(p.mechanism || '')} · confidence ${conf}</small>
+          </div>
+          <span class="pill-phi">🔒 Synthetic · no PHI</span>`;
+        box.appendChild(card);
+      });
+    }
+
+    function renderHypotheses(recommendations) {
+      const box = document.getElementById('hypotheses');
+      box.innerHTML = '';
+      const allHyp = (recommendations || []).slice(0, 4);
+      if (!allHyp.length) {
+        box.innerHTML = '<p style="font-size:0.8rem;color:var(--muted);">Run the pipeline to generate research hypotheses.</p>';
+        return;
+      }
+      allHyp.forEach((rec, hi) => {
+        const color = subgroupColor(rec.subgroup);
+        const cites = (evidenceCache || []).filter(e => e.subgroup === rec.subgroup).slice(0, 4);
+        let citeHtml = '';
+        cites.forEach(e => {
+          const sid = e.source_id || e.sourceId || '';
+          const st = e.source_type || e.sourceType || '';
+          if (String(sid).includes('NCT') || st === 'trial') {
+            citeHtml += `<a class="cite-pill" href="${nctHref(sid)}" target="_blank" rel="noopener">NCT</a>`;
+          } else {
+            citeHtml += `<a class="cite-pill" href="${pmidHref(sid)}" target="_blank" rel="noopener">PMID</a>`;
+          }
+        });
+        if (!citeHtml) citeHtml = '<span class="cite-pill">linked evidence</span>';
+        const tier = rec.tier || tierFromConfidence(rec.confidence || 0);
+        const warn = tier === 'Monitor' ? ' ⚠' : '';
+        const title = `${rec.treatment} — ${rec.subgroup}`;
+        const rationale = rec.rationale || `Hypothesis: ${rec.mechanism || 'mechanism'} may benefit ${rec.subgroup}.`;
+        const sentences = rationale.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
+        const card = document.createElement('div');
+        card.className = 'hyp-card';
+        card.style.borderLeftColor = color;
+        card.innerHTML = `
+          <div class="hyp-num">H${hi + 1}</div>
+          <h4 style="margin:0.15rem 0 0.35rem;font-size:0.9rem;">${escapeHtml(title)}${warn}
+            <span class="tier tier-${tier}" style="margin-left:0.35rem;">${tier}</span>
+          </h4>
+          <p style="font-size:0.78rem;margin:0 0 0.5rem;">${escapeHtml(sentences)}</p>
+          <div>${citeHtml}<span class="conf-pill">Conf: ${rec.confidence ?? '—'}</span></div>`;
+        box.appendChild(card);
+      });
+    }
+
+    function renderContinuousUpdate(recommendations) {
+      const box = document.getElementById('continuousUpdate');
+      box.innerHTML = '';
+      (recommendations || []).slice(0, 5).forEach((r, i) => {
+        const pct = Math.min(100, r.confidence || 0);
+        const delta = DELTA_PLACEHOLDERS[i % DELTA_PLACEHOLDERS.length];
+        const row = document.createElement('div');
+        row.className = 'update-bar';
+        row.innerHTML = `
+          <div class="bar-label"><span>${escapeHtml(r.treatment || r.subgroup)}</span><span class="delta-up">${delta}</span></div>
+          <div class="bar-track"><div class="bar-fill prioritize" style="width:${pct}%"></div></div>`;
+        box.appendChild(row);
+      });
+    }
+
+    async function loadEvidenceCache() {
+      try {
+        const r = await fetch(`${API_BASE}/api/evidence?offset=0&limit=100`);
+        const d = await r.json();
+        evidenceCache = (d.items || []).map(e => ({
+          source_id: e.sourceId,
+          sourceId: e.sourceId,
+          source_type: e.sourceType,
+          subgroup: e.subgroup,
+          title: e.title,
+        }));
+      } catch (e) {
+        evidenceCache = [];
+      }
+    }
+
+    async function loadResults(runId, runPayload) {
+      runPayload = runPayload || {};
+      let connections = [];
+      let recommendations = runPayload.recommendations || [];
+      let steps = runPayload.steps || [];
+
+      if (sb) {
+        const { data: tc } = await sb.from('treatment_connections').select('connection_id,mechanism,treatment,evidence_strength,commercial_potential,subgroups(name)');
+        connections = (tc || []).map(r => {
+          const es = r.evidence_strength || 0;
+          const cp = r.commercial_potential || 0;
+          const conf = Math.round((es * 0.55 + cp * 0.45) * 10) / 10;
+          return {
+            subgroup: r.subgroups?.name,
+            mechanism: r.mechanism,
+            treatment: r.treatment,
+            confidence: conf,
+            tier: tierFromConfidence(conf),
+          };
+        });
+        if (!recommendations.length) {
+          let rq = sb.from('recommendations').select('*').order('confidence', { ascending: false });
+          if (runId) rq = rq.eq('run_id', runId);
+          const { data: recs } = await rq.limit(10);
+          recommendations = recs || [];
+        }
+        if (!steps.length) {
+          let sq = sb.from('agent_outputs').select('*').order('output_id', { ascending: true });
+          if (runId) sq = sq.eq('run_id', runId);
+          else sq = sq.order('output_id', { ascending: false }).limit(20);
+          const { data: st } = await sq;
+          steps = (st || []).map(s => ({
+            agentName: s.agent_name,
+            stepOrder: s.step_order,
+            summary: s.summary,
+            createdAt: s.created_at,
+          }));
+        }
+      } else {
+        const agUrl = runId
+          ? `${API_BASE}/api/agents?run_id=${encodeURIComponent(runId)}`
+          : `${API_BASE}/api/agents`;
+        const recUrl = runId
+          ? `${API_BASE}/api/recommendations?run_id=${encodeURIComponent(runId)}`
+          : `${API_BASE}/api/recommendations`;
+        const [d, rec, ag] = await Promise.all([
+          fetch(`${API_BASE}/api/discover/parkinsons`).then(r => r.json()),
+          fetch(recUrl).then(r => r.json()),
+          fetch(agUrl).then(r => r.json()),
+        ]);
+        connections = (d.treatmentConnections || []).map(c => ({
+          subgroup: c.subgroup,
+          mechanism: c.mechanism,
+          treatment: c.treatment,
+          confidence: c.confidence,
+          tier: tierFromConfidence(c.confidence || 0),
+        }));
+        if (!recommendations.length) {
+          recommendations = rec.recommendations || [];
+        }
+        if (!steps.length) {
+          steps = ag.steps || [];
+          if (ag.runId) latestRunId = ag.runId;
+        }
+      }
+
+      if (runPayload.synthetic_cohort && runPayload.synthetic_cohort.length) {
+        syntheticCohort = runPayload.synthetic_cohort;
+      } else if (runId) {
+        syntheticCohort = await fetchSyntheticCohort(runId);
+      }
+      if (!syntheticCohort.length && recommendations.length) {
+        syntheticCohort = recommendations.slice(0, 5).map((r, i) => ({
+          patient_id: `Patient ${String.fromCharCode(65 + i)}`,
+          patient_letter: String.fromCharCode(65 + i),
+          subgroup: r.subgroup,
+          subgroup_color: subgroupColor(r.subgroup),
+          synthetic_age: 60 + i,
+          synthetic_sex: i % 2 ? 'F' : 'M',
+          key_feature: r.subgroup,
+          course: 'Illustrative synthetic profile',
+          top_opportunity: r.treatment,
+          mechanism: r.mechanism,
+          confidence: r.confidence,
+          is_synthetic: true,
+          phi_free: true,
+        }));
+      }
+      renderSyntheticCohort(syntheticCohort);
+      await loadEvidenceCache();
+
+      connections.sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
+      const bars = document.getElementById('confidenceBars');
+      bars.innerHTML = '';
+      connections.forEach(c => {
+        const pct = Math.min(100, c.confidence || 0);
+        const tier = c.tier || tierFromConfidence(pct);
+        const tierCls = tier.toLowerCase();
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+          <div class="bar-label">
+            <span>${escapeHtml(c.treatment || c.subgroup)}</span>
+            <span><span class="tier tier-${tier}">${tier}</span> ${pct}</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill ${tierCls}" style="width:${pct}%"></div></div>`;
+        bars.appendChild(row);
+      });
+
+      const top = document.getElementById('topRecs');
+      top.innerHTML = '';
+      const ranked = (recommendations.length ? recommendations : connections).slice(0, 5);
+      ranked.forEach((r, i) => {
+        const conf = r.confidence ?? 0;
+        const tier = r.tier || tierFromConfidence(conf);
+        const color = subgroupColor(r.subgroup);
+        const patient = patientBySubgroup[r.subgroup] || '';
+        const patientTag = patient ? `<span class="pill-patient">⚗ ${escapeHtml(patient)}</span>` : '';
+        const quote = quoteFromRationale(r.rationale || '');
+        const card = document.createElement('div');
+        card.className = 'rec-card';
+        card.innerHTML = `
+          <div class="rank" style="display:flex;justify-content:space-between;">
+            <span>#${i + 1} · ${escapeHtml(r.subgroup)}</span>
+            <span class="tier tier-${tier}">${tier}</span>
+          </div>
+          <h4>${escapeHtml(r.treatment)}</h4>
+          <p style="font-size:0.75rem;margin:0.25rem 0;">${escapeHtml(r.mechanism || '—')}</p>
+          ${quote ? `<p class="rec-quote">"${escapeHtml(quote)}"</p>` : ''}
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong class="conf-big">${conf}</strong>
+            ${patientTag}
+          </div>`;
+        top.appendChild(card);
+      });
+
+      renderHypotheses(recommendations.length ? recommendations : connections);
+      renderContinuousUpdate(recommendations.length ? recommendations : connections);
+
+      const tl = document.getElementById('agentTimeline');
+      tl.innerHTML = '';
+      const rid = runId || latestRunId;
+      updateRunMeta(rid, ranked.length, syntheticCohort.length);
+      steps.forEach(s => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="ts">${formatTime(s.createdAt)}</span>`
+          + `<strong>${escapeHtml(s.agentName)}</strong><br>${escapeHtml(s.summary || '')}`;
+        tl.appendChild(li);
+      });
+      if (syntheticCohort.length) {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="ts">${formatTime(steps[steps.length - 1]?.createdAt)}</span>`
+          + `<strong>Synthetic Cohort Generator</strong><br>Generated ${syntheticCohort.length} synthetic patient profiles.`;
+        tl.appendChild(li);
+      }
+      updateStepper(steps);
+      refreshPipelineStepper(rid || latestRunId, steps);
+      await loadEvidencePage();
+    }
+
+    async function loadEvidencePage() {
+      const tbody = document.getElementById('evidenceTable');
+      tbody.innerHTML = '';
+      const from = evPage * EV_PAGE_SIZE;
+      const to = from + EV_PAGE_SIZE - 1;
+      try {
+        let rows = [];
+        if (sb) {
+          const { data } = await sb.from('evidence').select('source_type,title,year,subgroup,mechanism,treatment,study_type,sample_size,access_status')
+            .order('evidence_id', { ascending: true }).range(from, to);
+          rows = data || [];
+        } else {
+          const off = evPage * EV_PAGE_SIZE;
+          const r = await fetch(`${API_BASE}/api/evidence?offset=${off}&limit=${EV_PAGE_SIZE}`);
+          const d = await r.json();
+          evTotal = d.total ?? evTotal;
+          rows = (d.items || []).map(e => ({
+            source_id: e.sourceId,
+            source_type: e.sourceType,
+            title: e.title,
+            year: e.year,
+            subgroup: e.subgroup,
+            mechanism: e.mechanism,
+            treatment: e.treatment,
+            study_type: e.studyType,
+            sample_size: e.sampleSize,
+            access_status: e.accessStatus,
+          }));
+        }
+        rows.forEach(e => {
+          const tr = document.createElement('tr');
+          const typeCls = e.source_type === 'literature' ? 'type-literature' : e.source_type === 'trial' ? 'type-trial' : 'type-grant';
+          const acc = accessLabel(e.access_status);
+          const patient = patientBySubgroup[e.subgroup];
+          const synLink = patient
+            ? `<span class="syn-link-btn">${escapeHtml(patient)}</span>`
+            : '—';
+          tr.innerHTML = `
+            <td><span class="type-badge ${typeCls}">${(e.source_type || 'lit').slice(0, 3)}</span></td>
+            <td>${escapeHtml(e.title || '—')}</td>
+            <td>${e.year || '—'}</td>
+            <td>${escapeHtml(e.subgroup || '—')}</td>
+            <td>${escapeHtml(e.mechanism || '—')}</td>
+            <td>${escapeHtml(e.treatment || '—')}</td>
+            <td>${escapeHtml(e.study_type || '—')}</td>
+            <td>${e.sample_size ?? '—'}</td>
+            <td class="${acc.cls}">${acc.label}</td>
+            <td>${synLink}</td>`;
+          tbody.appendChild(tr);
+        });
+        const shown = evPage * EV_PAGE_SIZE + rows.length;
+        const meta = document.getElementById('evidenceMeta');
+        if (meta) meta.textContent = `Showing ${shown} of ${evTotal || '—'} rows · live from API`;
+        document.getElementById('evPageLabel').textContent = `Page ${evPage + 1}`;
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="10">Could not load evidence.</td></tr>';
+      }
+    }
+
+    function accessLabel(s) {
+      if (s === 'open') return { label: 'Open', cls: 'access-open' };
+      if (s === 'abstract_only') return { label: 'Abstract', cls: 'access-abstract' };
+      if (s === 'restricted') return { label: 'Restricted', cls: 'access-restricted' };
+      return { label: s || '—', cls: '' };
+    }
+
+    function escapeHtml(t) {
+      const d = document.createElement('div');
+      d.textContent = t;
+      return d.innerHTML;
+    }
+
+    function getMode() {
+      return document.querySelector('input[name=mode]:checked')?.value || 'demo';
+    }
+
+    function getExtract() {
+      return document.querySelector('input[name=extract]:checked')?.value || 'nebius';
+    }
+
+    async function postRun(mode) {
+      const btn = document.getElementById('btnRun');
+      const btnScan = document.getElementById('btnScan');
+      btn.disabled = true;
+      if (btnScan) btnScan.disabled = true;
+      const modeLabel = mode.toUpperCase();
+      latestRunId = null;
+      refreshPipelineStepper(null, null, 'running');
+      setRunStatus(
+        'running',
+        'Running',
+        `${modeLabel} pipeline in progress — agents 1→6…`,
+        `Started ${formatEst(new Date())}`,
+      );
+      const body = {
+        mode,
+        query: document.getElementById('query').value.trim() || null,
+        max_papers: parseInt(document.getElementById('maxPapers').value, 10),
+        disease: document.getElementById('disease').value,
+        include_preprints: document.getElementById('preprints').checked ? 20 : 0,
+        with_fulltext: document.getElementById('fulltext').checked,
+        extract_backend: getExtract(),
+        pull_grants: document.getElementById('srcGrants').checked,
+      };
+      try {
+        const res = await fetch(`${API_BASE}/api/run-discovery`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || res.statusText);
+        latestRunId = data.run_id;
+        syntheticCohort = data.synthetic_cohort || [];
+        const steps = data.agent_outputs || data.steps || [];
+        const rs = data.runStats || null;
+        updateRunMeta(latestRunId, (data.recommendations || []).length, syntheticCohort.length);
+        if (rs) {
+          rs.recommendationsCount = (data.recommendations || []).length;
+          applyRunStats(rs);
+        } else {
+          setRunStatus(
+            'complete',
+            'Complete',
+            `Run ${data.run_id} finished with ${syntheticCohort.length} synthetic profiles.`,
+            formatEst(new Date()),
+          );
+        }
+        await refreshPipelineStepper(latestRunId, steps);
+        await loadRecentRuns();
+        showView('results');
+        await loadResults(latestRunId, {
+          recommendations: data.recommendations,
+          steps,
+          synthetic_cohort: syntheticCohort,
+        });
+      } catch (e) {
+        setRunStatus('error', 'Failed', e.message, formatEst(new Date()));
+      } finally {
+        btn.disabled = false;
+        if (btnScan) btnScan.disabled = false;
+      }
+    }
+
+    function showView(name) {
+      document.getElementById('viewInput').classList.toggle('hidden', name !== 'input');
+      document.getElementById('viewResults').classList.toggle('hidden', name !== 'results');
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.view === name);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('maxPapers').addEventListener('input', e => {
+      document.getElementById('maxLabel').textContent = e.target.value;
+    });
+    document.getElementById('btnRun').addEventListener('click', () => postRun(getMode()));
+    document.getElementById('btnScan').addEventListener('click', () => postRun('scan'));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.addEventListener('click', () => showView(b.dataset.view));
+    });
+    document.getElementById('evPrev').addEventListener('click', () => { if (evPage > 0) { evPage--; loadEvidencePage(); } });
+    document.getElementById('evNext').addEventListener('click', () => { evPage++; loadEvidencePage(); });
+
+    async function boot() {
+      initSupabase();
+      await loadCounts();
+      await loadSubgroups();
+      await loadRecentRuns();
+      if (latestRunId) await refreshPipelineStepper(latestRunId);
+      else if (statsCache.lastRunId) {
+        latestRunId = statsCache.lastRunId;
+        await refreshPipelineStepper(latestRunId);
+      }
+      let hasRecs = false;
+      try {
+        if (sb) {
+          const { count } = await sb.from('recommendations').select('*', { count: 'exact', head: true });
+          hasRecs = count > 0;
+        } else {
+          const r = await fetch(`${API_BASE}/api/recommendations`);
+          const d = await r.json();
+          hasRecs = (d.recommendations || []).length > 0;
+        }
+      } catch (e) { /* ignore */ }
+      showView(hasRecs ? 'results' : 'input');
+      if (hasRecs) {
+        if (latestRunId) {
+          try {
+            const rs = await fetch(`${API_BASE}/api/run-stats?run_id=${encodeURIComponent(latestRunId)}`);
+            if (rs.ok) applyRunStats((await rs.json()).runStats);
+          } catch (e) { /* database view */ }
+        }
+        await loadResults(latestRunId);
+      }
+    }
+    boot();
+  </script>
+</body>
+</html>

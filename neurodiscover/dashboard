@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# One-word launcher: ./dashboard  (from neurodiscover/)
+cd "$(dirname "$0")"
+exec python3 cli.py dashboard "$@"

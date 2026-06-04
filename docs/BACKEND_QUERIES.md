@@ -4,13 +4,15 @@
 **Full SQL:** [`queries.sql`](../queries.sql)  
 **Schema:** [`DATABASE.md`](DATABASE.md)
 
-## Connection (Flask example)
+## Connection (Python example)
 
 ```python
 import sqlite3
 conn = sqlite3.connect("neurodiscover.db")
 conn.row_factory = sqlite3.Row
 ```
+
+Implemented server: `neurodiscover/api_server.py` (FastAPI). See [`PERSON2_API_ENDPOINTS.md`](PERSON2_API_ENDPOINTS.md).
 
 No MongoDB required. If you mirror to Atlas, use field names from the MongoDB mapping table in `DATABASE.md`. Collection: **`evidence`**, not `papers`.
 
@@ -135,19 +137,139 @@ ORDER BY r.confidence DESC;
 
 ## POST /api/run-discovery
 
-Trigger the agent pipeline (Person 4 implements orchestration). Backend should:
+Trigger the agent pipeline (`orchestrator.py`).
 
-1. Generate a shared `run_id`
-2. Run agents 1→6 in order (or call their Python modules)
-3. Return the latest `recommendations` + `agent_outputs` for that `run_id`
+**Request:**
 
-Literature agent entry points:
+```json
+{ "mode": "demo", "query": null, "max_papers": 150 }
+```
+
+`mode`: `demo` | `scan` | `full`
+
+**Response:**
+
+```json
+{
+  "run_id": "a1b2c3d4",
+  "recommendations": [{ "subgroup": "...", "treatment": "...", "confidence": 75.7, "tier": "Monitor", "rationale": "..." }],
+  "agent_outputs": [{ "agentName": "Literature Synthesis Agent", "stepOrder": 1, "summary": "...", "createdAt": "..." }],
+  "steps": [],
+  "synthetic_cohort": [{ "patient_id": "Patient A", "subgroup": "...", "confidence": 82.5, "is_synthetic": true }],
+  "runStats": {
+    "mode": "demo",
+    "maxPapersRequested": 5,
+    "processed": { "literature": 5, "trial": 0, "grant": 0, "total": 5 },
+    "databaseTotals": { "literature": 228, "trial": 39, "grant": 40, "total": 307 },
+    "added": { "literature": 0, "trial": 0, "grant": 0, "total": 0 }
+  }
+}
+```
+
+`steps` is an alias of `agent_outputs`.
+
+---
+
+## Dashboard read helpers (API-only mode — no browser Supabase keys)
+
+Used when the frontend does not set `SUPABASE_URL` / `SUPABASE_ANON_KEY`.
+
+### GET /api/stats
+
+```json
+{
+  "literature": 228,
+  "trial": 39,
+  "grant": 40,
+  "subgroups": 5,
+  "connections": 5,
+  "totalEvidence": 307,
+  "lastScanAt": "2026-06-02T14:32:00",
+  "lastRunId": "a1b2c3d4",
+  "database": "sqlite",
+  "supabaseConfigured": false
+}
+```
+
+### GET /api/run-stats?run_id=a1b2c3d4
+
+Same `runStats` object shape as in `POST /api/run-discovery` (for revisiting a past run in the UI).
+
+### GET /api/evidence?offset=0&limit=15
+
+```json
+{ "items": [{ "sourceType": "literature", "title": "...", "accessStatus": "open" }], "total": 307, "offset": 0, "limit": 15 }
+```
+
+### GET /api/runs?limit=5
+
+```json
+{
+  "runs": [{
+    "runId": "abc123",
+    "steps": 6,
+    "startedAt": "...",
+    "mode": "demo",
+    "recommendations": 5,
+    "syntheticProfiles": 5,
+    "status": "Complete",
+    "evidenceNote": "5 papers (demo)"
+  }]
+}
+```
+
+### GET /api/agents?run_id=abc123
+
+Same shape as **GET /api/agents** below; optional `run_id` query param.
+
+### GET /api/synthetic-cohort?run_id=abc123
+
+Ephemeral Synthea-style demo profiles (not stored in DB).
+
+```json
+{
+  "run_id": "abc123",
+  "synthetic_cohort": [
+    {
+      "patient_id": "Patient A",
+      "patient_letter": "A",
+      "subgroup": "GBA-mutation PD",
+      "subgroup_color": "#2563eb",
+      "synthetic_age": 68,
+      "synthetic_sex": "M",
+      "key_feature": "GBA1 variant carriers",
+      "top_opportunity": "GCase activation",
+      "mechanism": "lysosomal dysfunction",
+      "confidence": 82.5,
+      "is_synthetic": true,
+      "phi_free": true
+    }
+  ]
+}
+```
+
+`POST /api/run-discovery` returns the same `synthetic_cohort` array plus `agent_outputs` (alias of `steps`).
+
+---
+
+## Quick verify
+
+**Local (no Supabase keys):**
 
 ```bash
-python3 cli.py demo                    # safe offline demo
-python3 cli.py pull --max 10           # pre-stage live pull
-python3 cli.py scan --max 5            # incremental update
+cd neurodiscover
+python3 cli.py build          # local neurodiscover.db only
+python3 cli.py validate
+python3 api_server.py         # port 5000
+curl -s http://127.0.0.1:5000/api/stats
+curl -s http://127.0.0.1:5000/api/recommendations
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
 ```
+
+**Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, **do not** run `build`, then `validate`, `api_server.py`, and the same `curl` lines.
+
+See [`neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md).
 
 ---
 

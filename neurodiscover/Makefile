@@ -1,4 +1,4 @@
-.PHONY: install build demo pull scan validate show clean
+.PHONY: install build demo dashboard pull scan validate show clean
 
 install:
 	pip install -r requirements.txt
@@ -8,6 +8,10 @@ build:
 
 demo: build
 	python3 cli.py demo
+
+# One word: make dashboard  →  same as  python3 cli.py dashboard
+dashboard:
+	python3 cli.py dashboard
 
 pull:
 	python3 cli.py pull --disease "Parkinson disease" --since 2022 --max 10

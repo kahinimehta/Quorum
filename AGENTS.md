@@ -24,7 +24,12 @@ but all share the database below.
 | [`queries.sql`](queries.sql) | Person 2 — copy-paste SELECTs |
 | [`docs/SUPABASE.md`](docs/SUPABASE.md) | Team shared live DB (free tier) |
 | [`docs/PERSON2_BACKEND.md`](docs/PERSON2_BACKEND.md) | Person 2 Supabase connection |
+| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard + API UI |
+| [`docs/PERSON2_API_ENDPOINTS.md`](docs/PERSON2_API_ENDPOINTS.md) | FastAPI route list |
 | [`docs/VALIDATION.md`](docs/VALIDATION.md) | Extraction QA after pull |
+| [`docs/index.html`](docs/index.html) | GitHub Pages — purpose, team, workflow (enable Pages from `/docs`) |
+| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard architecture + quick verify |
+| [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Run UI in &lt; 5 min (no Supabase keys OK) |
 
 **Canonical store:** SQLite locally, or **Supabase Postgres** when `SUPABASE_DATABASE_URL` is set. Table is **`evidence`**, not `papers`.
 
@@ -49,6 +54,22 @@ python3 cli.py scan --max 5    # incremental scan (skips LLM for known source_id
 python3 cli.py show [table]    # inspect tables
 python3 cli.py query "SQL"     # run a read query
 ```
+
+## Dashboard (one command: `dashboard`)
+
+```bash
+cd neurodiscover
+make dashboard
+# → http://127.0.0.1:8080  (Ctrl+C to stop)
+```
+
+Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip). Leave `SUPABASE_DATABASE_URL` unset for local demo.
+
+| Doc | Purpose |
+|-----|---------|
+| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Architecture + UI map |
+| [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Step-by-step |
+| [`docs/BACKEND_QUERIES.md`](docs/BACKEND_QUERIES.md) | API JSON shapes |
 
 ## Architecture: 6 agents, database is the blackboard
 The pipeline runs in order. Each agent READS what the previous wrote and WRITES

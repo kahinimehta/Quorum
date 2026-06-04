@@ -19,6 +19,7 @@ python3 cli.py validate
 | Database / schema | [`docs/DATABASE.md`](docs/DATABASE.md) |
 | Agent authors (Person 4) | [`docs/AGENT_IO.md`](docs/AGENT_IO.md) — new agents under `neurodiscover/agents/` |
 | Backend (Person 2) | [`docs/BACKEND_QUERIES.md`](docs/BACKEND_QUERIES.md), [`docs/PERSON2_BACKEND.md`](docs/PERSON2_BACKEND.md), [`queries.sql`](queries.sql) |
+| Dashboard | [`docs/DASHBOARD.md`](docs/DASHBOARD.md), [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) |
 | Shared Supabase | [`docs/SUPABASE.md`](docs/SUPABASE.md) |
 
 ## Database rules

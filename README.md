@@ -8,6 +8,7 @@ Hackathon project: continuous discovery of Parkinson's disease patient subgroups
 |----------|----------|
 | Cursor / coding agents | [`AGENTS.md`](AGENTS.md) |
 | Humans onboarding | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
+| **Project docs (web)** | [`docs/index.html`](docs/index.html) — enable [GitHub Pages](https://docs.github.com/en/pages) from `/docs` |
 | Database contract | [`docs/DATABASE.md`](docs/DATABASE.md) |
 
 **Storage:** SQLite locally, or **Supabase Postgres** for the team shared DB (`SUPABASE_DATABASE_URL`). Not MongoDB — the working doc's `papers` collection maps to **`evidence`**. See [`docs/DATABASE.md`](docs/DATABASE.md) and [`docs/SUPABASE.md`](docs/SUPABASE.md).
@@ -21,6 +22,7 @@ cp .env.example .env
 python3 cli.py build
 python3 cli.py validate
 python3 cli.py demo    # safe offline demo
+make dashboard       # local demo + API + UI (http://127.0.0.1:8080)
 ```
 
 ## Repo layout
@@ -44,7 +46,13 @@ Quorum/
       export_team_keys.py
     models/
       schemas.py             # Person 2 API DTOs (not DB schema)
+    api_server.py            # FastAPI dashboard backend (:5000)
+    orchestrator.py          # Agents 1→6 pipeline for POST /api/run-discovery
+    frontend/
+      index.html             # Dashboard UI
 ```
+
+Dashboard docs: [`docs/DASHBOARD.md`](docs/DASHBOARD.md).
 
 ## Team
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guides — NeuroDiscover AI</title>
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Developer guides</h1>
+    <p>Run, verify, and extend NeuroDiscover</p>
+  </header>
+  <nav class="site-nav">
+    <a href="index.html">Overview</a>
+    <a href="workflow.html">Workflow</a>
+    <a href="decisions.html">Decisions</a>
+    <a href="team.html">Team</a>
+    <a href="guides.html" class="active">Guides</a>
+    <a href="../neurodiscover/frontend/index.html">Dashboard</a>
+  </nav>
+  <main>
+    <div class="card">
+      <h2>Dashboard</h2>
+      <pre>cd neurodiscover && make dashboard</pre>
+      <p>Docs: <a href="DASHBOARD.md">DASHBOARD.md</a>, <a href="../neurodiscover/frontend/QUICKSTART.md">QUICKSTART.md</a></p>
+    </div>
+    <div class="card">
+      <h2>CLI (data &amp; agents)</h2>
+      <pre>python3 cli.py build      # local DB only
+python3 cli.py validate
+python3 cli.py demo
+python3 cli.py scan --max 5
+python3 cli.py pull --max 150</pre>
+    </div>
+    <div class="card">
+      <h2>API verify</h2>
+      <pre>curl -s http://127.0.0.1:5000/api/stats
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' \
+  -d '{"mode":"demo","max_papers":5}'</pre>
+      <p>See <a href="BACKEND_QUERIES.md">BACKEND_QUERIES.md</a> and <a href="PERSON2_API_ENDPOINTS.md">PERSON2_API_ENDPOINTS.md</a>.</p>
+    </div>
+    <div class="card">
+      <h2>Contract documents (markdown)</h2>
+      <ul>
+        <li><a href="DATABASE.md">DATABASE.md</a> — schema</li>
+        <li><a href="AGENT_IO.md">AGENT_IO.md</a> — per-agent I/O</li>
+        <li><a href="SUPABASE.md">SUPABASE.md</a> — team shared DB</li>
+        <li><a href="VALIDATION.md">VALIDATION.md</a> — extraction QA</li>
+        <li><a href="../AGENTS.md">AGENTS.md</a> — Cursor / agent context</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>GitHub Pages</h2>
+      <p>This site is published from the <code>docs/</code> folder. In the repo: <strong>Settings → Pages → Build from branch → main (or kahini/dashboard) → /docs</strong>.</p>
+    </div>
+  </main>
+  <footer>NeuroDiscover · Quorum</footer>
+</body>
+</html>
