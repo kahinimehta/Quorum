@@ -11,7 +11,7 @@ To match the PDF pixel-perfect, add a copy to this repo (e.g. `frontend/mockup-v
 | Header pills | DB LIVE · evidence row count · Synthetic Cohort Layer · DB type |
 | KPI strip | Papers · Trials · Grants · Subgroups · Connections |
 | Step 1 sidebar | DB tiles + last scan · subgroups with colored dots · agent stepper Done/Ready/Idle |
-| Step 1 main | Primary disease field · source cards · segmented run/extract/output · banners · run buttons |
+| Step 1 main | Primary disease field · DB source counts · segmented run/extract · banners · run buttons |
 | Recent runs | Run ID · Date · Mode · Evidence · Subgroups · Synthetic · Status (click → Step 2) |
 | Step 2 pills | Pipeline complete · synthetic count · subgroups/treatments |
 | Pipeline diagram | Data inputs → agents (①–⑥) → three outputs |

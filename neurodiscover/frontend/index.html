@@ -701,11 +701,10 @@
       transition: border-color 0.15s, background 0.15s;
       user-select: none;
     }
-    .source-card:hover { border-color: #93c5fd; }
-    .source-card.on { border-color: var(--primary); background: #eff6ff; }
+    .source-cards-readonly .source-card { cursor: default; }
+    .source-cards-readonly .source-card:hover { border-color: var(--border); }
     .source-card .sc-n { font-size: 1.25rem; font-weight: 700; color: var(--navy); }
     .source-card .sc-l { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; }
-    .source-card input { display: none; }
     .segmented {
       display: flex;
       border: 1px solid var(--border);
@@ -761,17 +760,6 @@
     .results-pills .badge.syn { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
     .conf-mini-track { height: 6px; background: var(--border); border-radius: 3px; margin-top: 0.35rem; overflow: hidden; }
     .conf-mini-fill { height: 100%; background: var(--secondary); border-radius: 3px; }
-    .btn-tier {
-      font-size: 0.68rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      background: #fff;
-      cursor: default;
-      font-weight: 600;
-    }
-    .btn-tier.prioritize { border-color: #93c5fd; color: var(--primary); }
-    .btn-tier.monitor { border-color: #fcd34d; color: #b45309; }
     .rec-quote {
       font-size: 0.78rem;
       font-style: italic;
@@ -937,23 +925,20 @@
         <label>Additional keyword filter (optional)</label>
         <input type="text" id="query" placeholder="e.g. GBA GCase lysosomal" />
 
-        <label>Evidence sources</label>
-        <div class="source-cards" id="sourceCards">
-          <label class="source-card on" data-src="pubmed">
-            <input type="checkbox" id="srcPubmed" checked />
+        <label>Evidence in database</label>
+        <div class="source-cards source-cards-readonly" id="sourceCards">
+          <div class="source-card">
             <div class="sc-n" id="srcCntPubmed">—</div>
             <div class="sc-l">PubMed · Literature</div>
-          </label>
-          <label class="source-card on" data-src="trials">
-            <input type="checkbox" id="srcTrials" checked />
+          </div>
+          <div class="source-card">
             <div class="sc-n" id="srcCntTrials">—</div>
             <div class="sc-l">ClinicalTrials.gov</div>
-          </label>
-          <label class="source-card on" data-src="grants">
-            <input type="checkbox" id="srcGrants" checked />
+          </div>
+          <div class="source-card">
             <div class="sc-n" id="srcCntGrants">—</div>
             <div class="sc-l">NIH RePORTER</div>
-          </label>
+          </div>
         </div>
 
         <label>Max papers to pull <span class="range-val" id="maxLabel">150</span> <small style="font-weight:400;color:var(--muted)">(10–500)</small></label>
@@ -962,7 +947,7 @@
         <div class="row">
           <label class="inline"><input type="checkbox" id="preprints" /> Include preprints (bioRxiv)</label>
           <label class="inline"><input type="checkbox" id="fulltext" checked /> Include full text (OA only)</label>
-          <label class="inline"><input type="checkbox" id="enrichRows" checked /> Enrich existing rows</label>
+          <label class="inline"><input type="checkbox" id="srcGrants" checked /> NIH grants (full pipeline only)</label>
         </div>
 
         <label>Run mode</label>
@@ -977,12 +962,6 @@
           <label class="seg-opt"><input type="radio" name="extract" value="nebius" checked /><span>Nebius (LLM)</span></label>
           <label class="seg-opt"><input type="radio" name="extract" value="ollama" /><span>Ollama (local)</span></label>
           <label class="seg-opt"><input type="radio" name="extract" value="none" /><span>None (abstract)</span></label>
-        </div>
-
-        <label>Output layers</label>
-        <div class="segmented" role="group" aria-label="Output layers">
-          <label class="seg-opt"><input type="radio" name="outputLayer" value="cohort" checked /><span>Synthetic Cohort</span></label>
-          <label class="seg-opt"><input type="radio" name="outputLayer" value="ranked" /><span>Ranked Outputs</span></label>
         </div>
 
         <div class="banner banner-green">
@@ -1283,20 +1262,6 @@
       document.getElementById('dbTypeBadge').textContent = 'Supabase Postgres';
     }
 
-    function bindSourceCards() {
-      document.querySelectorAll('.source-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-          if (e.target.tagName === 'INPUT') return;
-          const cb = card.querySelector('input[type=checkbox]');
-          if (!cb) return;
-          cb.checked = !cb.checked;
-          card.classList.toggle('on', cb.checked);
-        });
-        const cb = card.querySelector('input[type=checkbox]');
-        if (cb) card.classList.toggle('on', cb.checked);
-      });
-    }
-
     async function sbSelect(table, opts = {}) {
       if (!sb) throw new Error('no supabase');
       let q = sb.from(table).select(opts.select || '*');
@@ -1386,7 +1351,8 @@
       const total = db.total ?? statsCache.totalEvidence;
       const eb = document.getElementById('evidenceTotalBadge');
       if (eb) {
-        eb.textContent = `${proc.literature ?? 0} papers this run · ${total} in DB`;
+        const procTotal = (proc.literature ?? 0) + (proc.trial ?? 0) + (proc.grant ?? 0);
+        eb.textContent = `${procTotal} used this run · ${total} in DB`;
       }
       const chip = document.getElementById('runIdChip');
       if (chip && chip.style.display !== 'none') {
@@ -1914,13 +1880,12 @@
         const pct = Math.min(100, c.confidence || 0);
         const tier = c.tier || tierFromConfidence(pct);
         const tierCls = tier.toLowerCase();
-        const btnCls = tier === 'Prioritize' ? 'prioritize' : 'monitor';
         const row = document.createElement('div');
         row.className = 'bar-row';
         row.innerHTML = `
           <div class="bar-label">
             <span>${escapeHtml(c.treatment || c.subgroup)}</span>
-            <span><button type="button" class="btn-tier ${btnCls}">${tier}</button> ${pct}</span>
+            <span><span class="tier tier-${tier}">${tier}</span> ${pct}</span>
           </div>
           <div class="bar-track"><div class="bar-fill ${tierCls}" style="width:${pct}%"></div></div>`;
         bars.appendChild(row);
@@ -2011,7 +1976,7 @@
           const acc = accessLabel(e.access_status);
           const patient = patientBySubgroup[e.subgroup];
           const synLink = patient
-            ? `<a class="syn-link-btn" href="#" onclick="return false">${escapeHtml(patient)} ↗</a>`
+            ? `<span class="syn-link-btn">${escapeHtml(patient)}</span>`
             : '—';
           tr.innerHTML = `
             <td><span class="type-badge ${typeCls}">${(e.source_type || 'lit').slice(0, 3)}</span></td>
@@ -2140,7 +2105,6 @@
 
     async function boot() {
       initSupabase();
-      bindSourceCards();
       await loadCounts();
       await loadSubgroups();
       await loadRecentRuns();
