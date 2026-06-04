@@ -1,3 +1,10 @@
+---
+layout: default
+title: Literature pull
+parent: Developer reference
+nav_order: 9
+---
+
 # Literature Pull — Two-Stage MCP Strategy
 
 **Owner:** Person 3/4 (Ayelet)  

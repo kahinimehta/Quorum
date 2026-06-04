@@ -10,3 +10,6 @@ venv/
 database.md
 personal/
 *.log
+docs/_site/
+docs/vendor/
+docs/.bundle/

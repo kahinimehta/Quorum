@@ -1,0 +1,41 @@
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.flow-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.flow-arrow {
+  color: #64748b;
+}
+
+.team-member {
+  border-left: 4px solid #2563eb;
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.role-pill {
+  display: inline-block;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.35rem;
+}
+
+blockquote {
+  border-left: 4px solid #2563eb;
+}

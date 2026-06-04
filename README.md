@@ -8,7 +8,7 @@ Hackathon project: continuous discovery of Parkinson's disease patient subgroups
 |----------|----------|
 | Cursor / coding agents | [`AGENTS.md`](AGENTS.md) |
 | Humans onboarding | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
-| **Project docs (web)** | [`docs/index.html`](docs/index.html) — enable [GitHub Pages](https://docs.github.com/en/pages) from `/docs` |
+| **Project docs (web)** | **[neurodiscover.github.io](https://neurodiscover.github.io)** — Jekyll + Just the Docs ([source](docs/index.md)) |
 | Database contract | [`docs/DATABASE.md`](docs/DATABASE.md) |
 
 **Storage:** SQLite locally, or **Supabase Postgres** for the team shared DB (`SUPABASE_DATABASE_URL`). Not MongoDB — the working doc's `papers` collection maps to **`evidence`**. See [`docs/DATABASE.md`](docs/DATABASE.md) and [`docs/SUPABASE.md`](docs/SUPABASE.md).
@@ -30,7 +30,7 @@ make dashboard       # local demo + API + UI (http://127.0.0.1:8080)
 ```
 Quorum/
   AGENTS.md
-  docs/                  # DATABASE, AGENT_IO, SUPABASE, VALIDATION, …
+  docs/                  # Jekyll site (Just the Docs) → neurodiscover.github.io
   queries.sql
   neurodiscover/
     cli.py               # entry point — run all commands from here

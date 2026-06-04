@@ -1,3 +1,10 @@
+---
+layout: default
+title: API endpoints
+parent: Developer reference
+nav_order: 4
+---
+
 # Person 2 — API endpoints
 
 Backend: `neurodiscover/api_server.py` (**FastAPI**, port **5000**).

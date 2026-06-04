@@ -1,0 +1,58 @@
+title: NeuroDiscover AI
+description: >-
+  Multi-agent Parkinson's disease discovery — hidden patient subgroups,
+  treatment connections, and ranked recommendations.
+theme: just-the-docs
+
+url: https://neurodiscover.github.io
+baseurl: ""
+
+permalink: pretty
+
+logo: "/assets/images/logo.svg"
+
+favicon_ico: "/assets/images/logo.svg"
+
+color_scheme: neurodiscover
+
+callouts:
+  highlight:
+    title: Highlight
+    color: yellow
+  important:
+    title: Important
+    color: blue
+  warning:
+    title: Warning
+    color: red
+
+aux_links:
+  GitHub:
+    - "https://github.com/kahinimehta/Quorum"
+  Dashboard (local):
+    - "https://github.com/kahinimehta/Quorum/tree/main/neurodiscover/frontend"
+
+footer_content: "NeuroDiscover · Quorum · NextGen BioAgents Hackathon"
+
+mermaid:
+  version: "10.6.1"
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-include-cache
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - node_modules
+  - README.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

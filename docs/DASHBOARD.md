@@ -1,3 +1,10 @@
+---
+layout: default
+title: Dashboard API
+parent: Developer reference
+nav_order: 6
+---
+
 # NeuroDiscover Dashboard
 
 Single-page UI: `neurodiscover/frontend/index.html` (vanilla HTML/CSS/JS, no build step).

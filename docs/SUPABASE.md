@@ -1,3 +1,10 @@
+---
+layout: default
+title: Supabase
+parent: Developer reference
+nav_order: 8
+---
+
 # Supabase setup — shared live database (free tier)
 
 Use this when the team needs **one database** that updates from multiple laptops until and during the hackathon.

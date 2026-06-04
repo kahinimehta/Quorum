@@ -1,3 +1,10 @@
+---
+layout: default
+title: Person 2 backend
+parent: Developer reference
+nav_order: 5
+---
+
 # Person 2 — Backend API on Supabase
 
 Quick handoff for the dashboard API (`neurodiscover/api_server.py`, FastAPI).

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Downstream agents
+parent: Developer reference
+nav_order: 11
+---
+
 # Downstream agents (integrated)
 
 Agents 2–6 run in-process via `neurodiscover/orchestrator.py` after literature synthesis (Agent 1).

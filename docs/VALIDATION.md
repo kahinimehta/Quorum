@@ -1,3 +1,10 @@
+---
+layout: default
+title: Validation
+parent: Developer reference
+nav_order: 7
+---
+
 # Evidence extraction validation
 
 After `cli.py pull`, the literature agent can run automated QA on LLM/Ollama extractions.

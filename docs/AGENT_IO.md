@@ -1,3 +1,10 @@
+---
+layout: default
+title: Agent I/O
+parent: Developer reference
+nav_order: 2
+---
+
 # Agent I/O Contract — NeuroDiscover (Quorum)
 
 **Owner:** Person 4 (multi-agent logic). Literature section by Ayelet.  

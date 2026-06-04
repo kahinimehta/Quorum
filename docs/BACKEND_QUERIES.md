@@ -1,3 +1,10 @@
+---
+layout: default
+title: Backend queries
+parent: Developer reference
+nav_order: 3
+---
+
 # Backend Query Guide — Person 2
 
 **Database file:** `neurodiscover.db` (SQLite, repo root)  

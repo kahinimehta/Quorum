@@ -1,3 +1,10 @@
+---
+layout: default
+title: Team env sharing
+parent: Developer reference
+nav_order: 10
+---
+
 # Sharing credentials with the team
 
 **Never commit** `.env`, `personal/team-keys-for-sharing.txt`, or database passwords to GitHub.

@@ -1,26 +1,45 @@
-# Publishes docs/ to https://neurodiscover.github.io (org/user Pages root).
+# Publishes built Jekyll site to https://neurodiscover.github.io (org/user Pages root).
 # Requires GitHub org/user "neurodiscover" and repo "neurodiscover.github.io".
 # Add repository secret NEURODISCOVER_PAGES_TOKEN (PAT with contents:write on that repo).
 
 name: Deploy docs to neurodiscover.github.io
 
-# Run manually until NEURODISCOVER_PAGES_TOKEN is configured (Actions → Run workflow).
 on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - ".github/workflows/deploy-neurodiscover-org-pages.yml"
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy docs folder to neurodiscover.github.io
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: docs
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Deploy to neurodiscover.github.io
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           token: ${{ secrets.NEURODISCOVER_PAGES_TOKEN }}
           repository-name: neurodiscover/neurodiscover.github.io
           branch: main
-          folder: docs
+          folder: docs/_site
           clean: true
           single-commit: true
           commit-message: "Deploy docs from kahinimehta/Quorum@${{ github.sha }}"

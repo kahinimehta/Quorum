@@ -1,3 +1,10 @@
+---
+layout: default
+title: Database schema
+parent: Developer reference
+nav_order: 1
+---
+
 # Database Contract — NeuroDiscover (Quorum)
 
 **Owner:** Person 3 (Ayelet, Data Engineer)  
