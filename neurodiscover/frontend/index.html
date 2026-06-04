@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeuroDiscover AI</title>
+  <style>
+    :root {
+      --navy: #0f2044;
+      --primary: #2563eb;
+      --secondary: #0d9488;
+      --amber: #f59e0b;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      background: var(--navy);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    header h1 { margin: 0; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
+    header h1 span { color: #93c5fd; font-weight: 400; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: rgba(255,255,255,0.12);
+    }
+    .badge.live::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 6px #34d399;
+    }
+    nav.tabs {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem 0;
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    nav.tabs button {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      border-bottom: 2px solid transparent;
+    }
+    nav.tabs button.active { color: #fff; border-bottom-color: var(--primary); }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1rem;
+      padding: 1rem 1.5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .card h2, .card h3 { margin: 0 0 0.75rem; font-size: 0.95rem; color: var(--navy); }
+    .tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .tile {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 0.65rem;
+      text-align: center;
+    }
+    .tile .n { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+    .tile .l { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
+    .chip {
+      display: block;
+      padding: 0.5rem 0.65rem;
+      margin-bottom: 0.4rem;
+      background: var(--bg);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      border-left: 3px solid var(--secondary);
+    }
+    .chip strong { display: block; font-size: 0.85rem; }
+    .chip small { color: var(--muted); }
+    .stepper { list-style: none; padding: 0; margin: 0; }
+    .stepper li {
+      position: relative;
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      font-size: 0.8rem;
+      border-left: 2px solid var(--border);
+      margin-left: 0.4rem;
+    }
+    .stepper li::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 0.65rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .stepper li.done::before { background: var(--secondary); }
+    .stepper li.active::before { background: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.25); }
+    label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--muted); }
+    input[type=text], input[type=number] {
+      width: 100%;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    input:disabled { background: #f8fafc; color: var(--muted); }
+    .row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem; }
+    .row label.inline { font-weight: 400; display: flex; align-items: center; gap: 0.35rem; margin: 0; }
+    input[type=range] { width: 100%; accent-color: var(--primary); }
+    .range-val { font-size: 0.85rem; color: var(--primary); font-weight: 600; }
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:disabled { opacity: 0.6; cursor: wait; }
+    .btn-secondary { background: #fff; color: var(--primary); border: 1px solid var(--primary); margin-left: 0.5rem; }
+    .actions { margin-top: 1rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    th, td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; }
+    .type-badge {
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .type-literature { background: #dbeafe; color: #1d4ed8; }
+    .type-trial { background: #ccfbf1; color: #0f766e; }
+    .type-grant { background: #fef3c7; color: #b45309; }
+    .access-open { color: #059669; }
+    .access-abstract { color: var(--amber); }
+    .access-restricted { color: #dc2626; }
+    .bar-row { margin-bottom: 0.65rem; }
+    .bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem; }
+    .bar-track { height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 5px; transition: width 0.4s ease; }
+    .bar-fill.prioritize { background: var(--primary); }
+    .bar-fill.monitor { background: var(--amber); }
+    .bar-fill.reject { background: #94a3b8; }
+    .rec-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .rec-card .rank { font-size: 0.75rem; color: var(--muted); }
+    .rec-card h4 { margin: 0.25rem 0; font-size: 1rem; }
+    .tier {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .tier-Prioritize { background: #dbeafe; color: var(--primary); }
+    .tier-Monitor { background: #fef3c7; color: #b45309; }
+    .timeline li {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .timeline li strong { color: var(--navy); }
+    .hidden { display: none !important; }
+    .config-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    .pager { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.75rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NeuroDiscover <span>AI</span></h1>
+    <span class="badge live" id="dbBadge">Connecting…</span>
+  </header>
+  <nav class="tabs">
+    <button type="button" class="active" data-view="input">Run Configuration</button>
+    <button type="button" data-view="results">Results</button>
+  </nav>
+
+  <div id="configHint" class="config-hint hidden" style="margin:1rem 1.5rem 0; max-width:1400px;"></div>
+
+  <div id="viewInput" class="layout">
+    <aside>
+      <div class="card">
+        <h2>Database</h2>
+        <div class="tiles" id="dbTiles">
+          <div class="tile"><div class="n" id="cntLit">—</div><div class="l">Papers</div></div>
+          <div class="tile"><div class="n" id="cntTrial">—</div><div class="l">Trials</div></div>
+          <div class="tile"><div class="n" id="cntGrant">—</div><div class="l">Grants</div></div>
+          <div class="tile"><div class="n" id="cntSg">—</div><div class="l">Subgroups</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Patient subgroups</h2>
+        <div id="subgroupChips"></div>
+      </div>
+      <div class="card">
+        <h2>Agent pipeline</h2>
+        <ol class="stepper" id="pipelineStepper">
+          <li data-agent="Literature Synthesis Agent">Literature Synthesis</li>
+          <li data-agent="Patient Subgroup Agent">Patient Subgroup</li>
+          <li data-agent="Treatment Connection Agent">Treatment Connection</li>
+          <li data-agent="Evidence Scoring Agent">Evidence Scoring</li>
+          <li data-agent="Commercial Discovery Agent">Commercial Discovery</li>
+          <li data-agent="Conclusion Update Agent">Conclusion Update</li>
+        </ol>
+      </div>
+    </aside>
+    <main>
+      <div class="card">
+        <h2>Discovery run</h2>
+        <label>Disease (locked)</label>
+        <input type="text" id="disease" value="Parkinson disease" disabled />
+
+        <label>Keyword filter (optional, passed as --query)</label>
+        <input type="text" id="query" placeholder="e.g. GBA GCase lysosomal" />
+
+        <label>Evidence sources</label>
+        <div class="row">
+          <label class="inline"><input type="checkbox" id="srcPubmed" checked /> PubMed</label>
+          <label class="inline"><input type="checkbox" id="srcTrials" checked /> ClinicalTrials.gov</label>
+          <label class="inline"><input type="checkbox" id="srcGrants" checked /> NIH RePORTER</label>
+        </div>
+
+        <label>Max papers <span class="range-val" id="maxLabel">150</span></label>
+        <input type="range" id="maxPapers" min="10" max="500" value="150" step="10" />
+
+        <div class="row">
+          <label class="inline"><input type="checkbox" id="preprints" /> Include preprints</label>
+          <label class="inline"><input type="checkbox" id="fulltext" /> Include full text</label>
+        </div>
+
+        <label>Run mode</label>
+        <div class="row">
+          <label class="inline"><input type="radio" name="mode" value="full" /> Full pipeline</label>
+          <label class="inline"><input type="radio" name="mode" value="scan" /> Incremental scan</label>
+          <label class="inline"><input type="radio" name="mode" value="demo" checked /> Demo (offline)</label>
+        </div>
+
+        <label>Extraction backend</label>
+        <div class="row">
+          <label class="inline"><input type="radio" name="extract" value="nebius" checked /> Nebius</label>
+          <label class="inline"><input type="radio" name="extract" value="ollama" /> Ollama</label>
+          <label class="inline"><input type="radio" name="extract" value="none" /> None</label>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="btnRun">Run Discovery Pipeline</button>
+          <button type="button" class="btn btn-secondary" id="btnScan">Incremental Scan</button>
+        </div>
+        <p id="runStatus" style="font-size:0.85rem;color:var(--muted);margin-top:0.75rem;"></p>
+      </div>
+      <div class="card">
+        <h2>Recent runs</h2>
+        <table>
+          <thead><tr><th>Run ID</th><th>Steps</th><th>Started</th></tr></thead>
+          <tbody id="recentRuns"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div id="viewResults" class="layout hidden">
+    <div style="grid-column:1/-1;">
+      <div class="card">
+        <h2>Confidence by treatment connection</h2>
+        <p style="font-size:0.8rem;color:var(--muted);margin:0 0 1rem;">
+          confidence = evidence_strength × 0.55 + commercial_potential × 0.45
+        </p>
+        <div id="confidenceBars"></div>
+      </div>
+      <div class="card">
+        <h2>Top recommendations</h2>
+        <div id="topRecs"></div>
+      </div>
+      <div class="card" style="display:grid;grid-template-columns:1fr 2fr;gap:1rem;">
+        <div>
+          <h2>Agent run trace</h2>
+          <ul class="timeline" id="agentTimeline"></ul>
+        </div>
+        <div>
+          <h2>Evidence preview</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
+                <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th>
+              </tr>
+            </thead>
+            <tbody id="evidenceTable"></tbody>
+          </table>
+          <div class="pager">
+            <button type="button" class="btn btn-secondary" id="evPrev">Prev</button>
+            <span id="evPageLabel">Page 1</span>
+            <button type="button" class="btn btn-secondary" id="evNext">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    const API_BASE = window.NEURODISCOVER_API || 'http://127.0.0.1:5000';
+    const SUPABASE_URL = window.SUPABASE_URL || localStorage.getItem('SUPABASE_URL') || '';
+    const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || localStorage.getItem('SUPABASE_ANON_KEY') || '';
+
+    let sb = null;
+    let useApiFallback = false;
+    let latestRunId = null;
+    let evPage = 0;
+    const EV_PAGE_SIZE = 15;
+
+    const AGENTS = [
+      'Literature Synthesis Agent',
+      'Patient Subgroup Agent',
+      'Treatment Connection Agent',
+      'Evidence Scoring Agent',
+      'Commercial Discovery Agent',
+      'Conclusion Update Agent',
+    ];
+
+    function initSupabase() {
+      const hint = document.getElementById('configHint');
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+        useApiFallback = true;
+        hint.classList.remove('hidden');
+        hint.textContent = 'Supabase URL/anon key not set — using Flask API for reads. Set window.SUPABASE_URL and window.SUPABASE_ANON_KEY (see QUICKSTART.md).';
+        document.getElementById('dbBadge').textContent = 'API fallback';
+        return;
+      }
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      document.getElementById('dbBadge').textContent = 'Live DB';
+    }
+
+    async function sbSelect(table, opts = {}) {
+      if (!sb) throw new Error('no supabase');
+      let q = sb.from(table).select(opts.select || '*');
+      if (opts.count) q = q.select(opts.select || '*', { count: 'exact', head: true });
+      if (opts.order) q = q.order(opts.order.col, { ascending: opts.order.asc !== false });
+      if (opts.limit) q = q.limit(opts.limit);
+      if (opts.range) q = q.range(opts.range.from, opts.range.to);
+      const { data, error, count } = await q;
+      if (error) throw error;
+      return { data, count };
+    }
+
+    async function loadCounts() {
+      try {
+        if (sb) {
+          const types = ['literature', 'trial', 'grant'];
+          for (const t of types) {
+            const { count } = await sb.from('evidence').select('*', { count: 'exact', head: true }).eq('source_type', t);
+            const el = t === 'literature' ? 'cntLit' : t === 'trial' ? 'cntTrial' : 'cntGrant';
+            document.getElementById(el).textContent = count ?? '0';
+          }
+          const { count: sg } = await sb.from('subgroups').select('*', { count: 'exact', head: true });
+          document.getElementById('cntSg').textContent = sg ?? '0';
+        } else {
+          const r = await fetch(`${API_BASE}/api/discover/parkinsons`);
+          const d = await r.json();
+          document.getElementById('cntSg').textContent = (d.subgroups || []).length;
+          document.getElementById('cntLit').textContent = '—';
+          document.getElementById('cntTrial').textContent = '—';
+          document.getElementById('cntGrant').textContent = '—';
+        }
+      } catch (e) {
+        document.getElementById('dbBadge').textContent = 'Offline';
+      }
+    }
+
+    async function loadSubgroups() {
+      const box = document.getElementById('subgroupChips');
+      box.innerHTML = '';
+      try {
+        let rows = [];
+        if (sb) {
+          const { data: sgs } = await sb.from('subgroups').select('subgroup_id,name,defining_features');
+          for (const s of sgs || []) {
+            const { count } = await sb.from('subgroup_evidence').select('*', { count: 'exact', head: true }).eq('subgroup_id', s.subgroup_id);
+            rows.push({ ...s, evidence_count: count });
+          }
+        } else {
+          const r = await fetch(`${API_BASE}/api/discover/parkinsons`);
+          const d = await r.json();
+          rows = (d.subgroups || []).map(s => ({
+            name: s.name,
+            defining_features: s.definingFeatures,
+            evidence_count: s.evidenceCount,
+          }));
+        }
+        rows.forEach(s => {
+          const d = document.createElement('div');
+          d.className = 'chip';
+          d.innerHTML = `<strong>${s.name}</strong><small>${s.defining_features || '—'}</small><br><small>${s.evidence_count ?? 0} evidence links</small>`;
+          box.appendChild(d);
+        });
+      } catch (e) {
+        box.innerHTML = '<small>Could not load subgroups.</small>';
+      }
+    }
+
+    async function loadRecentRuns() {
+      const tbody = document.getElementById('recentRuns');
+      tbody.innerHTML = '';
+      try {
+        let runs = [];
+        if (sb) {
+          const { data } = await sb.from('agent_outputs').select('run_id,created_at').order('output_id', { ascending: false }).limit(200);
+          const map = {};
+          (data || []).forEach(r => {
+            if (!r.run_id) return;
+            if (!map[r.run_id]) map[r.run_id] = { steps: 0, started: r.created_at };
+            map[r.run_id].steps++;
+          });
+          runs = Object.entries(map).slice(0, 5).map(([id, v]) => ({ run_id: id, ...v }));
+        } else {
+          const r = await fetch(`${API_BASE}/api/agents`);
+          const d = await r.json();
+          if (d.runId) runs = [{ run_id: d.runId, steps: (d.steps || []).length, started: (d.steps[0] || {}).createdAt }];
+        }
+        runs.forEach(run => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td><code>${run.run_id}</code></td><td>${run.steps}</td><td>${run.started || '—'}</td>`;
+          tbody.appendChild(tr);
+        });
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="3">No runs yet</td></tr>';
+      }
+    }
+
+    function updateStepper(steps) {
+      const names = new Set((steps || []).map(s => s.agentName));
+      document.querySelectorAll('#pipelineStepper li').forEach(li => {
+        li.classList.remove('done', 'active');
+        const a = li.dataset.agent;
+        if (names.has(a)) li.classList.add('done');
+      });
+      const last = (steps || [])[steps.length - 1];
+      if (last) {
+        const el = document.querySelector(`#pipelineStepper li[data-agent="${last.agentName}"]`);
+        if (el) { el.classList.add('active'); el.classList.add('done'); }
+      }
+    }
+
+    function tierFromConfidence(c) {
+      if (c >= 80) return 'Prioritize';
+      if (c >= 65) return 'Monitor';
+      return 'Reject';
+    }
+
+    async function loadResults(runId) {
+      let connections = [];
+      let recommendations = [];
+      let steps = [];
+
+      if (sb) {
+        const { data: tc } = await sb.from('treatment_connections').select('connection_id,mechanism,treatment,evidence_strength,commercial_potential,subgroups(name)');
+        connections = (tc || []).map(r => {
+          const es = r.evidence_strength || 0;
+          const cp = r.commercial_potential || 0;
+          const conf = Math.round((es * 0.55 + cp * 0.45) * 10) / 10;
+          return {
+            subgroup: r.subgroups?.name,
+            mechanism: r.mechanism,
+            treatment: r.treatment,
+            confidence: conf,
+            tier: tierFromConfidence(conf),
+          };
+        });
+        let rq = sb.from('recommendations').select('*').order('confidence', { ascending: false }).limit(5);
+        const { data: recs } = await rq;
+        recommendations = recs || [];
+        let sq = sb.from('agent_outputs').select('*').order('output_id', { ascending: true });
+        if (runId) sq = sq.eq('run_id', runId);
+        else sq = sq.order('output_id', { ascending: false }).limit(20);
+        const { data: st } = await sq;
+        steps = (st || []).map(s => ({
+          agentName: s.agent_name,
+          stepOrder: s.step_order,
+          summary: s.summary,
+          createdAt: s.created_at,
+        }));
+      } else {
+        const [d, rec, ag] = await Promise.all([
+          fetch(`${API_BASE}/api/discover/parkinsons`).then(r => r.json()),
+          fetch(`${API_BASE}/api/recommendations`).then(r => r.json()),
+          fetch(`${API_BASE}/api/agents`).then(r => r.json()),
+        ]);
+        connections = (d.treatmentConnections || []).map(c => ({
+          subgroup: c.subgroup,
+          mechanism: c.mechanism,
+          treatment: c.treatment,
+          confidence: c.confidence,
+          tier: tierFromConfidence(c.confidence || 0),
+        }));
+        recommendations = (rec.recommendations || []).slice(0, 5);
+        steps = ag.steps || [];
+        if (ag.runId) latestRunId = ag.runId;
+      }
+
+      connections.sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
+      const bars = document.getElementById('confidenceBars');
+      bars.innerHTML = '';
+      connections.forEach(c => {
+        const pct = Math.min(100, c.confidence || 0);
+        const tier = (c.tier || tierFromConfidence(pct)).toLowerCase();
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+          <div class="bar-label"><span>${c.subgroup} → ${c.treatment}</span><span>${pct}</span></div>
+          <div class="bar-track"><div class="bar-fill ${tier}" style="width:${pct}%"></div></div>`;
+        bars.appendChild(row);
+      });
+
+      const top = document.getElementById('topRecs');
+      top.innerHTML = '';
+      (recommendations.length ? recommendations : connections.slice(0, 5)).forEach((r, i) => {
+        const card = document.createElement('div');
+        card.className = 'rec-card';
+        const conf = r.confidence ?? 0;
+        const tier = r.tier || tierFromConfidence(conf);
+        card.innerHTML = `
+          <div class="rank">#${i + 1}</div>
+          <h4>${r.treatment}</h4>
+          <p style="margin:0.25rem 0;font-size:0.85rem;">${r.subgroup} · ${r.mechanism || '—'}</p>
+          <p style="font-size:0.8rem;color:var(--muted);">${r.rationale || ''}</p>
+          <span class="tier tier-${tier}">${tier}</span>
+          <strong style="margin-left:0.5rem;">${conf}</strong>`;
+        top.appendChild(card);
+      });
+
+      const tl = document.getElementById('agentTimeline');
+      tl.innerHTML = '';
+      steps.forEach(s => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${s.agentName}</strong> (step ${s.stepOrder})<br>${s.summary}<br><small>${s.createdAt || ''}</small>`;
+        tl.appendChild(li);
+      });
+      updateStepper(steps);
+      await loadEvidencePage();
+    }
+
+    async function loadEvidencePage() {
+      const tbody = document.getElementById('evidenceTable');
+      tbody.innerHTML = '';
+      const from = evPage * EV_PAGE_SIZE;
+      const to = from + EV_PAGE_SIZE - 1;
+      try {
+        let rows = [];
+        if (sb) {
+          const { data } = await sb.from('evidence').select('source_type,title,year,subgroup,mechanism,treatment,study_type,sample_size,access_status')
+            .order('evidence_id', { ascending: true }).range(from, to);
+          rows = data || [];
+        } else {
+          const r = await fetch(`${API_BASE}/api/discover/parkinsons`);
+          rows = [];
+        }
+        rows.forEach(e => {
+          const tr = document.createElement('tr');
+          const typeCls = e.source_type === 'literature' ? 'type-literature' : e.source_type === 'trial' ? 'type-trial' : 'type-grant';
+          const acc = accessLabel(e.access_status);
+          tr.innerHTML = `
+            <td><span class="type-badge ${typeCls}">${(e.source_type || '').slice(0, 3)}</span></td>
+            <td>${escapeHtml(e.title || '—')}</td>
+            <td>${e.year || '—'}</td>
+            <td>${escapeHtml(e.subgroup || '—')}</td>
+            <td>${escapeHtml(e.mechanism || '—')}</td>
+            <td>${escapeHtml(e.treatment || '—')}</td>
+            <td>${escapeHtml(e.study_type || '—')}</td>
+            <td>${e.sample_size ?? '—'}</td>
+            <td class="${acc.cls}">${acc.label}</td>`;
+          tbody.appendChild(tr);
+        });
+        document.getElementById('evPageLabel').textContent = `Page ${evPage + 1}`;
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="9">Could not load evidence.</td></tr>';
+      }
+    }
+
+    function accessLabel(s) {
+      if (s === 'open') return { label: 'Open', cls: 'access-open' };
+      if (s === 'abstract_only') return { label: 'Abstract', cls: 'access-abstract' };
+      if (s === 'restricted') return { label: 'Restricted', cls: 'access-restricted' };
+      return { label: s || '—', cls: '' };
+    }
+
+    function escapeHtml(t) {
+      const d = document.createElement('div');
+      d.textContent = t;
+      return d.innerHTML;
+    }
+
+    function getMode() {
+      return document.querySelector('input[name=mode]:checked')?.value || 'demo';
+    }
+
+    function getExtract() {
+      return document.querySelector('input[name=extract]:checked')?.value || 'nebius';
+    }
+
+    async function postRun(mode) {
+      const status = document.getElementById('runStatus');
+      const btn = document.getElementById('btnRun');
+      btn.disabled = true;
+      status.textContent = 'Running pipeline…';
+      const body = {
+        mode,
+        query: document.getElementById('query').value.trim() || null,
+        max_papers: parseInt(document.getElementById('maxPapers').value, 10),
+        disease: document.getElementById('disease').value,
+        include_preprints: document.getElementById('preprints').checked ? 20 : 0,
+        with_fulltext: document.getElementById('fulltext').checked,
+        extract_backend: getExtract(),
+        pull_grants: document.getElementById('srcGrants').checked,
+      };
+      try {
+        const res = await fetch(`${API_BASE}/api/run-discovery`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || res.statusText);
+        latestRunId = data.run_id;
+        status.textContent = `Done — run ${data.run_id}`;
+        updateStepper(data.steps);
+        await loadRecentRuns();
+        await loadCounts();
+        showView('results');
+        await loadResults(latestRunId);
+      } catch (e) {
+        status.textContent = 'Error: ' + e.message;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function showView(name) {
+      document.getElementById('viewInput').classList.toggle('hidden', name !== 'input');
+      document.getElementById('viewResults').classList.toggle('hidden', name !== 'results');
+      document.querySelectorAll('nav.tabs button').forEach(b => {
+        b.classList.toggle('active', b.dataset.view === name);
+      });
+    }
+
+    document.getElementById('maxPapers').addEventListener('input', e => {
+      document.getElementById('maxLabel').textContent = e.target.value;
+    });
+    document.getElementById('btnRun').addEventListener('click', () => postRun(getMode()));
+    document.getElementById('btnScan').addEventListener('click', () => postRun('scan'));
+    document.querySelectorAll('nav.tabs button').forEach(b => {
+      b.addEventListener('click', () => showView(b.dataset.view));
+    });
+    document.getElementById('evPrev').addEventListener('click', () => { if (evPage > 0) { evPage--; loadEvidencePage(); } });
+    document.getElementById('evNext').addEventListener('click', () => { evPage++; loadEvidencePage(); });
+
+    async function boot() {
+      initSupabase();
+      await loadCounts();
+      await loadSubgroups();
+      await loadRecentRuns();
+      let hasRecs = false;
+      try {
+        if (sb) {
+          const { count } = await sb.from('recommendations').select('*', { count: 'exact', head: true });
+          hasRecs = count > 0;
+        } else {
+          const r = await fetch(`${API_BASE}/api/recommendations`);
+          const d = await r.json();
+          hasRecs = (d.recommendations || []).length > 0;
+        }
+      } catch (e) { /* ignore */ }
+      if (hasRecs) {
+        showView('results');
+        await loadResults(latestRunId);
+      }
+    }
+    boot();
+  </script>
+</body>
+</html>

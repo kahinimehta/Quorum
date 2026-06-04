@@ -1,40 +1,24 @@
 """
-NeuroDiscover Backend API
+NeuroDiscover Backend API — contract in docs/BACKEND_QUERIES.md
 
-Person 2 backend scaffold aligned with the shared Supabase/Postgres database.
-
-Safe behavior:
-- Reads SUPABASE_DATABASE_URL from .env
-- Uses SELECT queries only
-- Does not run cli.py build
-- Does not truncate or mutate tables
-
-Endpoints:
-- GET /health
-- GET /api/discover/parkinsons
-- GET /api/agents
-- GET /api/recommendations
-- POST /api/run-discovery
+Run: python3 api_server.py   (port 5000)
 """
 
+from __future__ import annotations
+
+import json
 import os
-from typing import Any, Dict, List, Optional
+import uuid
+from typing import Any
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-try:
-    import psycopg
-    from psycopg.rows import dict_row
-except ImportError:
-    psycopg = None
-
+from db import backend_label, connect, is_postgres
 
 load_dotenv()
-
-SUPABASE_DATABASE_URL = os.getenv("SUPABASE_DATABASE_URL")
 
 app = FastAPI(title="NeuroDiscover API")
 
@@ -48,44 +32,53 @@ app.add_middleware(
 
 
 class RunDiscoveryRequest(BaseModel):
-    disease: str = "Parkinson's Disease"
-    limit: int = 50
+    mode: str = "demo"
+    query: str | None = None
+    max_papers: int = Field(default=150, ge=10, le=500)
+    disease: str = "Parkinson disease"
+    include_preprints: int = 0
+    with_fulltext: bool = False
+    extract_backend: str | None = None
+    pull_grants: bool = True
 
 
-def get_connection():
-    if not SUPABASE_DATABASE_URL:
-        raise HTTPException(
-            status_code=500,
-            detail="SUPABASE_DATABASE_URL is not set in .env",
-        )
-
-    if psycopg is None:
-        raise HTTPException(
-            status_code=500,
-            detail="psycopg is not installed. Make sure psycopg[binary] is in requirements.txt",
-        )
-
-    return psycopg.connect(
-        SUPABASE_DATABASE_URL,
-        row_factory=dict_row,
-    )
-
-
-def query_db(sql: str, params: Optional[tuple] = None) -> List[Dict[str, Any]]:
-    params = params or tuple()
-
+def _query(sql: str, params: tuple = ()) -> list[dict[str, Any]]:
     try:
-        with get_connection() as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(sql, params)
-                rows = cursor.fetchall()
-                return list(rows)
+        with connect(None) as conn:
+            conn.execute(sql, params)
+            return conn.fetchall()
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Database query failed: {exc}") from exc
 
-    except Exception as error:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Database query failed: {str(error)}",
-        )
+
+def _order_desc(col: str) -> str:
+    if is_postgres():
+        return f"{col} DESC NULLS LAST"
+    return f"COALESCE({col}, -1) DESC"
+
+
+def _top_recommendation() -> dict[str, Any] | None:
+    rows = _query(
+        f"""
+        SELECT r.subgroup, r.treatment, r.confidence, r.tier, r.rationale,
+               tc.mechanism
+        FROM recommendations r
+        LEFT JOIN treatment_connections tc ON tc.connection_id = r.connection_id
+        ORDER BY {_order_desc('r.confidence')}
+        LIMIT 1
+        """
+    )
+    if not rows:
+        return None
+    r = rows[0]
+    return {
+        "subgroup": r["subgroup"],
+        "treatment": r["treatment"],
+        "confidence": r["confidence"],
+        "tier": r["tier"],
+        "rationale": r["rationale"],
+        "mechanism": r.get("mechanism"),
+    }
 
 
 @app.get("/health")
@@ -93,139 +86,155 @@ def health_check():
     return {
         "status": "running",
         "message": "NeuroDiscover backend API is live",
-        "database": "supabase/postgres" if SUPABASE_DATABASE_URL else "not connected",
+        "database": backend_label(),
     }
 
 
 @app.get("/api/discover/parkinsons")
 def discover_parkinsons():
-    """
-    Main dashboard payload for Parkinson's Disease.
-
-    Reads:
-    - evidence
-    - subgroups
-    - treatment_connections
-    - recommendations
-    - agent_outputs
-    """
-
-    evidence_summary = query_db(
+    subgroup_rows = _query(
         """
-        SELECT
-            source_type,
-            COUNT(*) AS count
-        FROM evidence
-        GROUP BY source_type
-        ORDER BY source_type
+        SELECT s.subgroup_id, s.name, s.defining_features, s.notes,
+               COUNT(DISTINCT se.evidence_id) AS evidence_count
+        FROM subgroups s
+        LEFT JOIN subgroup_evidence se ON se.subgroup_id = s.subgroup_id
+        GROUP BY s.subgroup_id, s.name, s.defining_features, s.notes
+        ORDER BY s.name
         """
     )
+    subgroups = [
+        {
+            "subgroupId": r["subgroup_id"],
+            "name": r["name"],
+            "definingFeatures": r.get("defining_features"),
+            "notes": r.get("notes"),
+            "evidenceCount": r.get("evidence_count") or 0,
+        }
+        for r in subgroup_rows
+    ]
 
-    subgroups = query_db(
-        """
-        SELECT *
-        FROM subgroups
-        LIMIT 20
+    conn_rows = _query(
+        f"""
+        SELECT tc.connection_id, s.name AS subgroup, tc.mechanism, tc.treatment,
+               tc.evidence_strength, tc.commercial_potential,
+               (COALESCE(tc.evidence_strength, 0) * 0.55
+                + COALESCE(tc.commercial_potential, 0) * 0.45) AS confidence
+        FROM treatment_connections tc
+        JOIN subgroups s ON s.subgroup_id = tc.subgroup_id
+        ORDER BY {_order_desc('confidence')}
         """
     )
-
-    treatment_connections = query_db(
-        """
-        SELECT *,
-               ROUND(
-                   (
-                       COALESCE(evidence_strength, 0) * 0.55
-                       + COALESCE(commercial_potential, 0) * 0.45
-                   )::numeric,
-                   2
-               ) AS confidence
-        FROM treatment_connections
-        ORDER BY confidence DESC
-        LIMIT 20
-        """
-    )
-
-    recommendations = query_db(
-        """
-        SELECT *
-        FROM recommendations
-        LIMIT 10
-        """
-    )
-
-    agent_trace = query_db(
-        """
-        SELECT *
-        FROM agent_outputs
-        ORDER BY step_order ASC
-        LIMIT 50
-        """
-    )
+    treatment_connections = [
+        {
+            "connectionId": r["connection_id"],
+            "subgroup": r["subgroup"],
+            "mechanism": r.get("mechanism"),
+            "treatment": r["treatment"],
+            "evidenceStrength": r.get("evidence_strength"),
+            "commercialPotential": r.get("commercial_potential"),
+            "confidence": round(float(r["confidence"]), 2) if r.get("confidence") is not None else None,
+        }
+        for r in conn_rows
+    ]
 
     return {
         "disease": "Parkinson's Disease",
-        "databaseStatus": evidence_summary,
         "subgroups": subgroups,
         "treatmentConnections": treatment_connections,
-        "recommendation": recommendations[0] if recommendations else None,
-        "agentTrace": agent_trace,
+        "recommendation": _top_recommendation() or {},
     }
 
 
 @app.get("/api/agents")
 def get_agents():
-    """
-    Returns the agent trace for the dashboard.
-    """
-
-    agent_trace = query_db(
+    rows = _query(
         """
-        SELECT *
+        SELECT run_id, agent_name, step_order, summary, payload, created_at
         FROM agent_outputs
-        ORDER BY step_order ASC
-        LIMIT 50
+        WHERE run_id = (
+            SELECT run_id FROM agent_outputs ORDER BY output_id DESC LIMIT 1
+        )
+        ORDER BY output_id
         """
     )
+    if not rows:
+        return {"runId": None, "steps": []}
 
-    return {
-        "agents": agent_trace,
-    }
+    run_id = rows[0]["run_id"]
+    steps = []
+    for r in rows:
+        payload = r.get("payload")
+        if isinstance(payload, str) and payload:
+            try:
+                payload = json.loads(payload)
+            except json.JSONDecodeError:
+                pass
+        created = r.get("created_at")
+        steps.append(
+            {
+                "agentName": r["agent_name"],
+                "stepOrder": r["step_order"],
+                "summary": r["summary"],
+                "payload": payload,
+                "createdAt": str(created) if created is not None else None,
+            }
+        )
+    return {"runId": run_id, "steps": steps}
 
 
 @app.get("/api/recommendations")
 def get_recommendations():
-    """
-    Returns final recommendations.
-    """
-
-    recommendations = query_db(
-        """
-        SELECT *
-        FROM recommendations
-        LIMIT 10
+    rows = _query(
+        f"""
+        SELECT r.subgroup, r.treatment, r.confidence, r.tier, r.rationale,
+               tc.mechanism
+        FROM recommendations r
+        LEFT JOIN treatment_connections tc ON tc.connection_id = r.connection_id
+        ORDER BY {_order_desc('r.confidence')}
         """
     )
-
-    return {
-        "recommendations": recommendations,
-    }
+    recommendations = [
+        {
+            "subgroup": r["subgroup"],
+            "treatment": r["treatment"],
+            "confidence": r["confidence"],
+            "tier": r["tier"],
+            "rationale": r["rationale"],
+            "mechanism": r.get("mechanism"),
+        }
+        for r in rows
+    ]
+    return {"recommendations": recommendations}
 
 
 @app.post("/api/run-discovery")
-def run_discovery(request: RunDiscoveryRequest):
-    """
-    Frontend button endpoint.
+def run_discovery(body: RunDiscoveryRequest):
+    run_id = str(uuid.uuid4())[:8]
+    try:
+        from orchestrator import run as run_pipeline
 
-    MVP behavior:
-    - Does not rebuild the database
-    - Does not run live ingestion
-    - Reads current Supabase-backed discovery outputs
-    """
-
-    payload = discover_parkinsons()
+        result = run_pipeline(
+            run_id,
+            body.mode,
+            query=body.query,
+            max_papers=body.max_papers,
+            disease=body.disease,
+            include_preprints=body.include_preprints,
+            with_fulltext=body.with_fulltext,
+            extract_backend=body.extract_backend,
+            pull_grants=body.pull_grants,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
     return {
-        "requestedDisease": request.disease,
-        "status": "completed",
-        **payload,
+        "run_id": result["run_id"],
+        "recommendations": result["recommendations"],
+        "steps": result["steps"],
     }
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=5000)
