@@ -2,6 +2,15 @@
 NeuroDiscover Backend API — contract in docs/BACKEND_QUERIES.md
 
 Run: python3 api_server.py   (port 5000)
+
+Quick verify (no Supabase keys — local SQLite):
+  unset SUPABASE_DATABASE_URL
+  python3 cli.py build && python3 cli.py validate
+  python3 api_server.py
+  curl -s http://127.0.0.1:5000/health
+  curl -s http://127.0.0.1:5000/api/stats
+  curl -s -X POST http://127.0.0.1:5000/api/run-discovery \\
+    -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
 """
 
 from __future__ import annotations

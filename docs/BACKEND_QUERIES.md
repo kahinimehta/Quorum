@@ -135,19 +135,74 @@ ORDER BY r.confidence DESC;
 
 ## POST /api/run-discovery
 
-Trigger the agent pipeline (Person 4 implements orchestration). Backend should:
+Trigger the agent pipeline (`orchestrator.py`).
 
-1. Generate a shared `run_id`
-2. Run agents 1→6 in order (or call their Python modules)
-3. Return the latest `recommendations` + `agent_outputs` for that `run_id`
+**Request:**
 
-Literature agent entry points:
+```json
+{ "mode": "demo", "query": null, "max_papers": 150 }
+```
+
+`mode`: `demo` | `scan` | `full`
+
+**Response:**
+
+```json
+{
+  "run_id": "a1b2c3d4",
+  "recommendations": [{ "subgroup": "...", "treatment": "...", "confidence": 75.7, "tier": "Monitor", "rationale": "..." }],
+  "steps": [{ "agentName": "Literature Synthesis Agent", "stepOrder": 1, "summary": "...", "createdAt": "..." }]
+}
+```
+
+---
+
+## Dashboard read helpers (API-only mode — no browser Supabase keys)
+
+Used when the frontend does not set `SUPABASE_URL` / `SUPABASE_ANON_KEY`.
+
+### GET /api/stats
+
+```json
+{ "literature": 228, "trial": 39, "grant": 40, "subgroups": 5 }
+```
+
+### GET /api/evidence?offset=0&limit=15
+
+```json
+{ "items": [{ "sourceType": "literature", "title": "...", "accessStatus": "open" }], "total": 307, "offset": 0, "limit": 15 }
+```
+
+### GET /api/runs?limit=5
+
+```json
+{ "runs": [{ "runId": "abc123", "steps": 6, "startedAt": "..." }] }
+```
+
+### GET /api/agents?run_id=abc123
+
+Same shape as **GET /api/agents** below; optional `run_id` query param.
+
+---
+
+## Quick verify
+
+**Local (no Supabase keys):**
 
 ```bash
-python3 cli.py demo                    # safe offline demo
-python3 cli.py pull --max 10           # pre-stage live pull
-python3 cli.py scan --max 5            # incremental update
+cd neurodiscover
+python3 cli.py build          # local neurodiscover.db only
+python3 cli.py validate
+python3 api_server.py         # port 5000
+curl -s http://127.0.0.1:5000/api/stats
+curl -s http://127.0.0.1:5000/api/recommendations
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
 ```
+
+**Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, **do not** run `build`, then `validate`, `api_server.py`, and the same `curl` lines.
+
+See [`neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md).
 
 ---
 

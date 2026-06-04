@@ -4,20 +4,26 @@ Single-page dashboard: `neurodiscover/frontend/index.html` (vanilla HTML/CSS/JS,
 
 ## Data flow
 
+**Default (no Supabase keys):** browser → API → SQLite or team Postgres (via `SUPABASE_DATABASE_URL` on the server only).
+
+**Optional:** browser → Supabase anon client for read-only panels (parallel to API).
+
 ```mermaid
 flowchart LR
   Browser[Browser dashboard]
-  SB[(Supabase Postgres)]
-  API[Flask/FastAPI api_server.py]
+  API[api_server.py :5000]
+  DB[(SQLite or Postgres)]
   Orch[orchestrator.py]
   Agents[Agents 1-6 + cli.py]
+  SB[(Supabase — optional direct reads)]
 
-  Browser -->|SELECT read-only panels| SB
+  Browser -->|GET /api/* reads| API
+  Browser -.->|optional SELECT| SB
   Browser -->|POST /api/run-discovery| API
+  API --> DB
   API --> Orch
   Orch --> Agents
-  Agents --> SB
-  API -->|SELECT contract JSON| SB
+  Agents --> DB
 ```
 
 ## Read path (Supabase JS SDK)
@@ -79,8 +85,33 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 
 In-process agents score 0–10; the orchestrator scales to **0–100** when writing to the DB.
 
+## Quick verify
+
+**No Supabase keys** (local laptop):
+
+```bash
+cd neurodiscover
+# unset SUPABASE_DATABASE_URL
+python3 cli.py build && python3 cli.py validate
+python3 api_server.py
+```
+
+```bash
+curl -s http://127.0.0.1:5000/health
+curl -s http://127.0.0.1:5000/api/stats
+curl -s http://127.0.0.1:5000/api/recommendations
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
+```
+
+UI: `cd frontend && python3 -m http.server 8080` → http://localhost:8080 (badge **Local API**).
+
+**Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, skip `build`, run `validate` + `api_server.py`, same `curl` commands. Do not run `cli.py build` on the shared DB.
+
+Full step-by-step: [`../neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md).
+
 ## Related docs
 
 - API JSON shapes: [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md)
 - Agent writes: [`AGENT_IO.md`](AGENT_IO.md)
-- Local setup: [`../neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md)
+- Setup + verify: [`../neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md)

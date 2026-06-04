@@ -97,18 +97,74 @@ location.reload();
 
 ## 5. Use the dashboard
 
-- **Without running a pipeline:** counts, subgroups, recommendations, and evidence load from Supabase immediately.
-- **Run pipeline:** click **Run Discovery Pipeline** (demo = offline) or **Incremental Scan** — calls `POST /api/run-discovery`.
+**Local API mode (no Supabase keys):** after `cli.py build`, open the UI — tiles, subgroups, and recommendations load from the API. Run **Demo** to refresh scores and agent trace.
 
-## Smoke test (API only)
+**Supabase mode (optional keys):** live team data loads from Supabase on page open; runs still go through `POST /api/run-discovery`.
+
+---
+
+## Quick verify (no Supabase keys)
+
+Run these in order from `neurodiscover/`. Expect `SUPABASE_DATABASE_URL` to be **unset** (local `neurodiscover.db`).
 
 ```bash
-curl http://127.0.0.1:5000/api/recommendations
-curl -X POST http://127.0.0.1:5000/api/run-discovery \
+cd neurodiscover
+pip install -r requirements.txt
+
+# Local DB only — safe on your laptop; never run build against team Supabase
+python3 cli.py build
+python3 cli.py validate
+
+# Terminal 1 — API
+python3 api_server.py
+```
+
+```bash
+# Terminal 2 — checks (API must be running on port 5000)
+curl -s http://127.0.0.1:5000/health
+curl -s http://127.0.0.1:5000/api/stats
+curl -s http://127.0.0.1:5000/api/discover/parkinsons | head -c 300
+curl -s http://127.0.0.1:5000/api/recommendations
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' \
+  -d '{"mode":"demo","max_papers":10}'
+curl -s 'http://127.0.0.1:5000/api/evidence?limit=3'
+curl -s http://127.0.0.1:5000/api/runs?limit=3
+```
+
+**Expected:** `health` shows your local DB path (not Supabase). `stats` returns non-zero `literature` / `subgroups` after `build`. `run-discovery` returns `run_id`, `recommendations`, and six `steps`.
+
+```bash
+# Terminal 3 — dashboard UI (optional)
+cd frontend && python3 -m http.server 8080
+# Open http://localhost:8080 — badge: "Local API"
+```
+
+---
+
+## Quick verify (team Supabase)
+
+Only if you have `SUPABASE_DATABASE_URL` in `.env` (Session pooler URI from the team):
+
+```bash
+cd neurodiscover
+pip install -r requirements.txt
+# Do NOT run cli.py build
+python3 cli.py validate
+python3 api_server.py
+```
+
+```bash
+curl -s http://127.0.0.1:5000/health
+curl -s http://127.0.0.1:5000/api/stats
+curl -s http://127.0.0.1:5000/api/recommendations
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' \
   -d '{"mode":"demo","max_papers":10}'
 ```
 
-## Supabase RLS
+Optional frontend: set `SUPABASE_URL` + `SUPABASE_ANON_KEY` in the page or `localStorage` for direct reads; otherwise the same API routes above still work.
 
-The anon key must allow `SELECT` on: `evidence`, `subgroups`, `subgroup_evidence`, `treatment_connections`, `recommendations`, `agent_outputs`. If policies block reads, the UI falls back to Flask GET routes (counts may be partial).
+## Supabase RLS (optional frontend keys only)
+
+If you use the Supabase JS client in the browser, the anon key must allow `SELECT` on: `evidence`, `subgroups`, `subgroup_evidence`, `treatment_connections`, `recommendations`, `agent_outputs`. If policies block reads, leave keys unset — the UI uses the API routes in the table above.

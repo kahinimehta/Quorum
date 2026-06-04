@@ -25,6 +25,8 @@ but all share the database below.
 | [`docs/SUPABASE.md`](docs/SUPABASE.md) | Team shared live DB (free tier) |
 | [`docs/PERSON2_BACKEND.md`](docs/PERSON2_BACKEND.md) | Person 2 Supabase connection |
 | [`docs/VALIDATION.md`](docs/VALIDATION.md) | Extraction QA after pull |
+| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard architecture + quick verify |
+| [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Run UI in &lt; 5 min (no Supabase keys OK) |
 
 **Canonical store:** SQLite locally, or **Supabase Postgres** when `SUPABASE_DATABASE_URL` is set. Table is **`evidence`**, not `papers`.
 
