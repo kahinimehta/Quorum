@@ -36,48 +36,38 @@ python3 cli.py pull --max 150</code></pre>
           <pre><code>curl -s http://127.0.0.1:5000/api/stats
 curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' \
-  -d '{"mode":"demo","max_papers":5}'</code></pre>
-          <p><a href="api.html">API overview</a> · <a href="BACKEND_QUERIES.md">BACKEND_QUERIES.md</a></p>
-        </div>
-        <div class="card">
-          <h2>Contract documents (markdown)</h2>
-          <ul>
-            <li><a href="DATABASE.md">DATABASE.md</a></li>
-            <li><a href="AGENT_IO.md">AGENT_IO.md</a></li>
-            <li><a href="SUPABASE.md">SUPABASE.md</a></li>
-            <li><a href="VALIDATION.md">VALIDATION.md</a></li>
-            <li><a href="../AGENTS.md">AGENTS.md</a></li>
-          </ul>
-        </div>
-        <div class="card" id="pages">
-          <h2>GitHub Pages — <code>neurodiscover.github.io</code></h2>
-          <p>
-            The URL <strong>https://neurodiscover.github.io</strong> is the root site for the GitHub account or organization named
-            <code>neurodiscover</code>. It is <em>not</em> the same as <code>https://kahinimehta.github.io/Quorum/</code> (project Pages).
-          </p>
-          <h3>Step 1 — Create the org site repo</h3>
-          <ol>
-            <li>Create a GitHub organization (or user) named <strong>neurodiscover</strong>.</li>
-            <li>Create a <strong>public</strong> repository named exactly <code>neurodiscover.github.io</code>.</li>
-            <li>In that repo: <strong>Settings → Pages → Build and deployment → Source: GitHub Actions</strong>.</li>
-          </ol>
-          <h3>Step 2 — Deploy this <code>docs/</code> folder (automated)</h3>
-          <ol>
-            <li>In <code>neurodiscover.github.io</code> repo settings, add secret <code>NEURODISCOVER_PAGES_TOKEN</code> — a fine-grained PAT with <strong>Contents: Read and write</strong> on that repo only.</li>
-            <li>In <strong>Quorum</strong> repo settings, add the same secret name so Actions can push docs.</li>
-            <li>On Quorum: run workflow <strong>Deploy docs to neurodiscover.github.io</strong> (or push to <code>main</code> after merge).</li>
-          </ol>
-          <p>Workflow: <code>.github/workflows/deploy-neurodiscover-org-pages.yml</code></p>
-          <h3>Alternative — interim project URL</h3>
-          <p>Until the org site exists, use Quorum project Pages:</p>
-          <ol>
-            <li><strong>Settings → Pages → Source: GitHub Actions</strong> on <code>kahinimehta/Quorum</code>.</li>
-            <li>Disable or remove the default Jekyll workflow if it conflicts; use <strong>Deploy documentation to GitHub Pages</strong> (<code>deploy-docs.yml</code>).</li>
-            <li>Site URL: <code>https://kahinimehta.github.io/Quorum/</code> (sidebar links auto-detect this path).</li>
-          </ol>
-        </div>
-      </main>
-      <footer class="site-footer">NeuroDiscover · Quorum</footer>
+  -d '{"mode":"demo","max_papers":5}'</pre>
+      <p>See <a href="BACKEND_QUERIES.md">BACKEND_QUERIES.md</a> and <a href="PERSON2_API_ENDPOINTS.md">PERSON2_API_ENDPOINTS.md</a>.</p>
+    </div>
+    <div class="card">
+      <h2>Contract documents (markdown)</h2>
+      <ul>
+        <li><a href="DATABASE.md">DATABASE.md</a> — schema</li>
+        <li><a href="AGENT_IO.md">AGENT_IO.md</a> — per-agent I/O</li>
+        <li><a href="SUPABASE.md">SUPABASE.md</a> — team shared DB</li>
+        <li><a href="VALIDATION.md">VALIDATION.md</a> — extraction QA</li>
+        <li><a href="../AGENTS.md">AGENTS.md</a> — Cursor / agent context</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>GitHub Pages (team docs site)</h2>
+      <p>Static pages live in <code>docs/</code> (overview, workflow, team, guides). The dashboard itself still runs locally via <code>make dashboard</code> — it is not hosted on Pages.</p>
+      <h3>Option A — GitHub Actions (recommended)</h3>
+      <ol>
+        <li>Merge to <code>main</code> and <code>git pull origin main</code>.</li>
+        <li>On GitHub: <strong>Settings → Pages → Build and deployment → Source: GitHub Actions</strong>.</li>
+        <li>Push to <code>main</code> (or run the workflow manually: <strong>Actions → “Deploy documentation to GitHub Pages” → Run workflow</strong>).</li>
+        <li>When the job succeeds, open the environment URL shown on the run (usually <code>https://&lt;org&gt;.github.io/&lt;repo&gt;/</code>).</li>
+      </ol>
+      <p>Workflow file: <code>.github/workflows/deploy-docs.yml</code> (uploads the <code>docs/</code> folder).</p>
+      <h3>Option B — Deploy from branch</h3>
+      <ol>
+        <li><strong>Settings → Pages → Source: Deploy from a branch</strong>.</li>
+        <li>Branch <code>main</code>, folder <code>/docs</code>, Save.</li>
+        <li>Wait ~1–2 minutes; the Pages URL appears at the top of the same settings page.</li>
+      </ol>
+      <p>Use only one option (Actions <em>or</em> branch deploy). If both are enabled, prefer Actions so deploys match CI.</p>
+      <p>First-time setup: the repo needs <strong>Pages</strong> enabled on the free plan; no extra secrets are required for the docs workflow.</p>
     </div>
   </div>
   <script src="assets/site.js"></script>
