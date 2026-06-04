@@ -8,13 +8,18 @@ To match the PDF pixel-perfect, add a copy to this repo (e.g. `frontend/mockup-v
 
 | Mockup region | Implementation |
 |---------------|----------------|
-| Header | Quorum mark + NeuroDiscover AI + live/run badges |
+| Header pills | DB LIVE · evidence row count · Synthetic Cohort Layer · DB type |
 | KPI strip | Papers · Trials · Grants · Subgroups · Connections |
-| Pipeline | Data inputs → agents (①–⑥) → three outputs, with ▼ connectors |
-| Left output | Synthetic cohort panel + green safety banner + Patient A–E cards |
-| Center output | Ranked outputs + confidence bars + ranked list |
-| Right output | Research hypotheses + continuous update |
-| Footer audit | Agent trace + evidence library table |
+| Step 1 sidebar | DB tiles + last scan · subgroups with colored dots · agent stepper Done/Ready/Idle |
+| Step 1 main | Primary disease field · source cards · segmented run/extract/output · banners · run buttons |
+| Recent runs | Run ID · Date · Mode · Evidence · Subgroups · Synthetic · Status (click → Step 2) |
+| Step 2 pills | Pipeline complete · synthetic count · subgroups/treatments |
+| Pipeline diagram | Data inputs → agents (①–⑥) → three outputs |
+| Synthetic panel | Profile line · onset · confidence mini-bar · No PHI pills |
+| Ranked panel | Prioritize/Monitor on bars · rec cards with quotes + patient links |
+| Hypotheses | H1–H4 · PMID/NCT pills · Conf score · Monitor warning |
+| Audit | Agent trace timestamps + synthetic generator step · evidence + synthetic link column |
+| Footer | Demo data notice (DEMO-* / cli.py pull) |
 
 ## Local preview
 

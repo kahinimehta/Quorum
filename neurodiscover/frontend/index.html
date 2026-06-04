@@ -554,6 +554,162 @@
     }
     .delta-up { color: #059669; font-size: 0.75rem; font-weight: 600; }
     .update-bar { margin-bottom: 0.45rem; }
+    .badge-pill-blue { background: rgba(59, 130, 246, 0.22); }
+    .badge-pill-amber { background: rgba(251, 191, 36, 0.22); color: #fde68a; }
+    .badge-pill-db { background: rgba(15, 23, 42, 0.35); font-size: 0.75rem; }
+    .scan-meta { font-size: 0.72rem; color: var(--muted); margin: 0.5rem 0 0; }
+    .sg-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 0.35rem;
+      vertical-align: middle;
+    }
+    .chip-row { display: flex; align-items: center; gap: 0.35rem; }
+    .stepper li.ready::before { background: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+    .stepper li.idle::before { background: #cbd5e1; }
+    .stepper li.idle { color: var(--muted); opacity: 0.85; }
+    .stepper li .step-state { float: right; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
+    .stepper li.done .step-state { color: #059669; }
+    .stepper li.ready .step-state { color: var(--primary); }
+    .stepper li.idle .step-state { color: #94a3b8; }
+    .field-primary {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .field-primary input { flex: 1; margin-bottom: 0; }
+    .tag-primary {
+      font-size: 0.65rem; font-weight: 700;
+      background: #dbeafe; color: #1d4ed8;
+      padding: 0.2rem 0.45rem; border-radius: 4px;
+      white-space: nowrap;
+    }
+    .source-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+    @media (max-width: 700px) { .source-cards { grid-template-columns: 1fr; } }
+    .source-card {
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .source-card:hover { border-color: #93c5fd; }
+    .source-card.on { border-color: var(--primary); background: #eff6ff; }
+    .source-card .sc-n { font-size: 1.25rem; font-weight: 700; color: var(--navy); }
+    .source-card .sc-l { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; }
+    .source-card input { display: none; }
+    .segmented {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 0.85rem;
+    }
+    .seg-opt {
+      flex: 1;
+      text-align: center;
+      padding: 0.55rem 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #f8fafc;
+      border-right: 1px solid var(--border);
+      margin: 0;
+      color: var(--muted);
+    }
+    .seg-opt:last-child { border-right: none; }
+    .seg-opt input { position: absolute; opacity: 0; pointer-events: none; }
+    .seg-opt:has(input:checked) {
+      background: var(--primary);
+      color: #fff;
+    }
+    .seg-opt.seg-purple:has(input:checked) {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    }
+    .banner {
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
+      margin-bottom: 0.65rem;
+      line-height: 1.45;
+    }
+    .banner-green { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+    .banner-blue { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+    .btn-run-stack { display: flex; flex-direction: column; gap: 0.5rem; align-items: stretch; max-width: 360px; }
+    .btn-run-stack .btn-primary { max-width: none; width: 100%; }
+    .btn-run-stack .btn-secondary { margin-left: 0; width: 100%; }
+    .runs-table { font-size: 0.75rem; }
+    .runs-table code { font-size: 0.7rem; }
+    .status-complete { color: #059669; font-weight: 600; }
+    .status-partial { color: var(--amber); font-weight: 600; }
+    .results-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .results-pills .badge { background: #fff; color: var(--navy); border: 1px solid var(--border); }
+    .results-pills .badge.ok { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .results-pills .badge.syn { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+    .conf-mini-track { height: 6px; background: var(--border); border-radius: 3px; margin-top: 0.35rem; overflow: hidden; }
+    .conf-mini-fill { height: 100%; background: var(--secondary); border-radius: 3px; }
+    .btn-tier {
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: default;
+      font-weight: 600;
+    }
+    .btn-tier.prioritize { border-color: #93c5fd; color: var(--primary); }
+    .btn-tier.monitor { border-color: #fcd34d; color: #b45309; }
+    .rec-quote {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: 0.35rem 0;
+      border-left: 2px solid var(--border);
+      padding-left: 0.5rem;
+    }
+    .hyp-num { font-size: 0.7rem; color: var(--muted); font-weight: 700; }
+    .conf-pill {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      margin-left: 0.25rem;
+    }
+    .syn-link-btn {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 1px solid #86efac;
+    }
+    .demo-notice {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .timeline .ts { float: right; font-size: 0.72rem; color: var(--muted); }
+    .evidence-meta { font-size: 0.72rem; color: var(--muted); float: right; }
   </style>
 </head>
 <body>
@@ -568,6 +724,9 @@
       </div>
       <div class="header-meta">
         <span class="badge live" id="dbBadge">Connecting…</span>
+        <span class="badge badge-pill-blue" id="evidenceTotalBadge">— Evidence Rows</span>
+        <span class="badge badge-pill-amber" id="synLayerBadge">Synthetic Cohort Layer</span>
+        <span class="badge badge-pill-db" id="dbTypeBadge">—</span>
         <span class="badge" id="runIdChip" style="display:none;">Run —</span>
       </div>
     </div>
@@ -614,6 +773,7 @@
           <div class="tile"><div class="n" id="cntGrant">—</div><div class="l">Grants</div></div>
           <div class="tile"><div class="n" id="cntSg">—</div><div class="l">Subgroups</div></div>
         </div>
+        <p class="scan-meta" id="lastScanMeta">Last scan: —</p>
       </div>
       <div class="card">
         <h2>Patient subgroups</h2>
@@ -622,63 +782,98 @@
       <div class="card">
         <h2>Agent pipeline</h2>
         <ol class="stepper" id="pipelineStepper">
-          <li data-agent="Literature Synthesis Agent">Literature Synthesis</li>
-          <li data-agent="Patient Subgroup Agent">Patient Subgroup</li>
-          <li data-agent="Treatment Connection Agent">Treatment Connection</li>
-          <li data-agent="Evidence Scoring Agent">Evidence Scoring</li>
-          <li data-agent="Commercial Discovery Agent">Commercial Discovery</li>
-          <li data-agent="Conclusion Update Agent">Conclusion Update</li>
+          <li class="idle" data-agent="Literature Synthesis Agent">Literature Synthesis <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Patient Subgroup Agent">Patient Subgroup <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Treatment Connection Agent">Treatment Connection <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Evidence Scoring Agent">Evidence Scoring <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Commercial Discovery Agent">Commercial Discovery <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Conclusion Update Agent">Conclusion Update <span class="step-state">Idle</span></li>
         </ol>
       </div>
     </aside>
     <main>
       <div class="card run-hero">
-        <h2>Discovery run</h2>
-        <label>Disease (locked)</label>
-        <input type="text" id="disease" value="Parkinson disease" disabled />
+        <h2>Discovery run configuration</h2>
+        <label>Disease / search query</label>
+        <div class="field-primary">
+          <input type="text" id="disease" value="Parkinson disease" disabled />
+          <span class="tag-primary">Primary</span>
+        </div>
 
-        <label>Keyword filter (optional, passed as --query)</label>
+        <label>Additional keyword filter (optional)</label>
         <input type="text" id="query" placeholder="e.g. GBA GCase lysosomal" />
 
         <label>Evidence sources</label>
-        <div class="row">
-          <label class="inline"><input type="checkbox" id="srcPubmed" checked /> PubMed</label>
-          <label class="inline"><input type="checkbox" id="srcTrials" checked /> ClinicalTrials.gov</label>
-          <label class="inline"><input type="checkbox" id="srcGrants" checked /> NIH RePORTER</label>
+        <div class="source-cards" id="sourceCards">
+          <label class="source-card on" data-src="pubmed">
+            <input type="checkbox" id="srcPubmed" checked />
+            <div class="sc-n" id="srcCntPubmed">—</div>
+            <div class="sc-l">PubMed · Literature</div>
+          </label>
+          <label class="source-card on" data-src="trials">
+            <input type="checkbox" id="srcTrials" checked />
+            <div class="sc-n" id="srcCntTrials">—</div>
+            <div class="sc-l">ClinicalTrials.gov</div>
+          </label>
+          <label class="source-card on" data-src="grants">
+            <input type="checkbox" id="srcGrants" checked />
+            <div class="sc-n" id="srcCntGrants">—</div>
+            <div class="sc-l">NIH RePORTER</div>
+          </label>
         </div>
 
-        <label>Max papers <span class="range-val" id="maxLabel">150</span></label>
+        <label>Max papers to pull <span class="range-val" id="maxLabel">150</span> <small style="font-weight:400;color:var(--muted)">(10–500)</small></label>
         <input type="range" id="maxPapers" min="10" max="500" value="150" step="10" />
 
         <div class="row">
-          <label class="inline"><input type="checkbox" id="preprints" /> Include preprints</label>
-          <label class="inline"><input type="checkbox" id="fulltext" /> Include full text</label>
+          <label class="inline"><input type="checkbox" id="preprints" /> Include preprints (bioRxiv)</label>
+          <label class="inline"><input type="checkbox" id="fulltext" checked /> Include full text (OA only)</label>
+          <label class="inline"><input type="checkbox" id="enrichRows" checked /> Enrich existing rows</label>
         </div>
 
         <label>Run mode</label>
-        <div class="row">
-          <label class="inline"><input type="radio" name="mode" value="full" /> Full pipeline</label>
-          <label class="inline"><input type="radio" name="mode" value="scan" /> Incremental scan</label>
-          <label class="inline"><input type="radio" name="mode" value="demo" checked /> Demo (offline)</label>
+        <div class="segmented" role="group" aria-label="Run mode">
+          <label class="seg-opt seg-purple"><input type="radio" name="mode" value="full" /><span>Full Pipeline</span></label>
+          <label class="seg-opt"><input type="radio" name="mode" value="scan" /><span>Incremental Scan</span></label>
+          <label class="seg-opt"><input type="radio" name="mode" value="demo" checked /><span>Demo (offline)</span></label>
         </div>
 
         <label>Extraction backend</label>
-        <div class="row">
-          <label class="inline"><input type="radio" name="extract" value="nebius" checked /> Nebius</label>
-          <label class="inline"><input type="radio" name="extract" value="ollama" /> Ollama</label>
-          <label class="inline"><input type="radio" name="extract" value="none" /> None</label>
+        <div class="segmented" role="group" aria-label="Extraction backend">
+          <label class="seg-opt"><input type="radio" name="extract" value="nebius" checked /><span>Nebius (LLM)</span></label>
+          <label class="seg-opt"><input type="radio" name="extract" value="ollama" /><span>Ollama (local)</span></label>
+          <label class="seg-opt"><input type="radio" name="extract" value="none" /><span>None (abstract)</span></label>
         </div>
 
-        <div class="actions">
-          <button type="button" class="btn btn-primary" id="btnRun">Run Discovery Pipeline</button>
-          <button type="button" class="btn btn-secondary" id="btnScan">Incremental Scan</button>
+        <label>Output layers</label>
+        <div class="segmented" role="group" aria-label="Output layers">
+          <label class="seg-opt"><input type="radio" name="outputLayer" value="cohort" checked /><span>Synthetic Cohort</span></label>
+          <label class="seg-opt"><input type="radio" name="outputLayer" value="ranked" /><span>Ranked Outputs</span></label>
+        </div>
+
+        <div class="banner banner-green">
+          <strong>Synthetic cohort layer</strong> — generates up to 5 illustrative patient profiles per subgroup.
+          No real patient data; HIPAA-safe visualization only.
+        </div>
+        <div class="banner banner-blue" id="liveDbBanner">
+          <strong>Live database</strong> — loading connection info…
+        </div>
+
+        <div class="btn-run-stack actions">
+          <button type="button" class="btn btn-primary" id="btnRun">▶ Run Discovery Pipeline</button>
+          <button type="button" class="btn btn-secondary" id="btnScan">Incremental Scan Only</button>
         </div>
         <p id="runStatus" style="font-size:0.85rem;color:var(--muted);margin-top:0.75rem;"></p>
       </div>
       <div class="card">
         <h2>Recent runs</h2>
-        <table>
-          <thead><tr><th>Run ID</th><th>Steps</th><th>Started</th></tr></thead>
+        <table class="runs-table">
+          <thead>
+            <tr>
+              <th>Run ID</th><th>Date</th><th>Mode</th><th>Evidence</th>
+              <th>Subgroups</th><th>Synthetic</th><th>Status</th>
+            </tr>
+          </thead>
           <tbody id="recentRuns"></tbody>
         </table>
       </div>
@@ -687,8 +882,13 @@
   </div>
 
   <div id="viewResults" class="hidden">
-    <p class="view-page-title">Step 2 — Discovery Results <span>Synthetic cohort · ranked treatments · research hypotheses (from latest run)</span></p>
+    <p class="view-page-title">Step 2 — Discovery Results <span id="resultsSubtitle">Synthetic cohort · ranked treatments · research hypotheses</span></p>
     <div class="results-wide">
+      <div class="results-pills" id="resultsPills">
+        <span class="badge ok" id="pillPipeline">Pipeline —</span>
+        <span class="badge syn" id="pillSynthetic">— Synthetic Profiles</span>
+        <span class="badge" id="pillSubTreat">— Subgroups · — Treatments</span>
+      </div>
       <section class="pipeline-v2">
         <h2>Discovery pipeline</h2>
         <div class="pipe-stage">
@@ -759,16 +959,16 @@
         <div class="section-label">Audit &amp; provenance</div>
         <div class="audit-grid">
           <div class="card">
-            <h2>Agent run trace</h2>
+            <h2>Agent run trace <code id="traceRunId" style="font-size:0.7rem;font-weight:400;"></code></h2>
             <ul class="timeline" id="agentTimeline"></ul>
           </div>
           <div class="card">
-            <h2>Evidence library</h2>
+            <h2>Evidence preview <span class="evidence-meta" id="evidenceMeta">—</span></h2>
             <table>
               <thead>
                 <tr>
                   <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
-                  <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th>
+                  <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th><th>Synthetic link</th>
                 </tr>
               </thead>
               <tbody id="evidenceTable"></tbody>
@@ -781,6 +981,11 @@
           </div>
         </div>
       </section>
+      <div class="demo-notice">
+        <strong>Demo data notice.</strong> Rows with <code>DEMO-*</code> source IDs are seed placeholders.
+        Run <code>python3 cli.py pull</code> (not <code>build</code> on team Supabase) to backfill real PMIDs and NCT ids.
+        Synthetic patient profiles contain zero real patient data.
+      </div>
     </div>
   </div>
 
@@ -797,8 +1002,10 @@
     let patientBySubgroup = {};
     let evidenceCache = [];
     let evPage = 0;
-    const EV_PAGE_SIZE = 15;
+    let evTotal = 0;
+    const EV_PAGE_SIZE = 6;
     const DELTA_PLACEHOLDERS = ['+2.1 ↑', '+0.8 ↑', '-0.4 ↓', '+1.3 ↑', '+0.2 ↑'];
+    let statsCache = { totalEvidence: 0, subgroups: 0 };
 
     const AGENTS = [
       'Literature Synthesis Agent',
@@ -819,11 +1026,27 @@
           + '<code>' + API_BASE + '</code> — not directly from the cloud. '
           + 'If you ran <code>make dashboard</code>, that API is already running; ignore any extra terminal step. '
           + 'Team cloud option (optional): add <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> in the page or localStorage — see QUICKSTART.md.';
-        document.getElementById('dbBadge').textContent = 'Local API';
+        document.getElementById('dbBadge').textContent = 'DB LIVE';
+        document.getElementById('dbTypeBadge').textContent = 'Local API';
         return;
       }
       sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      document.getElementById('dbBadge').textContent = 'Live DB';
+      document.getElementById('dbBadge').textContent = 'DB LIVE';
+      document.getElementById('dbTypeBadge').textContent = 'Supabase Postgres';
+    }
+
+    function bindSourceCards() {
+      document.querySelectorAll('.source-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (e.target.tagName === 'INPUT') return;
+          const cb = card.querySelector('input[type=checkbox]');
+          if (!cb) return;
+          cb.checked = !cb.checked;
+          card.classList.toggle('on', cb.checked);
+        });
+        const cb = card.querySelector('input[type=checkbox]');
+        if (cb) card.classList.toggle('on', cb.checked);
+      });
     }
 
     async function sbSelect(table, opts = {}) {
@@ -858,14 +1081,63 @@
       }
     }
 
-    function updateRunMeta(runId) {
+    function updateRunMeta(runId, recCount, synCount) {
       const chip = document.getElementById('runIdChip');
-      if (!chip) return;
-      if (runId) {
-        chip.style.display = 'inline-flex';
-        chip.textContent = `Run ${runId}`;
-      } else {
-        chip.style.display = 'none';
+      if (chip) {
+        if (runId) {
+          chip.style.display = 'inline-flex';
+          chip.textContent = `Run ${runId}`;
+        } else {
+          chip.style.display = 'none';
+        }
+      }
+      const sub = document.getElementById('resultsSubtitle');
+      if (sub && runId) sub.textContent = `Run ${runId} · synthetic cohort · ranked outputs · audit trace`;
+      const trace = document.getElementById('traceRunId');
+      if (trace) trace.textContent = runId ? `run_id: ${runId}` : '';
+      const nRec = recCount ?? 5;
+      const nSyn = synCount ?? (nRec > 0 ? 5 : 0);
+      const sg = statsCache.subgroups || 5;
+      const pillP = document.getElementById('pillPipeline');
+      const pillS = document.getElementById('pillSynthetic');
+      const pillST = document.getElementById('pillSubTreat');
+      if (pillP) pillP.textContent = nRec > 0 ? '• Pipeline Complete' : '• Pipeline Partial';
+      if (pillS) pillS.textContent = `${nSyn} Synthetic Profiles`;
+      if (pillST) pillST.textContent = `${sg} Subgroups · ${nRec || 5} Treatments`;
+    }
+
+    function formatScanTime(iso) {
+      if (!iso) return '—';
+      try {
+        const d = new Date(iso);
+        return d.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }) + ' UTC';
+      } catch (e) {
+        return iso;
+      }
+    }
+
+    function updateHeaderFromStats(s) {
+      statsCache = { totalEvidence: s.totalEvidence ?? 0, subgroups: s.subgroups ?? 0 };
+      const total = s.totalEvidence ?? ((s.literature || 0) + (s.trial || 0) + (s.grant || 0));
+      const eb = document.getElementById('evidenceTotalBadge');
+      if (eb) eb.textContent = `${total} Evidence Rows`;
+      const scanEl = document.getElementById('lastScanMeta');
+      if (scanEl) scanEl.textContent = 'Last scan: ' + formatScanTime(s.lastScanAt);
+      const pub = document.getElementById('srcCntPubmed');
+      const tri = document.getElementById('srcCntTrials');
+      const gr = document.getElementById('srcCntGrants');
+      if (pub) pub.textContent = String(s.literature ?? '—');
+      if (tri) tri.textContent = String(s.trial ?? '—');
+      if (gr) gr.textContent = String(s.grant ?? '—');
+      const banner = document.getElementById('liveDbBanner');
+      if (banner) {
+        const dbLabel = s.database || (s.supabaseConfigured ? 'Supabase Postgres' : 'Local SQLite');
+        banner.innerHTML = '<strong>Live DB active</strong> — connected via <code>' + escapeHtml(dbLabel) + '</code>. '
+          + 'Use <em>Incremental Scan</em> to add evidence without truncating tables. '
+          + (s.supabaseConfigured ? '' : 'Browser reads through the Python API at ' + API_BASE + '.');
+      }
+      if (s.supabaseConfigured && document.getElementById('dbTypeBadge')) {
+        document.getElementById('dbTypeBadge').textContent = 'Supabase Postgres';
       }
     }
 
@@ -891,10 +1163,22 @@
           trial = s.trial ?? 0;
           grant = s.grant ?? 0;
           sg = s.subgroups ?? 0;
+          conn = s.connections ?? 5;
+          updateHeaderFromStats(s);
+          if (s.lastRunId) latestRunId = latestRunId || s.lastRunId;
           try {
-            const d = await fetch(`${API_BASE}/api/discover/parkinsons`).then(x => x.json());
-            conn = (d.treatmentConnections || []).length || 5;
+            if (!conn) {
+              const d = await fetch(`${API_BASE}/api/discover/parkinsons`).then(x => x.json());
+              conn = (d.treatmentConnections || []).length || 5;
+            }
           } catch (e) { /* keep default */ }
+        }
+        if (sb) {
+          const total = lit + trial + grant;
+          updateHeaderFromStats({
+            literature: lit, trial, grant, subgroups: sg, totalEvidence: total,
+            lastScanAt: null, database: 'Supabase Postgres', supabaseConfigured: true,
+          });
         }
         syncKpi(lit, trial, grant, sg, conn);
       } catch (e) {
@@ -925,7 +1209,11 @@
         rows.forEach(s => {
           const d = document.createElement('div');
           d.className = 'chip';
-          d.innerHTML = `<strong>${s.name}</strong><small>${s.defining_features || '—'}</small><br><small>${s.evidence_count ?? 0} evidence links</small>`;
+          const color = subgroupColor(s.name);
+          const ev = s.evidence_count ?? 0;
+          d.style.borderLeftColor = color;
+          d.innerHTML = `<div class="chip-row"><span class="sg-dot" style="background:${color}"></span><strong>${escapeHtml(s.name)}</strong></div>`
+            + `<small>${escapeHtml(s.defining_features || '—')}</small><br><small>${ev} ev</small>`;
           box.appendChild(d);
         });
       } catch (e) {
@@ -954,30 +1242,59 @@
             run_id: x.runId,
             steps: x.steps,
             started: x.startedAt,
+            mode: x.mode,
+            recommendations: x.recommendations,
+            syntheticProfiles: x.syntheticProfiles,
+            status: x.status,
           }));
         }
+        const totalEv = statsCache.totalEvidence || 0;
         runs.forEach(run => {
           const tr = document.createElement('tr');
-          tr.innerHTML = `<td><code>${run.run_id}</code></td><td>${run.steps}</td><td>${run.started || '—'}</td>`;
+          const date = formatScanTime(run.started);
+          const mode = (run.mode || 'demo').toUpperCase();
+          const recs = run.recommendations ?? run.steps ?? 0;
+          const syn = run.syntheticProfiles ? `✓ ${run.syntheticProfiles} profiles` : '—';
+          const statusCls = (run.status === 'Complete') ? 'status-complete' : 'status-partial';
+          const status = run.status || (run.steps >= 6 ? 'Complete' : 'Partial');
+          tr.innerHTML = `<td><code>${escapeHtml(String(run.run_id).slice(0, 8))}</code></td>`
+            + `<td>${date}</td><td>${mode}</td>`
+            + `<td>+${recs} (${totalEv} total)</td>`
+            + `<td>${statsCache.subgroups || 5}</td><td>${syn}</td>`
+            + `<td class="${statusCls}">• ${status}</td>`;
+          tr.style.cursor = 'pointer';
+          tr.addEventListener('click', () => {
+            latestRunId = run.run_id;
+            updateRunMeta(latestRunId, recs, run.syntheticProfiles);
+            showView('results');
+            loadResults(latestRunId);
+          });
           tbody.appendChild(tr);
         });
       } catch (e) {
-        tbody.innerHTML = '<tr><td colspan="3">No runs yet</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7">No runs yet</td></tr>';
       }
     }
 
     function updateStepper(steps) {
-      const names = new Set((steps || []).map(s => s.agentName));
+      const completed = new Set((steps || []).map(s => s.agentName));
+      let markedReady = false;
       document.querySelectorAll('#pipelineStepper li').forEach(li => {
-        li.classList.remove('done', 'active');
+        li.classList.remove('done', 'ready', 'idle', 'active');
         const a = li.dataset.agent;
-        if (names.has(a)) li.classList.add('done');
+        const stateEl = li.querySelector('.step-state');
+        if (completed.has(a)) {
+          li.classList.add('done');
+          if (stateEl) stateEl.textContent = 'Done';
+        } else if (!markedReady) {
+          li.classList.add('ready');
+          if (stateEl) stateEl.textContent = 'Ready';
+          markedReady = true;
+        } else {
+          li.classList.add('idle');
+          if (stateEl) stateEl.textContent = 'Idle';
+        }
       });
-      const last = (steps || [])[steps.length - 1];
-      if (last) {
-        const el = document.querySelector(`#pipelineStepper li[data-agent="${last.agentName}"]`);
-        if (el) { el.classList.add('active'); el.classList.add('done'); }
-      }
     }
 
     function tierFromConfidence(c) {
@@ -1003,6 +1320,32 @@
       return '#';
     }
 
+    function nctHref(sourceId) {
+      if (!sourceId) return '#';
+      const raw = String(sourceId).replace(/^NCT/i, '').replace('DEMO-NCT-', '').trim();
+      if (/^NCT\d+/i.test(String(sourceId))) return `https://clinicaltrials.gov/study/${String(sourceId).toUpperCase()}`;
+      if (/^\d+/.test(raw)) return `https://clinicaltrials.gov/study/NCT${raw}`;
+      return '#';
+    }
+
+    function formatTime(ts) {
+      if (!ts) return '';
+      try {
+        const d = new Date(ts);
+        return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      } catch (e) {
+        return String(ts).slice(11, 19) || '';
+      }
+    }
+
+    function quoteFromRationale(text) {
+      if (!text) return '';
+      const m = text.match(/['"]([^'"]{20,120})['"]/);
+      if (m) return m[1];
+      const s = text.split(/(?<=[.!?])\s+/)[0] || text;
+      return s.length > 120 ? s.slice(0, 117) + '…' : s;
+    }
+
     async function fetchSyntheticCohort(runId) {
       if (!runId) return [];
       try {
@@ -1024,24 +1367,28 @@
         const card = document.createElement('div');
         card.className = 'syn-card';
         card.style.borderLeft = `4px solid ${color}`;
+        const conf = Math.min(100, Number(p.confidence) || 0);
+        const profileShort = (p.key_feature || '').split(';')[0].slice(0, 28) || 'PD subgroup';
+        const profileLine = `${p.synthetic_age}${p.synthetic_sex} · ${profileShort}`;
+        const onset = `~${Math.max(40, (p.synthetic_age || 60) - 8)}y (synthetic)`;
         card.innerHTML = `
           <div class="syn-head">
             <div class="syn-avatar" style="background:${color}">${p.patient_letter || '?'}</div>
             <div>
               <strong>${escapeHtml(p.patient_id)}</strong>
-              <span class="pill-syn">Synthetic only</span>
+              <span class="pill-syn">Synthetic only</span> <span class="pill-syn" style="background:#ecfdf5;">No PHI</span>
             </div>
           </div>
           <div class="syn-grid">
             <div><label>Subgroup</label>${escapeHtml(p.subgroup)}</div>
-            <div><label>Profile</label>${p.synthetic_age}y · ${p.synthetic_sex}</div>
+            <div><label>Profile</label>${escapeHtml(profileLine)}</div>
             <div><label>Key feature</label>${escapeHtml(p.key_feature || '—')}</div>
-            <div><label>Course</label>${escapeHtml(p.course || '—')}</div>
+            <div><label>Onset / course</label>${onset}</div>
           </div>
           <div class="syn-opp">
-            <strong>Top opportunity</strong><br>
-            ${escapeHtml(p.top_opportunity || '—')}<br>
-            <small>${escapeHtml(p.mechanism || '')} · confidence ${p.confidence ?? '—'}</small>
+            <strong>Top opportunity</strong> — ${escapeHtml(p.top_opportunity || '—')}
+            <div class="conf-mini-track"><div class="conf-mini-fill" style="width:${conf}%"></div></div>
+            <small>${escapeHtml(p.mechanism || '')} · confidence ${conf}</small>
           </div>
           <span class="pill-phi">🔒 Synthetic · no PHI</span>`;
         box.appendChild(card);
@@ -1051,36 +1398,40 @@
     function renderHypotheses(recommendations) {
       const box = document.getElementById('hypotheses');
       box.innerHTML = '';
-      const prioritize = (recommendations || [])
-        .filter(r => (r.tier || tierFromConfidence(r.confidence || 0)) === 'Prioritize')
-        .slice(0, 3);
-      if (!prioritize.length) {
-        box.innerHTML = '<p style="font-size:0.8rem;color:var(--muted);">No Prioritize-tier hypotheses in this run. Run demo or check Monitor-tier outputs above.</p>';
+      const allHyp = (recommendations || []).slice(0, 4);
+      if (!allHyp.length) {
+        box.innerHTML = '<p style="font-size:0.8rem;color:var(--muted);">Run the pipeline to generate research hypotheses.</p>';
         return;
       }
-      prioritize.forEach(rec => {
+      allHyp.forEach((rec, hi) => {
         const color = subgroupColor(rec.subgroup);
-        const cites = (evidenceCache || [])
-          .filter(e => e.subgroup === rec.subgroup)
-          .slice(0, 3);
-        const citeHtml = cites.length
-          ? cites.map(e => {
-              const sid = e.source_id || e.sourceId || '';
-              const href = pmidHref(sid);
-              return `<a class="cite-pill" href="${href}" target="_blank" rel="noopener">${escapeHtml(sid)}</a>`;
-            }).join('')
-          : '<span class="cite-pill">evidence-linked</span>';
-        const title = `${rec.treatment} for ${rec.subgroup}`;
-        const rationale = rec.rationale || `Hypothesis: ${rec.mechanism || 'targeted mechanism'} may benefit ${rec.subgroup}.`;
+        const cites = (evidenceCache || []).filter(e => e.subgroup === rec.subgroup).slice(0, 4);
+        let citeHtml = '';
+        cites.forEach(e => {
+          const sid = e.source_id || e.sourceId || '';
+          const st = e.source_type || e.sourceType || '';
+          if (String(sid).includes('NCT') || st === 'trial') {
+            citeHtml += `<a class="cite-pill" href="${nctHref(sid)}" target="_blank" rel="noopener">NCT</a>`;
+          } else {
+            citeHtml += `<a class="cite-pill" href="${pmidHref(sid)}" target="_blank" rel="noopener">PMID</a>`;
+          }
+        });
+        if (!citeHtml) citeHtml = '<span class="cite-pill">linked evidence</span>';
+        const tier = rec.tier || tierFromConfidence(rec.confidence || 0);
+        const warn = tier === 'Monitor' ? ' ⚠' : '';
+        const title = `${rec.treatment} — ${rec.subgroup}`;
+        const rationale = rec.rationale || `Hypothesis: ${rec.mechanism || 'mechanism'} may benefit ${rec.subgroup}.`;
         const sentences = rationale.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
         const card = document.createElement('div');
         card.className = 'hyp-card';
         card.style.borderLeftColor = color;
         card.innerHTML = `
-          <h4 style="margin:0 0 0.35rem;font-size:0.9rem;">${escapeHtml(title)}</h4>
+          <div class="hyp-num">H${hi + 1}</div>
+          <h4 style="margin:0.15rem 0 0.35rem;font-size:0.9rem;">${escapeHtml(title)}${warn}
+            <span class="tier tier-${tier}" style="margin-left:0.35rem;">${tier}</span>
+          </h4>
           <p style="font-size:0.78rem;margin:0 0 0.5rem;">${escapeHtml(sentences)}</p>
-          <div>${citeHtml}</div>
-          <strong style="font-size:0.8rem;">${rec.confidence ?? '—'}</strong>`;
+          <div>${citeHtml}<span class="conf-pill">Conf: ${rec.confidence ?? '—'}</span></div>`;
         box.appendChild(card);
       });
     }
@@ -1107,6 +1458,7 @@
         evidenceCache = (d.items || []).map(e => ({
           source_id: e.sourceId,
           sourceId: e.sourceId,
+          source_type: e.sourceType,
           subgroup: e.subgroup,
           title: e.title,
         }));
@@ -1211,12 +1563,17 @@
       bars.innerHTML = '';
       connections.forEach(c => {
         const pct = Math.min(100, c.confidence || 0);
-        const tier = (c.tier || tierFromConfidence(pct)).toLowerCase();
+        const tier = c.tier || tierFromConfidence(pct);
+        const tierCls = tier.toLowerCase();
+        const btnCls = tier === 'Prioritize' ? 'prioritize' : 'monitor';
         const row = document.createElement('div');
         row.className = 'bar-row';
         row.innerHTML = `
-          <div class="bar-label"><span>${c.subgroup} → ${c.treatment}</span><span>${pct}</span></div>
-          <div class="bar-track"><div class="bar-fill ${tier}" style="width:${pct}%"></div></div>`;
+          <div class="bar-label">
+            <span>${escapeHtml(c.treatment || c.subgroup)}</span>
+            <span><button type="button" class="btn-tier ${btnCls}">${tier}</button> ${pct}</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill ${tierCls}" style="width:${pct}%"></div></div>`;
         bars.appendChild(row);
       });
 
@@ -1227,20 +1584,24 @@
         const conf = r.confidence ?? 0;
         const tier = r.tier || tierFromConfidence(conf);
         const color = subgroupColor(r.subgroup);
-        const patientTag = patientBySubgroup[r.subgroup]
-          ? `<span class="pill-patient">⚗ ${escapeHtml(patientBySubgroup[r.subgroup])}</span>` : '';
-        const row = document.createElement('div');
-        row.className = 'rank-list-item';
-        row.innerHTML = `
-          <div class="rank-num" style="background:${color}">${i + 1}</div>
-          <div>
-            <strong style="font-size:0.82rem;">${escapeHtml(r.treatment)}</strong> ${patientTag}
-            <div style="font-size:0.72rem;color:var(--muted);">${escapeHtml(r.subgroup)}</div>
-            <div style="font-size:0.7rem;">${escapeHtml(r.mechanism || '—')}</div>
+        const patient = patientBySubgroup[r.subgroup] || '';
+        const patientTag = patient ? `<span class="pill-patient">⚗ ${escapeHtml(patient)}</span>` : '';
+        const quote = quoteFromRationale(r.rationale || '');
+        const card = document.createElement('div');
+        card.className = 'rec-card';
+        card.innerHTML = `
+          <div class="rank" style="display:flex;justify-content:space-between;">
+            <span>#${i + 1} · ${escapeHtml(r.subgroup)}</span>
             <span class="tier tier-${tier}">${tier}</span>
           </div>
-          <div class="conf-big">${conf}</div>`;
-        top.appendChild(row);
+          <h4>${escapeHtml(r.treatment)}</h4>
+          <p style="font-size:0.75rem;margin:0.25rem 0;">${escapeHtml(r.mechanism || '—')}</p>
+          ${quote ? `<p class="rec-quote">"${escapeHtml(quote)}"</p>` : ''}
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong class="conf-big">${conf}</strong>
+            ${patientTag}
+          </div>`;
+        top.appendChild(card);
       });
 
       renderHypotheses(recommendations.length ? recommendations : connections);
@@ -1248,11 +1609,20 @@
 
       const tl = document.getElementById('agentTimeline');
       tl.innerHTML = '';
+      const rid = runId || latestRunId;
+      updateRunMeta(rid, ranked.length, syntheticCohort.length);
       steps.forEach(s => {
         const li = document.createElement('li');
-        li.innerHTML = `<strong>${s.agentName}</strong> (step ${s.stepOrder})<br>${s.summary}<br><small>${s.createdAt || ''}</small>`;
+        li.innerHTML = `<span class="ts">${formatTime(s.createdAt)}</span>`
+          + `<strong>${escapeHtml(s.agentName)}</strong><br>${escapeHtml(s.summary || '')}`;
         tl.appendChild(li);
       });
+      if (syntheticCohort.length) {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="ts">${formatTime(steps[steps.length - 1]?.createdAt)}</span>`
+          + `<strong>Synthetic Cohort Generator</strong><br>Generated ${syntheticCohort.length} synthetic patient profiles.`;
+        tl.appendChild(li);
+      }
       updateStepper(steps);
       await loadEvidencePage();
     }
@@ -1272,7 +1642,10 @@
           const off = evPage * EV_PAGE_SIZE;
           const r = await fetch(`${API_BASE}/api/evidence?offset=${off}&limit=${EV_PAGE_SIZE}`);
           const d = await r.json();
+          evTotal = d.total ?? evTotal;
           rows = (d.items || []).map(e => ({
+            source_id: e.sourceId,
+            source_type: e.sourceType,
             source_type: e.sourceType,
             title: e.title,
             year: e.year,
@@ -1288,8 +1661,12 @@
           const tr = document.createElement('tr');
           const typeCls = e.source_type === 'literature' ? 'type-literature' : e.source_type === 'trial' ? 'type-trial' : 'type-grant';
           const acc = accessLabel(e.access_status);
+          const patient = patientBySubgroup[e.subgroup];
+          const synLink = patient
+            ? `<a class="syn-link-btn" href="#" onclick="return false">${escapeHtml(patient)} ↗</a>`
+            : '—';
           tr.innerHTML = `
-            <td><span class="type-badge ${typeCls}">${(e.source_type || '').slice(0, 3)}</span></td>
+            <td><span class="type-badge ${typeCls}">${(e.source_type || 'lit').slice(0, 3)}</span></td>
             <td>${escapeHtml(e.title || '—')}</td>
             <td>${e.year || '—'}</td>
             <td>${escapeHtml(e.subgroup || '—')}</td>
@@ -1297,12 +1674,16 @@
             <td>${escapeHtml(e.treatment || '—')}</td>
             <td>${escapeHtml(e.study_type || '—')}</td>
             <td>${e.sample_size ?? '—'}</td>
-            <td class="${acc.cls}">${acc.label}</td>`;
+            <td class="${acc.cls}">${acc.label}</td>
+            <td>${synLink}</td>`;
           tbody.appendChild(tr);
         });
+        const shown = evPage * EV_PAGE_SIZE + rows.length;
+        const meta = document.getElementById('evidenceMeta');
+        if (meta) meta.textContent = `Showing ${shown} of ${evTotal || '—'} rows · live from API`;
         document.getElementById('evPageLabel').textContent = `Page ${evPage + 1}`;
       } catch (e) {
-        tbody.innerHTML = '<tr><td colspan="9">Could not load evidence.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10">Could not load evidence.</td></tr>';
       }
     }
 
@@ -1351,8 +1732,8 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || res.statusText);
         latestRunId = data.run_id;
-        updateRunMeta(latestRunId);
         syntheticCohort = data.synthetic_cohort || [];
+        updateRunMeta(latestRunId, (data.recommendations || []).length, syntheticCohort.length);
         const steps = data.agent_outputs || data.steps || [];
         status.textContent = `Done — run ${data.run_id} · ${syntheticCohort.length} synthetic profiles`;
         updateStepper(steps);
@@ -1393,6 +1774,7 @@
 
     async function boot() {
       initSupabase();
+      bindSourceCards();
       await loadCounts();
       await loadSubgroups();
       await loadRecentRuns();

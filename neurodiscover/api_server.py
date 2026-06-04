@@ -107,11 +107,21 @@ def get_stats():
         "SELECT source_type, COUNT(*) AS count FROM evidence GROUP BY source_type"
     )}
     sg = _query("SELECT COUNT(*) AS count FROM subgroups")
+    conn = _query("SELECT COUNT(*) AS count FROM treatment_connections")
+    total = _query("SELECT COUNT(*) AS count FROM evidence")
+    scan = _query("SELECT disease, last_scan_at, last_run_id FROM scan_state WHERE id = 1")
+    scan_row = scan[0] if scan else {}
     return {
         "literature": counts.get("literature", 0),
         "trial": counts.get("trial", 0),
         "grant": counts.get("grant", 0),
         "subgroups": sg[0]["count"] if sg else 0,
+        "connections": conn[0]["count"] if conn else 0,
+        "totalEvidence": total[0]["count"] if total else 0,
+        "lastScanAt": str(scan_row.get("last_scan_at")) if scan_row.get("last_scan_at") else None,
+        "lastRunId": scan_row.get("last_run_id"),
+        "database": backend_label(),
+        "supabaseConfigured": bool(os.getenv("SUPABASE_DATABASE_URL") or os.getenv("DATABASE_URL")),
     }
 
 
@@ -160,25 +170,44 @@ def list_runs(limit: int = 5):
     limit = min(max(limit, 1), 20)
     rows = _query(
         """
-        SELECT run_id, COUNT(*) AS steps, MIN(created_at) AS started_at
-        FROM agent_outputs
-        WHERE run_id IS NOT NULL
-        GROUP BY run_id
-        ORDER BY MIN(output_id) DESC
+        SELECT ao.run_id,
+               COUNT(*) AS steps,
+               MIN(ao.created_at) AS started_at,
+               (SELECT COUNT(*) FROM recommendations r WHERE r.run_id = ao.run_id) AS rec_count
+        FROM agent_outputs ao
+        WHERE ao.run_id IS NOT NULL
+        GROUP BY ao.run_id
+        ORDER BY MIN(ao.output_id) DESC
         LIMIT ?
         """,
         (limit,),
     )
-    return {
-        "runs": [
-            {
-                "runId": r["run_id"],
-                "steps": r["steps"],
-                "startedAt": str(r["started_at"]) if r.get("started_at") else None,
-            }
-            for r in rows
-        ]
-    }
+    runs = []
+    for r in rows:
+        rid = r["run_id"]
+        mode = "demo"
+        summaries = _query(
+            "SELECT summary, payload FROM agent_outputs WHERE run_id = ? AND agent_name = ? LIMIT 1",
+            (rid, "Literature Synthesis Agent"),
+        )
+        if summaries:
+            s = summaries[0].get("summary") or ""
+            if "scan" in s.lower() or "incremental" in s.lower():
+                mode = "scan"
+            elif "demo" in s.lower():
+                mode = "demo"
+            elif "pull" in s.lower() or "stored" in s.lower():
+                mode = "full"
+        runs.append({
+            "runId": rid,
+            "steps": r["steps"],
+            "startedAt": str(r["started_at"]) if r.get("started_at") else None,
+            "recommendations": r.get("rec_count") or 0,
+            "syntheticProfiles": 5 if (r.get("rec_count") or 0) > 0 else 0,
+            "mode": mode,
+            "status": "Complete" if (r.get("steps") or 0) >= 6 else "Partial",
+        })
+    return {"runs": runs}
 
 
 @app.get("/api/discover/parkinsons")
