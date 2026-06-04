@@ -88,31 +88,99 @@
     @media (max-width: 800px) { .kpi-inner { grid-template-columns: repeat(2, 1fr); } }
     .kpi-item {
       text-align: center;
-      padding: 0.5rem;
+      padding: 0.55rem 0.5rem;
       border-radius: 8px;
       background: var(--bg);
+      border: 1px solid var(--border);
     }
     .kpi-item .val { font-size: 1.35rem; font-weight: 700; color: var(--navy); }
     .kpi-item .lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
-    nav.tabs {
+    .tab-nav {
+      background: #fff;
+      border-bottom: 2px solid var(--border);
+      padding: 1rem 1.5rem 1.25rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 14px rgba(15, 32, 68, 0.08);
+    }
+    .tab-nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 700px) { .tab-nav-inner { grid-template-columns: 1fr; } }
+    .tab-btn {
       display: flex;
-      gap: 0.25rem;
-      padding: 0 1.5rem;
-      background: var(--navy);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      max-width: 100%;
-    }
-    nav.tabs .tabs-inner { max-width: 1400px; margin: 0 auto; display: flex; width: 100%; }
-    nav.tabs button {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      padding: 0.5rem 1rem;
+      align-items: flex-start;
+      gap: 0.85rem;
+      text-align: left;
+      padding: 1rem 1.15rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: #f8fafc;
       cursor: pointer;
-      font-size: 0.9rem;
-      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.1s;
+      font-family: inherit;
     }
-    nav.tabs button.active { color: #fff; border-bottom-color: var(--primary); }
+    .tab-btn:hover {
+      border-color: #93c5fd;
+      background: #f0f9ff;
+    }
+    .tab-btn.active {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #eff6ff 0%, #fff 100%);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+      transform: translateY(-1px);
+    }
+    .tab-btn.active .tab-step {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+    }
+    .tab-btn.active .tab-title { color: var(--navy); }
+    .tab-step {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #e2e8f0;
+      color: var(--navy);
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tab-text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+    .tab-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .tab-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .tab-btn-results.active { border-color: #22c55e; background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); box-shadow: 0 4px 16px rgba(34, 197, 94, 0.18); }
+    .tab-btn-results.active .tab-step { background: #16a34a; }
+    .view-page-title {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .view-page-title span { font-weight: 400; color: var(--muted); font-size: 0.85rem; display: block; margin-top: 0.2rem; }
+    .run-hero {
+      border-left: 4px solid var(--primary);
+      background: linear-gradient(90deg, #eff6ff 0%, #fff 12%);
+    }
     .layout {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -273,12 +341,13 @@
     .pipeline-v2 {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
+      border-radius: 14px;
+      padding: 1.35rem 1.5rem;
       margin-bottom: 1.25rem;
       box-shadow: var(--shadow);
+      border-top: 4px solid var(--navy);
     }
-    .pipeline-v2 h2 { margin: 0 0 1rem; font-size: 1rem; color: var(--navy); }
+    .pipeline-v2 h2 { margin: 0 0 1rem; font-size: 1.05rem; color: var(--navy); font-weight: 700; }
     .pipe-stage { margin-bottom: 0.75rem; }
     .pipe-stage-title {
       font-size: 0.62rem;
@@ -401,13 +470,15 @@
     .syn-card {
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 0.75rem;
-      background: #fafafa;
+      padding: 0.85rem;
+      background: #fff;
       font-size: 0.72rem;
+      box-shadow: 0 1px 4px rgba(15, 32, 68, 0.05);
     }
     .syn-head { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.65rem; }
     .syn-avatar {
-      width: 40px; height: 40px;
+      width: 48px; height: 48px;
+      font-size: 1.15rem;
       border-radius: 50%;
       color: #fff;
       font-weight: 700;
@@ -504,16 +575,30 @@
       <div class="kpi-item"><div class="val" id="kpiConn">5</div><div class="lbl">Connections</div></div>
     </div>
   </div>
-  <nav class="tabs">
-    <div class="tabs-inner">
-      <button type="button" data-view="input">Pipeline Setup</button>
-      <button type="button" class="active" data-view="results">Discovery Dashboard</button>
+  <nav class="tab-nav" aria-label="Dashboard navigation">
+    <div class="tab-nav-inner">
+      <button type="button" class="tab-btn tab-btn-run" data-view="input">
+        <span class="tab-step">1</span>
+        <span class="tab-text">
+          <span class="tab-title">Configure &amp; Run Pipeline</span>
+          <span class="tab-desc">Choose sources, mode, keywords — then start discovery</span>
+        </span>
+      </button>
+      <button type="button" class="tab-btn tab-btn-results" data-view="results">
+        <span class="tab-step">2</span>
+        <span class="tab-text">
+          <span class="tab-title">Discovery Results</span>
+          <span class="tab-desc">Synthetic cohort, ranked outputs, hypotheses &amp; evidence</span>
+        </span>
+      </button>
     </div>
   </nav>
 
-  <div id="configHint" class="config-hint hidden" style="margin:1rem 1.5rem 0; max-width:1400px;"></div>
+  <div id="configHint" class="config-hint hidden" style="margin:1rem auto 0; max-width:1400px; padding:0 1.5rem;"></div>
 
-  <div id="viewInput" class="layout hidden">
+  <div id="viewInput" class="hidden">
+    <p class="view-page-title">Step 1 — Configure &amp; Run <span>Launch the multi-agent pipeline with your chosen settings</span></p>
+    <div class="layout">
     <aside>
       <div class="card">
         <h2>Database</h2>
@@ -541,7 +626,7 @@
       </div>
     </aside>
     <main>
-      <div class="card">
+      <div class="card run-hero">
         <h2>Discovery run</h2>
         <label>Disease (locked)</label>
         <input type="text" id="disease" value="Parkinson disease" disabled />
@@ -592,9 +677,11 @@
         </table>
       </div>
     </main>
+    </div>
   </div>
 
-  <div id="viewResults">
+  <div id="viewResults" class="hidden">
+    <p class="view-page-title">Step 2 — Discovery Results <span>Synthetic cohort · ranked treatments · research hypotheses (from latest run)</span></p>
     <div class="results-wide">
       <section class="pipeline-v2">
         <h2>Discovery pipeline</h2>
@@ -1279,9 +1366,10 @@
     function showView(name) {
       document.getElementById('viewInput').classList.toggle('hidden', name !== 'input');
       document.getElementById('viewResults').classList.toggle('hidden', name !== 'results');
-      document.querySelectorAll('nav.tabs button').forEach(b => {
+      document.querySelectorAll('.tab-btn').forEach(b => {
         b.classList.toggle('active', b.dataset.view === name);
       });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     document.getElementById('maxPapers').addEventListener('input', e => {
@@ -1289,7 +1377,7 @@
     });
     document.getElementById('btnRun').addEventListener('click', () => postRun(getMode()));
     document.getElementById('btnScan').addEventListener('click', () => postRun('scan'));
-    document.querySelectorAll('nav.tabs button').forEach(b => {
+    document.querySelectorAll('.tab-btn').forEach(b => {
       b.addEventListener('click', () => showView(b.dataset.view));
     });
     document.getElementById('evPrev').addEventListener('click', () => { if (evPage > 0) { evPage--; loadEvidencePage(); } });
