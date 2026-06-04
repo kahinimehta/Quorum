@@ -37,7 +37,7 @@ Validates per row:
 
 Failed rows are **kept by default**; use `--strict-pull` to skip insert.
 
-## PubTator grounding (`pubtator_verify.py`)
+## PubTator grounding (`validation/pubtator.py`)
 
 Queries [PubTator3](https://www.ncbi.nlm.nih.gov/research/pubtator3/) for genes, diseases, chemicals and compares to tokens extracted from LLM fields.
 
