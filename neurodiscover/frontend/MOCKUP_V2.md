@@ -22,4 +22,9 @@ To match the PDF pixel-perfect, add a copy to this repo (e.g. `frontend/mockup-v
 cd neurodiscover/frontend && python3 -m http.server 8080
 ```
 
-Open http://localhost:8080 → **Discovery Dashboard** tab.
+Open http://localhost:8080 → use the large **Step 1 / Step 2** tabs below the KPI strip:
+
+- **Configure & Run Pipeline** — form and run buttons  
+- **Discovery Results** — synthetic cohort, ranked outputs, hypotheses  
+
+Drop `mockup-v2.pdf` into `frontend/` for pixel-perfect tweaks against your PDF.
