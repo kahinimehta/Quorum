@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 from typing import Any
@@ -79,13 +80,139 @@ def _get_canonical_run_id(conn, fallback: str) -> str:
     return fallback
 
 
-def _fetch_evidence_rows(conn) -> list[dict[str, Any]]:
+def _evidence_counts(conn) -> dict[str, int]:
+    conn.execute("SELECT source_type, COUNT(*) AS count FROM evidence GROUP BY source_type")
+    counts = {r["source_type"]: int(r["count"]) for r in conn.fetchall()}
+    literature = counts.get("literature", 0)
+    trial = counts.get("trial", 0)
+    grant = counts.get("grant", 0)
+    return {
+        "literature": literature,
+        "trial": trial,
+        "grant": grant,
+        "total": literature + trial + grant,
+    }
+
+
+def _fetch_evidence_rows(conn, max_papers: int | None = None) -> list[dict[str, Any]]:
     conn.execute(
         "SELECT evidence_id, source_type, source_id, title, subgroup, mechanism, treatment, "
         "key_result, study_type, sample_size, access_status "
-        "FROM evidence WHERE subgroup IS NOT NULL"
+        "FROM evidence WHERE subgroup IS NOT NULL ORDER BY evidence_id"
     )
-    return conn.fetchall()
+    rows = conn.fetchall()
+    if not max_papers or max_papers <= 0:
+        return rows
+    filtered: list[dict[str, Any]] = []
+    lit_seen = 0
+    for row in rows:
+        if row.get("source_type") == "literature":
+            if lit_seen >= max_papers:
+                continue
+            lit_seen += 1
+        filtered.append(row)
+    return filtered
+
+
+def _count_rows_by_type(rows: list[dict[str, Any]]) -> dict[str, int]:
+    counts = {"literature": 0, "trial": 0, "grant": 0, "total": len(rows)}
+    for row in rows:
+        st = row.get("source_type")
+        if st in counts:
+            counts[st] += 1
+    return counts
+
+
+def _parse_literature_step(steps: list[dict[str, Any]]) -> dict[str, int]:
+    out = {
+        "published": 0,
+        "preprints": 0,
+        "trials": 0,
+        "newStored": 0,
+        "demoDbTotal": 0,
+    }
+    for step in steps:
+        name = step.get("agentName") or ""
+        if AGENT_LITERATURE not in name:
+            continue
+        summary = step.get("summary") or ""
+        payload = step.get("payload") or {}
+        if isinstance(payload, str) and payload:
+            try:
+                payload = json.loads(payload)
+            except json.JSONDecodeError:
+                payload = {}
+        m = re.search(
+            r"Two-stage pull: (\d+) published, (\d+) preprints?, (\d+) trials",
+            summary,
+        )
+        if m:
+            out["published"] = int(m.group(1))
+            out["preprints"] = int(m.group(2))
+            out["trials"] = int(m.group(3))
+        m = re.search(r"Stored (\d+) new evidence", summary)
+        if m:
+            out["newStored"] = int(m.group(1))
+        m = re.search(r"using (\d+) of (\d+) seeded", summary)
+        if m:
+            out["demoUsed"] = int(m.group(1))
+            out["demoDbTotal"] = int(m.group(2))
+        elif "Demo" in summary:
+            m = re.search(r"(\d+)", summary)
+            if m:
+                out["demoDbTotal"] = int(m.group(1))
+        if isinstance(payload, dict) and payload.get("new_evidence") is not None:
+            out["newStored"] = int(payload["new_evidence"])
+    return out
+
+
+def _build_run_stats(
+    mode: str,
+    max_papers: int,
+    before: dict[str, int],
+    after: dict[str, int],
+    steps: list[dict[str, Any]],
+    evidence_used: dict[str, int],
+) -> dict[str, Any]:
+    lit = _parse_literature_step(steps)
+    delta = {
+        "literature": after["literature"] - before["literature"],
+        "trial": after["trial"] - before["trial"],
+        "grant": after["grant"] - before["grant"],
+        "total": after["total"] - before["total"],
+    }
+    pulled_lit = lit["published"] + lit["preprints"]
+    if mode == "demo":
+        processed_lit = lit.get("demoUsed") or evidence_used["literature"]
+    else:
+        cap = max_papers if max_papers > 0 else pulled_lit
+        processed_lit = min(cap, pulled_lit) if pulled_lit else delta["literature"]
+    return {
+        "mode": mode,
+        "maxPapersRequested": max_papers,
+        "databaseTotals": after,
+        "databaseBefore": before,
+        "delta": delta,
+        "pulled": {
+            "literature": pulled_lit,
+            "preprints": lit["preprints"],
+            "trials": lit["trials"],
+        },
+        "added": {
+            "literature": delta["literature"],
+            "trial": delta["trial"],
+            "grant": delta["grant"],
+            "total": delta["total"],
+            "stored": lit["newStored"],
+        },
+        "processed": {
+            "literature": processed_lit,
+            "trial": lit["trials"] if lit["trials"] else evidence_used["trial"],
+            "grant": evidence_used["grant"],
+            "total": evidence_used["total"],
+        },
+        "evidenceUsed": evidence_used,
+    }
 
 
 def _subprocess_cli(
@@ -353,13 +480,16 @@ def _persist_recommendations(conn, run_id: str) -> list[dict[str, Any]]:
     return recs
 
 
-def _run_agents_2_through_6(conn, run_id: str) -> list[dict[str, Any]]:
+def _run_agents_2_through_6(
+    conn, run_id: str, *, max_papers: int | None = None
+) -> tuple[list[dict[str, Any]], dict[str, int]]:
     from agents.commercial_discovery_agent import CommercialDiscoveryAgent
     from agents.evidence_scoring_agent import EvidenceScoringAgent
     from agents.patient_subgroup_agent import PatientSubgroupAgent
     from agents.treatment_connection_agent import TreatmentConnectionAgent
 
-    evidence_rows = _fetch_evidence_rows(conn)
+    evidence_rows = _fetch_evidence_rows(conn, max_papers=max_papers)
+    evidence_used = _count_rows_by_type(evidence_rows)
 
     sg_agent = PatientSubgroupAgent()
     sg_out = sg_agent.run(evidence_rows)
@@ -377,7 +507,8 @@ def _run_agents_2_through_6(conn, run_id: str) -> list[dict[str, Any]]:
     cd_out = cd_agent.run(es_out)
     _persist_commercial_scores(conn, cd_out, run_id)
 
-    return _persist_recommendations(conn, run_id)
+    recs = _persist_recommendations(conn, run_id)
+    return recs, evidence_used
 
 
 def _run_literature_full(
@@ -459,6 +590,9 @@ def run(
     if mode not in ("demo", "scan", "full"):
         raise ValueError(f"Unknown mode: {mode}")
 
+    with connect(None) as conn:
+        before = _evidence_counts(conn)
+
     if mode in ("demo", "scan"):
         _subprocess_cli(
             mode,
@@ -481,12 +615,19 @@ def run(
         )
 
     with connect(None) as conn:
+        after = _evidence_counts(conn)
         canonical_run_id = _get_canonical_run_id(conn, run_id)
 
-        recommendations = _run_agents_2_through_6(conn, canonical_run_id)
+        agent_max = max_papers if mode == "demo" else None
+        recommendations, evidence_used = _run_agents_2_through_6(
+            conn, canonical_run_id, max_papers=agent_max
+        )
         conn.commit()
 
         steps = _fetch_steps(conn, canonical_run_id)
+        run_stats = _build_run_stats(
+            mode, max_papers, before, after, steps, evidence_used
+        )
 
         from synthetic_cohort import generate_synthetic_cohort
 
@@ -498,4 +639,5 @@ def run(
         "agent_outputs": steps,
         "steps": steps,
         "synthetic_cohort": synthetic_cohort,
+        "runStats": run_stats,
     }

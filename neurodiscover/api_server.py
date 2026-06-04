@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import uuid
 from typing import Any
 
@@ -164,6 +165,95 @@ def list_evidence(offset: int = 0, limit: int = 15):
     }
 
 
+def _steps_for_run(run_id: str) -> list[dict[str, Any]]:
+    rows = _query(
+        """
+        SELECT agent_name, step_order, summary, payload, created_at
+        FROM agent_outputs WHERE run_id = ? ORDER BY output_id
+        """,
+        (run_id,),
+    )
+    steps = []
+    for r in rows:
+        payload = r.get("payload")
+        if isinstance(payload, str) and payload:
+            try:
+                payload = json.loads(payload)
+            except json.JSONDecodeError:
+                pass
+        created = r.get("created_at")
+        steps.append(
+            {
+                "agentName": r["agent_name"],
+                "stepOrder": r["step_order"],
+                "summary": r["summary"],
+                "payload": payload,
+                "createdAt": str(created) if created is not None else None,
+            }
+        )
+    return steps
+
+
+@app.get("/api/run-stats")
+def get_run_stats(run_id: str):
+    """Per-run evidence metrics (processed vs full database totals)."""
+    if not run_id:
+        raise HTTPException(status_code=400, detail="run_id is required")
+    from orchestrator import (
+        _build_run_stats,
+        _evidence_counts,
+        _parse_literature_step,
+    )
+
+    steps = _steps_for_run(run_id)
+    if not steps:
+        raise HTTPException(status_code=404, detail=f"No run found for run_id={run_id}")
+
+    mode = "demo"
+    max_papers = 150
+    for step in steps:
+        if step.get("agentName") != "Literature Synthesis Agent":
+            continue
+        summary = (step.get("summary") or "").lower()
+        if "demo" in summary:
+            mode = "demo"
+        elif "scan" in summary or "incremental" in summary:
+            mode = "scan"
+        elif "pull" in summary or "two-stage" in summary:
+            mode = "full"
+        payload = step.get("payload") or {}
+        if isinstance(payload, dict) and payload.get("max_papers"):
+            max_papers = int(payload["max_papers"])
+        m = re.search(r"max_papers=(\d+)", step.get("summary") or "")
+        if m:
+            max_papers = int(m.group(1))
+        break
+
+    with connect(None) as conn:
+        after = _evidence_counts(conn)
+
+    lit = _parse_literature_step(steps)
+    if mode == "demo" and lit.get("demoUsed"):
+        evidence_used = {
+            "literature": lit["demoUsed"],
+            "trial": 0,
+            "grant": 0,
+            "total": lit["demoUsed"],
+        }
+    else:
+        pulled_total = lit["published"] + lit["preprints"] + lit["trials"]
+        evidence_used = {
+            "literature": lit["published"] + lit["preprints"],
+            "trial": lit["trials"],
+            "grant": 0,
+            "total": pulled_total or lit["newStored"],
+        }
+
+    before = dict(after)
+    run_stats = _build_run_stats(mode, max_papers, before, after, steps, evidence_used)
+    return {"runId": run_id, "runStats": run_stats}
+
+
 @app.get("/api/runs")
 def list_runs(limit: int = 5):
     """Recent pipeline runs from agent_outputs."""
@@ -198,6 +288,17 @@ def list_runs(limit: int = 5):
                 mode = "demo"
             elif "pull" in s.lower() or "stored" in s.lower():
                 mode = "full"
+        steps = _steps_for_run(rid)
+        from orchestrator import _evidence_counts, _parse_literature_step
+
+        with connect(None) as conn:
+            db = _evidence_counts(conn)
+        lit = _parse_literature_step(steps)
+        ev_note = f"+{lit.get('newStored', 0)} new"
+        if mode == "demo" and lit.get("demoUsed"):
+            ev_note = f"{lit['demoUsed']} papers (demo)"
+        elif lit.get("published"):
+            ev_note = f"{lit['published']} pulled · +{lit.get('newStored', 0)} new"
         runs.append({
             "runId": rid,
             "steps": r["steps"],
@@ -206,6 +307,8 @@ def list_runs(limit: int = 5):
             "syntheticProfiles": 5 if (r.get("rec_count") or 0) > 0 else 0,
             "mode": mode,
             "status": "Complete" if (r.get("steps") or 0) >= 6 else "Partial",
+            "evidenceNote": ev_note,
+            "databaseTotal": db["total"],
         })
     return {"runs": runs}
 

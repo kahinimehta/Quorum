@@ -775,11 +775,19 @@ def run(
     with connect(db_path) as conn:
         if demo:
             conn.execute("SELECT COUNT(*) AS n FROM evidence")
-            n = conn.fetchone()["n"]
-            log_trace(conn, run_id, 1,
-                      f"Demo mode: synthesized {n} pre-seeded evidence rows for {disease}.")
+            n = int(conn.fetchone()["n"])
+            cap = max_items if max_items and max_items > 0 else n
+            used = min(n, cap)
+            log_trace(
+                conn,
+                run_id,
+                1,
+                f"Demo mode: using {used} of {n} seeded evidence rows "
+                f"(max_papers={cap}) for {disease}.",
+                {"max_papers": cap, "demo_rows_used": used, "demo_rows_total": n},
+            )
             conn.commit()
-            print(f"[demo] {backend_label()} — {n} evidence rows. run_id={run_id}")
+            print(f"[demo] {backend_label()} — {used}/{n} evidence rows (max={cap}). run_id={run_id}")
             return
 
         scan = get_scan_state(conn)

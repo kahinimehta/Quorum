@@ -95,6 +95,9 @@
     }
     .kpi-item .val { font-size: 1.35rem; font-weight: 700; color: var(--navy); }
     .kpi-item .lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .kpi-item .kpi-sub { font-size: 0.6rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.2; }
+    .kpi-item.run-context { border-color: #93c5fd; background: #eff6ff; }
+    .kpi-item.run-context .val { color: var(--primary); }
     .tab-nav {
       background: #fff;
       border-bottom: 2px solid var(--border);
@@ -732,12 +735,12 @@
     </div>
   </header>
   <div class="kpi-strip">
-    <div class="kpi-inner">
-      <div class="kpi-item"><div class="val" id="kpiLit">—</div><div class="lbl">Papers</div></div>
-      <div class="kpi-item"><div class="val" id="kpiTrial">—</div><div class="lbl">Trials</div></div>
-      <div class="kpi-item"><div class="val" id="kpiGrant">—</div><div class="lbl">Grants</div></div>
-      <div class="kpi-item"><div class="val" id="kpiSg">—</div><div class="lbl">Subgroups</div></div>
-      <div class="kpi-item"><div class="val" id="kpiConn">5</div><div class="lbl">Connections</div></div>
+    <div class="kpi-inner" id="kpiStrip">
+      <div class="kpi-item" id="kpiBoxLit"><div class="val" id="kpiLit">—</div><div class="lbl">Papers</div><div class="kpi-sub" id="kpiLitSub">in database</div></div>
+      <div class="kpi-item" id="kpiBoxTrial"><div class="val" id="kpiTrial">—</div><div class="lbl">Trials</div><div class="kpi-sub" id="kpiTrialSub">in database</div></div>
+      <div class="kpi-item" id="kpiBoxGrant"><div class="val" id="kpiGrant">—</div><div class="lbl">Grants</div><div class="kpi-sub" id="kpiGrantSub">in database</div></div>
+      <div class="kpi-item" id="kpiBoxSg"><div class="val" id="kpiSg">—</div><div class="lbl">Subgroups</div><div class="kpi-sub" id="kpiSgSub">from this run</div></div>
+      <div class="kpi-item" id="kpiBoxConn"><div class="val" id="kpiConn">5</div><div class="lbl">Connections</div><div class="kpi-sub" id="kpiConnSub">from this run</div></div>
     </div>
   </div>
   <nav class="tab-nav" aria-label="Dashboard navigation">
@@ -1006,6 +1009,8 @@
     const EV_PAGE_SIZE = 6;
     const DELTA_PLACEHOLDERS = ['+2.1 ↑', '+0.8 ↑', '-0.4 ↓', '+1.3 ↑', '+0.2 ↑'];
     let statsCache = { totalEvidence: 0, subgroups: 0 };
+    let lastRunStats = null;
+    let kpiView = 'database';
 
     const AGENTS = [
       'Literature Synthesis Agent',
@@ -1061,7 +1066,28 @@
       return { data, count };
     }
 
-    function syncKpi(lit, trial, grant, sg, conn) {
+    function setKpiSubtitles(litSub, trialSub, grantSub, sgSub, connSub) {
+      const map = [
+        ['kpiLitSub', litSub],
+        ['kpiTrialSub', trialSub],
+        ['kpiGrantSub', grantSub],
+        ['kpiSgSub', sgSub],
+        ['kpiConnSub', connSub],
+      ];
+      map.forEach(([id, text]) => {
+        const el = document.getElementById(id);
+        if (el && text != null) el.textContent = text;
+      });
+    }
+
+    function setKpiRunContext(isRun) {
+      kpiView = isRun ? 'run' : 'database';
+      document.querySelectorAll('#kpiStrip .kpi-item').forEach(el => {
+        el.classList.toggle('run-context', isRun);
+      });
+    }
+
+    function syncKpi(lit, trial, grant, sg, conn, mirrorSidebar) {
       const pairs = [
         ['cntLit', 'kpiLit', lit],
         ['cntTrial', 'kpiTrial', trial],
@@ -1079,6 +1105,63 @@
         const k = document.getElementById('kpiConn');
         if (k) k.textContent = String(conn);
       }
+      if (mirrorSidebar) {
+        const src = [
+          ['srcCntPubmed', lit],
+          ['srcCntTrials', trial],
+          ['srcCntGrants', grant],
+        ];
+        src.forEach(([id, v]) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = String(v ?? '—');
+        });
+      }
+    }
+
+    function applyRunStats(rs) {
+      if (!rs) return;
+      lastRunStats = rs;
+      setKpiRunContext(true);
+      const proc = rs.processed || rs.evidenceUsed || {};
+      const db = rs.databaseTotals || {};
+      const added = rs.added || rs.delta || {};
+      const sg = statsCache.subgroups || 5;
+      const conn = (rs.recommendationsCount != null) ? rs.recommendationsCount : proc.total;
+
+      syncKpi(proc.literature ?? 0, proc.trial ?? 0, proc.grant ?? 0, sg, conn, true);
+
+      const mode = (rs.mode || 'run').toUpperCase();
+      const max = rs.maxPapersRequested ?? '—';
+      setKpiSubtitles(
+        `${db.literature ?? 0} in DB · +${added.literature ?? 0} new`,
+        `${db.trial ?? 0} in DB · +${added.trial ?? 0} new`,
+        `${db.grant ?? 0} in DB · +${added.grant ?? 0} new`,
+        `${mode} · max ${max} papers`,
+        `${added.total ?? 0} evidence added`,
+      );
+
+      const total = db.total ?? statsCache.totalEvidence;
+      const eb = document.getElementById('evidenceTotalBadge');
+      if (eb) {
+        eb.textContent = `${proc.literature ?? 0} papers this run · ${total} in DB`;
+      }
+      const chip = document.getElementById('runIdChip');
+      if (chip && chip.style.display !== 'none') {
+        chip.textContent = `Run ${latestRunId} · ${proc.literature ?? 0} papers`;
+      }
+    }
+
+    function applyDatabaseStats(s) {
+      setKpiRunContext(false);
+      lastRunStats = null;
+      const lit = s.literature ?? 0;
+      const trial = s.trial ?? 0;
+      const grant = s.grant ?? 0;
+      const sg = s.subgroups ?? 0;
+      const conn = s.connections ?? 5;
+      syncKpi(lit, trial, grant, sg, conn, true);
+      setKpiSubtitles('in database', 'in database', 'in database', 'in database', 'in database');
+      updateHeaderFromStats(s);
     }
 
     function updateRunMeta(runId, recCount, synCount) {
@@ -1117,10 +1200,16 @@
     }
 
     function updateHeaderFromStats(s) {
-      statsCache = { totalEvidence: s.totalEvidence ?? 0, subgroups: s.subgroups ?? 0 };
+      statsCache = {
+        totalEvidence: s.totalEvidence ?? 0,
+        subgroups: s.subgroups ?? 0,
+        literature: s.literature,
+        trial: s.trial,
+        grant: s.grant,
+      };
       const total = s.totalEvidence ?? ((s.literature || 0) + (s.trial || 0) + (s.grant || 0));
       const eb = document.getElementById('evidenceTotalBadge');
-      if (eb) eb.textContent = `${total} Evidence Rows`;
+      if (eb && kpiView === 'database') eb.textContent = `${total} Evidence Rows`;
       const scanEl = document.getElementById('lastScanMeta');
       if (scanEl) scanEl.textContent = 'Last scan: ' + formatScanTime(s.lastScanAt);
       const pub = document.getElementById('srcCntPubmed');
@@ -1164,7 +1253,6 @@
           grant = s.grant ?? 0;
           sg = s.subgroups ?? 0;
           conn = s.connections ?? 5;
-          updateHeaderFromStats(s);
           if (s.lastRunId) latestRunId = latestRunId || s.lastRunId;
           try {
             if (!conn) {
@@ -1172,15 +1260,17 @@
               conn = (d.treatmentConnections || []).length || 5;
             }
           } catch (e) { /* keep default */ }
+          applyDatabaseStats({ ...s, connections: conn });
+          return;
         }
         if (sb) {
           const total = lit + trial + grant;
-          updateHeaderFromStats({
+          applyDatabaseStats({
             literature: lit, trial, grant, subgroups: sg, totalEvidence: total,
-            lastScanAt: null, database: 'Supabase Postgres', supabaseConfigured: true,
+            connections: conn, lastScanAt: null, database: 'Supabase Postgres', supabaseConfigured: true,
           });
+          return;
         }
-        syncKpi(lit, trial, grant, sg, conn);
       } catch (e) {
         document.getElementById('dbBadge').textContent = 'Offline';
       }
@@ -1248,7 +1338,6 @@
             status: x.status,
           }));
         }
-        const totalEv = statsCache.totalEvidence || 0;
         runs.forEach(run => {
           const tr = document.createElement('tr');
           const date = formatScanTime(run.started);
@@ -1257,15 +1346,23 @@
           const syn = run.syntheticProfiles ? `✓ ${run.syntheticProfiles} profiles` : '—';
           const statusCls = (run.status === 'Complete') ? 'status-complete' : 'status-partial';
           const status = run.status || (run.steps >= 6 ? 'Complete' : 'Partial');
+          const evNote = run.evidenceNote || `${recs} recs`;
           tr.innerHTML = `<td><code>${escapeHtml(String(run.run_id).slice(0, 8))}</code></td>`
             + `<td>${date}</td><td>${mode}</td>`
-            + `<td>+${recs} (${totalEv} total)</td>`
+            + `<td>${escapeHtml(evNote)}</td>`
             + `<td>${statsCache.subgroups || 5}</td><td>${syn}</td>`
             + `<td class="${statusCls}">• ${status}</td>`;
           tr.style.cursor = 'pointer';
-          tr.addEventListener('click', () => {
+          tr.addEventListener('click', async () => {
             latestRunId = run.run_id;
             updateRunMeta(latestRunId, recs, run.syntheticProfiles);
+            try {
+              const rs = await fetch(`${API_BASE}/api/run-stats?run_id=${encodeURIComponent(run.run_id)}`);
+              if (rs.ok) {
+                const d = await rs.json();
+                applyRunStats(d.runStats);
+              }
+            } catch (e) { /* keep current kpi */ }
             showView('results');
             loadResults(latestRunId);
           });
@@ -1733,12 +1830,21 @@
         if (!res.ok) throw new Error(data.detail || res.statusText);
         latestRunId = data.run_id;
         syntheticCohort = data.synthetic_cohort || [];
-        updateRunMeta(latestRunId, (data.recommendations || []).length, syntheticCohort.length);
         const steps = data.agent_outputs || data.steps || [];
-        status.textContent = `Done — run ${data.run_id} · ${syntheticCohort.length} synthetic profiles`;
+        const rs = data.runStats || null;
+        if (rs) {
+          rs.recommendationsCount = (data.recommendations || []).length;
+          applyRunStats(rs);
+        }
+        updateRunMeta(latestRunId, (data.recommendations || []).length, syntheticCohort.length);
+        const proc = rs?.processed || {};
+        const modeLabel = (rs?.mode || mode).toUpperCase();
+        status.textContent = `Done — ${modeLabel} run ${data.run_id}: `
+          + `${proc.literature ?? '—'} papers used (max ${body.max_papers}), `
+          + `${rs?.added?.total ?? 0} new rows in DB, `
+          + `${syntheticCohort.length} synthetic profiles`;
         updateStepper(steps);
         await loadRecentRuns();
-        await loadCounts();
         showView('results');
         await loadResults(latestRunId, {
           recommendations: data.recommendations,
@@ -1790,7 +1896,15 @@
         }
       } catch (e) { /* ignore */ }
       showView(hasRecs ? 'results' : 'input');
-      if (hasRecs) await loadResults(latestRunId);
+      if (hasRecs) {
+        if (latestRunId) {
+          try {
+            const rs = await fetch(`${API_BASE}/api/run-stats?run_id=${encodeURIComponent(latestRunId)}`);
+            if (rs.ok) applyRunStats((await rs.json()).runStats);
+          } catch (e) { /* database view */ }
+        }
+        await loadResults(latestRunId);
+      }
     }
     boot();
   </script>
