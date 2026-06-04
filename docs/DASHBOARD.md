@@ -34,7 +34,18 @@ The frontend uses `@supabase/supabase-js` from CDN with the **anon key** for:
 | Agent timeline | `agent_outputs` |
 | Evidence table | `evidence` (paginated) |
 
-If Supabase URL/key are missing, the UI falls back to Flask `GET` routes (`/api/discover/parkinsons`, `/api/recommendations`, `/api/agents`).
+If Supabase URL/key are missing (**no keys required**), the UI uses API-only mode:
+
+| Panel | API route |
+|-------|-----------|
+| DB tiles | `GET /api/stats` |
+| Subgroups / confidence bars | `GET /api/discover/parkinsons` |
+| Recommendations | `GET /api/recommendations` |
+| Recent runs | `GET /api/runs` |
+| Agent timeline | `GET /api/agents?run_id=` |
+| Evidence table | `GET /api/evidence?offset=&limit=` |
+
+Local setup: unset `SUPABASE_DATABASE_URL`, run `python3 cli.py build` once, then `python3 api_server.py`.
 
 ## Write / run path (Flask API)
 

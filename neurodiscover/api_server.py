@@ -87,6 +87,86 @@ def health_check():
         "status": "running",
         "message": "NeuroDiscover backend API is live",
         "database": backend_label(),
+        "supabaseConfigured": bool(os.getenv("SUPABASE_DATABASE_URL") or os.getenv("DATABASE_URL")),
+    }
+
+
+@app.get("/api/stats")
+def get_stats():
+    """Evidence counts for dashboard tiles (no Supabase JS key required)."""
+    counts = {r["source_type"]: r["count"] for r in _query(
+        "SELECT source_type, COUNT(*) AS count FROM evidence GROUP BY source_type"
+    )}
+    sg = _query("SELECT COUNT(*) AS count FROM subgroups")
+    return {
+        "literature": counts.get("literature", 0),
+        "trial": counts.get("trial", 0),
+        "grant": counts.get("grant", 0),
+        "subgroups": sg[0]["count"] if sg else 0,
+    }
+
+
+@app.get("/api/evidence")
+def list_evidence(offset: int = 0, limit: int = 15):
+    """Paginated evidence for the results table."""
+    limit = min(max(limit, 1), 100)
+    offset = max(offset, 0)
+    rows = _query(
+        """
+        SELECT source_type, title, year, subgroup, mechanism, treatment,
+               study_type, sample_size, access_status
+        FROM evidence
+        ORDER BY evidence_id
+        LIMIT ? OFFSET ?
+        """,
+        (limit, offset),
+    )
+    total = _query("SELECT COUNT(*) AS count FROM evidence")
+    return {
+        "items": [
+            {
+                "sourceType": r["source_type"],
+                "title": r.get("title"),
+                "year": r.get("year"),
+                "subgroup": r.get("subgroup"),
+                "mechanism": r.get("mechanism"),
+                "treatment": r.get("treatment"),
+                "studyType": r.get("study_type"),
+                "sampleSize": r.get("sample_size"),
+                "accessStatus": r.get("access_status"),
+            }
+            for r in rows
+        ],
+        "offset": offset,
+        "limit": limit,
+        "total": total[0]["count"] if total else 0,
+    }
+
+
+@app.get("/api/runs")
+def list_runs(limit: int = 5):
+    """Recent pipeline runs from agent_outputs."""
+    limit = min(max(limit, 1), 20)
+    rows = _query(
+        """
+        SELECT run_id, COUNT(*) AS steps, MIN(created_at) AS started_at
+        FROM agent_outputs
+        WHERE run_id IS NOT NULL
+        GROUP BY run_id
+        ORDER BY MIN(output_id) DESC
+        LIMIT ?
+        """,
+        (limit,),
+    )
+    return {
+        "runs": [
+            {
+                "runId": r["run_id"],
+                "steps": r["steps"],
+                "startedAt": str(r["started_at"]) if r.get("started_at") else None,
+            }
+            for r in rows
+        ]
     }
 
 
@@ -146,21 +226,30 @@ def discover_parkinsons():
 
 
 @app.get("/api/agents")
-def get_agents():
-    rows = _query(
-        """
-        SELECT run_id, agent_name, step_order, summary, payload, created_at
-        FROM agent_outputs
-        WHERE run_id = (
-            SELECT run_id FROM agent_outputs ORDER BY output_id DESC LIMIT 1
+def get_agents(run_id: str | None = None):
+    if run_id:
+        rows = _query(
+            """
+            SELECT run_id, agent_name, step_order, summary, payload, created_at
+            FROM agent_outputs WHERE run_id = ? ORDER BY output_id
+            """,
+            (run_id,),
         )
-        ORDER BY output_id
-        """
-    )
+    else:
+        rows = _query(
+            """
+            SELECT run_id, agent_name, step_order, summary, payload, created_at
+            FROM agent_outputs
+            WHERE run_id = (
+                SELECT run_id FROM agent_outputs ORDER BY output_id DESC LIMIT 1
+            )
+            ORDER BY output_id
+            """
+        )
     if not rows:
         return {"runId": None, "steps": []}
 
-    run_id = rows[0]["run_id"]
+    resolved_run_id = rows[0]["run_id"]
     steps = []
     for r in rows:
         payload = r.get("payload")
@@ -179,7 +268,7 @@ def get_agents():
                 "createdAt": str(created) if created is not None else None,
             }
         )
-    return {"runId": run_id, "steps": steps}
+    return {"runId": resolved_run_id, "steps": steps}
 
 
 @app.get("/api/recommendations")

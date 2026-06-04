@@ -1,9 +1,38 @@
 # NeuroDiscover Dashboard — Quickstart (< 5 min)
 
-## Prerequisites
+## No Supabase keys? Use local mode (default)
+
+You do **not** need `SUPABASE_URL`, `SUPABASE_ANON_KEY`, or `SUPABASE_DATABASE_URL` for the dashboard.
+The UI talks to the Python API only; the API uses a local SQLite file.
+
+```bash
+cd neurodiscover
+pip install -r requirements.txt
+
+# One-time: create local demo DB (safe — only affects neurodiscover.db on your machine)
+# Do NOT run build if a teammate gave you their Supabase URI in .env
+python3 cli.py build
+
+python3 api_server.py
+```
+
+In another terminal (recommended — avoids browser file:// quirks):
+
+```bash
+cd neurodiscover/frontend
+python3 -m http.server 8080
+```
+
+Open **http://localhost:8080** — badge should say **Local API**. Click **Run Discovery Pipeline** (demo mode).
+
+Leave `SUPABASE_DATABASE_URL` **unset** in `.env` so the API does not touch the team cloud DB.
+
+---
+
+## With team Supabase (optional)
 
 - Python 3.10+
-- Team Supabase project (optional but recommended — **307 rows already live**)
+- Team Supabase project (**307 rows already live**)
 - Modern browser (Chrome, Firefox, Safari)
 
 ## 1. Install Python dependencies

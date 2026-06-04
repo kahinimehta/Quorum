@@ -376,8 +376,10 @@
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
         useApiFallback = true;
         hint.classList.remove('hidden');
-        hint.textContent = 'Supabase URL/anon key not set — using Flask API for reads. Set window.SUPABASE_URL and window.SUPABASE_ANON_KEY (see QUICKSTART.md).';
-        document.getElementById('dbBadge').textContent = 'API fallback';
+        hint.innerHTML = '<strong>No Supabase keys needed.</strong> This session uses the local API at '
+          + API_BASE + ' (start with <code>python3 api_server.py</code>). '
+          + 'Optional: set <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> for direct reads — see QUICKSTART.md.';
+        document.getElementById('dbBadge').textContent = 'Local API';
         return;
       }
       sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -408,12 +410,12 @@
           const { count: sg } = await sb.from('subgroups').select('*', { count: 'exact', head: true });
           document.getElementById('cntSg').textContent = sg ?? '0';
         } else {
-          const r = await fetch(`${API_BASE}/api/discover/parkinsons`);
-          const d = await r.json();
-          document.getElementById('cntSg').textContent = (d.subgroups || []).length;
-          document.getElementById('cntLit').textContent = '—';
-          document.getElementById('cntTrial').textContent = '—';
-          document.getElementById('cntGrant').textContent = '—';
+          const r = await fetch(`${API_BASE}/api/stats`);
+          const s = await r.json();
+          document.getElementById('cntLit').textContent = s.literature ?? '0';
+          document.getElementById('cntTrial').textContent = s.trial ?? '0';
+          document.getElementById('cntGrant').textContent = s.grant ?? '0';
+          document.getElementById('cntSg').textContent = s.subgroups ?? '0';
         }
       } catch (e) {
         document.getElementById('dbBadge').textContent = 'Offline';
@@ -466,9 +468,13 @@
           });
           runs = Object.entries(map).slice(0, 5).map(([id, v]) => ({ run_id: id, ...v }));
         } else {
-          const r = await fetch(`${API_BASE}/api/agents`);
+          const r = await fetch(`${API_BASE}/api/runs?limit=5`);
           const d = await r.json();
-          if (d.runId) runs = [{ run_id: d.runId, steps: (d.steps || []).length, started: (d.steps[0] || {}).createdAt }];
+          runs = (d.runs || []).map(x => ({
+            run_id: x.runId,
+            steps: x.steps,
+            started: x.startedAt,
+          }));
         }
         runs.forEach(run => {
           const tr = document.createElement('tr');
@@ -533,10 +539,13 @@
           createdAt: s.created_at,
         }));
       } else {
+        const agUrl = runId
+          ? `${API_BASE}/api/agents?run_id=${encodeURIComponent(runId)}`
+          : `${API_BASE}/api/agents`;
         const [d, rec, ag] = await Promise.all([
           fetch(`${API_BASE}/api/discover/parkinsons`).then(r => r.json()),
           fetch(`${API_BASE}/api/recommendations`).then(r => r.json()),
-          fetch(`${API_BASE}/api/agents`).then(r => r.json()),
+          fetch(agUrl).then(r => r.json()),
         ]);
         connections = (d.treatmentConnections || []).map(c => ({
           subgroup: c.subgroup,
@@ -604,8 +613,20 @@
             .order('evidence_id', { ascending: true }).range(from, to);
           rows = data || [];
         } else {
-          const r = await fetch(`${API_BASE}/api/discover/parkinsons`);
-          rows = [];
+          const off = evPage * EV_PAGE_SIZE;
+          const r = await fetch(`${API_BASE}/api/evidence?offset=${off}&limit=${EV_PAGE_SIZE}`);
+          const d = await r.json();
+          rows = (d.items || []).map(e => ({
+            source_type: e.sourceType,
+            title: e.title,
+            year: e.year,
+            subgroup: e.subgroup,
+            mechanism: e.mechanism,
+            treatment: e.treatment,
+            study_type: e.studyType,
+            sample_size: e.sampleSize,
+            access_status: e.accessStatus,
+          }));
         }
         rows.forEach(e => {
           const tr = document.createElement('tr');
