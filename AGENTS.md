@@ -52,27 +52,15 @@ python3 cli.py show [table]    # inspect tables
 python3 cli.py query "SQL"     # run a read query
 ```
 
-## Dashboard (no Supabase keys required)
+## Dashboard (one command: `dashboard`)
 
 ```bash
 cd neurodiscover
-pip install -r requirements.txt
-# Leave SUPABASE_DATABASE_URL unset for local SQLite
-python3 cli.py build && python3 cli.py validate
-python3 api_server.py
-# Other terminal: cd frontend && python3 -m http.server 8080  → http://localhost:8080
+make dashboard
+# → http://127.0.0.1:8080  (Ctrl+C to stop)
 ```
 
-Quick verify (API):
-
-```bash
-curl -s http://127.0.0.1:5000/health
-curl -s http://127.0.0.1:5000/api/stats
-curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
-  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
-```
-
-With team Supabase: set `SUPABASE_DATABASE_URL` in `.env`, **do not** run `build`, then `validate` + `api_server.py`. Details: [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md).
+Same as `python3 cli.py dashboard` or `./dashboard`. Leave `SUPABASE_DATABASE_URL` unset for local demo. Details: [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md).
 
 ## Architecture: 6 agents, database is the blackboard
 The pipeline runs in order. Each agent READS what the previous wrote and WRITES

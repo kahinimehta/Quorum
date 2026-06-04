@@ -1,6 +1,47 @@
 # NeuroDiscover Dashboard — Quickstart (< 5 min)
 
-## No Supabase keys? Use local mode (default)
+## One command: `dashboard`
+
+From the `neurodiscover/` folder, run **one word**:
+
+```bash
+cd neurodiscover
+make dashboard
+```
+
+Same thing:
+
+```bash
+python3 cli.py dashboard
+```
+
+Or:
+
+```bash
+./dashboard
+```
+
+That single command will:
+
+1. Install Python dependencies (`pip install -r requirements.txt`)
+2. Build local `neurodiscover.db` if needed (skipped when `SUPABASE_DATABASE_URL` is set)
+3. Run the offline demo pipeline (agents + synthetic cohort data)
+4. Start the API on port **5000** and the UI on port **8080**
+
+Then open **http://127.0.0.1:8080** — press **Ctrl+C** in the terminal to stop both servers.
+
+**Leave `SUPABASE_DATABASE_URL` unset** in `.env` for the safe local laptop demo (never `build` on the team Supabase DB).
+
+Optional flags:
+
+```bash
+python3 cli.py dashboard --fresh          # rebuild local DB
+python3 cli.py dashboard --skip-pipeline  # servers only, no agent run
+```
+
+---
+
+## Manual steps (if you prefer)
 
 You do **not** need `SUPABASE_URL`, `SUPABASE_ANON_KEY`, or `SUPABASE_DATABASE_URL` for the dashboard.
 The UI talks to the Python API only; the API uses a local SQLite file.
@@ -8,24 +49,18 @@ The UI talks to the Python API only; the API uses a local SQLite file.
 ```bash
 cd neurodiscover
 pip install -r requirements.txt
-
-# One-time: create local demo DB (safe — only affects neurodiscover.db on your machine)
-# Do NOT run build if a teammate gave you their Supabase URI in .env
 python3 cli.py build
-
 python3 api_server.py
 ```
 
-In another terminal (recommended — avoids browser file:// quirks):
+In another terminal:
 
 ```bash
 cd neurodiscover/frontend
 python3 -m http.server 8080
 ```
 
-Open **http://localhost:8080** — badge should say **Local API**. Click **Run Discovery Pipeline** (demo mode).
-
-Leave `SUPABASE_DATABASE_URL` **unset** in `.env` so the API does not touch the team cloud DB.
+Open **http://localhost:8080** — badge should say **Local API**.
 
 ---
 
@@ -105,40 +140,20 @@ location.reload();
 
 ## Quick verify (no Supabase keys)
 
-Run these in order from `neurodiscover/`. Expect `SUPABASE_DATABASE_URL` to be **unset** (local `neurodiscover.db`).
-
 ```bash
 cd neurodiscover
-pip install -r requirements.txt
-
-# Local DB only — safe on your laptop; never run build against team Supabase
-python3 cli.py build
-python3 cli.py validate
-
-# Terminal 1 — API
-python3 api_server.py
+make dashboard
 ```
 
+In another terminal while it is running:
+
 ```bash
-# Terminal 2 — checks (API must be running on port 5000)
 curl -s http://127.0.0.1:5000/health
 curl -s http://127.0.0.1:5000/api/stats
-curl -s http://127.0.0.1:5000/api/discover/parkinsons | head -c 300
-curl -s http://127.0.0.1:5000/api/recommendations
-curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
-  -H 'Content-Type: application/json' \
-  -d '{"mode":"demo","max_papers":10}'
-curl -s 'http://127.0.0.1:5000/api/evidence?limit=3'
-curl -s http://127.0.0.1:5000/api/runs?limit=3
+curl -s http://127.0.0.1:5000/api/synthetic-cohort?run_id=test
 ```
 
-**Expected:** `health` shows your local DB path (not Supabase). `stats` returns non-zero `literature` / `subgroups` after `build`. `run-discovery` returns `run_id`, `recommendations`, and six `steps`.
-
-```bash
-# Terminal 3 — dashboard UI (optional)
-cd frontend && python3 -m http.server 8080
-# Open http://localhost:8080 — badge: "Local API"
-```
+Open **http://127.0.0.1:8080** — Discovery Dashboard tab with synthetic cohort + ranked outputs.
 
 ---
 

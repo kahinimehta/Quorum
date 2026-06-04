@@ -114,24 +114,14 @@ In-process agents score 0–10; the orchestrator scales to **0–100** when writ
 
 ## Quick verify
 
-**No Supabase keys** (local laptop):
+**One command** (word: **`dashboard`**):
 
 ```bash
 cd neurodiscover
-# unset SUPABASE_DATABASE_URL
-python3 cli.py build && python3 cli.py validate
-python3 api_server.py
+make dashboard
 ```
 
-```bash
-curl -s http://127.0.0.1:5000/health
-curl -s http://127.0.0.1:5000/api/stats
-curl -s http://127.0.0.1:5000/api/recommendations
-curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
-  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
-```
-
-UI: `cd frontend && python3 -m http.server 8080` → http://localhost:8080 (badge **Local API**).
+Opens API + UI and runs the offline demo pipeline. Browser: http://127.0.0.1:8080
 
 **Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, skip `build`, run `validate` + `api_server.py`, same `curl` commands. Do not run `cli.py build` on the shared DB.
 
