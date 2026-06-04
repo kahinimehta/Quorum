@@ -52,8 +52,24 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
       </ul>
     </div>
     <div class="card">
-      <h2>GitHub Pages</h2>
-      <p>This site is published from the <code>docs/</code> folder. In the repo: <strong>Settings → Pages → Build from branch → main (or kahini/dashboard) → /docs</strong>.</p>
+      <h2>GitHub Pages (team docs site)</h2>
+      <p>Static pages live in <code>docs/</code> (overview, workflow, team, guides). The dashboard itself still runs locally via <code>make dashboard</code> — it is not hosted on Pages.</p>
+      <h3>Option A — GitHub Actions (recommended)</h3>
+      <ol>
+        <li>Merge to <code>main</code> and <code>git pull origin main</code>.</li>
+        <li>On GitHub: <strong>Settings → Pages → Build and deployment → Source: GitHub Actions</strong>.</li>
+        <li>Push to <code>main</code> (or run the workflow manually: <strong>Actions → “Deploy documentation to GitHub Pages” → Run workflow</strong>).</li>
+        <li>When the job succeeds, open the environment URL shown on the run (usually <code>https://&lt;org&gt;.github.io/&lt;repo&gt;/</code>).</li>
+      </ol>
+      <p>Workflow file: <code>.github/workflows/deploy-docs.yml</code> (uploads the <code>docs/</code> folder).</p>
+      <h3>Option B — Deploy from branch</h3>
+      <ol>
+        <li><strong>Settings → Pages → Source: Deploy from a branch</strong>.</li>
+        <li>Branch <code>main</code>, folder <code>/docs</code>, Save.</li>
+        <li>Wait ~1–2 minutes; the Pages URL appears at the top of the same settings page.</li>
+      </ol>
+      <p>Use only one option (Actions <em>or</em> branch deploy). If both are enabled, prefer Actions so deploys match CI.</p>
+      <p>First-time setup: the repo needs <strong>Pages</strong> enabled on the free plan; no extra secrets are required for the docs workflow.</p>
     </div>
   </main>
   <footer>NeuroDiscover · Quorum</footer>

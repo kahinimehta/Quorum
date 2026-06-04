@@ -1138,6 +1138,91 @@
     let lastRunStats = null;
     let kpiView = 'database';
 
+    const PIPELINE_AGENTS = [
+      'Literature Synthesis Agent',
+      'Patient Subgroup Agent',
+      'Treatment Connection Agent',
+      'Evidence Scoring Agent',
+      'Commercial Discovery Agent',
+      'Conclusion Update Agent',
+    ];
+
+    function _shortAgent(name) {
+      return String(name || '').replace(/ Agent$/, '').trim();
+    }
+
+    /** Mirrors neurodiscover/run_status.py — never show ? for agent counts in the UI. */
+    function clientAnalyzeTrace(steps, recCount) {
+      const names = new Set();
+      (steps || []).forEach(s => {
+        const n = (s.agentName || s.agent_name || '').trim();
+        if (n) names.add(n);
+      });
+      const done = PIPELINE_AGENTS.filter(a => names.has(a));
+      const missing = PIPELINE_AGENTS.filter(a => !names.has(a)).map(_shortAgent);
+      const nDone = done.length;
+      const recs = recCount ?? 0;
+      let status;
+      let detail;
+      if (nDone >= 6 && recs >= 1) {
+        status = 'Complete';
+        detail = `All 6 agents finished · ${recs} recommendation(s)`;
+      } else if (nDone >= 6) {
+        status = 'Complete';
+        detail = `All 6 agents finished · ${recs} recommendations`;
+      } else if (recs >= 5) {
+        status = 'Complete';
+        detail = `${nDone}/6 agents in trace · ${recs} recommendations (trace may be incomplete)`;
+      } else {
+        status = 'Partial';
+        detail = `Only ${nDone}/6 agents ran for this run`;
+        if (missing.length) detail += ` — missing: ${missing.join(', ')}`;
+        if (recs === 0) detail += ' · no recommendations saved';
+        else detail += ` · ${recs} recommendation(s)`;
+      }
+      return {
+        status,
+        statusDetail: detail,
+        agentsDone: nDone,
+        agentsTotal: PIPELINE_AGENTS.length,
+        agentsMissing: missing,
+      };
+    }
+
+    function enrichRunStatus(run) {
+      const recs = run.recommendations ?? 0;
+      if (run.traceSteps && run.traceSteps.length) {
+        return { ...run, ...clientAnalyzeTrace(run.traceSteps, recs) };
+      }
+      if (run.agentNames && run.agentNames.length) {
+        const steps = run.agentNames.map(n => ({ agentName: n }));
+        return { ...run, ...clientAnalyzeTrace(steps, recs) };
+      }
+      const done = run.agentsDone;
+      if (done != null && Number.isFinite(done)) {
+        const total = run.agentsTotal ?? 6;
+        const missing = (run.agentsMissing || []).join(', ');
+        let detail = run.statusDetail;
+        if (!detail) {
+          detail = done >= 6
+            ? `All 6 agents finished · ${recs} recommendation(s)`
+            : `Only ${done}/${total} agents ran for this run`;
+          if (done < 6 && missing) detail += ` — missing: ${missing}`;
+        }
+        return {
+          ...run,
+          status: run.status || (done >= 6 && recs >= 1 ? 'Complete' : (done >= 6 || recs >= 5 ? 'Complete' : 'Partial')),
+          statusDetail: detail,
+          agentsDone: done,
+          agentsTotal: total,
+        };
+      }
+      const steps = (run.steps && run.steps > 0)
+        ? PIPELINE_AGENTS.slice(0, Math.min(run.steps, 6)).map(a => ({ agentName: a }))
+        : [];
+      return { ...run, ...clientAnalyzeTrace(steps, recs) };
+    }
+
     /** DB timestamps are UTC; naive "YYYY-MM-DD HH:MM:SS" strings get a Z suffix. */
     function parseDbTimestamp(value) {
       if (value == null || value === '') return null;
@@ -1400,20 +1485,25 @@
     }
 
     function analyzeRunTraceFromStats(rs) {
-      const done = rs?.agentsDone ?? 0;
-      const total = rs?.agentsTotal ?? 6;
-      const missing = (rs?.agentsMissing || []).join(', ');
       const recs = rs?.recommendationsCount ?? 0;
-      if (done >= 6 && recs >= 1) {
-        return { status: 'Complete', detail: `All 6 agents finished · ${recs} recommendations` };
-      }
-      if (done >= 6 || recs >= 5) {
-        return { status: 'Complete', detail: rs?.statusDetail || `${done}/6 agents · ${recs} recommendations` };
-      }
-      let detail = `Only ${done}/${total} agents finished`;
-      if (missing) detail += ` — missing: ${missing}`;
-      if (recs === 0) detail += ' · no recommendations saved';
-      return { status: 'Partial', detail: rs?.statusDetail || detail };
+      const meta = (rs?.agentsDone != null && rs?.statusDetail)
+        ? {
+          status: rs.status || 'Partial',
+          statusDetail: rs.statusDetail,
+          agentsDone: rs.agentsDone,
+          agentsTotal: rs.agentsTotal ?? 6,
+          agentsMissing: rs.agentsMissing || [],
+        }
+        : clientAnalyzeTrace(rs?.agent_outputs || rs?.stepsTrace || [], recs);
+      if (rs?.agentsDone != null) meta.agentsDone = rs.agentsDone;
+      if (rs?.statusDetail) meta.statusDetail = rs.statusDetail;
+      if (rs?.status) meta.status = rs.status;
+      return {
+        status: meta.status,
+        detail: meta.statusDetail,
+        done: meta.agentsDone,
+        agentsTotal: meta.agentsTotal,
+      };
     }
 
     function applyDatabaseStats(s) {
@@ -1585,14 +1675,37 @@
       try {
         let runs = [];
         if (sb) {
-          const { data } = await sb.from('agent_outputs').select('run_id,created_at').order('output_id', { ascending: false }).limit(200);
+          const { data } = await sb.from('agent_outputs')
+            .select('run_id,created_at,agent_name')
+            .not('run_id', 'is', null)
+            .order('output_id', { ascending: false })
+            .limit(400);
           const map = {};
           (data || []).forEach(r => {
-            if (!r.run_id) return;
-            if (!map[r.run_id]) map[r.run_id] = { steps: 0, started: r.created_at };
+            if (!map[r.run_id]) {
+              map[r.run_id] = { steps: 0, started: r.created_at, agentNames: new Set() };
+            }
             map[r.run_id].steps++;
+            if (r.agent_name) map[r.run_id].agentNames.add(String(r.agent_name).trim());
           });
-          runs = Object.entries(map).slice(0, 5).map(([id, v]) => ({ run_id: id, ...v }));
+          runs = Object.entries(map)
+            .sort((a, b) => String(b[1].started).localeCompare(String(a[1].started)))
+            .slice(0, 5)
+            .map(([id, v]) => ({
+              run_id: id,
+              steps: v.steps,
+              started: v.started,
+              agentNames: [...v.agentNames],
+            }));
+          const ids = runs.map(r => r.run_id);
+          if (ids.length) {
+            const { data: recData } = await sb.from('recommendations').select('run_id').in('run_id', ids);
+            const recMap = {};
+            (recData || []).forEach(row => {
+              recMap[row.run_id] = (recMap[row.run_id] || 0) + 1;
+            });
+            runs.forEach(r => { r.recommendations = recMap[r.run_id] || 0; });
+          }
         } else {
           const r = await fetch(`${API_BASE}/api/runs?limit=5`);
           const d = await r.json();
@@ -1607,20 +1720,34 @@
             statusDetail: x.statusDetail,
             agentsDone: x.agentsDone,
             agentsMissing: x.agentsMissing,
+            evidenceNote: x.evidenceNote,
+          }));
+          await Promise.all(runs.map(async (run) => {
+            if (run.agentsDone != null && run.statusDetail) return;
+            try {
+              const ag = await fetch(`${API_BASE}/api/agents?run_id=${encodeURIComponent(run.run_id)}`);
+              if (!ag.ok) return;
+              const trace = await ag.json();
+              run.traceSteps = trace.steps || [];
+              const meta = clientAnalyzeTrace(run.traceSteps, run.recommendations ?? 0);
+              run.status = meta.status;
+              run.statusDetail = meta.statusDetail;
+              run.agentsDone = meta.agentsDone;
+              run.agentsMissing = meta.agentsMissing;
+            } catch (e) { /* keep API list fields */ }
           }));
         }
+        runs = runs.map(enrichRunStatus);
         runs.forEach(run => {
           const tr = document.createElement('tr');
           const date = formatScanTime(run.started);
           const mode = (run.mode || 'demo').toUpperCase();
-          const recs = run.recommendations ?? run.steps ?? 0;
-          const syn = run.syntheticProfiles ? `✓ ${run.syntheticProfiles} profiles` : '—';
-          const status = run.status || (run.steps >= 6 ? 'Complete' : 'Partial');
+          const recs = run.recommendations ?? 0;
+          const syn = run.syntheticProfiles ? `✓ ${run.syntheticProfiles} profiles` : (recs > 0 ? '✓ 5 profiles' : '—');
+          const status = run.status || 'Partial';
           const statusKey = status === 'Complete' ? 'complete' : 'partial';
           const evNote = run.evidenceNote || `${recs} recs`;
-          const detail = run.statusDetail || (status === 'Complete'
-            ? 'All 6 agents finished'
-            : `Only ${run.agentsDone ?? '?'}/6 agents`);
+          const detail = run.statusDetail || `Only ${run.agentsDone ?? 0}/6 agents ran for this run`;
           tr.innerHTML = `<td><code>${escapeHtml(String(run.run_id).slice(0, 8))}</code></td>`
             + `<td>${date}</td><td>${mode}</td>`
             + `<td>${escapeHtml(evNote)}</td>`
