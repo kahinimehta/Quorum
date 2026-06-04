@@ -27,6 +27,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from db import backend_label, connect, is_postgres
+from timestamps import format_ts_for_api
 
 load_dotenv()
 
@@ -119,7 +120,7 @@ def get_stats():
         "subgroups": sg[0]["count"] if sg else 0,
         "connections": conn[0]["count"] if conn else 0,
         "totalEvidence": total[0]["count"] if total else 0,
-        "lastScanAt": str(scan_row.get("last_scan_at")) if scan_row.get("last_scan_at") else None,
+        "lastScanAt": format_ts_for_api(scan_row.get("last_scan_at")),
         "lastRunId": scan_row.get("last_run_id"),
         "database": backend_label(),
         "supabaseConfigured": bool(os.getenv("SUPABASE_DATABASE_URL") or os.getenv("DATABASE_URL")),
@@ -188,7 +189,7 @@ def _steps_for_run(run_id: str) -> list[dict[str, Any]]:
                 "stepOrder": r["step_order"],
                 "summary": r["summary"],
                 "payload": payload,
-                "createdAt": str(created) if created is not None else None,
+                "createdAt": format_ts_for_api(created),
             }
         )
     return steps
@@ -302,7 +303,7 @@ def list_runs(limit: int = 5):
         runs.append({
             "runId": rid,
             "steps": r["steps"],
-            "startedAt": str(r["started_at"]) if r.get("started_at") else None,
+            "startedAt": format_ts_for_api(r.get("started_at")),
             "recommendations": r.get("rec_count") or 0,
             "syntheticProfiles": 5 if (r.get("rec_count") or 0) > 0 else 0,
             "mode": mode,
@@ -408,7 +409,7 @@ def get_agents(run_id: str | None = None):
                 "stepOrder": r["step_order"],
                 "summary": r["summary"],
                 "payload": payload,
-                "createdAt": str(created) if created is not None else None,
+                "createdAt": format_ts_for_api(created),
             }
         )
     return {"runId": resolved_run_id, "steps": steps}

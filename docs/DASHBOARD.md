@@ -45,7 +45,7 @@ flowchart LR
 | **Step 1** | Configure & run — mode, max papers, extraction, pull options |
 | **Step 2** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses, audit trace, evidence table |
 
-Timestamps display in **US Eastern (ET)**.
+Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 
 ## API reads (no browser keys)
 

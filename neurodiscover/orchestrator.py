@@ -17,6 +17,7 @@ import sys
 from typing import Any
 
 from db import connect, insert_ignore_sql, is_postgres
+from timestamps import format_ts_for_api
 
 AGENT_LITERATURE = "Literature Synthesis Agent"
 AGENT_SUBGROUP = "Patient Subgroup Agent"
@@ -565,7 +566,7 @@ def _fetch_steps(conn, run_id: str) -> list[dict[str, Any]]:
                 "stepOrder": row["step_order"],
                 "summary": row["summary"],
                 "payload": payload,
-                "createdAt": str(created) if created is not None else None,
+                "createdAt": format_ts_for_api(created),
             }
         )
     return steps

@@ -1129,12 +1129,28 @@
     let lastRunStats = null;
     let kpiView = 'database';
 
+    /** DB timestamps are UTC; naive "YYYY-MM-DD HH:MM:SS" strings get a Z suffix. */
+    function parseDbTimestamp(value) {
+      if (value == null || value === '') return null;
+      if (value instanceof Date) return value;
+      const s = String(value).trim();
+      if (!s) return null;
+      if (/[Zz]$/.test(s) || /[+-]\d{2}:\d{2}$/.test(s) || /[+-]\d{4}$/.test(s)) {
+        return new Date(s);
+      }
+      const base = (s.includes('T') ? s : s.replace(' ', 'T')).split('.')[0];
+      return new Date(base + 'Z');
+    }
+
     function formatEst(isoOrDate, { dateOnly, timeOnly } = {}) {
       if (!isoOrDate) return '—';
       try {
-        const d = isoOrDate instanceof Date ? isoOrDate : new Date(isoOrDate);
-        if (Number.isNaN(d.getTime())) return String(isoOrDate);
-        const opts = { timeZone: TZ_EASTERN };
+        const d = isoOrDate instanceof Date ? isoOrDate : parseDbTimestamp(isoOrDate);
+        if (!d || Number.isNaN(d.getTime())) return String(isoOrDate);
+        const opts = {
+          timeZone: TZ_EASTERN,
+          timeZoneName: 'short',
+        };
         if (timeOnly) {
           return d.toLocaleTimeString('en-US', {
             ...opts,
@@ -1142,11 +1158,11 @@
             minute: '2-digit',
             second: '2-digit',
             hour12: true,
-          }) + ' ET';
+          });
         }
         if (dateOnly) {
           return d.toLocaleDateString('en-US', {
-            ...opts,
+            timeZone: TZ_EASTERN,
             month: 'short',
             day: 'numeric',
             year: 'numeric',
@@ -1160,7 +1176,7 @@
           hour: '2-digit',
           minute: '2-digit',
           hour12: true,
-        }) + ' ET';
+        });
       } catch (e) {
         return String(isoOrDate);
       }
