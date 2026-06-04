@@ -121,7 +121,7 @@ cd neurodiscover
 make dashboard
 ```
 
-Opens API + UI and runs the offline demo pipeline. Browser: http://127.0.0.1:8080
+Opens API + UI, runs the offline demo pipeline, and launches http://127.0.0.1:8080 in your default browser (`--no-browser` to skip).
 
 **Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, skip `build`, run `validate` + `api_server.py`, same `curl` commands. Do not run `cli.py build` on the shared DB.
 

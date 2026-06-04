@@ -13,6 +13,7 @@ import subprocess
 import sys
 import time
 import uuid
+import webbrowser
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FRONTEND = os.path.join(HERE, "frontend")
@@ -35,6 +36,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--skip-build", action="store_true", help="Skip local sqlite build")
     parser.add_argument("--skip-pipeline", action="store_true", help="Do not run demo pipeline before serving")
     parser.add_argument("--fresh", action="store_true", help="Rebuild local neurodiscover.db")
+    parser.add_argument(
+        "--no-browser",
+        action="store_true",
+        help="Do not open the dashboard URL in your default browser",
+    )
     args = parser.parse_args(argv)
 
     sys.path.insert(0, HERE)
@@ -99,12 +105,20 @@ def main(argv: list[str] | None = None) -> int:
     )
     procs.append(ui)
 
+    ui_url = f"http://127.0.0.1:{args.port_ui}/"
     print()
     print("  NeuroDiscover dashboard is running")
-    print(f"  Open:  http://127.0.0.1:{args.port_ui}")
+    print(f"  Open:  {ui_url}")
     print(f"  API:   http://127.0.0.1:{args.port_api}")
     print("  Press Ctrl+C to stop")
     print()
+
+    if not args.no_browser:
+        time.sleep(0.4)
+        print("[dashboard] Opening in your default browser…")
+        opened = webbrowser.open(ui_url, new=2)
+        if not opened:
+            print("[dashboard] Could not launch a browser — open the URL above manually.")
 
     try:
         while True:

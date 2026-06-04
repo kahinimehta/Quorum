@@ -194,6 +194,8 @@ def cmd_dashboard(a):
         argv.extend(["--port-api", str(a.port_api)])
     if getattr(a, "port_ui", None):
         argv.extend(["--port-ui", str(a.port_ui)])
+    if getattr(a, "no_browser", False):
+        argv.append("--no-browser")
     raise SystemExit(launch_main(argv))
 
 
@@ -292,6 +294,7 @@ def main():
     dash.add_argument("--skip-build", action="store_true")
     dash.add_argument("--skip-pipeline", action="store_true")
     dash.add_argument("--fresh", action="store_true", help="rebuild local neurodiscover.db")
+    dash.add_argument("--no-browser", action="store_true", help="do not open the UI in a browser")
     dash.set_defaults(fn=cmd_dashboard)
 
     a = p.parse_args()

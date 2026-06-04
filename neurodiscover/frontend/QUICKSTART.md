@@ -46,6 +46,7 @@ Optional flags:
 ```bash
 python3 cli.py dashboard --fresh          # rebuild local DB
 python3 cli.py dashboard --skip-pipeline  # servers only, no agent run
+python3 cli.py dashboard --no-browser     # do not auto-open a browser tab
 ```
 
 ---
