@@ -275,7 +275,12 @@
       font-weight: 600;
       cursor: pointer;
     }
-    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+    }
+    .run-hero .btn-primary { width: 100%; max-width: 320px; padding: 0.75rem 1.5rem; font-size: 1rem; }
     .btn-primary:disabled { opacity: 0.6; cursor: wait; }
     .btn-secondary { background: #fff; color: var(--primary); border: 1px solid var(--primary); margin-left: 0.5rem; }
     .actions { margin-top: 1rem; }
@@ -328,13 +333,14 @@
     .timeline li strong { color: var(--navy); }
     .hidden { display: none !important; }
     .config-hint {
-      font-size: 0.75rem;
-      color: var(--muted);
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      padding: 0.5rem 0.75rem;
-      border-radius: 6px;
-      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      color: #1e40af;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      margin-bottom: 0;
+      line-height: 1.45;
     }
     .pager { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.75rem; }
     .results-wide { max-width: 1400px; margin: 0 auto; padding: 1rem 1.5rem 2.5rem; }
@@ -577,7 +583,7 @@
   </div>
   <nav class="tab-nav" aria-label="Dashboard navigation">
     <div class="tab-nav-inner">
-      <button type="button" class="tab-btn tab-btn-run" data-view="input">
+      <button type="button" class="tab-btn tab-btn-run active" data-view="input">
         <span class="tab-step">1</span>
         <span class="tab-text">
           <span class="tab-title">Configure &amp; Run Pipeline</span>
@@ -808,9 +814,11 @@
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
         useApiFallback = true;
         hint.classList.remove('hidden');
-        hint.innerHTML = '<strong>No Supabase keys needed.</strong> This session uses the local API at '
-          + API_BASE + ' (start with <code>python3 api_server.py</code>). '
-          + 'Optional: set <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> for direct reads — see QUICKSTART.md.';
+        hint.innerHTML =
+          '<strong>Local mode (normal for demo).</strong> You did not set browser Supabase keys, so this page loads data through the Python API at '
+          + '<code>' + API_BASE + '</code> — not directly from the cloud. '
+          + 'If you ran <code>make dashboard</code>, that API is already running; ignore any extra terminal step. '
+          + 'Team cloud option (optional): add <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> in the page or localStorage — see QUICKSTART.md.';
         document.getElementById('dbBadge').textContent = 'Local API';
         return;
       }
