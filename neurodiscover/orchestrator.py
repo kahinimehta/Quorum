@@ -17,6 +17,7 @@ import sys
 from typing import Any
 
 from db import connect, insert_ignore_sql, is_postgres
+from run_status import analyze_run_trace
 from timestamps import format_ts_for_api
 
 AGENT_LITERATURE = "Literature Synthesis Agent"
@@ -629,6 +630,7 @@ def run(
         run_stats = _build_run_stats(
             mode, max_papers, before, after, steps, evidence_used
         )
+        run_stats.update(analyze_run_trace(steps, len(recommendations)))
 
         from synthetic_cohort import generate_synthetic_cohort
 

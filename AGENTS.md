@@ -27,6 +27,7 @@ but all share the database below.
 | [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard + API UI |
 | [`docs/PERSON2_API_ENDPOINTS.md`](docs/PERSON2_API_ENDPOINTS.md) | FastAPI route list |
 | [`docs/VALIDATION.md`](docs/VALIDATION.md) | Extraction QA after pull |
+| [`docs/index.html`](docs/index.html) | GitHub Pages — purpose, team, workflow (enable Pages from `/docs`) |
 | [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard architecture + quick verify |
 | [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Run UI in &lt; 5 min (no Supabase keys OK) |
 

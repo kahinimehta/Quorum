@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeuroDiscover AI — Quorum</title>
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>NeuroDiscover AI</h1>
+    <p>Quorum · NextGen BioAgents Hackathon — Parkinson's disease subgroup &amp; treatment discovery</p>
+  </header>
+  <nav class="site-nav">
+    <a href="index.html" class="active">Overview</a>
+    <a href="workflow.html">Workflow</a>
+    <a href="decisions.html">Decisions</a>
+    <a href="team.html">Team</a>
+    <a href="guides.html">Guides</a>
+    <a href="../neurodiscover/frontend/index.html">Dashboard</a>
+  </nav>
+  <main>
+    <div class="card">
+      <h2>Purpose</h2>
+      <p>
+        NeuroDiscover is a <strong>multi-agent discovery system</strong> for Parkinson's disease (PD).
+        It ingests public literature, clinical trials, and NIH grants; identifies <strong>patient subgroups</strong>;
+        maps <strong>subgroup → mechanism → treatment</strong> connections; scores evidence and commercial potential;
+        and ranks opportunities for research and development.
+      </p>
+      <p>
+        Final ranking uses a transparent formula:
+        <code>confidence = evidence_strength × 0.55 + commercial_potential × 0.45</code>,
+        with tiers <strong>Prioritize</strong>, <strong>Monitor</strong>, and <strong>Reject</strong>.
+      </p>
+    </div>
+    <div class="card">
+      <h2>Rationale</h2>
+      <ul>
+        <li><strong>Hidden subgroups</strong> — PD is heterogeneous (genetic, inflammatory, progression rate). One-size-fits-all trials miss signal.</li>
+        <li><strong>Evidence as contract</strong> — Every claim links to real PMIDs, NCT ids, or grants in a shared SQL database (not hallucinated ids).</li>
+        <li><strong>Database blackboard</strong> — Six agents run in sequence; each reads prior tables and writes its own. The dashboard and API read the same store.</li>
+        <li><strong>Safe demo</strong> — Synthetic patient profiles (Patients A–E) illustrate outputs with <strong>no PHI</strong> for judges and stakeholders.</li>
+        <li><strong>Reproducibility</strong> — Schema in git; local SQLite for laptops; optional team Supabase for shared live data.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Quick start</h2>
+      <pre>cd neurodiscover
+make dashboard</pre>
+      <p>Opens the dashboard at <code>http://127.0.0.1:8080</code> with API on port 5000. See <a href="guides.html">Guides</a>.</p>
+    </div>
+    <div class="card">
+      <h2>Repository map</h2>
+      <ul>
+        <li><code>neurodiscover/agents/</code> — six pipeline agents</li>
+        <li><code>neurodiscover/orchestrator.py</code> — wires agents 1→6 for API runs</li>
+        <li><code>neurodiscover/api_server.py</code> — FastAPI backend</li>
+        <li><code>neurodiscover/frontend/index.html</code> — dashboard UI</li>
+        <li><code>docs/DATABASE.md</code> — schema contract (for developers editing markdown)</li>
+      </ul>
+    </div>
+  </main>
+  <footer>NeuroDiscover · Quorum · Columbia / NextGen BioAgents</footer>
+</body>
+</html>

@@ -27,6 +27,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from db import backend_label, connect, is_postgres
+from run_status import analyze_run_trace
 from timestamps import format_ts_for_api
 
 load_dotenv()
@@ -250,8 +251,15 @@ def get_run_stats(run_id: str):
             "total": pulled_total or lit["newStored"],
         }
 
+    rec_rows = _query(
+        "SELECT COUNT(*) AS count FROM recommendations WHERE run_id = ?",
+        (run_id,),
+    )
+    rec_count = rec_rows[0]["count"] if rec_rows else 0
+
     before = dict(after)
     run_stats = _build_run_stats(mode, max_papers, before, after, steps, evidence_used)
+    run_stats.update(analyze_run_trace(steps, rec_count))
     return {"runId": run_id, "runStats": run_stats}
 
 
@@ -300,14 +308,21 @@ def list_runs(limit: int = 5):
             ev_note = f"{lit['demoUsed']} papers (demo)"
         elif lit.get("published"):
             ev_note = f"{lit['published']} pulled · +{lit.get('newStored', 0)} new"
+        rec_count = r.get("rec_count") or 0
+        meta = analyze_run_trace(steps, rec_count)
         runs.append({
             "runId": rid,
             "steps": r["steps"],
+            "traceRows": r["steps"],
             "startedAt": format_ts_for_api(r.get("started_at")),
-            "recommendations": r.get("rec_count") or 0,
-            "syntheticProfiles": 5 if (r.get("rec_count") or 0) > 0 else 0,
+            "recommendations": rec_count,
+            "syntheticProfiles": 5 if rec_count > 0 else 0,
             "mode": mode,
-            "status": "Complete" if (r.get("steps") or 0) >= 6 else "Partial",
+            "status": meta["status"],
+            "statusDetail": meta["statusDetail"],
+            "agentsDone": meta["agentsDone"],
+            "agentsTotal": meta["agentsTotal"],
+            "agentsMissing": meta["agentsMissing"],
             "evidenceNote": ev_note,
             "databaseTotal": db["total"],
         })

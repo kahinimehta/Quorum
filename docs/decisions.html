@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Decisions — NeuroDiscover AI</title>
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Architecture decisions</h1>
+    <p>Why we built it this way</p>
+  </header>
+  <nav class="site-nav">
+    <a href="index.html">Overview</a>
+    <a href="workflow.html">Workflow</a>
+    <a href="decisions.html" class="active">Decisions</a>
+    <a href="team.html">Team</a>
+    <a href="guides.html">Guides</a>
+    <a href="../neurodiscover/frontend/index.html">Dashboard</a>
+  </nav>
+  <main>
+    <div class="card">
+      <h2>SQLite / Postgres, not MongoDB</h2>
+      <p>Early working docs mentioned MongoDB <code>papers</code>. The team contract is SQL table <code>evidence</code> with FK integrity, shared via Supabase Session pooler or local <code>neurodiscover.db</code>.</p>
+    </div>
+    <div class="card">
+      <h2>Database as blackboard</h2>
+      <p>Agents do not call each other directly. They read/write tables so Person 2 (API), Person 4 (agents), and the dashboard can evolve independently.</p>
+    </div>
+    <div class="card">
+      <h2>No <code>cli.py build</code> on live Supabase</h2>
+      <p><code>build</code> truncates all tables. Team DB already has 300+ real rows. Use <code>scan</code> / <code>pull</code> to add evidence only.</p>
+    </div>
+    <div class="card">
+      <h2>Vanilla dashboard + FastAPI</h2>
+      <p>Single <code>index.html</code> and <code>api_server.py</code> avoid build tooling for hackathon demos. Optional Supabase JS keys for direct reads; default path is API-only (no browser secrets).</p>
+    </div>
+    <div class="card">
+      <h2>Synthetic cohort not persisted</h2>
+      <p>Patient profiles are generated from recommendations + subgroups per <code>run_id</code>, labeled synthetic/no PHI, and never stored — reducing HIPAA scope.</p>
+    </div>
+    <div class="card">
+      <h2>Run status: Complete vs Partial</h2>
+      <p><strong>Complete</strong> means all six pipeline agents logged output for that <code>run_id</code> and recommendations exist. <strong>Partial</strong> means the run stopped early (missing agents or no recommendations) — not a judgment on data quality.</p>
+    </div>
+    <div class="card">
+      <h2>External tools</h2>
+      <ul>
+        <li><strong>BioMCP</strong> — unified PubMed + ClinicalTrials.gov</li>
+        <li><strong>Nebius / Ollama</strong> — structured extraction (<code>EXTRACT_BACKEND</code>)</li>
+        <li><strong>Tavily / NIH RePORTER</strong> — commercial agent signals</li>
+      </ul>
+    </div>
+  </main>
+  <footer>Contract docs: DATABASE.md, AGENT_IO.md, BACKEND_QUERIES.md</footer>
+</body>
+</html>

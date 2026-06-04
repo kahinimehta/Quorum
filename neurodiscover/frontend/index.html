@@ -670,8 +670,13 @@
     }
     .chip-row { display: flex; align-items: center; gap: 0.35rem; }
     .stepper li.ready::before { background: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+    .stepper li.running::before { background: #3b82f6; animation: pulse-dot 1s ease infinite; }
+    .stepper li.running { color: var(--primary); font-weight: 600; }
     .stepper li.idle::before { background: #cbd5e1; }
     .stepper li.idle { color: var(--muted); opacity: 0.85; }
+    .stepper-run-meta { font-size: 0.72rem; color: var(--muted); font-weight: 400; margin-left: 0.35rem; }
+    .runs-hint { font-size: 0.75rem; color: var(--muted); margin: -0.35rem 0 0.65rem; line-height: 1.4; }
+    .status-cell .status-hint { display: block; font-size: 0.65rem; color: var(--muted); font-weight: 400; margin-top: 0.2rem; max-width: 220px; line-height: 1.3; }
     .stepper li .step-state { float: right; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
     .stepper li.done .step-state { color: #059669; }
     .stepper li.ready .step-state { color: var(--primary); }
@@ -902,7 +907,7 @@
         <div id="subgroupChips"></div>
       </div>
       <div class="card">
-        <h2>Agent pipeline</h2>
+        <h2>Agent pipeline <span class="stepper-run-meta" id="stepperRunMeta">—</span></h2>
         <ol class="stepper" id="pipelineStepper">
           <li class="idle" data-agent="Literature Synthesis Agent">Literature Synthesis <span class="step-state">Idle</span></li>
           <li class="idle" data-agent="Patient Subgroup Agent">Patient Subgroup <span class="step-state">Idle</span></li>
@@ -985,6 +990,10 @@
       </div>
       <div class="card">
         <h2>Recent runs</h2>
+        <p class="runs-hint">
+          <strong>Complete</strong> = all 6 agents ran and recommendations were saved.
+          <strong>Partial</strong> = the run stopped early (some agents missing or no recommendations).
+        </p>
         <table class="runs-table">
           <thead>
             <tr>
@@ -1378,14 +1387,33 @@
       updateEvidenceSummaryBar(rs);
       const addedTotal = added.total ?? 0;
       const procTotal = (proc.literature ?? 0) + (proc.trial ?? 0) + (proc.grant ?? 0);
-      const statusState = (rs.recommendationsCount || 0) >= 5 ? 'complete' : 'partial';
+      const traceMeta = analyzeRunTraceFromStats(rs);
+      const statusState = (rs.status || traceMeta.status || 'complete').toLowerCase();
+      const norm = statusState === 'complete' ? 'complete' : 'partial';
       setRunStatus(
-        statusState,
-        statusState === 'complete' ? 'Pipeline complete' : 'Pipeline partial',
+        norm,
+        rs.statusDetail || traceMeta.detail || (norm === 'complete' ? 'Pipeline complete' : 'Pipeline partial'),
         `${mode} run ${latestRunId || '—'}: using ${proc.literature ?? 0} papers, `
-          + `${proc.trial ?? 0} trials, ${proc.grant ?? 0} grants (${procTotal} evidence rows in this run).`,
-        `Max ${max} papers requested · +${addedTotal} new in DB · ${total} total in database`,
+          + `${proc.trial ?? 0} trials, ${proc.grant ?? 0} grants (${procTotal} in this run).`,
+        `Agents ${rs.agentsDone ?? traceMeta.done}/${rs.agentsTotal ?? 6} · max ${max} papers · +${addedTotal} new in DB`,
       );
+    }
+
+    function analyzeRunTraceFromStats(rs) {
+      const done = rs?.agentsDone ?? 0;
+      const total = rs?.agentsTotal ?? 6;
+      const missing = (rs?.agentsMissing || []).join(', ');
+      const recs = rs?.recommendationsCount ?? 0;
+      if (done >= 6 && recs >= 1) {
+        return { status: 'Complete', detail: `All 6 agents finished · ${recs} recommendations` };
+      }
+      if (done >= 6 || recs >= 5) {
+        return { status: 'Complete', detail: rs?.statusDetail || `${done}/6 agents · ${recs} recommendations` };
+      }
+      let detail = `Only ${done}/${total} agents finished`;
+      if (missing) detail += ` — missing: ${missing}`;
+      if (recs === 0) detail += ' · no recommendations saved';
+      return { status: 'Partial', detail: rs?.statusDetail || detail };
     }
 
     function applyDatabaseStats(s) {
@@ -1490,7 +1518,10 @@
           grant = s.grant ?? 0;
           sg = s.subgroups ?? 0;
           conn = s.connections ?? 5;
-          if (s.lastRunId) latestRunId = latestRunId || s.lastRunId;
+          if (s.lastRunId) {
+            latestRunId = latestRunId || s.lastRunId;
+            statsCache.lastRunId = s.lastRunId;
+          }
           try {
             if (!conn) {
               const d = await fetch(`${API_BASE}/api/discover/parkinsons`).then(x => x.json());
@@ -1567,12 +1598,15 @@
           const d = await r.json();
           runs = (d.runs || []).map(x => ({
             run_id: x.runId,
-            steps: x.steps,
+            steps: x.traceRows || x.steps,
             started: x.startedAt,
             mode: x.mode,
             recommendations: x.recommendations,
             syntheticProfiles: x.syntheticProfiles,
             status: x.status,
+            statusDetail: x.statusDetail,
+            agentsDone: x.agentsDone,
+            agentsMissing: x.agentsMissing,
           }));
         }
         runs.forEach(run => {
@@ -1584,22 +1618,23 @@
           const status = run.status || (run.steps >= 6 ? 'Complete' : 'Partial');
           const statusKey = status === 'Complete' ? 'complete' : 'partial';
           const evNote = run.evidenceNote || `${recs} recs`;
+          const detail = run.statusDetail || (status === 'Complete'
+            ? 'All 6 agents finished'
+            : `Only ${run.agentsDone ?? '?'}/6 agents`);
           tr.innerHTML = `<td><code>${escapeHtml(String(run.run_id).slice(0, 8))}</code></td>`
             + `<td>${date}</td><td>${mode}</td>`
             + `<td>${escapeHtml(evNote)}</td>`
             + `<td>${statsCache.subgroups || 5}</td><td>${syn}</td>`
-            + `<td><span class="status-badge ${statusKey}"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;"></span>${status}</span></td>`;
+            + `<td class="status-cell" title="${escapeHtml(detail)}">`
+            + `<span class="status-badge ${statusKey}">${status}</span>`
+            + `<span class="status-hint">${escapeHtml(detail)}</span></td>`;
           tr.style.cursor = 'pointer';
           tr.addEventListener('click', async () => {
             latestRunId = run.run_id;
             updateRunMeta(latestRunId, recs, run.syntheticProfiles);
             const stKey = status === 'Complete' ? 'complete' : 'partial';
-            setRunStatus(
-              stKey,
-              status,
-              `Run ${run.run_id} · ${mode} · ${evNote}`,
-              `Started ${date}`,
-            );
+            setRunStatus(stKey, status, detail, `Run ${run.run_id} · ${mode} · started ${date}`);
+            await refreshPipelineStepper(run.run_id);
             try {
               const rs = await fetch(`${API_BASE}/api/run-stats?run_id=${encodeURIComponent(run.run_id)}`);
               if (rs.ok) {
@@ -1618,19 +1653,56 @@
       }
     }
 
-    function updateStepper(steps) {
+    async function refreshPipelineStepper(runId, steps, mode) {
+      const meta = document.getElementById('stepperRunMeta');
+      if (meta) {
+        meta.textContent = runId
+          ? (mode === 'running' ? `Run ${runId} · in progress…` : `Run ${runId}`)
+          : 'No active run';
+      }
+      if (mode === 'running') {
+        updateStepper([], { running: true });
+        return;
+      }
+      if (steps && steps.length) {
+        updateStepper(steps);
+        return;
+      }
+      if (!runId) {
+        updateStepper([]);
+        return;
+      }
+      try {
+        const ag = await fetch(`${API_BASE}/api/agents?run_id=${encodeURIComponent(runId)}`);
+        const d = await ag.json();
+        updateStepper(d.steps || []);
+      } catch (e) {
+        updateStepper([]);
+      }
+    }
+
+    function updateStepper(steps, opts) {
+      if (opts && opts.running) {
+        document.querySelectorAll('#pipelineStepper li').forEach(li => {
+          li.classList.remove('done', 'ready', 'idle', 'active');
+          li.classList.add('running');
+          const stateEl = li.querySelector('.step-state');
+          if (stateEl) stateEl.textContent = 'Running…';
+        });
+        return;
+      }
       const completed = new Set((steps || []).map(s => s.agentName));
       let markedReady = false;
       document.querySelectorAll('#pipelineStepper li').forEach(li => {
-        li.classList.remove('done', 'ready', 'idle', 'active');
+        li.classList.remove('done', 'ready', 'idle', 'active', 'running');
         const a = li.dataset.agent;
         const stateEl = li.querySelector('.step-state');
         if (completed.has(a)) {
           li.classList.add('done');
           if (stateEl) stateEl.textContent = 'Done';
-        } else if (!markedReady) {
+        } else if (!markedReady && steps && steps.length) {
           li.classList.add('ready');
-          if (stateEl) stateEl.textContent = 'Ready';
+          if (stateEl) stateEl.textContent = 'Next';
           markedReady = true;
         } else {
           li.classList.add('idle');
@@ -1955,6 +2027,7 @@
         tl.appendChild(li);
       }
       updateStepper(steps);
+      refreshPipelineStepper(rid || latestRunId, steps);
       await loadEvidencePage();
     }
 
@@ -2044,10 +2117,12 @@
       btn.disabled = true;
       if (btnScan) btnScan.disabled = true;
       const modeLabel = mode.toUpperCase();
+      latestRunId = null;
+      refreshPipelineStepper(null, null, 'running');
       setRunStatus(
         'running',
         'Running',
-        `${modeLabel} pipeline in progress — please wait…`,
+        `${modeLabel} pipeline in progress — agents 1→6…`,
         `Started ${formatEst(new Date())}`,
       );
       const body = {
@@ -2084,7 +2159,7 @@
             formatEst(new Date()),
           );
         }
-        updateStepper(steps);
+        await refreshPipelineStepper(latestRunId, steps);
         await loadRecentRuns();
         showView('results');
         await loadResults(latestRunId, {
@@ -2125,6 +2200,11 @@
       await loadCounts();
       await loadSubgroups();
       await loadRecentRuns();
+      if (latestRunId) await refreshPipelineStepper(latestRunId);
+      else if (statsCache.lastRunId) {
+        latestRunId = statsCache.lastRunId;
+        await refreshPipelineStepper(latestRunId);
+      }
       let hasRecs = false;
       try {
         if (sb) {
