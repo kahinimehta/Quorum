@@ -1,6 +1,12 @@
 # Publishes built Jekyll site to https://neurodiscover.github.io (org Pages root).
 # Requires repo neurodiscover/neurodiscover.github.io (public) and secret
 # NEURODISCOVER_PAGES_TOKEN (classic PAT scope: repo — or fine-grained Contents: read/write).
+#
+# If deploy fails with git exit 128:
+#   1. Secret NEURODISCOVER_PAGES_TOKEN must be set on kahinimehta/Quorum
+#   2. Classic PAT: scope "repo" — OR fine-grained: Contents read/write on neurodiscover.github.io
+#   3. Token creator must be org owner; authorize SSO for neurodiscover org if prompted
+#   4. repository-name must be neurodiscover/neurodiscover.github.io (no typos)
 
 name: Deploy docs to neurodiscover.github.io
 
@@ -19,7 +25,6 @@ jobs:
       - name: Checkout Quorum
         uses: actions/checkout@v4
         with:
-          # Required for cross-repo deploy — otherwise checkout's GITHUB_TOKEN wins over PAT.
           persist-credentials: false
 
       - name: Setup Ruby
@@ -38,13 +43,21 @@ jobs:
       - name: Verify build output
         run: test -f docs/_site/index.html
 
-      - name: Deploy to neurodiscover.github.io
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          token: ${{ secrets.NEURODISCOVER_PAGES_TOKEN }}
-          repository-name: neurodiscover/neurodiscover.github.io
-          branch: main
-          folder: docs/_site
-          clean: true
-          single-commit: true
-          commit-message: "Deploy docs from kahinimehta/Quorum@${{ github.sha }}"
+      - name: Push built site to neurodiscover.github.io
+        env:
+          DEPLOY_TOKEN: ${{ secrets.NEURODISCOVER_PAGES_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DEPLOY_TOKEN}" ]; then
+            echo "::error::NEURODISCOVER_PAGES_TOKEN is not set. Add it under Quorum → Settings → Secrets → Actions."
+            exit 1
+          fi
+          cd docs/_site
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Deploy docs from kahinimehta/Quorum@${GITHUB_SHA}"
+          git branch -M main
+          git remote add origin "https://x-access-token:${DEPLOY_TOKEN}@github.com/neurodiscover/neurodiscover.github.io.git"
+          git push --force origin main
