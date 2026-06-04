@@ -216,6 +216,114 @@
       margin-bottom: 1rem;
     }
     .pager { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.75rem; }
+    .results-wide { grid-column: 1 / -1; max-width: 1400px; margin: 0 auto; padding: 0 1.5rem 2rem; }
+    .flow-diagram { margin-bottom: 1rem; }
+    .flow-row { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 0.5rem; }
+    .flow-box {
+      padding: 0.45rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      text-align: center;
+      min-width: 90px;
+    }
+    .flow-input { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .flow-agent { background: #f5f3ff; color: #5b21b6; border-color: #ddd6fe; }
+    .flow-out-syn { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+    .flow-out-rank { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+    .flow-out-hyp { background: #f0fdf4; color: #166534; border-color: #86efac; }
+    .flow-footer { font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 0.5rem; }
+    .syn-banner {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 1000px) { .two-col { grid-template-columns: 1fr; } }
+    .syn-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
+      margin-bottom: 0.75rem;
+      background: #fff;
+    }
+    .syn-head { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.65rem; }
+    .syn-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .pill-syn {
+      background: #dcfce7;
+      color: #166534;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+    }
+    .pill-phi {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+    }
+    .syn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .syn-grid label { font-size: 0.65rem; color: var(--muted); margin: 0; }
+    .syn-opp {
+      background: var(--bg);
+      border-radius: 6px;
+      padding: 0.5rem;
+      font-size: 0.78rem;
+    }
+    .pill-patient {
+      background: #dcfce7;
+      color: #166534;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.12rem 0.4rem;
+      border-radius: 999px;
+      margin-left: 0.35rem;
+    }
+    .hyp-card {
+      border: 1px solid var(--border);
+      border-left-width: 4px;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 0.65rem;
+      background: #fff;
+    }
+    .cite-pill {
+      display: inline-block;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 0.68rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      margin: 0.15rem 0.25rem 0 0;
+      text-decoration: none;
+    }
+    .delta-up { color: #059669; font-size: 0.75rem; font-weight: 600; }
+    .update-bar { margin-bottom: 0.45rem; }
   </style>
 </head>
 <body>
@@ -311,40 +419,79 @@
     </main>
   </div>
 
-  <div id="viewResults" class="layout hidden">
-    <div style="grid-column:1/-1;">
-      <div class="card">
-        <h2>Confidence by treatment connection</h2>
-        <p style="font-size:0.8rem;color:var(--muted);margin:0 0 1rem;">
-          confidence = evidence_strength × 0.55 + commercial_potential × 0.45
-        </p>
-        <div id="confidenceBars"></div>
+  <div id="viewResults" class="hidden">
+    <div class="results-wide">
+      <div class="card flow-diagram">
+        <h2>Discovery architecture</h2>
+        <div class="flow-row">
+          <span class="flow-box flow-input">Literature</span>
+          <span class="flow-box flow-input">Clinical Trials</span>
+          <span class="flow-box flow-input">Grants</span>
+          <span class="flow-box flow-input">Biomarkers &amp; Omics</span>
+        </div>
+        <div class="flow-row">
+          <span class="flow-box flow-agent">Literature Synthesis</span>
+          <span class="flow-box flow-agent">Patient Subgroup</span>
+          <span class="flow-box flow-agent">Treatment Connection</span>
+        </div>
+        <div class="flow-row">
+          <span class="flow-box flow-agent">Evidence Scoring</span>
+          <span class="flow-box flow-agent">Commercial Discovery</span>
+          <span class="flow-box flow-agent">Conclusion Update</span>
+        </div>
+        <div class="flow-row">
+          <span class="flow-box flow-out-syn">Synthetic Cohort</span>
+          <span class="flow-box flow-out-rank">Ranked Outputs</span>
+          <span class="flow-box flow-out-hyp">Research Hypotheses</span>
+        </div>
+        <p class="flow-footer">Discovery logic = public evidence only · Synthetic data = safe visualization only · no HIPAA, no PHI, no real records</p>
       </div>
-      <div class="card">
-        <h2>Top recommendations</h2>
-        <div id="topRecs"></div>
-      </div>
-      <div class="card" style="display:grid;grid-template-columns:1fr 2fr;gap:1rem;">
+
+      <div class="two-col">
         <div>
-          <h2>Agent run trace</h2>
-          <ul class="timeline" id="agentTimeline"></ul>
+          <div class="syn-banner">⚗ Synthetic Cohort — Synthea-style profiles · no real patient data · no PHI · no HIPAA</div>
+          <div id="syntheticCohort"></div>
         </div>
         <div>
-          <h2>Evidence preview</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
-                <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th>
-              </tr>
-            </thead>
-            <tbody id="evidenceTable"></tbody>
-          </table>
-          <div class="pager">
-            <button type="button" class="btn btn-secondary" id="evPrev">Prev</button>
-            <span id="evPageLabel">Page 1</span>
-            <button type="button" class="btn btn-secondary" id="evNext">Next</button>
+          <div class="card">
+            <h2>Ranked outputs</h2>
+            <p style="font-size:0.8rem;color:var(--muted);margin:0 0 0.75rem;">
+              confidence = evidence_strength × 0.55 + commercial_potential × 0.45
+            </p>
+            <div id="confidenceBars"></div>
+            <div id="topRecs"></div>
           </div>
+          <div class="card">
+            <h2>Research hypotheses</h2>
+            <p style="font-size:0.75rem;color:var(--muted);">Top Prioritize-tier proposals with auditable citations</p>
+            <div id="hypotheses"></div>
+          </div>
+          <div class="card">
+            <h2>Continuous update</h2>
+            <div id="continuousUpdate"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Agent run trace</h2>
+        <ul class="timeline" id="agentTimeline"></ul>
+      </div>
+      <div class="card">
+        <h2>Evidence preview</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
+              <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th>
+            </tr>
+          </thead>
+          <tbody id="evidenceTable"></tbody>
+        </table>
+        <div class="pager">
+          <button type="button" class="btn btn-secondary" id="evPrev">Prev</button>
+          <span id="evPageLabel">Page 1</span>
+          <button type="button" class="btn btn-secondary" id="evNext">Next</button>
         </div>
       </div>
     </div>
@@ -359,8 +506,12 @@
     let sb = null;
     let useApiFallback = false;
     let latestRunId = null;
+    let syntheticCohort = [];
+    let patientBySubgroup = {};
+    let evidenceCache = [];
     let evPage = 0;
     const EV_PAGE_SIZE = 15;
+    const DELTA_PLACEHOLDERS = ['+2.1 ↑', '+0.8 ↑', '-0.4 ↓', '+1.3 ↑', '+0.2 ↑'];
 
     const AGENTS = [
       'Literature Synthesis Agent',
@@ -506,6 +657,135 @@
       return 'Reject';
     }
 
+    function subgroupColor(name) {
+      if (!name) return '#64748b';
+      if (name.includes('GBA')) return '#2563eb';
+      if (name.includes('LRRK2')) return '#0d9488';
+      if (name.includes('Alpha') || name.includes('synuclein')) return '#7c3aed';
+      if (name.includes('Inflamm')) return '#dc2626';
+      if (name.includes('Rapid')) return '#d97706';
+      return '#64748b';
+    }
+
+    function pmidHref(sourceId) {
+      if (!sourceId) return '#';
+      const raw = String(sourceId).replace('PMID:', '').replace('DEMO-PMID-', '').trim();
+      if (/^\d+$/.test(raw)) return `https://pubmed.ncbi.nlm.nih.gov/${raw}/`;
+      return '#';
+    }
+
+    async function fetchSyntheticCohort(runId) {
+      if (!runId) return [];
+      try {
+        const r = await fetch(`${API_BASE}/api/synthetic-cohort?run_id=${encodeURIComponent(runId)}`);
+        const d = await r.json();
+        return d.synthetic_cohort || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderSyntheticCohort(cohort) {
+      const box = document.getElementById('syntheticCohort');
+      box.innerHTML = '';
+      patientBySubgroup = {};
+      (cohort || []).forEach(p => {
+        patientBySubgroup[p.subgroup] = p.patient_id;
+        const color = p.subgroup_color || subgroupColor(p.subgroup);
+        const card = document.createElement('div');
+        card.className = 'syn-card';
+        card.style.borderLeft = `4px solid ${color}`;
+        card.innerHTML = `
+          <div class="syn-head">
+            <div class="syn-avatar" style="background:${color}">${p.patient_letter || '?'}</div>
+            <div>
+              <strong>${escapeHtml(p.patient_id)}</strong>
+              <span class="pill-syn">Synthetic only</span>
+            </div>
+          </div>
+          <div class="syn-grid">
+            <div><label>Subgroup</label>${escapeHtml(p.subgroup)}</div>
+            <div><label>Profile</label>${p.synthetic_age}y · ${p.synthetic_sex}</div>
+            <div><label>Key feature</label>${escapeHtml(p.key_feature || '—')}</div>
+            <div><label>Course</label>${escapeHtml(p.course || '—')}</div>
+          </div>
+          <div class="syn-opp">
+            <strong>Top opportunity</strong><br>
+            ${escapeHtml(p.top_opportunity || '—')}<br>
+            <small>${escapeHtml(p.mechanism || '')} · confidence ${p.confidence ?? '—'}</small>
+          </div>
+          <span class="pill-phi">🔒 Synthetic · no PHI</span>`;
+        box.appendChild(card);
+      });
+    }
+
+    function renderHypotheses(recommendations) {
+      const box = document.getElementById('hypotheses');
+      box.innerHTML = '';
+      const prioritize = (recommendations || [])
+        .filter(r => (r.tier || tierFromConfidence(r.confidence || 0)) === 'Prioritize')
+        .slice(0, 3);
+      if (!prioritize.length) {
+        box.innerHTML = '<p style="font-size:0.8rem;color:var(--muted);">No Prioritize-tier hypotheses in this run. Run demo or check Monitor-tier outputs above.</p>';
+        return;
+      }
+      prioritize.forEach(rec => {
+        const color = subgroupColor(rec.subgroup);
+        const cites = (evidenceCache || [])
+          .filter(e => e.subgroup === rec.subgroup)
+          .slice(0, 3);
+        const citeHtml = cites.length
+          ? cites.map(e => {
+              const sid = e.source_id || e.sourceId || '';
+              const href = pmidHref(sid);
+              return `<a class="cite-pill" href="${href}" target="_blank" rel="noopener">${escapeHtml(sid)}</a>`;
+            }).join('')
+          : '<span class="cite-pill">evidence-linked</span>';
+        const title = `${rec.treatment} for ${rec.subgroup}`;
+        const rationale = rec.rationale || `Hypothesis: ${rec.mechanism || 'targeted mechanism'} may benefit ${rec.subgroup}.`;
+        const sentences = rationale.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
+        const card = document.createElement('div');
+        card.className = 'hyp-card';
+        card.style.borderLeftColor = color;
+        card.innerHTML = `
+          <h4 style="margin:0 0 0.35rem;font-size:0.9rem;">${escapeHtml(title)}</h4>
+          <p style="font-size:0.78rem;margin:0 0 0.5rem;">${escapeHtml(sentences)}</p>
+          <div>${citeHtml}</div>
+          <strong style="font-size:0.8rem;">${rec.confidence ?? '—'}</strong>`;
+        box.appendChild(card);
+      });
+    }
+
+    function renderContinuousUpdate(recommendations) {
+      const box = document.getElementById('continuousUpdate');
+      box.innerHTML = '';
+      (recommendations || []).slice(0, 5).forEach((r, i) => {
+        const pct = Math.min(100, r.confidence || 0);
+        const delta = DELTA_PLACEHOLDERS[i % DELTA_PLACEHOLDERS.length];
+        const row = document.createElement('div');
+        row.className = 'update-bar';
+        row.innerHTML = `
+          <div class="bar-label"><span>${escapeHtml(r.treatment || r.subgroup)}</span><span class="delta-up">${delta}</span></div>
+          <div class="bar-track"><div class="bar-fill prioritize" style="width:${pct}%"></div></div>`;
+        box.appendChild(row);
+      });
+    }
+
+    async function loadEvidenceCache() {
+      try {
+        const r = await fetch(`${API_BASE}/api/evidence?offset=0&limit=100`);
+        const d = await r.json();
+        evidenceCache = (d.items || []).map(e => ({
+          source_id: e.sourceId,
+          sourceId: e.sourceId,
+          subgroup: e.subgroup,
+          title: e.title,
+        }));
+      } catch (e) {
+        evidenceCache = [];
+      }
+    }
+
     async function loadResults(runId) {
       let connections = [];
       let recommendations = [];
@@ -559,6 +839,29 @@
         if (ag.runId) latestRunId = ag.runId;
       }
 
+      if (runId) {
+        syntheticCohort = await fetchSyntheticCohort(runId);
+      }
+      if (!syntheticCohort.length && recommendations.length) {
+        syntheticCohort = recommendations.slice(0, 5).map((r, i) => ({
+          patient_id: `Patient ${String.fromCharCode(65 + i)}`,
+          patient_letter: String.fromCharCode(65 + i),
+          subgroup: r.subgroup,
+          subgroup_color: subgroupColor(r.subgroup),
+          synthetic_age: 60 + i,
+          synthetic_sex: i % 2 ? 'F' : 'M',
+          key_feature: r.subgroup,
+          course: 'Illustrative synthetic profile',
+          top_opportunity: r.treatment,
+          mechanism: r.mechanism,
+          confidence: r.confidence,
+          is_synthetic: true,
+          phi_free: true,
+        }));
+      }
+      renderSyntheticCohort(syntheticCohort);
+      await loadEvidenceCache();
+
       connections.sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
       const bars = document.getElementById('confidenceBars');
       bars.innerHTML = '';
@@ -580,15 +883,20 @@
         card.className = 'rec-card';
         const conf = r.confidence ?? 0;
         const tier = r.tier || tierFromConfidence(conf);
+        const patientTag = patientBySubgroup[r.subgroup]
+          ? `<span class="pill-patient">⚗ ${escapeHtml(patientBySubgroup[r.subgroup])}</span>` : '';
         card.innerHTML = `
-          <div class="rank">#${i + 1}</div>
-          <h4>${r.treatment}</h4>
-          <p style="margin:0.25rem 0;font-size:0.85rem;">${r.subgroup} · ${r.mechanism || '—'}</p>
-          <p style="font-size:0.8rem;color:var(--muted);">${r.rationale || ''}</p>
+          <div class="rank">#${i + 1} ${patientTag}</div>
+          <h4>${escapeHtml(r.treatment)}</h4>
+          <p style="margin:0.25rem 0;font-size:0.85rem;">${escapeHtml(r.subgroup)} · ${escapeHtml(r.mechanism || '—')}</p>
+          <p style="font-size:0.8rem;color:var(--muted);">${escapeHtml(r.rationale || '')}</p>
           <span class="tier tier-${tier}">${tier}</span>
           <strong style="margin-left:0.5rem;">${conf}</strong>`;
         top.appendChild(card);
       });
+
+      renderHypotheses(recommendations.length ? recommendations : connections);
+      renderContinuousUpdate(recommendations.length ? recommendations : connections);
 
       const tl = document.getElementById('agentTimeline');
       tl.innerHTML = '';
@@ -695,11 +1003,13 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || res.statusText);
         latestRunId = data.run_id;
-        status.textContent = `Done — run ${data.run_id}`;
-        updateStepper(data.steps);
+        syntheticCohort = data.synthetic_cohort || [];
+        status.textContent = `Done — run ${data.run_id} · ${syntheticCohort.length} synthetic profiles`;
+        updateStepper(data.agent_outputs || data.steps);
         await loadRecentRuns();
         await loadCounts();
         showView('results');
+        if (syntheticCohort.length) renderSyntheticCohort(syntheticCohort);
         await loadResults(latestRunId);
       } catch (e) {
         status.textContent = 'Error: ' + e.message;

@@ -183,6 +183,34 @@ Used when the frontend does not set `SUPABASE_URL` / `SUPABASE_ANON_KEY`.
 
 Same shape as **GET /api/agents** below; optional `run_id` query param.
 
+### GET /api/synthetic-cohort?run_id=abc123
+
+Ephemeral Synthea-style demo profiles (not stored in DB).
+
+```json
+{
+  "run_id": "abc123",
+  "synthetic_cohort": [
+    {
+      "patient_id": "Patient A",
+      "patient_letter": "A",
+      "subgroup": "GBA-mutation PD",
+      "subgroup_color": "#2563eb",
+      "synthetic_age": 68,
+      "synthetic_sex": "M",
+      "key_feature": "GBA1 variant carriers",
+      "top_opportunity": "GCase activation",
+      "mechanism": "lysosomal dysfunction",
+      "confidence": 82.5,
+      "is_synthetic": true,
+      "phi_free": true
+    }
+  ]
+}
+```
+
+`POST /api/run-discovery` returns the same `synthetic_cohort` array plus `agent_outputs` (alias of `steps`).
+
 ---
 
 ## Quick verify

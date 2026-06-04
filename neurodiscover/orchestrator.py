@@ -453,7 +453,7 @@ def run(
     pull_grants: bool = True,
 ) -> dict[str, Any]:
     """
-    Execute the discovery pipeline. Returns run_id, recommendations, steps.
+    Execute the discovery pipeline. Returns run_id, recommendations, agent_outputs, synthetic_cohort.
     """
     mode = (mode or "demo").lower()
     if mode not in ("demo", "scan", "full"):
@@ -488,8 +488,14 @@ def run(
 
         steps = _fetch_steps(conn, canonical_run_id)
 
+        from synthetic_cohort import generate_synthetic_cohort
+
+        synthetic_cohort = generate_synthetic_cohort(canonical_run_id, conn)
+
     return {
         "run_id": canonical_run_id,
         "recommendations": recommendations,
+        "agent_outputs": steps,
         "steps": steps,
+        "synthetic_cohort": synthetic_cohort,
     }

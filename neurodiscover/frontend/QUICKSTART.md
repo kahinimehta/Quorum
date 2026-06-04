@@ -165,6 +165,23 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
 
 Optional frontend: set `SUPABASE_URL` + `SUPABASE_ANON_KEY` in the page or `localStorage` for direct reads; otherwise the same API routes above still work.
 
+## Synthetic Cohort Layer
+
+After running the pipeline, the dashboard automatically generates up to **5 synthetic patient profiles** (Patients A–E), one per discovered subgroup. Profiles are built from `recommendations` + `subgroups` — **no real patient data** is used at any point.
+
+- Regenerated on each `POST /api/run-discovery` (included in the response as `synthetic_cohort`)
+- Read-only refresh: `GET /api/synthetic-cohort?run_id=<id>`
+- **Not stored in the database** — ephemeral visualization only
+- UI badges **Synthetic only** and **🔒 Synthetic · no PHI** are always shown
+
+Safe for demos, investor presentations, and regulatory discussions.
+
+```bash
+curl -s 'http://127.0.0.1:5000/api/synthetic-cohort?run_id=YOUR_RUN_ID'
+```
+
+---
+
 ## Supabase RLS (optional frontend keys only)
 
 If you use the Supabase JS client in the browser, the anon key must allow `SELECT` on: `evidence`, `subgroups`, `subgroup_evidence`, `treatment_connections`, `recommendations`, `agent_outputs`. If policies block reads, leave keys unset — the UI uses the API routes in the table above.

@@ -122,8 +122,8 @@ def list_evidence(offset: int = 0, limit: int = 15):
     offset = max(offset, 0)
     rows = _query(
         """
-        SELECT source_type, title, year, subgroup, mechanism, treatment,
-               study_type, sample_size, access_status
+        SELECT source_type, source_id, title, year, subgroup, mechanism, treatment,
+               study_type, sample_size, access_status, url
         FROM evidence
         ORDER BY evidence_id
         LIMIT ? OFFSET ?
@@ -135,7 +135,9 @@ def list_evidence(offset: int = 0, limit: int = 15):
         "items": [
             {
                 "sourceType": r["source_type"],
+                "sourceId": r.get("source_id"),
                 "title": r.get("title"),
+                "url": r.get("url"),
                 "year": r.get("year"),
                 "subgroup": r.get("subgroup"),
                 "mechanism": r.get("mechanism"),
@@ -325,11 +327,21 @@ def run_discovery(body: RunDiscoveryRequest):
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
-    return {
-        "run_id": result["run_id"],
-        "recommendations": result["recommendations"],
-        "steps": result["steps"],
-    }
+    return result
+
+
+@app.get("/api/synthetic-cohort")
+def get_synthetic_cohort(run_id: str):
+    if not run_id:
+        raise HTTPException(status_code=400, detail="run_id query parameter is required")
+    try:
+        from synthetic_cohort import generate_synthetic_cohort
+
+        with connect(None) as conn:
+            cohort = generate_synthetic_cohort(run_id, conn)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    return {"run_id": run_id, "synthetic_cohort": cohort}
 
 
 if __name__ == "__main__":

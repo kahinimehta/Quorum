@@ -53,6 +53,30 @@ If Supabase URL/key are missing (**no keys required**), the UI uses API-only mod
 
 Local setup: unset `SUPABASE_DATABASE_URL`, run `python3 cli.py build` once, then `python3 api_server.py`.
 
+## Synthetic cohort layer (visualization only)
+
+After Agent 6 (Conclusion Update), `synthetic_cohort.generate_synthetic_cohort(run_id, conn)` builds **Patients A–E** — one fictional profile per subgroup, ordered by confidence.
+
+| Property | Detail |
+|----------|--------|
+| Data sources | `subgroups.defining_features`, `recommendations`, `treatment_connections` |
+| Storage | **None** — not written to Postgres/SQLite |
+| Privacy | `is_synthetic: true`, `phi_free: true` on every profile; UI labels cannot be hidden |
+| Style | Synthea-inspired demo constructs for judges/stakeholders |
+
+**API**
+
+- Included in `POST /api/run-discovery` → `synthetic_cohort[]`
+- `GET /api/synthetic-cohort?run_id=<id>` regenerates the same shape
+
+**UI (results view)**
+
+- Left column: synthetic patient cards + green safety banner
+- Right column: ranked outputs (linked via ⚗ Patient A–E pills), research hypotheses, continuous-update chart
+- Top: three-row architecture diagram (inputs → agents → outputs)
+
+No HIPAA scope: no real records, no PHI, no clinical identifiers.
+
 ## Write / run path (Flask API)
 
 | Action | Endpoint | Backend |
