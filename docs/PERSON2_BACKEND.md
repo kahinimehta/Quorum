@@ -42,9 +42,21 @@ Example discover payload shape:
 
 ## Setup steps
 
-1. Get `SUPABASE_DATABASE_URL` from Person 3 (Ayelet).
-2. Confirm tables exist (Supabase Table Editor or run `cli.py validate`).
-3. Implement four routes from the working doc using `queries.sql`.
-4. Optional: Supabase Realtime on `agent_outputs` for live UI.
+1. **Local / no keys:** omit `SUPABASE_DATABASE_URL`, run `python3 cli.py build`, then `python3 api_server.py`.
+2. **Team Supabase:** get `SUPABASE_DATABASE_URL` from Person 3 — **do not** run `build` on shared DB.
+3. Confirm tables: `python3 cli.py validate`.
+4. Routes implemented in `neurodiscover/api_server.py` — see [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md).
+
+## Quick verify
+
+```bash
+cd neurodiscover
+python3 api_server.py
+curl -s http://127.0.0.1:5000/api/stats
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
+```
+
+Dashboard: [`../neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md). Architecture: [`DASHBOARD.md`](DASHBOARD.md).
 
 See [`SUPABASE.md`](SUPABASE.md) for project creation and schema apply.
