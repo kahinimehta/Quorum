@@ -1,6 +1,6 @@
 # Quorum — NeuroDiscover AI
 
-> **Collaborators:** The **dashboard**, **demo video** (`docs/demo_draft.mp4`), and **[docs site](https://neurodiscover.github.io)** are still being edited. Expect layout and copy changes before the showcase.
+> **Collaborators:** The **dashboard**, **demo video** (YouTube — see below), and **[docs site](https://neurodiscover.github.io)** are still being edited. Expect layout and copy changes before the showcase.
 
 **Quorum** — six agents, one evidence store, ranked commercial discovery.
 
@@ -12,28 +12,14 @@ Agentic system for **commercial development discovery**: continuously ingest lit
 
 ## Demo (draft)
 
-<video src="docs/demo_draft.mp4" controls width="100%">
-  <a href="docs/demo_draft.mp4">Download demo video</a>
-</video>
+<!-- Replace VIDEO_ID with your YouTube id (from youtube.com/watch?v=VIDEO_ID) -->
+[![Watch the NeuroDiscover demo on YouTube](https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
 
-**File:** `docs/demo_draft.mp4` (~71 MB). Under GitHub’s **100 MB per-file limit** — commit it **directly** (do **not** use Git LFS; LFS breaks the README `<video>` embed).
+**YouTube:** [youtube.com/watch?v=VIDEO_ID](https://www.youtube.com/watch?v=VIDEO_ID)
 
-```bash
-# From your machine (copy into the repo if needed)
-cp /path/to/demo_draft.mp4 docs/demo_draft.mp4
-git add docs/demo_draft.mp4
-git commit -m "docs: add demo draft video"
-git push
-```
+Upload `docs/demo_draft.mp4` as **Unlisted** or **Public**, then swap `VIDEO_ID` in the lines above. You can remove the local `docs/demo_draft.mp4` from git — no need to commit the 71 MB file.
 
-GitHub may warn that the file is over 50 MB — that is expected; the push should still succeed.
-
-**Optional — smaller clone / faster load** (re-encode before commit):
-
-```bash
-ffmpeg -i docs/demo_draft.mp4 -vcodec libx264 -crf 28 -preset slow -movflags +faststart docs/demo_draft_compressed.mp4
-mv docs/demo_draft_compressed.mp4 docs/demo_draft.mp4
-```
+The [docs site](https://neurodiscover.github.io) can show an inline player (iframes work there); add the same embed to `docs/index.md` if you want it on the home page.
 
 ---
 
@@ -113,7 +99,6 @@ python3 cli.py pull --disease "your condition" --max 150
 Quorum/
   AGENTS.md
   docs/                  # Jekyll site (Just the Docs) → neurodiscover.github.io
-  docs/demo_draft.mp4    # demo video (draft)
   queries.sql
   neurodiscover/
     cli.py               # entry point — run all commands from here
