@@ -440,6 +440,23 @@
       font-size: 0.85rem;
     }
     .timeline li strong { color: var(--navy); }
+    .timeline li.trace-error {
+      background: #fef2f2;
+      border-left: 3px solid #dc2626;
+      padding: 0.65rem 0.75rem;
+      margin: 0 -0.75rem;
+      border-bottom-color: #fecaca;
+    }
+    .timeline li.trace-error strong { color: #991b1b; }
+    .timeline li.trace-error .trace-err-tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #dc2626;
+      margin-bottom: 0.25rem;
+    }
     .hidden { display: none !important; }
     .config-hint {
       font-size: 0.8rem;
@@ -676,6 +693,9 @@
     }
     .chip-row { display: flex; align-items: center; gap: 0.35rem; }
     .stepper li.ready::before { background: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+    .stepper li.error::before { background: #dc2626; box-shadow: 0 0 0 3px rgba(220,38,38,0.15); }
+    .stepper li.error { color: #991b1b; font-weight: 600; }
+    .stepper li.error .step-state { color: #dc2626; }
     .stepper li.running::before { background: #3b82f6; animation: pulse-dot 1s ease infinite; }
     .stepper li.running { color: var(--primary); font-weight: 600; }
     .stepper li.idle::before { background: #cbd5e1; }
@@ -1163,6 +1183,58 @@
 
     function _shortAgent(name) {
       return String(name || '').replace(/ Agent$/, '').trim();
+    }
+
+    function withMissingAgentErrors(steps, statusDetail) {
+      const real = steps || [];
+      const byAgent = new Map();
+      real.forEach(s => {
+        const name = (s.agentName || s.agent_name || '').trim();
+        if (!name) return;
+        if (!byAgent.has(name)) byAgent.set(name, []);
+        byAgent.get(name).push(s);
+      });
+      const detail = statusDetail || 'Pipeline stopped before this agent ran.';
+      const out = [];
+      PIPELINE_AGENTS.forEach(agent => {
+        if (byAgent.has(agent)) {
+          out.push(...byAgent.get(agent));
+        } else {
+          out.push({
+            agentName: agent,
+            summary: `Did not run — ${detail}`,
+            createdAt: null,
+            isError: true,
+          });
+        }
+      });
+      return out;
+    }
+
+    function renderAgentTimeline(steps, statusDetail) {
+      const tl = document.getElementById('agentTimeline');
+      if (!tl) return;
+      tl.innerHTML = '';
+      const full = withMissingAgentErrors(steps, statusDetail);
+      full.forEach(s => {
+        const li = document.createElement('li');
+        if (s.isError) li.classList.add('trace-error');
+        const ts = s.createdAt ? formatTime(s.createdAt) : '—';
+        const errTag = s.isError ? '<span class="trace-err-tag">Not run</span><br>' : '';
+        li.innerHTML = `<span class="ts">${ts}</span>`
+          + errTag
+          + `<strong>${escapeHtml(s.agentName || s.agent_name || 'Agent')}</strong><br>`
+          + escapeHtml(s.summary || '');
+        tl.appendChild(li);
+      });
+      if (syntheticCohort.length && full.some(s => !s.isError)) {
+        const lastTs = [...full].reverse().find(s => s.createdAt && !s.isError);
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="ts">${formatTime(lastTs?.createdAt)}</span>`
+          + `<strong>Synthetic Cohort Generator</strong><br>Generated ${syntheticCohort.length} synthetic patient profiles.`;
+        tl.appendChild(li);
+      }
+      return full;
     }
 
     /** Mirrors neurodiscover/run_status.py — never show ? for agent counts in the UI. */
@@ -1833,19 +1905,23 @@
         });
         return;
       }
-      const completed = new Set((steps || []).map(s => s.agentName));
-      let markedReady = false;
+      const completed = new Set(
+        (steps || [])
+          .filter(s => !s.isError)
+          .map(s => s.agentName || s.agent_name)
+          .filter(Boolean),
+      );
+      const partialRun = steps && steps.length > 0 && completed.size < PIPELINE_AGENTS.length;
       document.querySelectorAll('#pipelineStepper li').forEach(li => {
-        li.classList.remove('done', 'ready', 'idle', 'active', 'running');
+        li.classList.remove('done', 'ready', 'idle', 'active', 'running', 'error');
         const a = li.dataset.agent;
         const stateEl = li.querySelector('.step-state');
         if (completed.has(a)) {
           li.classList.add('done');
           if (stateEl) stateEl.textContent = 'Done';
-        } else if (!markedReady && steps && steps.length) {
-          li.classList.add('ready');
+        } else if (partialRun) {
+          li.classList.add('error');
           if (stateEl) stateEl.textContent = 'Not run';
-          markedReady = true;
         } else {
           li.classList.add('idle');
           if (stateEl) stateEl.textContent = 'Idle';
@@ -2152,22 +2228,10 @@
       renderHypotheses(recommendations.length ? recommendations : connections);
       renderContinuousUpdate(recommendations.length ? recommendations : connections);
 
-      const tl = document.getElementById('agentTimeline');
-      tl.innerHTML = '';
       const rid = runId || latestRunId;
       updateRunMeta(rid, ranked.length, syntheticCohort.length);
-      steps.forEach(s => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="ts">${formatTime(s.createdAt)}</span>`
-          + `<strong>${escapeHtml(s.agentName)}</strong><br>${escapeHtml(s.summary || '')}`;
-        tl.appendChild(li);
-      });
-      if (syntheticCohort.length) {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="ts">${formatTime(steps[steps.length - 1]?.createdAt)}</span>`
-          + `<strong>Synthetic Cohort Generator</strong><br>Generated ${syntheticCohort.length} synthetic patient profiles.`;
-        tl.appendChild(li);
-      }
+      const traceMeta = clientAnalyzeTrace(steps, ranked.length);
+      renderAgentTimeline(steps, traceMeta.statusDetail);
       updateStepper(steps);
       refreshPipelineStepper(rid || latestRunId, steps);
       await loadEvidencePage();
