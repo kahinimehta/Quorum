@@ -13,12 +13,27 @@ Single-page UI at `neurodiscover/frontend/index.html` — vanilla HTML/CSS/JS, n
 
 ## Quick start
 
-**Cross-platform:** macOS, Linux, and Windows (with Python 3). `make dashboard` is equivalent to `python3 cli.py dashboard` — not Mac-only.
+**Python 3.10, 3.11, or 3.12** · macOS, Linux, Windows · `make dashboard` = `python3 cli.py dashboard`
+
+**pip:**
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
-pip install -r requirements.txt   # first time only
+python3 --version          # must be 3.10.x – 3.12.x
+pip install -r requirements.txt
+cp .env.example .env
+make dashboard
+```
+
+**conda (empty environment):**
+
+```bash
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum/neurodiscover
+conda env create -f environment.yml
+conda activate neurodiscover
+cp .env.example .env
 make dashboard
 ```
 
@@ -48,7 +63,8 @@ The launcher will:
 | **Windows** | `./dashboard` requires Git Bash or WSL |
 | **Linux / WSL / SSH / headless** | `--no-browser` then open `http://127.0.0.1:8080` manually |
 | **macOS** | Port 5000 sometimes taken by **AirPlay Receiver** — `--port-api 5001 --port-ui 8081` or disable AirPlay |
-| **Any OS** | Ports busy? `--port-api 5001 --port-ui 8081` |
+| **Any OS** | Python must be **3.10–3.12**. Re-run `pip install -r requirements.txt` or `conda env update -f environment.yml --prune` if imports fail |
+| **Conda** | `conda activate neurodiscover` before starting the dashboard |
 
 ### Useful flags
 

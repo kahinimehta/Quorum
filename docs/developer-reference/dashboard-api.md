@@ -11,10 +11,12 @@ Single-page UI: `neurodiscover/frontend/index.html` (vanilla HTML/CSS/JS, no bui
 
 ## Quick start
 
+Requires **Python 3.10, 3.11, or 3.12**.
+
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
-pip install -r requirements.txt
+pip install -r requirements.txt   # or: conda env create -f environment.yml && conda activate neurodiscover
 make dashboard
 ```
 

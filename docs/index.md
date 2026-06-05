@@ -72,13 +72,28 @@ See [Architecture decisions](decisions) for trade-offs · [Design & engineering]
 
 ## Quick start
 
-Requires **Python 3.10+** on macOS, Linux, or Windows.
+Requires **Python 3.10, 3.11, or 3.12** on macOS, Linux, or Windows.
+
+**pip:**
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
+python3 --version          # must be 3.10.x – 3.12.x
 pip install -r requirements.txt
+cp .env.example .env
 make dashboard    # same as: python3 cli.py dashboard
+```
+
+**conda (empty environment):**
+
+```bash
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum/neurodiscover
+conda env create -f environment.yml
+conda activate neurodiscover
+cp .env.example .env
+make dashboard
 ```
 
 Opens **http://127.0.0.1:8080** (API on port 5000). Press **Ctrl+C** to stop.

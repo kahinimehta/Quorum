@@ -1,38 +1,96 @@
 # NeuroDiscover Dashboard — Quickstart
 
+## Requirements
+
+| Item | Detail |
+|------|--------|
+| **Python** | **3.10, 3.11, or 3.12** (required). Check with `python3 --version`. Python 3.13+ is not tested with `biomcp-python` yet. |
+| **OS** | macOS, Linux, or Windows |
+| **Runtime deps** | [`requirements.txt`](../requirements.txt) — API, agents, CLI, literature pull |
+| **Conda env** | [`environment.yml`](../environment.yml) — creates env `neurodiscover` from an empty conda environment |
+| **Optional dev** | [`requirements-dev.txt`](../requirements-dev.txt) — Playwright for doc screenshots only |
+
+`sqlite3` is in the Python standard library. No Node.js or frontend build step.
+
+---
+
 ## Get the repo
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
-pip install -r requirements.txt
 cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
 ```
 
-## One command
+---
+
+## Install dependencies
+
+Pick **one** path below before running the dashboard.
+
+### Option A — pip (venv or existing Python)
+
+Use a Python in the **3.10–3.12** range:
+
+```bash
+python3 --version          # e.g. Python 3.12.x
+python3 -m venv .venv      # recommended
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -U pip
+pip install -r requirements.txt
+```
+
+Verify the BioMCP CLI is on your PATH (needed for incremental scan / full pull):
+
+```bash
+which biomcp    # should print a path inside your venv or env
+biomcp --help
+```
+
+### Option B — conda (empty environment)
 
 From `neurodiscover/`:
+
+```bash
+conda env create -f environment.yml
+conda activate neurodiscover
+python --version           # should be 3.10.x – 3.12.x
+which biomcp
+```
+
+Update after pulling dependency changes:
+
+```bash
+conda activate neurodiscover
+conda env update -f environment.yml --prune
+```
+
+### Optional — dev / doc screenshots
+
+Not required for the dashboard or API:
+
+```bash
+pip install -r requirements-dev.txt
+playwright install chromium
+```
+
+---
+
+## One command
+
+From `neurodiscover/` (with deps installed and env activated):
 
 ```bash
 make dashboard
 ```
 
-**Cross-platform:** works on **macOS, Linux, and Windows** with **Python 3.10, 3.11, or 3.12**. `make dashboard` is not Mac-only — it runs `python3 cli.py dashboard` under the hood.
+**Cross-platform:** `make dashboard` runs `python3 cli.py dashboard` — not Mac-only.
 
 Equivalents:
 
 ```bash
 python3 cli.py dashboard
 ./dashboard          # bash — macOS/Linux; Git Bash or WSL on Windows
-```
-
-**Conda:**
-
-```bash
-conda env create -f environment.yml
-conda activate neurodiscover
-cp .env.example .env
-make dashboard
 ```
 
 On Windows without `make`:
@@ -43,7 +101,7 @@ python cli.py dashboard
 
 This will:
 
-1. Install dependencies (unless `--skip-install`)
+1. Install dependencies (unless `--skip-install`) via `pip install -r requirements.txt`
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
 3. Run one pipeline pass before serving (unless `--skip-pipeline`):
    - **Local SQLite:** offline **demo** with `max_papers=10`
@@ -53,6 +111,8 @@ This will:
 
 Press **Ctrl+C** to stop.
 
+---
+
 ## Platform notes
 
 | Platform | Tip |
@@ -61,7 +121,10 @@ Press **Ctrl+C** to stop.
 | **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
 | **Linux / WSL / SSH / headless VM** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
 | **macOS** | Port **5000** may conflict with **AirPlay Receiver** (System Settings → General → AirDrop & Handoff) — use alternate ports below or disable AirPlay |
-| **Any OS** | Missing packages? Run `pip install -r requirements.txt` first |
+| **Any OS** | Wrong Python version? Use 3.10–3.12. Missing packages? Re-run `pip install -r requirements.txt` or `conda env update -f environment.yml --prune` |
+| **Conda** | Always `conda activate neurodiscover` before `make dashboard` |
+
+---
 
 ## Useful flags
 
@@ -69,17 +132,18 @@ Press **Ctrl+C** to stop.
 python3 cli.py dashboard --no-browser      # do not auto-open browser
 python3 cli.py dashboard --skip-pipeline   # start API + UI only
 python3 cli.py dashboard --fresh           # rebuild local DB
-python3 cli.py dashboard --skip-install    # skip pip install step
+python3 cli.py dashboard --skip-install    # skip pip install step (deps already installed)
 python3 cli.py dashboard --port-api 5001 --port-ui 8081   # alternate ports
 ```
 
-Minimal path (no auto-install, no browser):
+Minimal path (deps already installed, no browser):
 
 ```bash
-pip install -r requirements.txt
-python3 cli.py dashboard --no-browser
+python3 cli.py dashboard --skip-install --no-browser
 # → open http://127.0.0.1:8080 manually
 ```
+
+---
 
 ## Using the UI
 
@@ -97,14 +161,15 @@ python3 cli.py dashboard --no-browser
 
 After each run, the KPI strip and summary bar show **this run** counts (e.g. 5 papers used) separately from **in database** totals.
 
+---
+
 ## Manual setup (optional)
 
-If you prefer two terminals instead of the one-command launcher:
+If you prefer two terminals instead of the one-command launcher, install deps first (pip or conda above), then:
 
 ```bash
 cd neurodiscover
-pip install -r requirements.txt
-python3 cli.py build
+python3 cli.py build      # local SQLite only — never on team Supabase
 python3 api_server.py
 ```
 
@@ -116,6 +181,8 @@ python3 -m http.server 8080
 ```
 
 Badge should read **Local API** when browser Supabase keys are unset.
+
+---
 
 ## Team Supabase (optional)
 
@@ -140,20 +207,26 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -d '{"mode":"agents-only","max_papers":0}'
 ```
 
+---
+
 ## Verify API
 
 ```bash
 curl -s http://127.0.0.1:5000/health
 curl -s http://127.0.0.1:5000/api/stats
 curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
-  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
+  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10,"wait":true}'
 ```
 
 Response includes `runStats.processed` (papers used this run) and `runStats.databaseTotals`.
 
+---
+
 ## Synthetic cohort
 
 Up to five illustrative profiles (Patients A–E) per run. Returned in `POST /api/run-discovery` and via `GET /api/synthetic-cohort?run_id=`. Not stored in the database.
+
+---
 
 ## More detail
 

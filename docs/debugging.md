@@ -30,7 +30,8 @@ See [Site publishing](pages-setup) for full setup.
 
 ```bash
 cd neurodiscover
-pip install -r requirements.txt
+python3 --version          # must be 3.10.x – 3.12.x
+pip install -r requirements.txt   # or: conda activate neurodiscover
 python3 cli.py validate
 python3 cli.py dashboard --no-browser
 ```
@@ -43,7 +44,8 @@ python3 cli.py dashboard --no-browser
 | Port 5000 or 8080 in use | Stop other processes or use `python3 cli.py dashboard --port-api 5001 --port-ui 8081` |
 | `make: command not found` | Use `python3 cli.py dashboard` instead |
 | Browser does not open | Expected on SSH/WSL — use `--no-browser` and open the URL manually |
-| Module not found | Run from `neurodiscover/` directory; `pip install -r requirements.txt` |
+| Module not found | Run from `neurodiscover/`; Python **3.10–3.12**; `pip install -r requirements.txt` or `conda env update -f environment.yml --prune` |
+| `biomcp` not found | Re-install deps; `which biomcp` should point inside your venv/conda env |
 | DB errors | Local: `python3 cli.py build` (local only). Team Supabase: set `SUPABASE_DATABASE_URL`, **never** `build`. |
 
 ### API smoke test
