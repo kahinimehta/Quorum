@@ -26,8 +26,10 @@ Six agents · one evidence store · ranked commercial discovery
 
 Continuously ingest literature and trials, surface hidden patient subgroups, map subgroup → mechanism → treatment, and rank opportunities by evidence and commercial potential.
 
-<div class="video-embed">
-  <iframe src="https://www.youtube.com/embed/32vsR5R4hHM" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div class="video-embed-wrap">
+  <div class="video-embed">
+    <iframe src="https://www.youtube-nocookie.com/embed/32vsR5R4hHM?modestbranding=1&amp;rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
 </div>
 
 ---
