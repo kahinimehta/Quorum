@@ -33,7 +33,6 @@ class EvidenceScoringAgent:
             matching_rows = [
                 row for row in evidence_rows
                 if row.get("subgroup") == subgroup
-                and row.get("mechanism") == mechanism
                 and row.get("treatment") == treatment
             ]
 

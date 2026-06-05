@@ -122,12 +122,31 @@ def _evidence_counts(conn) -> dict[str, int]:
 
 
 def _fetch_evidence_rows(conn, max_papers: int | None = None) -> list[dict[str, Any]]:
+    from ingestion.evidence_tags import backfill_evidence_tags
+
+    backfill_evidence_tags(conn)
     conn.execute(
-        "SELECT evidence_id, source_type, source_id, title, subgroup, mechanism, treatment, "
-        "key_result, study_type, sample_size, access_status "
-        "FROM evidence WHERE subgroup IS NOT NULL ORDER BY evidence_id"
+        """
+        SELECT e.evidence_id, e.source_type, e.source_id, e.title,
+               COALESCE(
+                   e.subgroup,
+                   (SELECT s.name FROM subgroup_evidence se
+                    JOIN subgroups s ON s.subgroup_id = se.subgroup_id
+                    WHERE se.evidence_id = e.evidence_id
+                    LIMIT 1)
+               ) AS subgroup,
+               e.mechanism, e.treatment, e.key_result, e.study_type,
+               e.sample_size, e.access_status
+        FROM evidence e
+        WHERE e.subgroup IS NOT NULL
+           OR EXISTS (
+               SELECT 1 FROM subgroup_evidence se
+               WHERE se.evidence_id = e.evidence_id
+           )
+        ORDER BY e.evidence_id
+        """
     )
-    rows = conn.fetchall()
+    rows = [r for r in conn.fetchall() if r.get("subgroup")]
     if not max_papers or max_papers <= 0:
         return rows
     filtered: list[dict[str, Any]] = []
@@ -207,6 +226,7 @@ def _build_run_stats(
     *,
     settings: dict[str, Any] | None = None,
     connections_scored: list[dict[str, Any]] | None = None,
+    scoring_eligible: dict[str, int] | None = None,
 ) -> dict[str, Any]:
     lit = _parse_literature_step(steps)
     delta = {
@@ -254,6 +274,8 @@ def _build_run_stats(
         out["settings"] = settings
     if connections_scored:
         out["connectionsScored"] = connections_scored
+    if scoring_eligible:
+        out["scoringEligible"] = scoring_eligible
     return out
 
 
@@ -563,7 +585,7 @@ def _persist_recommendations(conn, run_id: str) -> list[dict[str, Any]]:
 
 def _run_agents_2_through_6(
     conn, run_id: str, *, max_papers: int | None = None
-) -> tuple[list[dict[str, Any]], dict[str, int]]:
+) -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]], dict[str, int]]:
     from agents.commercial_discovery_agent import CommercialDiscoveryAgent
     from agents.evidence_scoring_agent import EvidenceScoringAgent
     from agents.patient_subgroup_agent import PatientSubgroupAgent
@@ -588,9 +610,22 @@ def _run_agents_2_through_6(
             "treatment": c.get("treatment_strategy") or c.get("treatment"),
             "mechanism": c.get("mechanism"),
             "evidence_count": c.get("evidence_count", 0),
+            "subgroup_evidence_count": c.get("subgroup_evidence_count", 0),
         }
         for c in tc_out.get("connections", [])
     ]
+
+    scoring_eligible = {
+        "rows_used": len(evidence_rows),
+        "with_treatment": sum(1 for r in evidence_rows if r.get("treatment")),
+        "with_mechanism": sum(1 for r in evidence_rows if r.get("mechanism")),
+        "with_full_triple": sum(
+            1 for r in evidence_rows
+            if r.get("subgroup") and r.get("mechanism") and r.get("treatment")
+        ),
+    }
+    conn.execute("SELECT COUNT(*) AS n FROM evidence")
+    scoring_eligible["database_total"] = int(conn.fetchone()["n"])
 
     es_agent = EvidenceScoringAgent()
     es_out = es_agent.run(tc_out, evidence_rows)
@@ -604,7 +639,7 @@ def _run_agents_2_through_6(
 
     recs = _persist_recommendations(conn, run_id)
     conn.commit()
-    return recs, evidence_used, connection_snapshots
+    return recs, evidence_used, connection_snapshots, scoring_eligible
 
 
 def _run_literature_full(
@@ -757,7 +792,7 @@ def run(
             "extract_backend": extract_backend,
             "pull_grants": pull_grants,
         }
-        recommendations, evidence_used, connections_scored = _run_agents_2_through_6(
+        recommendations, evidence_used, connections_scored, scoring_eligible = _run_agents_2_through_6(
             conn, canonical_run_id, max_papers=agent_max
         )
 
@@ -771,6 +806,7 @@ def run(
             evidence_used,
             settings=run_settings,
             connections_scored=connections_scored,
+            scoring_eligible=scoring_eligible,
         )
         run_stats.update(analyze_run_trace(steps, len(recommendations)))
 

@@ -2074,6 +2074,9 @@
       const db = rs?.databaseTotals || statsCache || {};
       const conns = rs?.connectionsScored || [];
       const recs = recommendations || [];
+      const eligible = rs?.scoringEligible || {};
+      const scoredTotal = proc.total ?? eligible.rows_used ?? 0;
+      const dbTotal = eligible.database_total ?? db.total ?? 0;
 
       const confByKey = {};
       recs.forEach(r => {
@@ -2088,13 +2091,24 @@
       if (cfg.with_fulltext) opts.push('fulltext');
       if (cfg.pull_grants) opts.push('grants');
 
+      let lowCoverageWarn = '';
+      if (!inProgress && dbTotal > 20 && scoredTotal < dbTotal * 0.25) {
+        lowCoverageWarn = `<p class="run-report-warn" style="font-size:0.78rem;color:#b45309;margin:0.5rem 0 0;">`
+          + `<strong>Low tagging coverage:</strong> only <strong>${scoredTotal}</strong> of `
+          + `<strong>${dbTotal}</strong> DB rows have subgroup tags for scoring. `
+          + `Check that <code>SUPABASE_DATABASE_URL</code> is set (team DB has ~300 rows) `
+          + `or run <code>cli.py pull</code> with LLM extraction enabled.</p>`;
+      }
+
       let connRows = '';
       if (conns.length) {
         connRows = conns.slice(0, 6).map(c => {
           const k = `${c.subgroup}::${c.treatment}`;
-          const conf = confByKey[k] ?? '—';
+          const conf = confByKey[k] ?? c.confidence ?? '—';
+          const sgCount = c.subgroup_evidence_count ?? '—';
           return `<tr><td>${escapeHtml(c.subgroup || '—')}</td>`
             + `<td>${escapeHtml(c.treatment || '—')}</td>`
+            + `<td>${sgCount}</td>`
             + `<td><strong>${c.evidence_count ?? 0}</strong></td>`
             + `<td>${conf}</td></tr>`;
         }).join('');
@@ -2102,7 +2116,7 @@
         connRows = recs.slice(0, 5).map(r =>
           `<tr><td>${escapeHtml(r.subgroup || '—')}</td>`
           + `<td>${escapeHtml(r.treatment || '—')}</td>`
-          + `<td>—</td><td>${r.confidence ?? '—'}</td></tr>`,
+          + `<td>—</td><td>—</td><td>${r.confidence ?? '—'}</td></tr>`,
         ).join('');
       }
 
@@ -2111,6 +2125,7 @@
         : '<p style="font-size:0.78rem;color:#059669;margin:0.5rem 0 0;"><strong>Finished</strong> — compare signature &amp; evidence counts across runs.</p>';
 
       body.innerHTML = statusLine
+        + lowCoverageWarn
         + `<dl class="run-report-grid">`
         + `<div><dt>Mode</dt><dd>${escapeHtml(modeLabel)}</dd></div>`
         + `<div><dt>Disease</dt><dd>${escapeHtml(cfg.disease || '—')}</dd></div>`
@@ -2118,13 +2133,16 @@
         + `<div><dt>Keyword</dt><dd>${escapeHtml(cfg.query || '(none)')}</dd></div>`
         + `<div><dt>Extraction</dt><dd>${escapeHtml(extract)}</dd></div>`
         + `<div><dt>Pull options</dt><dd>${escapeHtml(opts.length ? opts.join(', ') : '(none)')}</dd></div>`
-        + `<div><dt>Evidence scored</dt><dd>${proc.literature ?? 0} lit · ${proc.trial ?? 0} trials · ${proc.grant ?? 0} grants = <strong>${proc.total ?? 0}</strong></dd></div>`
+        + `<div><dt>Evidence scored</dt><dd>${proc.literature ?? 0} lit · ${proc.trial ?? 0} trials · ${proc.grant ?? 0} grants = <strong>${scoredTotal}</strong>`
+        + (dbTotal ? ` <span style="color:var(--muted)">of ${dbTotal} in DB</span>` : '')
+        + `</dd></div>`
+        + `<div><dt>Tagging</dt><dd>${eligible.with_treatment ?? '—'} with treatment · ${eligible.with_full_triple ?? '—'} full triple</dd></div>`
         + `<div><dt>DB delta</dt><dd>+${added.literature ?? 0} lit · +${added.trial ?? 0} trials · +${added.grant ?? 0} grants · <strong>+${added.total ?? 0} total</strong></dd></div>`
         + `<div><dt>DB totals</dt><dd>${db.literature ?? '—'} lit · ${db.trial ?? '—'} trials · ${db.grant ?? '—'} grants</dd></div>`
         + `</dl>`
         + `<div class="run-signature"><strong>Run signature</strong> — ${escapeHtml(runSignature(runId, cfg, rs))}</div>`
         + (connRows
-          ? `<table class="conn-count-table"><thead><tr><th>Subgroup</th><th>Treatment</th><th>Support rows</th><th>Conf</th></tr></thead><tbody>${connRows}</tbody></table>`
+          ? `<table class="conn-count-table"><thead><tr><th>Subgroup</th><th>Treatment</th><th>Subgroup papers</th><th>Link support</th><th>Conf</th></tr></thead><tbody>${connRows}</tbody></table>`
           : '<p style="font-size:0.75rem;color:var(--muted);margin:0.5rem 0 0;">Connection counts appear when agents 3–6 finish.</p>');
     }
 
