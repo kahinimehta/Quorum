@@ -716,8 +716,9 @@
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 0.55rem 0.75rem;
+      padding: 0.68rem 0.75rem 0.52rem;
       font-size: 0.9rem;
+      line-height: 1.35;
       color: var(--navy);
     }
     .field-primary input:focus {
@@ -970,7 +971,7 @@
         <h2>Discovery run configuration</h2>
         <label>Disease / indication</label>
         <div class="field-primary">
-          <input type="text" id="disease" value="Parkinson's disease" placeholder="e.g. Parkinson's disease" />
+          <input type="text" id="disease" value="Parkinson's" placeholder="e.g. Parkinson's" />
           <span class="tag-primary">Primary</span>
         </div>
         <p class="mode-hint" style="margin-top:-0.35rem;">Anchors PubMed and trial search on live pull modes. Demo and rescore use evidence already in the database.</p>
@@ -1687,7 +1688,10 @@
       }
       const diseaseEl = document.getElementById('disease');
       if (diseaseEl && s.disease && !diseaseEl.dataset.userEdited) {
-        diseaseEl.value = s.disease;
+        const legacy = s.disease.trim();
+        diseaseEl.value = (legacy === 'Parkinson disease' || legacy === "Parkinson's disease")
+          ? "Parkinson's"
+          : legacy;
       }
     }
 
