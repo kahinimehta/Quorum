@@ -11,6 +11,17 @@ What NeuroDiscover produces — ranked recommendations, agent trace, synthetic p
 
 ---
 
+## Dashboard — Step 2 (Discovery Results)
+
+After a run completes, **Step 2** shows pipeline outputs: synthetic cohort, ranked treatments, hypotheses, agent trace, and evidence audit.
+
+![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
+{: .doc-screenshot }
+
+*Step 2 — synthetic cohort, ranked outputs, hypotheses, agent trace, and evidence table.*
+
+---
+
 ## POST /api/run-discovery response
 
 Full pipeline response (demo mode, abbreviated):
@@ -67,6 +78,11 @@ Full pipeline response (demo mode, abbreviated):
 
 ## Recommendations (Agent 6)
 
+![Ranked outputs panel](/assets/images/dashboard/step2-ranked-treatments.png)
+{: .doc-screenshot }
+
+*Ranked treatments with confidence bars and Prioritize / Monitor / Reject tiers.*
+
 ```json
 {
   "recommendations": [
@@ -104,6 +120,11 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 
 ## Agent trace
 
+![Agent trace and evidence audit](/assets/images/dashboard/step2-audit-evidence.png)
+{: .doc-screenshot }
+
+*Agent run trace (shared `run_id`) and paginated evidence preview with source links.*
+
 Every run logs one row per agent step in `agent_outputs`:
 
 ```json
@@ -139,6 +160,11 @@ Every run logs one row per agent step in `agent_outputs`:
 ---
 
 ## Synthetic cohort (Patients A–E)
+
+![Synthetic cohort panel](/assets/images/dashboard/step2-synthetic-cohort.png)
+{: .doc-screenshot }
+
+*Illustrative patient profiles (A–E) — synthetic only, no PHI.*
 
 Generated per `run_id` from recommendations + subgroups. **Not stored in the database.** Every profile is labeled synthetic / no PHI.
 

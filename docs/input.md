@@ -11,6 +11,17 @@ What NeuroDiscover consumes — external evidence sources, API request bodies, a
 
 ---
 
+## Dashboard — Step 1 (Configure & Run)
+
+The UI maps directly to pipeline inputs: mode, keyword filter, max papers, source toggles, and extraction backend.
+
+![Step 1 — Configure & run pipeline](/assets/images/dashboard/step1-configure-run.png)
+{: .doc-screenshot }
+
+*Step 1 maps UI controls to `POST /api/run-discovery` — demo mode, max papers, optional keyword filter, and source options.*
+
+---
+
 ## External evidence sources
 
 Agent 1 (Literature Synthesis) pulls from public APIs via **BioMCP** and optional MCP servers:
@@ -44,7 +55,7 @@ Set `EXTRACT_BACKEND=nebius|ollama|none` in `.env` for structured LLM extraction
 
 ## POST /api/run-discovery (pipeline trigger)
 
-The dashboard and API start a full run with:
+The form in **Step 1 — Configure & Run** (above) posts the same body the API accepts:
 
 ```json
 {
