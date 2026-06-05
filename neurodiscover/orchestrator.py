@@ -707,7 +707,7 @@ def _run_grants_pull(conn, run_id: str, limit: int = 30) -> None:
     from ingestion.grants_pull import run as run_grants
 
     try:
-        run_grants(None, None, limit, run_id=run_id)
+        run_grants(None, None, limit, run_id=run_id, conn=conn)
     except Exception as exc:
         log_step(
             conn,

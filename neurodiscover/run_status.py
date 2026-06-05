@@ -1,6 +1,7 @@
 """Interpret agent_outputs traces for dashboard run status (display only)."""
 from __future__ import annotations
 
+import json
 import re
 from typing import Any
 
@@ -25,14 +26,36 @@ def _short_agent(name: str) -> str:
     return name.replace(" Agent", "").strip()
 
 
+def _step_payload(step: dict[str, Any]) -> dict[str, Any]:
+    payload = step.get("payload")
+    if isinstance(payload, dict):
+        return payload
+    if isinstance(payload, str) and payload:
+        try:
+            parsed = json.loads(payload)
+            return parsed if isinstance(parsed, dict) else {}
+        except json.JSONDecodeError:
+            return {}
+    return {}
+
+
 def literature_complete(steps: list[dict[str, Any]]) -> bool:
     """Literature counts as done only after its final summary (not mid-pull progress rows)."""
+    literature_failed = False
     for step in steps:
         name = (step.get("agentName") or step.get("agent_name") or "").strip()
         if name != AGENT_LITERATURE:
             continue
         if _LITERATURE_COMPLETE.search(step.get("summary") or ""):
             return True
+        payload = _step_payload(step)
+        if payload.get("literature_failed"):
+            literature_failed = True
+    if literature_failed:
+        return any(
+            (s.get("agentName") or s.get("agent_name") or "").strip() in PIPELINE_AGENTS[1:]
+            for s in steps
+        )
     return False
 
 

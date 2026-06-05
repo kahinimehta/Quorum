@@ -146,6 +146,7 @@ def connect(db_path: str | None = None) -> Iterator[DbConnection]:
         raw.row_factory = sqlite3.Row
         raw.execute("PRAGMA foreign_keys = ON")
         raw.execute("PRAGMA journal_mode = WAL")
+        raw.execute("PRAGMA busy_timeout = 30000")
         conn = DbConnection(raw, postgres=False)
         try:
             yield conn

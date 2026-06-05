@@ -1310,9 +1310,16 @@
     }
 
     function isLiteratureComplete(steps) {
-      return literatureSteps(steps).some(s =>
+      const lit = literatureSteps(steps);
+      if (lit.some(s =>
         /Stored \d+ new evidence|Incremental scan complete|Full live pull complete|Demo mode:|Agents-only:/i.test(s.summary || ''),
-      );
+      )) return true;
+      if (lit.some(s => (s.payload || {}).literature_failed)) {
+        return PIPELINE_AGENTS.slice(1).some(a =>
+          (steps || []).some(s => (s.agentName || s.agent_name) === a),
+        );
+      }
+      return false;
     }
 
     function isAgentComplete(agentName, steps) {
@@ -2276,8 +2283,14 @@
         && isLiteratureComplete(steps);
     }
 
+    function pipelineWaitTimeoutMs(mode) {
+      return (mode === 'scan' || mode === 'full') ? 3600000 : 600000;
+    }
+
     async function waitForPipelineComplete(runId, maxMs = 600000) {
       const start = Date.now();
+      let lastStepCount = 0;
+      let lastProgressAt = Date.now();
       while (Date.now() - start < maxMs) {
         try {
           const statusRes = await fetch(
@@ -2294,6 +2307,9 @@
             if (st.status === 'partial' && (st.agentsDone >= PIPELINE_AGENTS.length || st.recommendations >= 5)) {
               return fetchPipelineSteps(runId);
             }
+            if (st.status === 'running') {
+              lastProgressAt = Date.now();
+            }
           }
         } catch (e) {
           if (e.message && !/failed|404/i.test(e.message)) {
@@ -2303,6 +2319,14 @@
           }
         }
         const steps = await fetchPipelineSteps(runId);
+        if (steps.length > lastStepCount) {
+          lastStepCount = steps.length;
+          lastProgressAt = Date.now();
+        } else if (Date.now() - lastProgressAt > 900000) {
+          throw new Error(
+            'Pipeline stalled with no new progress for 15 minutes — check server logs or refresh Recent runs.',
+          );
+        }
         const phase = pipelinePhaseFrom(steps, true);
         syncPipelineUi(runId, steps, phase);
         const doneCount = countCompletedAgents(steps);
@@ -2328,10 +2352,30 @@
             evidenceNote: evNote || pendingRunRow?.evidenceNote || 'Finalizing…',
           };
         }
+        patchPendingRunRow(pendingRunRow);
         if (isPipelineTraceComplete(steps)) {
           return steps;
         }
         await new Promise(r => setTimeout(r, 400));
+      }
+      try {
+        const statusRes = await fetch(
+          `${API_BASE}/api/run-discovery/status?run_id=${encodeURIComponent(runId)}`,
+        );
+        if (statusRes.ok) {
+          const st = await statusRes.json();
+          if (st.status === 'running') {
+            throw new Error(
+              `Pipeline still running in the background (run ${runId}). `
+              + 'Large incremental/full pulls can take 30+ minutes — refresh Recent runs shortly.',
+            );
+          }
+          if (st.status === 'complete' || (st.status === 'partial' && st.recommendations >= 5)) {
+            return fetchPipelineSteps(runId);
+          }
+        }
+      } catch (e) {
+        if (/still running in the background/i.test(e.message || '')) throw e;
       }
       throw new Error('Pipeline timed out waiting for completion');
     }
@@ -3136,7 +3180,9 @@
         syntheticCohort = data.synthetic_cohort || [];
 
         if (data.status === 'running' || data.accepted) {
-          steps = await waitForPipelineComplete(latestRunId);
+          clearInterval(pollTimer);
+          pollTimer = null;
+          steps = await waitForPipelineComplete(latestRunId, pipelineWaitTimeoutMs(mode));
           const result = await fetchRunResult(latestRunId);
           steps = result.steps || steps;
           rs = result.runStats || rs;
@@ -3170,7 +3216,13 @@
       } catch (e) {
         pipelineRunInFlight = false;
         pendingRunRow = null;
-        setRunStatus('error', 'Failed', e.message, formatEst(new Date()));
+        const stillRunning = /still running in the background/i.test(e.message || '');
+        setRunStatus(
+          stillRunning ? 'running' : 'error',
+          stillRunning ? 'Running' : 'Failed',
+          e.message,
+          formatEst(new Date()),
+        );
         await loadRecentRuns();
       } finally {
         clearInterval(pollTimer);
