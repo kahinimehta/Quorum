@@ -32,7 +32,7 @@ At the top, **This run** shows:
 
 ## Dashboard — Step 3 (Grant Proposal · CUA)
 
-**Step 3** is separate from pipeline rankings. It loads the bundled CUA demo (`graded6`) via `GET /api/cua/demo` and embeds the full HTML report from `/cua-demo/graded6.html`.
+**Step 3** is separate from pipeline rankings and **not run-scoped**. It always loads the static bundled CUA demo (`graded6`) via `GET /api/cua/demo` and embeds `/cua-demo/graded6.html` — unchanged no matter which pipeline run you view in Step 2.
 
 ![Step 3 — CUA grant proposal tab](/assets/images/dashboard/step3-cua-grant-proposal.png)
 {: .doc-screenshot }

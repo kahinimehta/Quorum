@@ -654,12 +654,11 @@ def run_discovery(body: RunDiscoveryRequest):
 
 
 @app.get("/api/cua/demo")
-def get_cua_demo(run_id: str = "graded6"):
-    """Summary of the bundled CUA demo artifacts (pre-rendered grant proposal)."""
-    from cua_demo import load_demo_summary
+def get_cua_demo():
+    """Bundled static CUA demo (graded6) — not tied to pipeline run_id."""
+    from cua_demo import DEFAULT_RUN_ID, load_demo_summary
 
-    run_id = (run_id or "graded6").strip()[:32]
-    summary = load_demo_summary(run_id)
+    summary = load_demo_summary(DEFAULT_RUN_ID)
     if summary.get("available") and summary.get("report_path"):
         summary["report_url"] = summary["report_path"]
     return summary

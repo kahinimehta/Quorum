@@ -74,6 +74,9 @@ def load_demo_summary(run_id: str = DEFAULT_RUN_ID) -> dict[str, Any]:
 
     return {
         "available": True,
+        "static_demo": True,
+        "pipeline_linked": False,
+        "demo_id": run_id,
         "run_id": run_id,
         "version": "v1.1",
         "project_title": proposal.get("project_title"),

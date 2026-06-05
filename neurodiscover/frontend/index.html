@@ -360,6 +360,46 @@
       line-height: 1.5;
     }
     .cua-unavail { color: var(--muted); font-size: 0.85rem; padding: 1rem 0; }
+    .cua-static-bar {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      border: 1px solid #c4b5fd;
+      background: #f5f3ff;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: #4c1d95;
+    }
+    .cua-static-badge {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: #7c3aed;
+      color: #fff;
+    }
+    .tab-static-tag {
+      display: inline-block;
+      margin-left: 0.35rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      background: #ede9fe;
+      color: #6d28d9;
+      vertical-align: middle;
+    }
     .view-page-title {
       max-width: 1400px;
       margin: 0 auto;
@@ -1086,8 +1126,8 @@
       <button type="button" class="tab-btn tab-btn-cua" data-view="cua">
         <span class="tab-step">3</span>
         <span class="tab-text">
-          <span class="tab-title">Grant Proposal (CUA)</span>
-          <span class="tab-desc">NIH R01 draft from evidence — separate from pipeline rankings</span>
+          <span class="tab-title">Grant Proposal (CUA)<span class="tab-static-tag">Static</span></span>
+          <span class="tab-desc">Bundled <code>graded6</code> demo — never changes with your pipeline run</span>
         </span>
       </button>
     </div>
@@ -1342,15 +1382,23 @@
   </div>
 
   <div id="viewCua" class="hidden">
-    <p class="view-page-title">Step 3 — Grant Proposal (CUA) <span id="cuaSubtitle">Conclusion Update Agent · NIH R01 from team evidence</span></p>
+    <p class="view-page-title">Step 3 — Grant Proposal (CUA) <span id="cuaSubtitle">Static bundled demo · not tied to Step 1 or Step 2 runs</span></p>
     <div class="cua-wide">
+      <div class="cua-static-bar" role="note">
+        <span class="cua-static-badge">Static demo</span>
+        <span>
+          This tab always shows the pre-rendered <code>graded6</code> sample (~400-paper team corpus → 60 writer view).
+          It does <strong>not</strong> update when you run the pipeline, pick a mode, or open a different run in Step&nbsp;2.
+          Steps 1–2 are run-scoped; Step&nbsp;3 is a fixed showcase. Generate a new proposal with the CLI below.
+        </span>
+      </div>
       <div class="card cua-banner">
         <h2 style="margin-top:0;">Separate from Step 2 rankings</h2>
         <p style="margin:0;font-size:0.85rem;color:var(--muted);line-height:1.5;">
           The dashboard pipeline writes <strong>Prioritize / Monitor / Reject</strong> tiers (formula, no LLM).
-          <strong>CUA</strong> is an optional Agent&nbsp;6 package that reads the same evidence and produces a
-          multi-round, citation-grounded <strong>NIH grant proposal</strong>. This tab shows the bundled
-          <code>graded6</code> demo run (~400 papers → 60 writer view). Run live against your DB with the CLI below.
+          <strong>CUA</strong> is an optional Agent&nbsp;6 package that can read evidence and produce a
+          multi-round, citation-grounded <strong>NIH grant proposal</strong>. The iframe here is the shipped
+          <code>graded6</code> artifact only — not your latest <code>run_id</code>.
         </p>
       </div>
       <div class="cua-kpi-row" id="cuaKpis">
@@ -1374,13 +1422,16 @@
             <div id="cuaAims"></div>
           </div>
           <div class="card">
-            <h2>Run live</h2>
-            <p style="font-size:0.75rem;color:var(--muted);margin:0 0 0.5rem;">Read-only against Supabase or local SQLite — writes local JSON only.</p>
+            <h2>Run live (CLI)</h2>
+            <p style="font-size:0.75rem;color:var(--muted);margin:0 0 0.5rem;">
+              To replace this static demo, run CUA yourself. Read-only against Supabase or local SQLite —
+              writes local JSON only (not <code>recommendations</code>). <code>--run-id</code> labels the CUA output folder, not a dashboard pipeline run.
+            </p>
             <pre class="cua-cli">cd cua &amp;&amp; pip install -e .
 export CUA_LIVE=1 ANTHROPIC_API_KEY=...
 python -m cua.nih.run_db \
   --db "$SUPABASE_DATABASE_URL" \
-  --run-id my-run --capture-content</pre>
+  --run-id my-cua-run --capture-content</pre>
           </div>
         </aside>
         <div class="cua-report-wrap">
@@ -3367,6 +3418,8 @@ python -m cua.nih.run_db \
       }
     }
 
+    const CUA_STATIC_DEMO_ID = 'graded6';
+    const CUA_STATIC_REPORT_URL = `${API_BASE}/cua-demo/${CUA_STATIC_DEMO_ID}.html`;
     let cuaLoaded = false;
 
     async function loadCuaTab() {
@@ -3385,7 +3438,6 @@ python -m cua.nih.run_db \
         unavail.classList.add('hidden');
         main.classList.remove('hidden');
         kpis.classList.remove('hidden');
-        document.getElementById('cuaSubtitle').textContent = d.project_title || 'CUA demo';
         document.getElementById('cuaHypothesis').textContent = d.central_hypothesis || '—';
         document.getElementById('cuaKpiCorpus').textContent = d.ingestion?.corpus_n ?? '—';
         document.getElementById('cuaKpiView').textContent = d.ingestion?.top_k ?? '—';
@@ -3394,9 +3446,10 @@ python -m cua.nih.run_db \
         document.getElementById('cuaKpiF2').textContent = d.audit?.scores?.F2 ?? '—';
         document.getElementById('cuaReportTitle').textContent = d.project_title || 'Full pipeline report';
         document.getElementById('cuaReportMeta').textContent =
-          `${d.run_id} · ${d.audit?.obligations_satisfied ?? '—'} obligations satisfied`;
-        const reportUrl = `${API_BASE}${d.report_path || '/cua-demo/graded6.html'}`;
-        document.getElementById('cuaReportFrame').src = reportUrl;
+          `static demo ${CUA_STATIC_DEMO_ID} · ${d.audit?.obligations_satisfied ?? '—'} obligations satisfied · not run-scoped`;
+        const reportUrl = CUA_STATIC_REPORT_URL;
+        const frame = document.getElementById('cuaReportFrame');
+        if (!frame.src || frame.src === 'about:blank') frame.src = reportUrl;
         document.getElementById('cuaReportOpen').href = reportUrl;
         const aimsEl = document.getElementById('cuaAims');
         aimsEl.innerHTML = (d.aims || []).map(a =>
