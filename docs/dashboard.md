@@ -23,7 +23,7 @@ cd Quorum/neurodiscover
 python3 --version          # must be 3.10.x – 3.12.x
 pip install -r requirements.txt
 cp .env.example .env
-make dashboard
+make dashboard # use `python3 cli.py dashboard` for Windows
 ```
 
 **conda (empty environment):**
@@ -34,14 +34,7 @@ cd Quorum/neurodiscover
 conda env create -f environment.yml
 conda activate neurodiscover
 cp .env.example .env
-make dashboard
-```
-
-Equivalents:
-
-```bash
-python3 cli.py dashboard
-./dashboard                         # bash script — Git Bash / WSL on Windows
+make dashboard # use `python3 cli.py dashboard` for Windows
 ```
 
 Opens **http://127.0.0.1:8080** in your default browser. Use `--no-browser` to skip auto-open. Press **Ctrl+C** to stop API + UI.
