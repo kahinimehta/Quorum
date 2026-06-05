@@ -37,7 +37,7 @@ python3 cli.py dashboard --no-browser
 ```
 
 {: .highlight }
-**Not Mac-only:** `make dashboard` works on macOS, Linux, and Windows. On Windows use `python cli.py dashboard` if `make` is missing. On headless/SSH use `--no-browser` and open `http://127.0.0.1:8080` manually. On macOS, port 5000 may conflict with AirPlay — use `--port-api 5001 --port-ui 8081`.
+**Not Mac-only:** `make dashboard` works on **macOS and Linux**. On **Windows** use **`python cli.py dashboard`** in Command Prompt or PowerShell (`make` is usually missing). Git Bash/WSL can use `make dashboard` like Linux. On headless/SSH use `--no-browser`. On macOS, port 5000 may conflict with AirPlay — use `--port-api 5001 --port-ui 8081`.
 
 | Error | Fix |
 |-------|-----|

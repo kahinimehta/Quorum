@@ -74,32 +74,40 @@ See [Architecture decisions](decisions) for trade-offs · [Design & engineering]
 
 Requires **Python 3.10, 3.11, or 3.12** on macOS, Linux, or Windows.
 
-**pip:**
+| Platform | Command |
+|----------|---------|
+| **macOS / Linux** | `make dashboard` |
+| **Windows** | `python cli.py dashboard` |
+
+**pip — macOS / Linux:**
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
-python3 --version          # must be 3.10.x – 3.12.x
 pip install -r requirements.txt
-cp .env.example .env
-make dashboard    # same as: python3 cli.py dashboard
-```
-
-**conda (empty environment):**
-
-```bash
-git clone https://github.com/kahinimehta/Quorum.git
-cd Quorum/neurodiscover
-conda env create -f environment.yml
-conda activate neurodiscover
 cp .env.example .env
 make dashboard
 ```
 
-Opens **http://127.0.0.1:8080** (API on port 5000). Press **Ctrl+C** to stop.
+**pip — Windows:**
 
-{: .highlight }
-**Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the URL manually.
+```bash
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum\neurodiscover
+python -m pip install -r requirements.txt
+copy .env.example .env
+python cli.py dashboard
+```
+
+**conda:**
+
+```bash
+conda env create -f environment.yml
+conda activate neurodiscover
+cp .env.example .env
+make dashboard                # macOS/Linux
+python cli.py dashboard       # Windows
+```
 
 Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Debugging](debugging)
 
