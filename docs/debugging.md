@@ -53,7 +53,7 @@ curl -s http://127.0.0.1:5000/api/stats
 curl -s http://127.0.0.1:5000/api/runs?limit=3
 curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' \
-  -d '{"mode":"demo","max_papers":5}'
+  -d '{"mode":"demo","max_papers":10}'
 ```
 
 Expected: JSON with `run_id`, `recommendations`, `agent_outputs`, `runStats`.
@@ -64,7 +64,7 @@ Expected: JSON with `run_id`, `recommendations`, `agent_outputs`, `runStats`.
 
 | UI status | Meaning |
 |-----------|---------|
-| **Complete** | All 6 agents logged for `run_id` + ≥1 recommendation |
+| **Complete** | All 6 agents logged for `run_id` + ≥1 recommendation — or ≥5 recommendations with partial trace (`run_status.py`) |
 | **Partial** | Stopped early — check agent trace count (e.g. `3/6`) |
 | **Failed** | Exception in orchestrator — see API terminal logs |
 
@@ -123,7 +123,7 @@ bundle exec jekyll serve
 ## Safe demo checklist (stage)
 
 - [ ] Run `make dashboard` **before** presenting (not live pull on stage)  
-- [ ] Mode **demo**, max papers **5**  
+- [ ] Mode **demo**, max papers **10** (launcher default; API allows 10–500)  
 - [ ] No `cli.py build` against team Supabase  
 - [ ] Browser at `http://127.0.0.1:8080` (not stale GitHub Pages tab for live UI)  
 - [ ] Fallback: [neurodiscover.github.io](https://neurodiscover.github.io) for docs if local fails  

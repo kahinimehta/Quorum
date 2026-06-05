@@ -7,7 +7,7 @@ nav_order: 3
 
 # Backend Query Guide — Person 2
 
-**Database file:** `neurodiscover.db` (SQLite, repo root)  
+**Database file:** `neurodiscover/neurodiscover.db` (SQLite, inside `neurodiscover/` package dir — see `paths.py`)  
 **Full SQL:** [`queries.sql`](../../queries.sql)  
 **Schema:** [Database schema](database)
 
@@ -15,7 +15,7 @@ nav_order: 3
 
 ```python
 import sqlite3
-conn = sqlite3.connect("neurodiscover.db")
+conn = sqlite3.connect("neurodiscover/neurodiscover.db")
 conn.row_factory = sqlite3.Row
 ```
 
@@ -36,11 +36,11 @@ Returns disease overview, subgroups, and treatment connections.
 
 ```json
 {
-  "disease": "Configured indication (from seed or pull)",
+  "disease": "Parkinson's Disease",
   "subgroups": [
     {
       "subgroupId": 1,
-      "name": "GBA-mutation carriers",
+      "name": "GBA-mutation PD",
       "definingFeatures": "...",
       "evidenceCount": 2
     }
@@ -48,7 +48,7 @@ Returns disease overview, subgroups, and treatment connections.
   "treatmentConnections": [
     {
       "connectionId": 1,
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "mechanism": "lysosomal dysfunction",
       "treatment": "GCase activation",
       "evidenceStrength": null,
@@ -123,8 +123,9 @@ Ranked recommendations from Agent 6.
 {
   "recommendations": [
     {
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "treatment": "GCase activation",
+      "mechanism": "lysosomal dysfunction",
       "confidence": 82.5,
       "tier": "Prioritize",
       "rationale": "..."
@@ -162,14 +163,14 @@ Trigger the agent pipeline (`orchestrator.py`).
 ```json
 {
   "run_id": "a1b2c3d4",
-  "recommendations": [{ "subgroup": "...", "treatment": "...", "confidence": 75.7, "tier": "Monitor", "rationale": "..." }],
+  "recommendations": [{ "subgroup": "...", "treatment": "...", "mechanism": "...", "confidence": 75.7, "tier": "Monitor", "rationale": "..." }],
   "agent_outputs": [{ "agentName": "Literature Synthesis Agent", "stepOrder": 1, "summary": "...", "createdAt": "..." }],
   "steps": [],
   "synthetic_cohort": [{ "patient_id": "Patient A", "subgroup": "...", "confidence": 82.5, "is_synthetic": true }],
   "runStats": {
     "mode": "demo",
-    "maxPapersRequested": 5,
-    "processed": { "literature": 5, "trial": 0, "grant": 0, "total": 5 },
+    "maxPapersRequested": 10,
+    "processed": { "literature": 5, "trial": 4, "grant": 0, "total": 9 },
     "databaseTotals": { "literature": 228, "trial": 39, "grant": 40, "total": 307 },
     "added": { "literature": 0, "trial": 0, "grant": 0, "total": 0 }
   }
@@ -243,7 +244,7 @@ Ephemeral Synthea-style demo profiles (not stored in DB).
     {
       "patient_id": "Patient A",
       "patient_letter": "A",
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "subgroup_color": "#2563eb",
       "synthetic_age": 68,
       "synthetic_sex": "M",

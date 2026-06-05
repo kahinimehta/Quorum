@@ -35,7 +35,7 @@ The launcher will:
 
 1. Install dependencies (unless `--skip-install`)
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-3. Run one offline **demo** pipeline pass (unless `--skip-pipeline`)
+3. Run one offline **demo** pipeline pass with `max_papers=10` (unless `--skip-pipeline`)
 4. Start FastAPI on **5000** and static UI on **8080**
 
 ### Platform notes
@@ -110,7 +110,7 @@ Timestamps display in **US Eastern** (`America/New_York`).
 ```bash
 curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' \
-  -d '{"mode":"demo","max_papers":5}'
+  -d '{"mode":"demo","max_papers":10}'
 ```
 
 See [Output examples](output) for the response shape.

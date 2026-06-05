@@ -36,7 +36,7 @@ This will:
 
 1. Install dependencies (unless `--skip-install`)
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-3. Run one offline **demo** pipeline pass (unless `--skip-pipeline`)
+3. Run one offline **demo** pipeline pass with `max_papers=10` (unless `--skip-pipeline`)
 4. Start API on **5000** and UI on **8080**
 5. Open **http://127.0.0.1:8080** in your default browser (unless `--no-browser`)
 
@@ -122,7 +122,7 @@ python3 api_server.py
 curl -s http://127.0.0.1:5000/health
 curl -s http://127.0.0.1:5000/api/stats
 curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
-  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":5}'
+  -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
 ```
 
 Response includes `runStats.processed` (papers used this run) and `runStats.databaseTotals`.

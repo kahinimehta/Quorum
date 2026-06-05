@@ -57,11 +57,12 @@ Displayed as 0–100 in the API (internal 0–10 scores × 10).
 
 ```json
 {
-  "subgroup": "GBA-mutation carriers",
+  "subgroup": "GBA-mutation PD",
   "treatment": "GCase activation",
+  "mechanism": "lysosomal dysfunction",
   "confidence": 82.5,
   "tier": "Prioritize",
-  "rationale": "Strong preclinical cohort data and active Phase 2 trial; high commercial interest in GCase modulators."
+  "rationale": "GBA-mutation PD → GCase activation via lysosomal dysfunction. Confidence 82.5 (Prioritize)."
 }
 ```
 
