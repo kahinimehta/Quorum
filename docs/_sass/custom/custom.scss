@@ -97,6 +97,21 @@
   line-height: 1.45;
 }
 
+.site-logo img {
+  max-height: 3.25rem;
+  width: auto;
+}
+
+.home-logo {
+  margin: 0.5rem 0 1rem;
+  text-align: center;
+
+  img {
+    max-width: min(100%, 32rem);
+    height: auto;
+  }
+}
+
 .team-member {
   border-left: 4px solid #2563eb;
   padding-left: 1rem;

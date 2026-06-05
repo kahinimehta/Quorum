@@ -5,6 +5,10 @@ nav_order: 1
 description: "Agentic commercial development discovery — quick start and overview"
 ---
 
+<p class="home-logo">
+  <img src="/assets/images/neurodiscover-ai-logo.png" alt="NeuroDiscover AI — an autonomous research agent for clinical research in neuroscience" />
+</p>
+
 # NeuroDiscover AI
 
 {: .fs-5 .fw-300 }

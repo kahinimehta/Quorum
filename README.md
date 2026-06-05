@@ -1,5 +1,9 @@
 # Quorum — NeuroDiscover AI
 
+<p align="center">
+  <img src="docs/assets/images/neurodiscover-ai-logo.png" alt="NeuroDiscover AI — an autonomous research agent for clinical research in neuroscience" width="420" />
+</p>
+
 > **Collaborators:** The **dashboard**, **demo video** ([docs home](https://neurodiscover.github.io)), and **[docs site](https://neurodiscover.github.io)** are still being edited. Expect layout and copy changes before the showcase.
 
 **Quorum** — six agents, one evidence store, ranked commercial discovery.

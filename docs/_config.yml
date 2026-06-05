@@ -9,9 +9,15 @@ baseurl: ""
 
 permalink: pretty
 
-logo: "/assets/images/logo.svg"
+logo: "/assets/images/logo-compact.png"
 
-favicon_ico: "/assets/images/logo.svg"
+favicon_ico: "/assets/images/favicon.png"
+
+# Open Graph / social preview (jekyll-seo-tag)
+image: /assets/images/neurodiscover-ai-logo.png
+twitter:
+  card: summary_large_image
+  image: /assets/images/neurodiscover-ai-logo.png
 
 color_scheme: neurodiscover
 
