@@ -18,7 +18,7 @@ OUT = os.path.abspath(
 
 
 def seed_demo_run() -> None:
-    body = json.dumps({"mode": "demo", "max_papers": 10}).encode()
+    body = json.dumps({"mode": "demo", "max_papers": 10, "wait": True}).encode()
     req = urllib.request.Request(
         f"{API}/api/run-discovery",
         data=body,
