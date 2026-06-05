@@ -150,6 +150,31 @@ def log_trace(conn, run_id: str, step: int, summary: str, payload: dict | None =
     )
 
 
+def backfill_grant_fields(conn) -> int:
+    """Fill subgroup/mechanism/treatment on existing grant rows from title text."""
+    conn.execute(
+        "SELECT evidence_id, title FROM evidence "
+        "WHERE source_type = 'grant' AND subgroup IS NULL"
+    )
+    updated = 0
+    for row in conn.fetchall():
+        inferred = _infer_from_grant_text(row.get("title") or "")
+        if not inferred.get("subgroup"):
+            continue
+        conn.execute(
+            "UPDATE evidence SET subgroup = ?, mechanism = ?, treatment = ? "
+            "WHERE evidence_id = ?",
+            (
+                inferred["subgroup"],
+                inferred["mechanism"],
+                inferred["treatment"],
+                row["evidence_id"],
+            ),
+        )
+        updated += 1
+    return updated
+
+
 def run(db_path, text_query: str, limit: int, *, run_id: str | None = None) -> None:
     from db import backend_label, connect
 
@@ -161,10 +186,11 @@ def run(db_path, text_query: str, limit: int, *, run_id: str | None = None) -> N
             finding = grant_to_finding(project)
             if finding and upsert_grant(conn, finding):
                 new += 1
+        backfilled = backfill_grant_fields(conn)
         log_trace(
             conn, pipeline_run_id, 4,
             f"Pulled {len(projects)} grants from NIH RePORTER; stored {new} new rows.",
-            {"query": text_query, "limit": limit, "new_grants": new},
+            {"query": text_query, "limit": limit, "new_grants": new, "grants_backfilled": backfilled},
         )
         conn.commit()
     print(f"[pull-grants] {backend_label()} — stored {new} new of {len(projects)}. run_id={pipeline_run_id}")
