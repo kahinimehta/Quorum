@@ -42,7 +42,9 @@ Agent 1 (Literature Synthesis) pulls from public APIs via **BioMCP** and optiona
 | PubMed | `literature` | `PMID:38234567` | BioMCP / E-utilities |
 | bioRxiv preprints | `literature` | DOI | bioRxiv MCP |
 | ClinicalTrials.gov | `trial` | `NCT01234567` | BioMCP |
-| NIH RePORTER | `grant` | project number | `cli.py pull-grants` |
+| NIH RePORTER | `grant` | project number | `cli.py pull-grants` / full-mode `pull_grants` |
+
+Grant rows infer `subgroup`, `mechanism`, and `treatment` from project title keywords (GBA, LRRK2, alpha-synuclein, etc.) so they can enter agents 2–6. Existing grants with null subgroup are backfilled on each grant pull.
 
 {: .warning }
 **Never invent PMIDs, DOIs, or NCT ids.** Seed data uses `DEMO-*` placeholders for offline demo only. Live pulls must use ids returned by BioMCP.
@@ -71,9 +73,10 @@ The form in **Step 1 — Configure & Run** (above) posts the same body the API a
 ```json
 {
   "mode": "demo",
+  "run_id": "f799fbe8",
   "query": null,
   "max_papers": 150,
-  "disease": "Parkinson disease",
+  "disease": "Parkinson's",
   "include_preprints": 0,
   "with_fulltext": false,
   "extract_backend": null,
@@ -84,9 +87,10 @@ The form in **Step 1 — Configure & Run** (above) posts the same body the API a
 | Field | Values | Meaning |
 |-------|--------|---------|
 | `mode` | `demo` \| `scan` \| `full` \| `agents-only` | Offline seed / incremental scan / live pull / downstream-only on existing evidence |
+| `run_id` | string (optional) | Client-generated id (8 chars); UI sends this so the stepper tracks the run immediately. **Full** mode passes it to literature pull. |
 | `max_papers` | **10–500** (API validated) | In **demo**: caps literature rows for agents 2–6. In **agents-only**: optional cap (0 or omit = all rows). Ignored for scan/full downstream agents. |
 | `query` | string or null | Optional keyword filter passed to BioMCP |
-| `disease` | string | Literature anchor (default `"Parkinson disease"` in API) |
+| `disease` | string | Literature anchor; dashboard default **Parkinson's** (API default `"Parkinson disease"` if omitted) |
 | `include_preprints` | integer | bioRxiv cap; used in **full** mode |
 | `with_fulltext` | boolean | OA full-text sections; **full** / `pull` paths |
 | `extract_backend` | `nebius` \| `ollama` \| `none` or null | Override `EXTRACT_BACKEND` in `.env` |
@@ -173,7 +177,7 @@ WHERE e.mechanism IS NOT NULL AND e.treatment IS NOT NULL;
 
 ### Agent 4 — Evidence Scoring
 
-In-memory connections from Agent 3 plus matching evidence rows (orchestrator). Scoring uses `evidence_count` and `source_type` — not `study_type` / `sample_size` directly.
+In-memory connections from Agent 3 plus evidence rows matching each connection’s subgroup + mechanism + treatment. Scoring uses **per-connection `evidence_count`** (continuous) and source types — not `study_type` / `sample_size` directly.
 
 Reference SQL (post-persistence inspection):
 

@@ -59,22 +59,19 @@ class CommercialDiscoveryAgent:
         treatment = str(connection.get("treatment_strategy", "")).lower()
         evidence_count = connection.get("evidence_count", 0)
 
-        score = 6.0
+        score = 5.5 + min(2.5, evidence_count * 0.12)
 
         if "gba" in subgroup or "lrrk2" in subgroup:
-            score += 1.0
+            score += 0.9
 
         if "alpha" in mechanism or "synuclein" in mechanism:
-            score += 0.7
+            score += 0.6
 
         if "lysosomal" in mechanism or "kinase" in mechanism:
-            score += 0.8
-
-        if treatment:
             score += 0.7
 
-        if evidence_count >= 5:
-            score += 0.5
+        if treatment:
+            score += 0.6
 
         return round(min(score, 10.0), 1)
 

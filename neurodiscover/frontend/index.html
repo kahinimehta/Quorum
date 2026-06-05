@@ -698,6 +698,7 @@
     .stepper li.error .step-state { color: #dc2626; }
     .stepper li.running::before { background: #3b82f6; animation: pulse-dot 1s ease infinite; }
     .stepper li.running { color: var(--primary); font-weight: 600; }
+    .stepper li.running .step-state { color: var(--primary); }
     .stepper li.idle::before { background: #cbd5e1; }
     .stepper li.idle { color: var(--muted); opacity: 0.85; }
     .stepper-run-meta { font-size: 0.72rem; color: var(--muted); font-weight: 400; margin-left: 0.35rem; }
@@ -1889,6 +1890,61 @@
       }
     }
 
+    async function fetchPipelineSteps(clientRunId) {
+      let steps = [];
+      const tryFetch = async (id) => {
+        if (!id) return [];
+        const ag = await fetch(`${API_BASE}/api/agents?run_id=${encodeURIComponent(id)}`);
+        if (!ag.ok) return [];
+        const d = await ag.json();
+        return d.steps || [];
+      };
+      try {
+        steps = await tryFetch(clientRunId);
+        if (steps.length < PIPELINE_AGENTS.length) {
+          const s = await fetch(`${API_BASE}/api/stats`).then(r => r.json());
+          if (s.lastRunId && s.lastRunId !== clientRunId) {
+            const alt = await tryFetch(s.lastRunId);
+            if (alt.length > steps.length) steps = alt;
+          }
+        }
+      } catch (e) { /* keep partial */ }
+      return steps;
+    }
+
+    function applyStepperState(steps, inProgress) {
+      const completed = new Set(
+        (steps || [])
+          .filter(s => !s.isError)
+          .map(s => s.agentName || s.agent_name)
+          .filter(Boolean),
+      );
+      const partialRun = !inProgress && steps && steps.length > 0 && completed.size < PIPELINE_AGENTS.length;
+      let activeAssigned = false;
+      document.querySelectorAll('#pipelineStepper li').forEach(li => {
+        li.classList.remove('done', 'ready', 'idle', 'active', 'running', 'error');
+        const a = li.dataset.agent;
+        const stateEl = li.querySelector('.step-state');
+        if (completed.has(a)) {
+          li.classList.add('done');
+          if (stateEl) stateEl.textContent = 'Done';
+        } else if (inProgress && !activeAssigned) {
+          activeAssigned = true;
+          li.classList.add('running');
+          if (stateEl) stateEl.textContent = 'Running…';
+        } else if (partialRun) {
+          li.classList.add('error');
+          if (stateEl) stateEl.textContent = 'Not run';
+        } else if (inProgress) {
+          li.classList.add('idle');
+          if (stateEl) stateEl.textContent = 'Waiting…';
+        } else {
+          li.classList.add('idle');
+          if (stateEl) stateEl.textContent = 'Idle';
+        }
+      });
+    }
+
     async function refreshPipelineStepper(runId, steps, mode) {
       const meta = document.getElementById('stepperRunMeta');
       if (meta) {
@@ -1901,58 +1957,28 @@
         }
       }
       if (mode === 'running') {
-        updateStepper([], { running: true });
+        applyStepperState(steps || [], true);
         return;
       }
       if (steps && steps.length) {
-        updateStepper(steps);
+        applyStepperState(steps, false);
         return;
       }
       if (!runId) {
-        updateStepper([]);
+        applyStepperState([], false);
         return;
       }
       try {
-        const ag = await fetch(`${API_BASE}/api/agents?run_id=${encodeURIComponent(runId)}`);
-        const d = await ag.json();
-        updateStepper(d.steps || []);
+        const fetched = await fetchPipelineSteps(runId);
+        applyStepperState(fetched, false);
       } catch (e) {
-        updateStepper([]);
+        applyStepperState([], false);
       }
     }
 
     function updateStepper(steps, opts) {
-      if (opts && opts.running) {
-        document.querySelectorAll('#pipelineStepper li').forEach(li => {
-          li.classList.remove('done', 'ready', 'idle', 'active');
-          li.classList.add('running');
-          const stateEl = li.querySelector('.step-state');
-          if (stateEl) stateEl.textContent = 'Running…';
-        });
-        return;
-      }
-      const completed = new Set(
-        (steps || [])
-          .filter(s => !s.isError)
-          .map(s => s.agentName || s.agent_name)
-          .filter(Boolean),
-      );
-      const partialRun = steps && steps.length > 0 && completed.size < PIPELINE_AGENTS.length;
-      document.querySelectorAll('#pipelineStepper li').forEach(li => {
-        li.classList.remove('done', 'ready', 'idle', 'active', 'running', 'error');
-        const a = li.dataset.agent;
-        const stateEl = li.querySelector('.step-state');
-        if (completed.has(a)) {
-          li.classList.add('done');
-          if (stateEl) stateEl.textContent = 'Done';
-        } else if (partialRun) {
-          li.classList.add('error');
-          if (stateEl) stateEl.textContent = 'Not run';
-        } else {
-          li.classList.add('idle');
-          if (stateEl) stateEl.textContent = 'Idle';
-        }
-      });
+      const inProgress = !!(opts && opts.running);
+      applyStepperState(steps || [], inProgress);
     }
 
     function tierFromConfidence(c) {
@@ -2205,10 +2231,12 @@
       renderSyntheticCohort(syntheticCohort);
       await loadEvidenceCache();
 
-      connections.sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
+      const displayRanked = (recommendations.length ? recommendations : connections)
+        .slice()
+        .sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
       const bars = document.getElementById('confidenceBars');
       bars.innerHTML = '';
-      connections.forEach(c => {
+      displayRanked.forEach(c => {
         const pct = Math.min(100, c.confidence || 0);
         const tier = c.tier || tierFromConfidence(pct);
         const tierCls = tier.toLowerCase();
@@ -2225,7 +2253,7 @@
 
       const top = document.getElementById('topRecs');
       top.innerHTML = '';
-      const ranked = (recommendations.length ? recommendations : connections).slice(0, 5);
+      const ranked = displayRanked.slice(0, 5);
       ranked.forEach((r, i) => {
         const conf = r.confidence ?? 0;
         const tier = r.tier || tierFromConfidence(conf);
@@ -2250,8 +2278,8 @@
         top.appendChild(card);
       });
 
-      renderHypotheses(recommendations.length ? recommendations : connections);
-      renderContinuousUpdate(recommendations.length ? recommendations : connections);
+      renderHypotheses(displayRanked);
+      renderContinuousUpdate(displayRanked);
 
       const rid = runId || latestRunId;
       updateRunMeta(rid, ranked.length, syntheticCohort.length);
@@ -2418,6 +2446,14 @@
         `${modeLabel} in progress — agents 1→6…`,
         `Started ${formatEst(new Date())}`,
       );
+      let pollTimer = setInterval(async () => {
+        const steps = await fetchPipelineSteps(latestRunId);
+        const done = new Set(
+          steps.filter(s => !s.isError).map(s => s.agentName || s.agent_name).filter(Boolean),
+        );
+        const stillRunning = done.size < PIPELINE_AGENTS.length;
+        await refreshPipelineStepper(latestRunId, steps, stillRunning ? 'running' : null);
+      }, 1500);
       let maxPapers = parseInt(document.getElementById('maxPapers').value, 10);
       if (mode === 'agents-only' && maxPapers >= 500) {
         maxPapers = 0;
@@ -2468,6 +2504,7 @@
       } catch (e) {
         setRunStatus('error', 'Failed', e.message, formatEst(new Date()));
       } finally {
+        clearInterval(pollTimer);
         btn.disabled = false;
       }
     }

@@ -25,7 +25,9 @@ Pull manuscripts and clinical trials for a **configured disease or condition**, 
 | PubMed | BioMCP | `literature` |
 | bioRxiv | bioRxiv MCP (optional) | `literature` |
 | ClinicalTrials.gov | BioMCP | `trial` |
-| NIH RePORTER | `pull-grants` | `grant` |
+| NIH RePORTER | `pull-grants` / full-mode grants step | `grant` |
+
+Grant rows infer `subgroup`, `mechanism`, and `treatment` from project title keywords so they can enter agents 2–6 (existing null grants backfilled on each grant pull).
 
 ## Pipeline steps
 

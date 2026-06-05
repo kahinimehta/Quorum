@@ -118,6 +118,18 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 | Monitor | 65 ≤ confidence < 80 |
 | Reject | confidence < 65 |
 
+### When confidence changes
+
+Scores **update every pipeline run** (agents 2–6 recompute from the full `evidence` corpus with `subgroup IS NOT NULL`). Confidence moves when:
+
+- New literature/trial rows are stored **with** `subgroup`, `mechanism`, and `treatment` filled (check literature step: `Stored N new evidence`).
+- Those rows attach to an existing connection (increase `evidence_count`) or create a new connection.
+- Grant pulls tag rows into subgroups (title keyword inference + backfill on each pull).
+
+Confidence may stay flat when `Stored 0 new`, when new rows lack extraction fields, or when **Rescore** runs on the same corpus without new scored rows. **Demo** and **Rescore** cap literature only — trials always count. Results charts prefer **this run’s** `recommendations` over global connection totals.
+
+Recent runs **Evidence** column (full mode): `+29 stored · 4 papers · 25 trials` — stored count includes all new row types; only scored rows affect confidence.
+
 ---
 
 ## Agent trace

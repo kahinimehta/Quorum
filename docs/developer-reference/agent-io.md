@@ -149,7 +149,7 @@ Plus `agent_outputs`.
 
 ## Agent 4 — Evidence Scoring / Skeptic (Alia)
 
-**Reads:** in-memory `connections` from Agent 3 plus matching rows from the evidence list the orchestrator passes (same `subgroup` name). Uses `evidence_count` and `source_type` sets — not per-row `study_type` / `sample_size`.
+**Reads:** in-memory `connections` from Agent 3 plus evidence rows matching each connection’s subgroup, mechanism, and treatment. Uses **per-connection `evidence_count`** (continuous scaling) and `source_type` on those rows — not per-row `study_type` / `sample_size`.
 
 Reference SQL (for inspecting linked evidence after persistence):
 
@@ -173,7 +173,7 @@ The orchestrator calls `_scale_score()` (×10) before UPDATE, so the DB column h
 ## Agent 5 — Commercial Discovery (Alia / Amy)
 
 **Reads:** in-memory `scored_connections` from Agent 4  
-**External:** none in current code — heuristic scoring only. Grants enter via `cli.py pull-grants` or **full** mode (`pull_grants=true`), not inside this agent.  
+**External:** none in current code — heuristic scoring only. **NIH grants** are ingested via `pull-grants` / full mode; grant rows infer subgroup fields from title keywords so they can affect connection counts.  
 **Writes:**
 
 ```sql

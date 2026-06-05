@@ -52,7 +52,7 @@ flowchart LR
 | 5 | [Commercial Discovery](commercial-discovery) | scored connections (in-memory) | `commercial_potential` (via orchestrator) |
 | 6 | [Conclusion Update](conclusion-update) | scored connections | `recommendations` |
 
-**Agent 1** appends its own `agent_outputs` rows. **Agents 2–6** run in-process; the **orchestrator** (`orchestrator.py`) persists SQL writes and logs `agent_outputs` (step_order 2–6).
+**Agent 1** appends its own `agent_outputs` rows. **Agents 2–6** run in-process; the **orchestrator** persists SQL writes, logs `agent_outputs` (step_order 2–6), and **commits after each agent** so the dashboard stepper can poll live progress during `POST /api/run-discovery`.
 
 ---
 
