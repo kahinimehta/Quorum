@@ -2164,6 +2164,89 @@
       return steps;
     }
 
+    function isPipelineTraceComplete(steps) {
+      return countCompletedAgents(steps) >= PIPELINE_AGENTS.length
+        && isLiteratureComplete(steps);
+    }
+
+    async function waitForPipelineComplete(runId, maxMs = 600000) {
+      const start = Date.now();
+      while (Date.now() - start < maxMs) {
+        try {
+          const statusRes = await fetch(
+            `${API_BASE}/api/run-discovery/status?run_id=${encodeURIComponent(runId)}`,
+          );
+          if (statusRes.ok) {
+            const st = await statusRes.json();
+            if (st.status === 'failed') {
+              throw new Error(st.error || st.statusDetail || 'Pipeline failed');
+            }
+            if (st.status === 'complete' || st.status === 'partial') {
+              return fetchPipelineSteps(runId);
+            }
+          }
+        } catch (e) {
+          if (e.message && !/failed|404/i.test(e.message)) {
+            /* fall through to step polling */
+          } else {
+            throw e;
+          }
+        }
+        const steps = await fetchPipelineSteps(runId);
+        const phase = pipelinePhaseFrom(steps, true);
+        syncPipelineUi(runId, steps, phase);
+        const doneCount = countCompletedAgents(steps);
+        const evNote = evidenceNoteFromSteps(steps);
+        if (phase === 'running') {
+          pendingRunRow = {
+            ...pendingRunRow,
+            run_id: runId,
+            traceSteps: steps,
+            agentsDone: doneCount,
+            status: 'Running',
+            statusDetail: `${doneCount}/6 agents complete…`,
+            evidenceNote: evNote || pendingRunRow?.evidenceNote,
+          };
+        } else if (phase === 'finalizing') {
+          pendingRunRow = {
+            ...pendingRunRow,
+            run_id: runId,
+            traceSteps: steps,
+            agentsDone: PIPELINE_AGENTS.length,
+            status: 'Finalizing',
+            statusDetail: 'Saving recommendations…',
+            evidenceNote: evNote || pendingRunRow?.evidenceNote || 'Finalizing…',
+          };
+        }
+        if (isPipelineTraceComplete(steps)) {
+          return steps;
+        }
+        await new Promise(r => setTimeout(r, 400));
+      }
+      throw new Error('Pipeline timed out waiting for completion');
+    }
+
+    async function fetchRunResult(runId) {
+      const enc = encodeURIComponent(runId);
+      const [statsRes, recRes, cohortRes, steps] = await Promise.all([
+        fetch(`${API_BASE}/api/run-stats?run_id=${enc}`),
+        fetch(`${API_BASE}/api/recommendations?run_id=${enc}`),
+        fetch(`${API_BASE}/api/synthetic-cohort?run_id=${enc}`),
+        fetchPipelineSteps(runId),
+      ]);
+      const statsJson = statsRes.ok ? await statsRes.json() : {};
+      const recJson = recRes.ok ? await recRes.json() : {};
+      const cohortJson = cohortRes.ok ? await cohortRes.json() : {};
+      return {
+        run_id: runId,
+        runStats: statsJson.runStats || null,
+        recommendations: recJson.recommendations || [],
+        synthetic_cohort: cohortJson.synthetic_cohort || [],
+        steps,
+        agent_outputs: steps,
+      };
+    }
+
     function applyStepperState(steps, inProgress) {
       const completed = new Set(
         PIPELINE_AGENTS.filter(a => isAgentComplete(a, steps)),
@@ -2368,6 +2451,14 @@
           'Finalizing',
           `Run ${runId || '—'} — all 6 agents done, saving recommendations…`,
           'Results will appear in Recent runs when finished.',
+        );
+      } else if (phase === 'complete') {
+        const pct = computePipelineProgress(steps, false);
+        setRunStatus(
+          doneCount >= PIPELINE_AGENTS.length ? 'complete' : 'partial',
+          doneCount >= PIPELINE_AGENTS.length ? 'Complete' : 'Partial',
+          runId ? `Run ${runId} finished` : 'Pipeline finished',
+          `${pct}% · ${doneCount}/6 agents complete`,
         );
       }
     }
@@ -2886,6 +2977,7 @@
         evidenceNote: 'In progress…',
       };
       syncPipelineUi(latestRunId, [], 'running');
+      setRunStatus('running', 'Running', `${MODE_LABELS[mode] || mode} run starting…`, '0% · 0/6 agents');
       await loadRecentRuns();
       let pollTicks = 0;
       let pollTimer = setInterval(async () => {
@@ -2928,28 +3020,40 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || res.statusText);
         latestRunId = data.run_id || latestRunId;
+
+        let steps = data.agent_outputs || data.steps || [];
+        let rs = data.runStats || null;
+        let recommendations = data.recommendations || [];
         syntheticCohort = data.synthetic_cohort || [];
-        const steps = data.agent_outputs || data.steps || [];
-        const rs = data.runStats || null;
+
+        if (data.status === 'running' || data.accepted) {
+          steps = await waitForPipelineComplete(latestRunId);
+          const result = await fetchRunResult(latestRunId);
+          steps = result.steps || steps;
+          rs = result.runStats || rs;
+          recommendations = result.recommendations || recommendations;
+          syntheticCohort = result.synthetic_cohort || syntheticCohort;
+        }
+
         pipelineRunInFlight = false;
         pendingRunRow = null;
-        updateRunMeta(latestRunId, (data.recommendations || []).length, syntheticCohort.length);
+        updateRunMeta(latestRunId, recommendations.length, syntheticCohort.length);
         if (rs) {
-          rs.recommendationsCount = (data.recommendations || []).length;
+          rs.recommendationsCount = recommendations.length;
           applyRunStats(rs);
         } else {
           setRunStatus(
             'complete',
             'Complete',
-            `Run ${data.run_id} finished with ${syntheticCohort.length} synthetic profiles.`,
+            `Run ${latestRunId} finished with ${syntheticCohort.length} synthetic profiles.`,
             'Open Step 2 for discovery results.',
           );
         }
         syncPipelineUi(latestRunId, steps, 'complete');
-        renderRunReport(latestRunId, lastRunConfig, rs, data.recommendations || [], false);
+        renderRunReport(latestRunId, lastRunConfig, rs, recommendations, false);
         await loadRecentRuns();
         await loadResults(latestRunId, {
-          recommendations: data.recommendations,
+          recommendations,
           steps,
           synthetic_cohort: syntheticCohort,
           runStats: rs,

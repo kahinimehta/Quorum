@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import threading
 import uuid
 from typing import Any
 
@@ -53,6 +54,7 @@ class RunDiscoveryRequest(BaseModel):
     extract_backend: str | None = None
     pull_grants: bool = True
     run_id: str | None = Field(default=None, max_length=32)
+    wait: bool = False
 
     @field_validator("max_papers")
     @classmethod
@@ -498,27 +500,117 @@ def get_recommendations(run_id: str | None = None):
     return {"recommendations": recommendations}
 
 
+_jobs_lock = threading.Lock()
+_running_jobs: set[str] = set()
+_job_errors: dict[str, str] = {}
+
+
+def _log_pipeline_error(run_id: str, exc: Exception) -> None:
+    from orchestrator import AGENT_LITERATURE, log_step
+
+    try:
+        with connect(None) as conn:
+            log_step(
+                conn,
+                run_id,
+                AGENT_LITERATURE,
+                99,
+                f"Pipeline failed: {exc}",
+                {"error": True},
+            )
+            conn.commit()
+    except Exception:
+        pass
+
+
+def _execute_pipeline(run_id: str, body: RunDiscoveryRequest) -> dict[str, Any]:
+    from orchestrator import run as run_pipeline
+
+    return run_pipeline(
+        run_id,
+        body.mode,
+        query=body.query,
+        max_papers=body.max_papers,
+        disease=body.disease,
+        include_preprints=body.include_preprints,
+        with_fulltext=body.with_fulltext,
+        extract_backend=body.extract_backend,
+        pull_grants=body.pull_grants,
+    )
+
+
+def _pipeline_worker(run_id: str, body: RunDiscoveryRequest) -> None:
+    try:
+        _execute_pipeline(run_id, body)
+    except Exception as exc:
+        with _jobs_lock:
+            _job_errors[run_id] = str(exc)
+        _log_pipeline_error(run_id, exc)
+    finally:
+        with _jobs_lock:
+            _running_jobs.discard(run_id)
+
+
+@app.get("/api/run-discovery/status")
+def run_discovery_status(run_id: str):
+    """Poll background pipeline job state (running / complete / partial / failed)."""
+    if not run_id:
+        raise HTTPException(status_code=400, detail="run_id is required")
+
+    with _jobs_lock:
+        if run_id in _running_jobs:
+            return {"run_id": run_id, "status": "running"}
+        err = _job_errors.get(run_id)
+
+    if err:
+        return {"run_id": run_id, "status": "failed", "error": err}
+
+    steps = _steps_for_run(run_id)
+    if not steps:
+        raise HTTPException(status_code=404, detail=f"No run found for run_id={run_id}")
+
+    rec_rows = _query(
+        "SELECT COUNT(*) AS count FROM recommendations WHERE run_id = ?",
+        (run_id,),
+    )
+    rec_count = rec_rows[0]["count"] if rec_rows else 0
+    meta = analyze_run_trace(steps, rec_count)
+    return {
+        "run_id": run_id,
+        "status": meta["status"].lower(),
+        "statusDetail": meta["statusDetail"],
+        "agentsDone": meta["agentsDone"],
+        "recommendations": rec_count,
+    }
+
+
 @app.post("/api/run-discovery")
 def run_discovery(body: RunDiscoveryRequest):
     run_id = (body.run_id or "").strip()[:32] or str(uuid.uuid4())[:8]
-    try:
-        from orchestrator import run as run_pipeline
 
-        result = run_pipeline(
-            run_id,
-            body.mode,
-            query=body.query,
-            max_papers=body.max_papers,
-            disease=body.disease,
-            include_preprints=body.include_preprints,
-            with_fulltext=body.with_fulltext,
-            extract_backend=body.extract_backend,
-            pull_grants=body.pull_grants,
-        )
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    if body.wait:
+        try:
+            return _execute_pipeline(run_id, body)
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=str(exc)) from exc
 
-    return result
+    with _jobs_lock:
+        if run_id in _running_jobs:
+            raise HTTPException(
+                status_code=409,
+                detail=f"Run {run_id} is already in progress",
+            )
+        _running_jobs.add(run_id)
+        _job_errors.pop(run_id, None)
+
+    thread = threading.Thread(
+        target=_pipeline_worker,
+        args=(run_id, body),
+        daemon=True,
+        name=f"pipeline-{run_id}",
+    )
+    thread.start()
+    return {"run_id": run_id, "status": "running", "accepted": True}
 
 
 @app.get("/api/synthetic-cohort")
