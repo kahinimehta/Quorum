@@ -221,20 +221,13 @@ def get_run_stats(run_id: str):
     if not steps:
         raise HTTPException(status_code=404, detail=f"No run found for run_id={run_id}")
 
-    mode = "demo"
+    from pipeline_mode import detect_pipeline_mode, literature_stats_from_steps, mode_label
+
+    mode = detect_pipeline_mode(steps)
     max_papers = 150
     for step in steps:
         if step.get("agentName") != "Literature Synthesis Agent":
             continue
-        summary = (step.get("summary") or "").lower()
-        if "agents-only" in summary:
-            mode = "agents-only"
-        elif "demo" in summary:
-            mode = "demo"
-        elif "scan" in summary or "incremental" in summary:
-            mode = "scan"
-        elif "pull" in summary or "two-stage" in summary:
-            mode = "full"
         payload = step.get("payload") or {}
         if isinstance(payload, dict) and payload.get("max_papers"):
             max_papers = int(payload["max_papers"])
@@ -246,7 +239,7 @@ def get_run_stats(run_id: str):
     with connect(None) as conn:
         after = _evidence_counts(conn)
 
-    lit = _parse_literature_step(steps)
+    lit = literature_stats_from_steps(steps)
     if mode in ("demo", "agents-only") and lit.get("demoUsed"):
         evidence_used = {
             "literature": lit["demoUsed"],
@@ -271,6 +264,7 @@ def get_run_stats(run_id: str):
 
     before = dict(after)
     run_stats = _build_run_stats(mode, max_papers, before, after, steps, evidence_used)
+    run_stats["modeLabel"] = mode_label(mode)
     run_stats.update(analyze_run_trace(steps, rec_count))
     if not run_stats.get("connectionsScored"):
         scored = _query(
@@ -322,42 +316,23 @@ def list_runs(limit: int = 5):
         (limit,),
     )
     runs = []
+    from pipeline_mode import (
+        detect_pipeline_mode,
+        format_evidence_note,
+        literature_stats_from_steps,
+        mode_label,
+    )
+
     for r in rows:
         rid = r["run_id"]
-        mode = "demo"
-        summaries = _query(
-            "SELECT summary, payload FROM agent_outputs WHERE run_id = ? AND agent_name = ? LIMIT 1",
-            (rid, "Literature Synthesis Agent"),
-        )
-        if summaries:
-            s = summaries[0].get("summary") or ""
-            if "agents-only" in s.lower():
-                mode = "agents-only"
-            elif "scan" in s.lower() or "incremental" in s.lower():
-                mode = "scan"
-            elif "demo" in s.lower():
-                mode = "demo"
-            elif "pull" in s.lower() or "stored" in s.lower():
-                mode = "full"
         steps = _steps_for_run(rid)
-        from orchestrator import _evidence_counts, _parse_literature_step
+        mode = detect_pipeline_mode(steps)
+        lit = literature_stats_from_steps(steps)
+        ev_note = format_evidence_note(mode, lit)
+        from orchestrator import _evidence_counts
 
         with connect(None) as conn:
             db = _evidence_counts(conn)
-        lit = _parse_literature_step(steps)
-        new_stored = lit.get("newStored", 0)
-        ev_note = f"+{new_stored} stored"
-        if mode == "agents-only" and lit.get("demoUsed"):
-            ev_note = f"{lit['demoUsed']} papers (agents-only)"
-        elif mode == "demo" and lit.get("demoUsed"):
-            ev_note = f"{lit['demoUsed']} papers (demo)"
-        elif lit.get("published") or lit.get("trials"):
-            bits = [ev_note]
-            if lit.get("published"):
-                bits.append(f"{lit['published']} papers")
-            if lit.get("trials"):
-                bits.append(f"{lit['trials']} trials")
-            ev_note = " · ".join(bits)
         rec_count = r.get("rec_count") or 0
         meta = analyze_run_trace(steps, rec_count)
         runs.append({
@@ -368,6 +343,7 @@ def list_runs(limit: int = 5):
             "recommendations": rec_count,
             "syntheticProfiles": 5 if rec_count > 0 else 0,
             "mode": mode,
+            "modeLabel": mode_label(mode),
             "status": meta["status"],
             "statusDetail": meta["statusDetail"],
             "agentsDone": meta["agentsDone"],

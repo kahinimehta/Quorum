@@ -228,6 +228,8 @@ def _build_run_stats(
     connections_scored: list[dict[str, Any]] | None = None,
     scoring_eligible: dict[str, int] | None = None,
 ) -> dict[str, Any]:
+    from pipeline_mode import mode_label
+
     lit = _parse_literature_step(steps)
     delta = {
         "literature": after["literature"] - before["literature"],
@@ -246,6 +248,7 @@ def _build_run_stats(
     display_max = max_papers if max_papers and max_papers > 0 else after["literature"]
     out: dict[str, Any] = {
         "mode": mode,
+        "modeLabel": mode_label(mode),
         "maxPapersRequested": display_max,
         "databaseTotals": after,
         "databaseBefore": before,
@@ -343,6 +346,7 @@ def _log_agents_only_literature(
         f"(no literature pull).",
         {
             "agents_only": True,
+            "pipeline_mode": "agents-only",
             "evidence_rows_used": used,
             "evidence_rows_total": total,
             "max_papers": max_papers if max_papers and max_papers > 0 else None,

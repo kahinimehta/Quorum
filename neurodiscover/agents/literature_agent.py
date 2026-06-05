@@ -791,7 +791,12 @@ def run(
                 1,
                 f"Demo mode: using {used} of {n} seeded evidence rows "
                 f"(max_papers={cap}) for {disease}.",
-                {"max_papers": cap, "demo_rows_used": used, "demo_rows_total": n},
+                {
+                    "pipeline_mode": "demo",
+                    "max_papers": cap,
+                    "demo_rows_used": used,
+                    "demo_rows_total": n,
+                },
             )
             update_scan_state(conn, disease, run_id)
             conn.commit()
@@ -802,9 +807,10 @@ def run(
             conn,
             run_id,
             0,
-            f"Starting literature {'scan' if incremental else 'pull'} for {disease}…",
+            f"Starting {'incremental scan' if incremental else 'full live pull'} for {disease}…",
             {
                 "phase": "starting",
+                "pipeline_mode": "scan" if incremental else "full",
                 "max_items": max_items,
                 "incremental": incremental,
                 "progress": 0,
@@ -863,6 +869,7 @@ def run(
             f"{len(preprint_enriched)} preprints, {len(trial_enriched)} trials.",
             {
                 "phase": "fetched",
+                "pipeline_mode": "scan" if incremental else "full",
                 "since_year": effective_since,
                 "incremental": incremental,
                 "query": query,
@@ -942,6 +949,8 @@ def run(
                     f"({new} new, {skipped} skipped)…",
                     {
                         "phase": "extracting",
+                        "pipeline_mode": "scan" if incremental else "full",
+                        "incremental": incremental,
                         "progress": idx,
                         "total": total_sources,
                         "new": new,
@@ -970,13 +979,14 @@ def run(
 
         update_scan_state(conn, disease, run_id)
         payload = {
+            "pipeline_mode": "scan" if incremental else "full",
+            "incremental": incremental,
             "new_evidence": new,
             "skipped_duplicates": skipped,
             "touched_existing": touched,
             "rejected_no_id": rejected,
             "validation_dropped": validation_dropped,
             "since_year": effective_since,
-            "incremental": incremental,
             "query": query,
             "gene": gene,
             "extract_backend": _resolve_extract_backend(),
@@ -987,9 +997,16 @@ def run(
             "extract_failed": extract_failed,
             "validation": validation_summary,
         }
+        complete_summary = (
+            f"Incremental scan complete: stored {new} new evidence rows "
+            f"({skipped} existing skipped, {rejected} rejected)."
+            if incremental
+            else f"Full live pull complete: stored {new} new evidence rows "
+            f"({skipped} existing skipped, {rejected} rejected)."
+        )
         log_trace_commit(
             conn, run_id, 2,
-            f"Stored {new} new evidence rows ({skipped} existing skipped, {rejected} rejected).",
+            complete_summary,
             payload,
         )
         if validation_summary:

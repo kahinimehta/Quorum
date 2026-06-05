@@ -1288,6 +1288,18 @@
       'Commercial Discovery Agent',
       'Conclusion Update Agent',
     ];
+    const MODE_LABELS = {
+      'agents-only': 'Rescore DB',
+      demo: 'Demo sample',
+      scan: 'Incremental scan',
+      full: 'Full live pull',
+    };
+
+    function formatRunMode(mode, modeLabel) {
+      if (modeLabel) return modeLabel;
+      return MODE_LABELS[mode] || mode || '—';
+    }
+
     const LITERATURE_AGENT = PIPELINE_AGENTS[0];
     const LITERATURE_WEIGHT = 45;
     const DOWNSTREAM_WEIGHT = 11;
@@ -1298,7 +1310,7 @@
 
     function isLiteratureComplete(steps) {
       return literatureSteps(steps).some(s =>
-        /Stored \d+ new evidence|Demo mode:|Agents-only:/i.test(s.summary || ''),
+        /Stored \d+ new evidence|Incremental scan complete|Full live pull complete|Demo mode:|Agents-only:/i.test(s.summary || ''),
       );
     }
 
@@ -1447,23 +1459,32 @@
     }
 
     function evidenceNoteFromSteps(steps) {
-      for (const step of steps || []) {
-        const name = step.agentName || step.agent_name || '';
-        if (!name.includes('Literature')) continue;
+      const litSteps = (steps || []).filter(s =>
+        (s.agentName || s.agent_name || '').includes('Literature'),
+      );
+      for (let i = litSteps.length - 1; i >= 0; i--) {
+        const step = litSteps[i];
         const s = step.summary || '';
-        let m = s.match(/using (\d+) of (\d+) existing evidence/i);
-        if (m) return `${m[1]} papers (agents-only)`;
+        let m = s.match(/Incremental scan complete: stored (\d+) new/i);
+        if (m) return `+${m[1]} new · incremental`;
+        m = s.match(/Full live pull complete: stored (\d+) new/i);
+        if (m) return `+${m[1]} new · full pull`;
+        m = s.match(/Stored (\d+) new evidence/i);
+        if (m) return `+${m[1]} stored`;
+        m = s.match(/using (\d+) of (\d+) existing evidence/i);
+        if (m) return `${m[1]} rows rescored (no pull)`;
         m = s.match(/using (\d+) of (\d+) seeded/i);
-        if (m) return `${m[1]} papers (demo)`;
+        if (m) return `${m[1]} papers (demo sample)`;
         m = s.match(/Two-stage pull: (\d+) published/i);
         if (m) {
           const trials = (s.match(/(\d+) trials/) || [])[1];
-          return trials ? `${m[1]} papers · ${trials} trials` : `${m[1]} papers`;
+          const payload = step.payload || {};
+          const incremental = payload.incremental || /incremental/i.test(s);
+          const tag = incremental ? 'incremental scan' : 'full pull';
+          return trials ? `${m[1]} papers · ${trials} trials · ${tag}` : `${m[1]} papers · ${tag}`;
         }
-        m = s.match(/Stored (\d+) new evidence/i);
-        if (m) return `+${m[1]} stored`;
-        m = s.match(/incremental scan/i);
-        if (m) return 'Incremental scan';
+        if (/Starting incremental scan/i.test(s)) return 'Incremental scan starting…';
+        if (/Starting full live pull/i.test(s)) return 'Full live pull starting…';
       }
       return null;
     }
@@ -1762,7 +1783,7 @@
 
       syncKpi(proc.literature ?? 0, proc.trial ?? 0, proc.grant ?? 0, sg, conn, true);
 
-      const mode = (rs.mode || 'run').toUpperCase();
+      const mode = formatRunMode(rs.mode, rs.modeLabel);
       const max = rs.maxPapersRequested ?? '—';
       setKpiSubtitles(
         `${db.literature ?? 0} in DB · +${added.literature ?? 0} new`,
@@ -2038,6 +2059,7 @@
             steps: x.traceRows || x.steps,
             started: x.startedAt,
             mode: x.mode,
+            modeLabel: x.modeLabel,
             recommendations: x.recommendations,
             syntheticProfiles: x.syntheticProfiles,
             status: x.status,
@@ -2083,7 +2105,7 @@
             tr.classList.add('run-row-active');
           }
           const date = formatScanTime(run.started);
-          const mode = (run.mode || 'demo').toUpperCase();
+          const mode = formatRunMode(run.mode, run.modeLabel);
           const recs = run.recommendations ?? 0;
           const syn = run.syntheticProfiles ? `✓ ${run.syntheticProfiles} profiles` : (recs > 0 ? '✓ 5 profiles' : '—');
           const status = run.status || 'Partial';
@@ -2219,7 +2241,7 @@
       const cfg = config || rs?.settings || {};
       return [
         runId || '—',
-        (cfg.mode || rs?.mode || '—').toUpperCase(),
+        formatRunMode(cfg.mode || rs?.mode, cfg.modeLabel || rs?.modeLabel),
         `max=${cfg.max_papers ?? rs?.maxPapersRequested ?? '—'}`,
         cfg.query ? `q="${cfg.query}"` : 'no-keyword',
         `scored=${proc.total ?? '—'}`,
@@ -2249,7 +2271,7 @@
         confByKey[k] = r.confidence;
       });
 
-      const modeLabel = (cfg.mode || rs?.mode || '—').toUpperCase();
+      const modeLabel = formatRunMode(cfg.mode || rs?.mode, cfg.modeLabel || rs?.modeLabel);
       const extract = cfg.extract_backend || 'default';
       const opts = [];
       if (cfg.include_preprints) opts.push(`preprints=${cfg.include_preprints}`);
@@ -2333,7 +2355,7 @@
         }
       }
       if (lbl && finalizing) lbl.textContent = 'Finalizing run…';
-      const mode = (lastRunConfig?.mode || 'pipeline').toUpperCase();
+      const mode = formatRunMode(lastRunConfig?.mode || 'pipeline', lastRunConfig?.modeLabel);
       if (inProgress) {
         const lit = getLiteratureProgress(steps);
         const pct = computePipelineProgress(steps, true);
@@ -2861,6 +2883,7 @@
       pendingRunRow = {
         run_id: latestRunId,
         mode,
+        modeLabel: MODE_LABELS[mode] || mode,
         started: new Date().toISOString(),
         status: 'Running',
         statusDetail: 'Pipeline in progress…',

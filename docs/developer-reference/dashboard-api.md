@@ -82,13 +82,16 @@ Body (example): `{ "mode": "demo", "run_id": "abc12345", "max_papers": 10, "dise
 
 Response includes: `run_id`, `recommendations`, `agent_outputs` (alias `steps`), `synthetic_cohort`, `runStats` (processed vs database totals).
 
-Orchestrator modes:
+Orchestrator modes (all run literature **in-process** with the client `run_id` for live stepper commits):
 
-- **demo / scan** — literature via `cli.py` subprocess, then agents 2–6 in-process (commits after each agent 2–6 step for live stepper)
-- **agents-only** — no literature subprocess; agents 2–6 on existing DB evidence (`make dashboard` on Supabase)
-- **full** — `literature_agent.run()` with client `run_id` (+ optional grants), then agents 2–6
+- **demo** — offline seeded evidence; trace: `Demo mode: using N of M…`
+- **scan** — incremental pull; trace: `Starting incremental scan…` → `Incremental scan complete: stored N new…`
+- **full** — live PubMed + trials (+ optional preprints, full text, grants); trace: `Starting full live pull…` → `Full live pull complete: stored N new…`
+- **agents-only** — no literature pull; trace: `Agents-only: using N of M…`
 
-**demo** caps literature rows used by downstream agents to `max_papers`. **agents-only** uses all evidence unless `max_papers` is set. **scan/full** agents use all evidence rows with subgroup (pull settings only affect step 1).
+`GET /api/runs` returns `mode` (API slug) and **`modeLabel`** (UI string). **`evidenceNote`** is mode-specific — incremental runs include `incremental` and skip counts; full runs list papers/trials stored.
+
+`runStats` includes **`modeLabel`** alongside `mode`.
 
 ## Scoring (agents 4–5)
 
