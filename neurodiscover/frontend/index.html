@@ -209,6 +209,7 @@
     .status-badge.partial { background: #fef3c7; color: #b45309; }
     .status-badge.running { background: #dbeafe; color: #1d4ed8; }
     .status-badge.finalizing { background: #fef3c7; color: #b45309; }
+    .status-badge.error { background: #fee2e2; color: #b91c1c; }
     .tab-nav {
       background: #fff;
       border-bottom: 2px solid var(--border);
@@ -1336,8 +1337,14 @@
       if (/Two-stage pull:/.test(latest.summary || '')) {
         return { fraction: 0.15, label: 'Search complete — extracting…' };
       }
-      if (/Starting literature/.test(latest.summary || '')) {
+      if (/Starting literature|Starting incremental scan|Starting full live pull/i.test(latest.summary || '')) {
         return { fraction: 0.05, label: latest.summary };
+      }
+      if (/Processing \d+\/\d+/i.test(latest.summary || '')) {
+        const frac = payload.progress != null && payload.total
+          ? Math.min(1, Number(payload.progress) / Math.max(1, Number(payload.total)))
+          : 0.2;
+        return { fraction: frac, label: latest.summary };
       }
       return { fraction: 0.08, label: latest.summary || 'Literature running…' };
     }
@@ -1420,13 +1427,41 @@
       return full;
     }
 
-    /** Mirrors neurodiscover/run_status.py — never show ? for agent counts in the UI. */
-    function clientAnalyzeTrace(steps, recCount) {
+    function completedAgentNames(steps) {
       const names = new Set();
       (steps || []).forEach(s => {
         const n = (s.agentName || s.agent_name || '').trim();
         if (n) names.add(n);
       });
+      if (names.has(LITERATURE_AGENT) && !isLiteratureComplete(steps)) {
+        names.delete(LITERATURE_AGENT);
+      }
+      return names;
+    }
+
+    function pipelineRunningDetail(steps, doneCount) {
+      if (!isLiteratureComplete(steps)) {
+        return getLiteratureProgress(steps).label || 'Literature running…';
+      }
+      const running = activeRunningAgent(steps, true);
+      if (running && running !== LITERATURE_AGENT) {
+        return `${_shortAgent(running)} running… · ${doneCount}/6 agents complete`;
+      }
+      return `${doneCount}/6 agents complete…`;
+    }
+
+    function pipelineRunningMeta(steps, doneCount, pct) {
+      if (!isLiteratureComplete(steps)) {
+        const lit = getLiteratureProgress(steps);
+        const p = lit.fraction > 0 ? Math.round(lit.fraction * LITERATURE_WEIGHT) : 0;
+        return `${Math.max(p, pct)}% · literature`;
+      }
+      return `${pct}% · ${doneCount}/6 agents complete`;
+    }
+
+    /** Mirrors neurodiscover/run_status.py — never show ? for agent counts in the UI. */
+    function clientAnalyzeTrace(steps, recCount) {
+      const names = completedAgentNames(steps);
       const done = PIPELINE_AGENTS.filter(a => names.has(a));
       const missing = PIPELINE_AGENTS.filter(a => !names.has(a)).map(_shortAgent);
       const nDone = done.length;
@@ -1497,17 +1532,22 @@
         ? apiRow.evidenceNote
         : (pending.evidenceNote && pending.evidenceNote !== 'In progress…'
           ? pending.evidenceNote
-          : (evidenceNoteFromSteps(pending.traceSteps) || apiRow.evidenceNote || 'Finalizing…'));
+          : (evidenceNoteFromSteps(pending.traceSteps) || apiRow.evidenceNote || 'In progress…'));
+      let statusDetail = apiRow.statusDetail || pending.statusDetail;
+      if (pending.status === 'Running') {
+        statusDetail = pending.statusDetail || pipelineRunningDetail(pending.traceSteps || [], agentsDone);
+      } else if (isFinalizing && pipelineRunInFlight) {
+        statusDetail = pending.statusDetail || 'Saving recommendations…';
+      }
       return {
         ...apiRow,
         agentsDone,
         mode: pending.mode || apiRow.mode,
+        modeLabel: pending.modeLabel || apiRow.modeLabel,
         status: pending.status === 'Running'
           ? 'Running'
           : (isFinalizing && pipelineRunInFlight ? 'Finalizing' : (apiRow.status || pending.status)),
-        statusDetail: isFinalizing && pipelineRunInFlight
-          ? (pending.statusDetail || 'Saving recommendations…')
-          : (apiRow.statusDetail || pending.statusDetail),
+        statusDetail,
         evidenceNote,
         recommendations: apiRow.recommendations ?? pending.recommendations ?? 0,
         pending: pipelineRunInFlight,
@@ -1576,6 +1616,7 @@
 
     async function enrichRunsFromAgentTrace(runs) {
       await Promise.all(runs.map(async (run) => {
+        if (run.status === 'Running' || run.status === 'Failed') return;
         try {
           const ag = await fetch(`${API_BASE}/api/agents?run_id=${encodeURIComponent(run.run_id)}`);
           if (!ag.ok) return;
@@ -1590,6 +1631,50 @@
         } catch (e) { /* keep list fields */ }
       }));
       return runs;
+    }
+
+    function patchPendingRunRow(pending) {
+      if (!pending || !pending.run_id) return;
+      const tbody = document.getElementById('recentRuns');
+      if (!tbody) return;
+      const rid = String(pending.run_id);
+      let tr = tbody.querySelector(`tr[data-run-id="${CSS.escape(rid)}"]`);
+      const status = pending.status || 'Running';
+      const detail = pending.statusDetail || 'Pipeline in progress…';
+      const statusKey = status === 'Complete' ? 'complete'
+        : (status === 'Running' ? 'running'
+          : (status === 'Finalizing' ? 'finalizing'
+            : (status === 'Failed' ? 'error' : 'partial')));
+      const evNote = pending.evidenceNote || 'In progress…';
+      if (!tr) {
+        tr = document.createElement('tr');
+        tr.dataset.runId = rid;
+        tr.classList.add('run-row-active');
+        tr.style.cursor = 'pointer';
+        const mode = formatRunMode(pending.mode, pending.modeLabel);
+        tr.innerHTML = `<td><code>${escapeHtml(rid.slice(0, 8))}</code></td>`
+          + `<td>${formatScanTime(pending.started)}</td><td>${mode}</td>`
+          + `<td class="run-ev-note">${escapeHtml(evNote)}</td>`
+          + `<td>${statsCache.subgroups || 5}</td><td>—</td>`
+          + `<td class="status-cell" title="${escapeHtml(detail)}">`
+          + `<span class="status-badge ${statusKey}">${escapeHtml(status)}</span>`
+          + `<span class="status-hint">${escapeHtml(detail)}</span></td>`;
+        tbody.prepend(tr);
+        return;
+      }
+      tr.classList.toggle('run-row-active', status === 'Running' || status === 'Finalizing');
+      const badge = tr.querySelector('.status-badge');
+      const hint = tr.querySelector('.status-hint');
+      const evCell = tr.querySelector('.run-ev-note');
+      if (badge) {
+        badge.className = `status-badge ${statusKey}`;
+        badge.textContent = status;
+      }
+      if (hint) {
+        hint.textContent = detail;
+        tr.querySelector('.status-cell')?.setAttribute('title', detail);
+      }
+      if (evCell) evCell.textContent = evNote;
     }
 
     /** DB timestamps are UTC; naive "YYYY-MM-DD HH:MM:SS" strings get a Z suffix. */
@@ -2121,6 +2206,7 @@
         runs = runs.slice(0, 8);
         runs.forEach(run => {
           const tr = document.createElement('tr');
+          tr.dataset.runId = String(run.run_id);
           if (run.pending || run.status === 'Running' || run.status === 'Finalizing') {
             tr.classList.add('run-row-active');
           }
@@ -2131,12 +2217,13 @@
           const status = run.status || 'Partial';
           const statusKey = status === 'Complete' ? 'complete'
             : (status === 'Running' ? 'running'
-              : (status === 'Finalizing' ? 'finalizing' : 'partial'));
+              : (status === 'Finalizing' ? 'finalizing'
+                : (status === 'Failed' ? 'error' : 'partial')));
           const evNote = run.evidenceNote || `${recs} recs`;
           const detail = run.statusDetail || `Only ${run.agentsDone ?? 0}/6 agents ran for this run`;
           tr.innerHTML = `<td><code>${escapeHtml(String(run.run_id).slice(0, 8))}</code></td>`
             + `<td>${date}</td><td>${mode}</td>`
-            + `<td>${escapeHtml(evNote)}</td>`
+            + `<td class="run-ev-note">${escapeHtml(evNote)}</td>`
             + `<td>${statsCache.subgroups || 5}</td><td>${syn}</td>`
             + `<td class="status-cell" title="${escapeHtml(detail)}">`
             + `<span class="status-badge ${statusKey}">${status}</span>`
@@ -2227,7 +2314,7 @@
             traceSteps: steps,
             agentsDone: doneCount,
             status: 'Running',
-            statusDetail: `${doneCount}/6 agents complete…`,
+            statusDetail: pipelineRunningDetail(steps, doneCount),
             evidenceNote: evNote || pendingRunRow?.evidenceNote,
           };
         } else if (phase === 'finalizing') {
@@ -2460,13 +2547,12 @@
         const lit = getLiteratureProgress(steps);
         const pct = computePipelineProgress(steps, true);
         const runningAgent = activeRunningAgent(steps, inProgress);
+        const detail = pipelineRunningDetail(steps, doneCount);
         setRunStatus(
           'running',
           'Running',
-          runningAgent === LITERATURE_AGENT && lit.label
-            ? lit.label
-            : `${mode} run ${runId || '—'} in progress — agents 1→6…`,
-          `${pct}% · ${doneCount}/6 agents complete`,
+          detail,
+          pipelineRunningMeta(steps, doneCount, pct),
         );
       } else if (finalizing) {
         setRunStatus(
@@ -3018,7 +3104,7 @@
             traceSteps: steps,
             agentsDone: doneCount,
             status: 'Running',
-            statusDetail: `${doneCount}/6 agents complete…`,
+            statusDetail: pipelineRunningDetail(steps, doneCount),
             evidenceNote: evNote || pendingRunRow.evidenceNote,
           };
         } else if (phase === 'finalizing') {
@@ -3032,7 +3118,7 @@
             evidenceNote: evNote || pendingRunRow.evidenceNote || 'Finalizing…',
           };
         }
-        if (pollTicks % 2 === 0) await loadRecentRuns();
+        patchPendingRunRow(pendingRunRow);
       }, 500);
       try {
         const res = await fetch(`${API_BASE}/api/run-discovery`, {

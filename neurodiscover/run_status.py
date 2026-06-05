@@ -1,6 +1,7 @@
 """Interpret agent_outputs traces for dashboard run status (display only)."""
 from __future__ import annotations
 
+import re
 from typing import Any
 
 PIPELINE_AGENTS = [
@@ -12,9 +13,38 @@ PIPELINE_AGENTS = [
     "Conclusion Update Agent",
 ]
 
+AGENT_LITERATURE = PIPELINE_AGENTS[0]
+
+_LITERATURE_COMPLETE = re.compile(
+    r"Incremental scan complete|Full live pull complete|Demo mode:|Agents-only:",
+    re.IGNORECASE,
+)
+
 
 def _short_agent(name: str) -> str:
     return name.replace(" Agent", "").strip()
+
+
+def literature_complete(steps: list[dict[str, Any]]) -> bool:
+    """Literature counts as done only after its final summary (not mid-pull progress rows)."""
+    for step in steps:
+        name = (step.get("agentName") or step.get("agent_name") or "").strip()
+        if name != AGENT_LITERATURE:
+            continue
+        if _LITERATURE_COMPLETE.search(step.get("summary") or ""):
+            return True
+    return False
+
+
+def completed_agent_names(steps: list[dict[str, Any]]) -> set[str]:
+    names = {
+        (s.get("agentName") or s.get("agent_name") or "").strip()
+        for s in steps
+        if s.get("agentName") or s.get("agent_name")
+    }
+    if AGENT_LITERATURE in names and not literature_complete(steps):
+        names.discard(AGENT_LITERATURE)
+    return names
 
 
 def analyze_run_trace(
@@ -25,11 +55,7 @@ def analyze_run_trace(
     Complete = all 6 agents logged for this run_id and ≥1 recommendation.
     Partial = fewer than 6 agents and/or no recommendations (stopped early or old trace).
     """
-    names = {
-        (s.get("agentName") or s.get("agent_name") or "").strip()
-        for s in steps
-        if s.get("agentName") or s.get("agent_name")
-    }
+    names = completed_agent_names(steps)
     done = [a for a in PIPELINE_AGENTS if a in names]
     missing = [_short_agent(a) for a in PIPELINE_AGENTS if a not in names]
     n_done = len(done)

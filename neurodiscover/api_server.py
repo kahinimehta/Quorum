@@ -325,6 +325,10 @@ def list_runs(limit: int = 5):
         mode_label,
     )
 
+    with _jobs_lock:
+        running_jobs = set(_running_jobs)
+        job_errors = dict(_job_errors)
+
     for r in rows:
         rid = r["run_id"]
         steps = _steps_for_run(rid)
@@ -337,6 +341,19 @@ def list_runs(limit: int = 5):
             db = _evidence_counts(conn)
         rec_count = r.get("rec_count") or 0
         meta = analyze_run_trace(steps, rec_count)
+        status = meta["status"]
+        status_detail = meta["statusDetail"]
+        if rid in running_jobs:
+            status = "Running"
+            n = meta["agentsDone"]
+            status_detail = (
+                f"Pipeline in progress · {n}/6 agents complete"
+                if n
+                else "Pipeline in progress · literature running…"
+            )
+        elif rid in job_errors:
+            status = "Failed"
+            status_detail = job_errors[rid]
         runs.append({
             "runId": rid,
             "steps": r["steps"],
@@ -346,8 +363,8 @@ def list_runs(limit: int = 5):
             "syntheticProfiles": 5 if rec_count > 0 else 0,
             "mode": mode,
             "modeLabel": mode_label(mode),
-            "status": meta["status"],
-            "statusDetail": meta["statusDetail"],
+            "status": status,
+            "statusDetail": status_detail,
             "agentsDone": meta["agentsDone"],
             "agentsTotal": meta["agentsTotal"],
             "agentsMissing": meta["agentsMissing"],
@@ -559,7 +576,29 @@ def run_discovery_status(run_id: str):
 
     with _jobs_lock:
         if run_id in _running_jobs:
-            return {"run_id": run_id, "status": "running"}
+            steps = _steps_for_run(run_id)
+            rec_rows = _query(
+                "SELECT COUNT(*) AS count FROM recommendations WHERE run_id = ?",
+                (run_id,),
+            )
+            rec_count = rec_rows[0]["count"] if rec_rows else 0
+            meta = analyze_run_trace(steps, rec_count) if steps else {
+                "agentsDone": 0,
+                "statusDetail": "Pipeline starting…",
+            }
+            n = meta.get("agentsDone", 0)
+            detail = (
+                f"Pipeline in progress · {n}/6 agents complete"
+                if n
+                else "Pipeline in progress · literature running…"
+            )
+            return {
+                "run_id": run_id,
+                "status": "running",
+                "statusDetail": detail,
+                "agentsDone": n,
+                "recommendations": rec_count,
+            }
         err = _job_errors.get(run_id)
 
     if err:
