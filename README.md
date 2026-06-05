@@ -1,4 +1,4 @@
-# Quorum — NeuroDiscover AI
+# NeuroDiscover AI by Quorum
 
 > **Collaborators:** The **dashboard**, **demo video** ([docs home](https://neurodiscover.github.io)), and **[docs site](https://neurodiscover.github.io)** are still being edited. Expect layout and copy changes before the showcase.
 
