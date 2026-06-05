@@ -1181,8 +1181,7 @@
     let evPage = 0;
     let evTotal = 0;
     const EV_PAGE_SIZE = 6;
-    // Illustrative deltas only — not persisted run-over-run history yet
-    const DELTA_PLACEHOLDERS = ['+2.1 ↑', '+0.8 ↑', '-0.4 ↓', '+1.3 ↑', '+0.2 ↑'];
+    // Run-over-run confidence deltas are not tracked yet — do not show fake movement.
     const TZ_EASTERN = 'America/New_York';
     let statsCache = { totalEvidence: 0, subgroups: 0 };
     let lastRunStats = null;
@@ -2088,13 +2087,12 @@
     function renderContinuousUpdate(recommendations) {
       const box = document.getElementById('continuousUpdate');
       box.innerHTML = '';
-      (recommendations || []).slice(0, 5).forEach((r, i) => {
+      (recommendations || []).slice(0, 5).forEach((r) => {
         const pct = Math.min(100, r.confidence || 0);
-        const delta = DELTA_PLACEHOLDERS[i % DELTA_PLACEHOLDERS.length];
         const row = document.createElement('div');
         row.className = 'update-bar';
         row.innerHTML = `
-          <div class="bar-label"><span>${escapeHtml(r.treatment || r.subgroup)}</span><span class="delta-up">${delta}</span></div>
+          <div class="bar-label"><span>${escapeHtml(r.treatment || r.subgroup)}</span><span class="delta-up">${pct}</span></div>
           <div class="bar-track"><div class="bar-fill prioritize" style="width:${pct}%"></div></div>`;
         box.appendChild(row);
       });

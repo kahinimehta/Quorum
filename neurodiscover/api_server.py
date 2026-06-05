@@ -317,13 +317,19 @@ def list_runs(limit: int = 5):
         with connect(None) as conn:
             db = _evidence_counts(conn)
         lit = _parse_literature_step(steps)
-        ev_note = f"+{lit.get('newStored', 0)} new"
+        new_stored = lit.get("newStored", 0)
+        ev_note = f"+{new_stored} stored"
         if mode == "agents-only" and lit.get("demoUsed"):
             ev_note = f"{lit['demoUsed']} papers (agents-only)"
         elif mode == "demo" and lit.get("demoUsed"):
             ev_note = f"{lit['demoUsed']} papers (demo)"
-        elif lit.get("published"):
-            ev_note = f"{lit['published']} pulled · +{lit.get('newStored', 0)} new"
+        elif lit.get("published") or lit.get("trials"):
+            bits = [ev_note]
+            if lit.get("published"):
+                bits.append(f"{lit['published']} papers")
+            if lit.get("trials"):
+                bits.append(f"{lit['trials']} trials")
+            ev_note = " · ".join(bits)
         rec_count = r.get("rec_count") or 0
         meta = analyze_run_trace(steps, rec_count)
         runs.append({
