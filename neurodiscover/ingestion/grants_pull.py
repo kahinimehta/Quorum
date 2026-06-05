@@ -113,10 +113,10 @@ def log_trace(conn, run_id: str, step: int, summary: str, payload: dict | None =
     )
 
 
-def run(db_path, text_query: str, limit: int) -> None:
+def run(db_path, text_query: str, limit: int, *, run_id: str | None = None) -> None:
     from db import backend_label, connect
 
-    run_id = str(uuid.uuid4())[:8]
+    pipeline_run_id = run_id or str(uuid.uuid4())[:8]
     projects = search_grants(text_query, limit=limit)
     new = 0
     with connect(db_path) as conn:
@@ -125,12 +125,12 @@ def run(db_path, text_query: str, limit: int) -> None:
             if finding and upsert_grant(conn, finding):
                 new += 1
         log_trace(
-            conn, run_id, 1,
+            conn, pipeline_run_id, 4,
             f"Pulled {len(projects)} grants from NIH RePORTER; stored {new} new rows.",
             {"query": text_query, "limit": limit, "new_grants": new},
         )
         conn.commit()
-    print(f"[pull-grants] {backend_label()} — stored {new} new of {len(projects)}. run_id={run_id}")
+    print(f"[pull-grants] {backend_label()} — stored {new} new of {len(projects)}. run_id={pipeline_run_id}")
 
 
 def main() -> None:

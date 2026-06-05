@@ -69,16 +69,15 @@ def log_step(
 
 
 def _get_canonical_run_id(
-    conn, fallback: str, *, after_literature_subprocess: bool = False
+    conn, fallback: str, *, after_literature: bool = False
 ) -> str:
     """
     Resolve the run_id agents 2–6 should use.
 
-    After demo/scan subprocess, literature logs a fresh run_id but does not always
-    update scan_state (demo never does). Prefer the latest literature trace row so
-    downstream agents attach to the same run as agent 1.
+    After any literature phase, prefer the latest Literature Synthesis trace row
+    so downstream agents attach to the same run as agent 1 (demo/scan/full).
     """
-    if after_literature_subprocess:
+    if after_literature:
         conn.execute(
             "SELECT run_id FROM agent_outputs WHERE agent_name = ? "
             "ORDER BY output_id DESC LIMIT 1",
@@ -592,7 +591,6 @@ def _run_literature_full(
     max_papers: int,
     include_preprints: int,
     with_fulltext: bool,
-    pull_grants: bool,
     extract_backend: str | None,
 ) -> None:
     if extract_backend:
@@ -612,10 +610,22 @@ def _run_literature_full(
         with_fulltext=with_fulltext,
     )
 
-    if pull_grants:
-        from ingestion.grants_pull import run as run_grants
 
-        run_grants(None, None, 30)
+def _run_grants_pull(conn, run_id: str, limit: int = 30) -> None:
+    """Attach NIH grant pull to the active pipeline run_id (non-fatal on failure)."""
+    from ingestion.grants_pull import run as run_grants
+
+    try:
+        run_grants(None, None, limit, run_id=run_id)
+    except Exception as exc:
+        log_step(
+            conn,
+            run_id,
+            AGENT_LITERATURE,
+            4,
+            f"Grant pull failed (continuing pipeline): {exc}",
+            {"error": True, "grant_pull_failed": True},
+        )
 
 
 def _fetch_steps(conn, run_id: str) -> list[dict[str, Any]]:
@@ -688,7 +698,6 @@ def run(
             max_papers=max_papers,
             include_preprints=include_preprints,
             with_fulltext=with_fulltext,
-            pull_grants=pull_grants,
             extract_backend=extract_backend,
         )
 
@@ -700,8 +709,11 @@ def run(
             canonical_run_id = _get_canonical_run_id(
                 conn,
                 run_id,
-                after_literature_subprocess=(mode in ("demo", "scan")),
+                after_literature=(mode in ("demo", "scan", "full")),
             )
+
+        if mode == "full" and pull_grants:
+            _run_grants_pull(conn, canonical_run_id)
 
         if mode == "demo":
             agent_max = max_papers
