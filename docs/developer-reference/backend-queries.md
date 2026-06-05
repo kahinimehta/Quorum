@@ -153,10 +153,19 @@ Trigger the agent pipeline (`orchestrator.py`).
 **Request:**
 
 ```json
-{ "mode": "demo", "query": null, "max_papers": 150 }
+{
+  "mode": "full",
+  "run_id": "f799fbe8",
+  "query": "GBA GCase",
+  "max_papers": 150,
+  "disease": "Parkinson's",
+  "pull_grants": true
+}
 ```
 
 `mode`: `demo` | `scan` | `full` | `agents-only`
+
+Optional `run_id` — UI generates an 8-char id before POST so the pipeline stepper and `agent_outputs` share one trace from the start. **Full** mode passes it to `literature_agent.run()`.
 
 **agents-only** — skip literature pull; run agents 2–6 on existing evidence. Used automatically by `make dashboard` when `SUPABASE_DATABASE_URL` is set. Optional `max_papers` cap (API minimum 10; orchestrator accepts `0` = all rows).
 
@@ -165,7 +174,7 @@ Trigger the agent pipeline (`orchestrator.py`).
 ```json
 {
   "run_id": "a1b2c3d4",
-  "recommendations": [{ "subgroup": "...", "treatment": "...", "mechanism": "...", "confidence": 75.7, "tier": "Monitor", "rationale": "..." }],
+  "recommendations": [{ "subgroup": "...", "treatment": "...", "mechanism": "...", "confidence": 67.5, "tier": "Monitor", "rationale": "..." }],
   "agent_outputs": [{ "agentName": "Literature Synthesis Agent", "stepOrder": 1, "summary": "...", "createdAt": "..." }],
   "steps": [],
   "synthetic_cohort": [{ "patient_id": "Patient A", "subgroup": "...", "confidence": 82.5, "is_synthetic": true }],
@@ -226,7 +235,7 @@ Same `runStats` object shape as in `POST /api/run-discovery` (for revisiting a p
     "recommendations": 5,
     "syntheticProfiles": 5,
     "status": "Complete",
-    "evidenceNote": "5 papers (demo)"
+    "evidenceNote": "+29 stored · 4 papers · 25 trials"
   }]
 }
 ```

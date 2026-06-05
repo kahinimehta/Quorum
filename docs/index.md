@@ -52,6 +52,8 @@ See [Problem & significance](problem) for full framing.
 confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 ```
 
+Scores **scale with per-connection evidence count** — new literature, trials, or tagged grants move confidence when agents 2–6 rerun after a pull. See [Output examples — when confidence changes](output#when-confidence-changes).
+
 | Tier | Rule |
 |------|------|
 | **Prioritize** | confidence ≥ 80 |

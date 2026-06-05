@@ -102,7 +102,8 @@ flowchart LR
 | Header | DB status, evidence totals, synthetic cohort badge, run id |
 | KPI strip | Per-type counts; **this run** vs **in database** |
 | Run status | Ready / Running / Complete / Partial / Failed |
-| **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental / Full), max papers, extraction; **one run button** |
+| **Agent pipeline stepper** | During a run: one agent **Running…**, completed **Done**, rest **Waiting…** (polled from `agent_outputs` every ~1.5s). After complete: all **Done** or **Not run** if partial. |
+| **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental / Full), disease, max papers, extraction; **one run button** |
 | **Step 2** | Pipeline diagram, synthetic cohort, ranked outputs, audit trace |
 
 Timestamps display in **US Eastern** (`America/New_York`).

@@ -16,10 +16,10 @@ description: "Agent 5 — commercial potential heuristics"
 
 ## Role
 
-Estimate **commercial potential** (0–10) for each scored connection using **in-memory heuristics** — subgroup keywords, mechanism class, treatment presence, and evidence count.
+Estimate **commercial potential** (0–10) for each scored connection using **in-memory heuristics** — subgroup keywords, mechanism class, treatment presence, and **evidence count** (continuous, not a single ≥5 threshold).
 
 {: .highlight }
-**Current code:** no Tavily or live web search. Grants enter the DB via `cli.py pull-grants` or **full** mode (`pull_grants=true`), not inside this agent.
+**Current code:** no Tavily or live web search. **NIH grants** are ingested via `pull-grants` / full mode (`pull_grants=true`); grant rows infer subgroup/mechanism/treatment from title keywords so they can enter agents 2–6.
 
 ## Reads
 
@@ -37,13 +37,13 @@ The orchestrator calls `_scale_score()` (×10) before UPDATE, so the DB column h
 
 | Signal | Effect |
 |--------|--------|
-| Subgroup mentions `gba` or `lrrk2` | +1.0 |
-| Mechanism mentions `alpha` / `synuclein` | +0.7 |
-| Mechanism mentions `lysosomal` / `kinase` | +0.8 |
-| Non-empty treatment | +0.7 |
-| `evidence_count` ≥ 5 | +0.5 |
+| Volume | `5.5 + min(2.5, evidence_count × 0.12)` |
+| Subgroup mentions `gba` or `lrrk2` | +0.9 |
+| Mechanism mentions `alpha` / `synuclein` | +0.6 |
+| Mechanism mentions `lysosomal` / `kinase` | +0.7 |
+| Non-empty treatment | +0.6 |
 
-Base score 6.0, capped at 10.0 before scaling.
+Capped at 10.0 before orchestrator scaling (×10 → stored 0–100).
 
 ## Example (agent output, pre-scale)
 

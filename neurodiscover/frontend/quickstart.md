@@ -74,11 +74,13 @@ python3 cli.py dashboard --no-browser
 
 ## Using the UI
 
-1. **Step 1 — Configure & Run** — pick **pipeline mode** (Rescore DB / Demo sample / Incremental scan / Full live pull), max papers, keywords, extraction backend.
-2. Click the **run button** (label matches the selected mode, e.g. *Run incremental scan*).
-3. **Step 2 — Discovery Results** — synthetic cohort, ranked treatments, hypotheses, agent trace, evidence table.
+1. **Step 1 — Configure & Run** — pick **pipeline mode** (Rescore DB / Demo sample / Incremental scan / Full live pull), disease (default **Parkinson's**), max papers, keywords, extraction backend.
+2. Click the **run button** (label matches the selected mode). The **agent pipeline stepper** shows one agent **Running…** at a time; others **Waiting…** until **Done**.
+3. **Step 2 — Discovery Results** — synthetic cohort, ranked treatments, hypotheses, agent trace, evidence table (scores from **this run’s** recommendations).
 
 `make dashboard` only runs demo once at startup. Change settings and rerun from Step 1 while the servers stay up.
+
+**Confidence** updates when new evidence rows with `subgroup` + `mechanism` + `treatment` land in the DB and agents 2–6 rerun. Rescore on the same corpus without new rows may show similar numbers; check the literature step for `Stored N new evidence`.
 
 **Local demo:** leave `SUPABASE_DATABASE_URL` unset. **Never** run `cli.py build` on the team Supabase DB.
 

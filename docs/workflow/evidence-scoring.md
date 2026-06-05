@@ -16,11 +16,11 @@ description: "Agent 4 — skeptic scores connection evidence strength"
 
 ## Role
 
-Act as a **skeptic** — score how strong the evidence is for each treatment connection from **evidence count** and **source types** (literature, trial, grant) on matching evidence rows.
+Act as a **skeptic** — score how strong the evidence is for each treatment connection from **per-connection evidence count** and **source types** (literature, trial, grant) on rows matching the same subgroup + mechanism + treatment triple.
 
 ## Reads
 
-In-memory `connections` from Agent 3 plus matching rows from the evidence list passed by the orchestrator (same subgroup name).
+In-memory `connections` from Agent 3 plus evidence rows passed by the orchestrator that match each connection’s subgroup, mechanism, and treatment (not all rows for the subgroup).
 
 {: .highlight }
 **Not used in current code:** per-row `study_type`, `sample_size`, or `access_status` (those columns exist on `evidence` for future weighting).
@@ -35,16 +35,18 @@ The orchestrator calls `_scale_score()` (×10) before UPDATE, so the DB column h
 
 ## Scoring heuristics (code)
 
+Scores **scale with support count** so new pulls that add rows to a connection move the number (not flat buckets only).
+
 | Signal | Effect |
 |--------|--------|
-| Base | 5.0 |
-| `evidence_count` ≥ 3 | +1.0 |
-| `evidence_count` ≥ 8 | +1.0 |
-| Has `literature` source | +0.8 |
-| Has `trial` source | +1.0 |
-| Has `grant` source | +0.5 |
+| Base + volume | `4.0 + min(4.5, evidence_count × 0.22)` |
+| Has `literature` in matching rows | +0.6 |
+| Has `trial` in matching rows | +0.8 |
+| Has `grant` in matching rows | +0.4 |
 
-Capped at 10.0 before orchestrator scaling.
+Capped at 10.0 before orchestrator scaling (×10 → stored 0–100 on `treatment_connections`).
+
+Adding a few supporting papers or trials to an existing connection typically changes `evidence_strength` by ~0.2–0.5 (pre-scale) per row.
 
 ## Example (agent output, pre-scale)
 
