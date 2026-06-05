@@ -1,5 +1,30 @@
 # Contributing to Quorum / NeuroDiscover
 
+## File naming (capitalization)
+
+All **documentation** uses **lowercase kebab-case** filenames:
+
+| OK | Not OK |
+|----|--------|
+| `docs/input.md` | `docs/INPUT.md`, `docs/Input.md` |
+| `docs/developer-reference/agent-io.md` | `docs/AGENT_IO.md` |
+| `neurodiscover/frontend/quickstart.md` | `QUICKSTART.md` |
+
+**Exceptions (do not rename — tools depend on exact names):**
+
+| File | Why |
+|------|-----|
+| `README.md` | GitHub repo homepage |
+| `AGENTS.md` | Cursor / agent context |
+| `CONTRIBUTING.md` | GitHub contributing guide |
+| `docs/Gemfile`, `docs/Gemfile.lock` | Ruby Bundler |
+| `neurodiscover/Makefile` | GNU Make |
+| `neurodiscover/**/*.py` | Python imports (snake_case modules) |
+
+When adding docs, use `docs/` or `docs/developer-reference/` with lowercase names. Update links if you rename a page.
+
+---
+
 ## Quick start
 
 ```bash

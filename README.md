@@ -95,6 +95,8 @@ python3 cli.py pull --disease "your condition" --max 150
 
 ## Repo layout
 
+Naming: docs and guides use **lowercase kebab-case** (e.g. `docs/developer-reference/agent-io.md`). Root `README.md`, `AGENTS.md`, and `CONTRIBUTING.md` stay uppercase — see [`CONTRIBUTING.md`](CONTRIBUTING.md#file-naming-capitalization).
+
 ```
 Quorum/
   AGENTS.md
