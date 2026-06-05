@@ -204,6 +204,9 @@ def _build_run_stats(
     after: dict[str, int],
     steps: list[dict[str, Any]],
     evidence_used: dict[str, int],
+    *,
+    settings: dict[str, Any] | None = None,
+    connections_scored: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     lit = _parse_literature_step(steps)
     delta = {
@@ -221,7 +224,7 @@ def _build_run_stats(
         cap = max_papers if max_papers > 0 else pulled_lit
         processed_lit = min(cap, pulled_lit) if pulled_lit else delta["literature"]
     display_max = max_papers if max_papers and max_papers > 0 else after["literature"]
-    return {
+    out: dict[str, Any] = {
         "mode": mode,
         "maxPapersRequested": display_max,
         "databaseTotals": after,
@@ -247,6 +250,11 @@ def _build_run_stats(
         },
         "evidenceUsed": evidence_used,
     }
+    if settings:
+        out["settings"] = settings
+    if connections_scored:
+        out["connectionsScored"] = connections_scored
+    return out
 
 
 def _subprocess_cli(
@@ -574,6 +582,16 @@ def _run_agents_2_through_6(
     _persist_treatment_connections(conn, tc_out, run_id)
     conn.commit()
 
+    connection_snapshots = [
+        {
+            "subgroup": c.get("subgroup"),
+            "treatment": c.get("treatment_strategy") or c.get("treatment"),
+            "mechanism": c.get("mechanism"),
+            "evidence_count": c.get("evidence_count", 0),
+        }
+        for c in tc_out.get("connections", [])
+    ]
+
     es_agent = EvidenceScoringAgent()
     es_out = es_agent.run(tc_out, evidence_rows)
     _persist_evidence_scores(conn, es_out, run_id)
@@ -586,7 +604,7 @@ def _run_agents_2_through_6(
 
     recs = _persist_recommendations(conn, run_id)
     conn.commit()
-    return recs, evidence_used
+    return recs, evidence_used, connection_snapshots
 
 
 def _run_literature_full(
@@ -729,13 +747,30 @@ def run(
             agent_max = max_papers if max_papers and max_papers > 0 else None
         else:
             agent_max = None
-        recommendations, evidence_used = _run_agents_2_through_6(
+        run_settings = {
+            "mode": mode,
+            "query": query,
+            "disease": disease,
+            "max_papers": max_papers,
+            "include_preprints": include_preprints,
+            "with_fulltext": with_fulltext,
+            "extract_backend": extract_backend,
+            "pull_grants": pull_grants,
+        }
+        recommendations, evidence_used, connections_scored = _run_agents_2_through_6(
             conn, canonical_run_id, max_papers=agent_max
         )
 
         steps = _fetch_steps(conn, canonical_run_id)
         run_stats = _build_run_stats(
-            mode, max_papers, before, after, steps, evidence_used
+            mode,
+            max_papers,
+            before,
+            after,
+            steps,
+            evidence_used,
+            settings=run_settings,
+            connections_scored=connections_scored,
         )
         run_stats.update(analyze_run_trace(steps, len(recommendations)))
 

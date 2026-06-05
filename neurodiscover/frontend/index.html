@@ -708,6 +708,66 @@
     .stepper li.done .step-state { color: #059669; }
     .stepper li.ready .step-state { color: var(--primary); }
     .stepper li.idle .step-state { color: #94a3b8; }
+    .run-report-card {
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+    }
+    .run-report-card h2 { margin-bottom: 0.5rem; }
+    .run-progress-track {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0.5rem 0 0.75rem;
+    }
+    .run-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #2563eb, #059669);
+      border-radius: 999px;
+      transition: width 0.45s ease;
+    }
+    .run-progress-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .stepper-compact { margin-top: 0.25rem; }
+    .stepper-compact li { padding: 0.35rem 0 0.35rem 1.35rem; font-size: 0.78rem; }
+    .run-report-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.65rem 1rem;
+      margin-top: 0.75rem;
+      font-size: 0.78rem;
+    }
+    .run-report-grid dt { color: var(--muted); font-weight: 600; margin: 0; }
+    .run-report-grid dd { margin: 0.1rem 0 0; color: var(--navy); }
+    .run-signature {
+      font-family: ui-monospace, monospace;
+      font-size: 0.72rem;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      padding: 0.45rem 0.6rem;
+      margin-top: 0.65rem;
+      word-break: break-all;
+    }
+    .conn-count-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .conn-count-table th, .conn-count-table td {
+      text-align: left;
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
     .field-primary {
       display: flex; align-items: center; gap: 0.5rem;
     }
@@ -1067,6 +1127,27 @@
         <span class="badge syn" id="pillSynthetic">— Synthetic Profiles</span>
         <span class="badge" id="pillSubTreat">— Subgroups · — Treatments</span>
       </div>
+
+      <section class="card run-report-card" id="runReportCard">
+        <h2>This run <code id="runReportId" style="font-size:0.75rem;font-weight:500;">—</code></h2>
+        <div class="run-progress-label">
+          <span id="runProgressLabel">Pipeline idle</span>
+          <span id="runProgressPct">0%</span>
+        </div>
+        <div class="run-progress-track" aria-hidden="true">
+          <div class="run-progress-fill" id="runProgressFill"></div>
+        </div>
+        <ol class="stepper stepper-compact" id="resultsPipelineStepper">
+          <li class="idle" data-agent="Literature Synthesis Agent">Literature <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Patient Subgroup Agent">Subgroups <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Treatment Connection Agent">Connections <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Evidence Scoring Agent">Evidence <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Commercial Discovery Agent">Commercial <span class="step-state">Idle</span></li>
+          <li class="idle" data-agent="Conclusion Update Agent">Conclusions <span class="step-state">Idle</span></li>
+        </ol>
+        <div id="runReportBody"></div>
+      </section>
+
       <section class="pipeline-v2">
         <h2>Discovery pipeline</h2>
         <div class="pipe-stage">
@@ -1127,7 +1208,7 @@
           <div class="output-panel-body">
             <p style="font-size:0.68rem;color:var(--muted);margin:0 0 0.5rem;">Prioritize tier · auditable citations</p>
             <div id="hypotheses"></div>
-            <div class="section-label" style="margin-top:0.75rem;">Confidence trend (illustrative)</div>
+            <div class="section-label" style="margin-top:0.75rem;">Confidence by treatment (this run)</div>
             <div id="continuousUpdate"></div>
           </div>
         </div>
@@ -1186,6 +1267,7 @@
     const TZ_EASTERN = 'America/New_York';
     let statsCache = { totalEvidence: 0, subgroups: 0 };
     let lastRunStats = null;
+    let lastRunConfig = null;
     let kpiView = 'database';
 
     const PIPELINE_AGENTS = [
@@ -1584,6 +1666,8 @@
           + `${proc.trial ?? 0} trials, ${proc.grant ?? 0} grants (${procTotal} in this run).`,
         `Agents ${rs.agentsDone ?? traceMeta.done}/${rs.agentsTotal ?? 6} · max ${max} papers · +${addedTotal} new in DB`,
       );
+      if (rs.settings) lastRunConfig = { ...rs.settings };
+      renderRunReport(latestRunId, lastRunConfig, rs, null, false);
     }
 
     function analyzeRunTraceFromStats(rs) {
@@ -1871,17 +1955,19 @@
             updateRunMeta(latestRunId, recs, run.syntheticProfiles);
             const stKey = status === 'Complete' ? 'complete' : 'partial';
             setRunStatus(stKey, status, detail, `Run ${run.run_id} · ${mode} · started ${date}`);
-            await refreshPipelineStepper(run.run_id);
+            let rsPayload = null;
             try {
               const rs = await fetch(`${API_BASE}/api/run-stats?run_id=${encodeURIComponent(run.run_id)}`);
               if (rs.ok) {
                 const d = await rs.json();
-                d.runStats.recommendationsCount = recs;
-                applyRunStats(d.runStats);
+                rsPayload = d.runStats;
+                rsPayload.recommendationsCount = recs;
+                applyRunStats(rsPayload);
               }
             } catch (e) { /* keep current kpi */ }
+            await refreshPipelineStepper(run.run_id);
             showView('results');
-            loadResults(latestRunId);
+            loadResults(latestRunId, { runStats: rsPayload });
           });
           tbody.appendChild(tr);
         });
@@ -1920,16 +2006,20 @@
           .filter(Boolean),
       );
       const partialRun = !inProgress && steps && steps.length > 0 && completed.size < PIPELINE_AGENTS.length;
-      let activeAssigned = false;
-      document.querySelectorAll('#pipelineStepper li').forEach(li => {
+      const doneCount = PIPELINE_AGENTS.filter(a => completed.has(a)).length;
+      const pct = Math.round((doneCount / PIPELINE_AGENTS.length) * 100);
+      const runningAgent = inProgress
+        ? (PIPELINE_AGENTS.find(a => !completed.has(a)) || null)
+        : null;
+
+      document.querySelectorAll('#pipelineStepper li, #resultsPipelineStepper li').forEach(li => {
         li.classList.remove('done', 'ready', 'idle', 'active', 'running', 'error');
         const a = li.dataset.agent;
         const stateEl = li.querySelector('.step-state');
         if (completed.has(a)) {
           li.classList.add('done');
           if (stateEl) stateEl.textContent = 'Done';
-        } else if (inProgress && !activeAssigned) {
-          activeAssigned = true;
+        } else if (runningAgent && a === runningAgent) {
           li.classList.add('running');
           if (stateEl) stateEl.textContent = 'Running…';
         } else if (partialRun) {
@@ -1943,21 +2033,118 @@
           if (stateEl) stateEl.textContent = 'Idle';
         }
       });
+
+      const fill = document.getElementById('runProgressFill');
+      const pctEl = document.getElementById('runProgressPct');
+      const lbl = document.getElementById('runProgressLabel');
+      if (fill) fill.style.width = `${inProgress && doneCount === 0 ? 8 : pct}%`;
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      if (lbl) {
+        if (inProgress) lbl.textContent = doneCount === 0 ? 'Starting pipeline…' : `${doneCount}/6 agents complete`;
+        else if (doneCount >= 6) lbl.textContent = 'Pipeline complete';
+        else if (doneCount > 0) lbl.textContent = `${doneCount}/6 agents (partial run)`;
+        else lbl.textContent = 'Pipeline idle';
+      }
+      return doneCount;
+    }
+
+    function runSignature(runId, config, rs) {
+      const proc = rs?.processed || rs?.evidenceUsed || {};
+      const added = rs?.added || rs?.delta || {};
+      const cfg = config || rs?.settings || {};
+      return [
+        runId || '—',
+        (cfg.mode || rs?.mode || '—').toUpperCase(),
+        `max=${cfg.max_papers ?? rs?.maxPapersRequested ?? '—'}`,
+        cfg.query ? `q="${cfg.query}"` : 'no-keyword',
+        `scored=${proc.total ?? '—'}`,
+        `+${added.total ?? 0}`,
+      ].join(' · ');
+    }
+
+    function renderRunReport(runId, config, rs, recommendations, inProgress) {
+      const ridEl = document.getElementById('runReportId');
+      const body = document.getElementById('runReportBody');
+      if (ridEl) ridEl.textContent = runId || '—';
+      if (!body) return;
+
+      const cfg = config || rs?.settings || lastRunConfig || {};
+      const proc = rs?.processed || rs?.evidenceUsed || {};
+      const added = rs?.added || rs?.delta || {};
+      const db = rs?.databaseTotals || statsCache || {};
+      const conns = rs?.connectionsScored || [];
+      const recs = recommendations || [];
+
+      const confByKey = {};
+      recs.forEach(r => {
+        const k = `${r.subgroup}::${r.treatment}`;
+        confByKey[k] = r.confidence;
+      });
+
+      const modeLabel = (cfg.mode || rs?.mode || '—').toUpperCase();
+      const extract = cfg.extract_backend || 'default';
+      const opts = [];
+      if (cfg.include_preprints) opts.push(`preprints=${cfg.include_preprints}`);
+      if (cfg.with_fulltext) opts.push('fulltext');
+      if (cfg.pull_grants) opts.push('grants');
+
+      let connRows = '';
+      if (conns.length) {
+        connRows = conns.slice(0, 6).map(c => {
+          const k = `${c.subgroup}::${c.treatment}`;
+          const conf = confByKey[k] ?? '—';
+          return `<tr><td>${escapeHtml(c.subgroup || '—')}</td>`
+            + `<td>${escapeHtml(c.treatment || '—')}</td>`
+            + `<td><strong>${c.evidence_count ?? 0}</strong></td>`
+            + `<td>${conf}</td></tr>`;
+        }).join('');
+      } else if (recs.length) {
+        connRows = recs.slice(0, 5).map(r =>
+          `<tr><td>${escapeHtml(r.subgroup || '—')}</td>`
+          + `<td>${escapeHtml(r.treatment || '—')}</td>`
+          + `<td>—</td><td>${r.confidence ?? '—'}</td></tr>`,
+        ).join('');
+      }
+
+      const statusLine = inProgress
+        ? '<p style="font-size:0.78rem;color:#1d4ed8;margin:0.5rem 0 0;"><strong>In progress</strong> — settings below are what this run is using.</p>'
+        : '<p style="font-size:0.78rem;color:#059669;margin:0.5rem 0 0;"><strong>Finished</strong> — compare signature &amp; evidence counts across runs.</p>';
+
+      body.innerHTML = statusLine
+        + `<dl class="run-report-grid">`
+        + `<div><dt>Mode</dt><dd>${escapeHtml(modeLabel)}</dd></div>`
+        + `<div><dt>Disease</dt><dd>${escapeHtml(cfg.disease || '—')}</dd></div>`
+        + `<div><dt>Max papers</dt><dd>${cfg.max_papers ?? rs?.maxPapersRequested ?? '—'}</dd></div>`
+        + `<div><dt>Keyword</dt><dd>${escapeHtml(cfg.query || '(none)')}</dd></div>`
+        + `<div><dt>Extraction</dt><dd>${escapeHtml(extract)}</dd></div>`
+        + `<div><dt>Pull options</dt><dd>${escapeHtml(opts.length ? opts.join(', ') : '(none)')}</dd></div>`
+        + `<div><dt>Evidence scored</dt><dd>${proc.literature ?? 0} lit · ${proc.trial ?? 0} trials · ${proc.grant ?? 0} grants = <strong>${proc.total ?? 0}</strong></dd></div>`
+        + `<div><dt>DB delta</dt><dd>+${added.literature ?? 0} lit · +${added.trial ?? 0} trials · +${added.grant ?? 0} grants · <strong>+${added.total ?? 0} total</strong></dd></div>`
+        + `<div><dt>DB totals</dt><dd>${db.literature ?? '—'} lit · ${db.trial ?? '—'} trials · ${db.grant ?? '—'} grants</dd></div>`
+        + `</dl>`
+        + `<div class="run-signature"><strong>Run signature</strong> — ${escapeHtml(runSignature(runId, cfg, rs))}</div>`
+        + (connRows
+          ? `<table class="conn-count-table"><thead><tr><th>Subgroup</th><th>Treatment</th><th>Support rows</th><th>Conf</th></tr></thead><tbody>${connRows}</tbody></table>`
+          : '<p style="font-size:0.75rem;color:var(--muted);margin:0.5rem 0 0;">Connection counts appear when agents 3–6 finish.</p>');
     }
 
     async function refreshPipelineStepper(runId, steps, mode) {
       const meta = document.getElementById('stepperRunMeta');
+      const inProgress = mode === 'running';
       if (meta) {
-        if (mode === 'running') {
+        if (inProgress) {
           meta.textContent = runId ? `Run ${runId} · in progress…` : 'Run in progress…';
         } else if (runId) {
-          meta.textContent = `Run ${runId}`;
+          const done = (steps || []).filter(s => !s.isError).map(s => s.agentName || s.agent_name);
+          const allDone = PIPELINE_AGENTS.every(a => done.includes(a));
+          meta.textContent = allDone ? `Run ${runId} · complete` : `Run ${runId}`;
         } else {
           meta.textContent = 'No active run';
         }
       }
-      if (mode === 'running') {
+      if (inProgress) {
         applyStepperState(steps || [], true);
+        renderRunReport(runId, lastRunConfig, lastRunStats, null, true);
         return;
       }
       if (steps && steps.length) {
@@ -2145,6 +2332,7 @@
       let connections = [];
       let recommendations = runPayload.recommendations || [];
       let steps = runPayload.steps || [];
+      const rs = runPayload.runStats || lastRunStats;
 
       if (sb) {
         const { data: tc } = await sb.from('treatment_connections').select('connection_id,mechanism,treatment,evidence_strength,commercial_potential,subgroups(name)');
@@ -2282,6 +2470,7 @@
       renderContinuousUpdate(displayRanked);
 
       const rid = runId || latestRunId;
+      renderRunReport(rid, lastRunConfig, rs, recommendations, false);
       updateRunMeta(rid, ranked.length, syntheticCohort.length);
       const traceMeta = clientAnalyzeTrace(steps, ranked.length);
       renderAgentTimeline(steps, traceMeta.statusDetail);
@@ -2438,22 +2627,9 @@
       btn.disabled = true;
       const modeLabel = (MODE_META[mode]?.btn || mode).replace(/^▶\s*/, '');
       latestRunId = newRunId();
+      lastRunConfig = null;
       updateRunMeta(latestRunId, 0, 0);
-      refreshPipelineStepper(latestRunId, null, 'running');
-      setRunStatus(
-        'running',
-        'Running',
-        `${modeLabel} in progress — agents 1→6…`,
-        `Started ${formatEst(new Date())}`,
-      );
-      let pollTimer = setInterval(async () => {
-        const steps = await fetchPipelineSteps(latestRunId);
-        const done = new Set(
-          steps.filter(s => !s.isError).map(s => s.agentName || s.agent_name).filter(Boolean),
-        );
-        const stillRunning = done.size < PIPELINE_AGENTS.length;
-        await refreshPipelineStepper(latestRunId, steps, stillRunning ? 'running' : null);
-      }, 1500);
+      showView('results');
       let maxPapers = parseInt(document.getElementById('maxPapers').value, 10);
       if (mode === 'agents-only' && maxPapers >= 500) {
         maxPapers = 0;
@@ -2469,6 +2645,30 @@
         extract_backend: getExtract(),
         pull_grants: document.getElementById('srcGrants').checked,
       };
+      lastRunConfig = { ...body };
+      renderRunReport(latestRunId, lastRunConfig, null, null, true);
+      refreshPipelineStepper(latestRunId, null, 'running');
+      setRunStatus(
+        'running',
+        'Running',
+        `${modeLabel} in progress — agents 1→6…`,
+        `Started ${formatEst(new Date())}`,
+      );
+      let pollTimer = setInterval(async () => {
+        let pollId = latestRunId;
+        try {
+          const s = await fetch(`${API_BASE}/api/stats`).then(r => r.json());
+          if (s.lastRunId) pollId = s.lastRunId;
+        } catch (e) { /* keep client id */ }
+        const steps = await fetchPipelineSteps(pollId);
+        if (pollId !== latestRunId) latestRunId = pollId;
+        const done = new Set(
+          steps.filter(s => !s.isError).map(s => s.agentName || s.agent_name).filter(Boolean),
+        );
+        const stillRunning = done.size < PIPELINE_AGENTS.length;
+        applyStepperState(steps, stillRunning);
+        await refreshPipelineStepper(latestRunId, steps, stillRunning ? 'running' : null);
+      }, 1200);
       try {
         const res = await fetch(`${API_BASE}/api/run-discovery`, {
           method: 'POST',
@@ -2493,13 +2693,15 @@
             formatEst(new Date()),
           );
         }
+        applyStepperState(steps, false);
+        renderRunReport(latestRunId, lastRunConfig, rs, data.recommendations || [], false);
         await refreshPipelineStepper(latestRunId, steps);
         await loadRecentRuns();
-        showView('results');
         await loadResults(latestRunId, {
           recommendations: data.recommendations,
           steps,
           synthetic_cohort: syntheticCohort,
+          runStats: rs,
         });
       } catch (e) {
         setRunStatus('error', 'Failed', e.message, formatEst(new Date()));

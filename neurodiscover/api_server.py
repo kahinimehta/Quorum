@@ -272,6 +272,31 @@ def get_run_stats(run_id: str):
     before = dict(after)
     run_stats = _build_run_stats(mode, max_papers, before, after, steps, evidence_used)
     run_stats.update(analyze_run_trace(steps, rec_count))
+    if not run_stats.get("connectionsScored"):
+        scored = _query(
+            """
+            SELECT s.name AS subgroup, tc.treatment, tc.mechanism,
+                   (SELECT COUNT(*) FROM connection_evidence ce
+                    WHERE ce.connection_id = tc.connection_id) AS evidence_count,
+                   r.confidence
+            FROM recommendations r
+            JOIN treatment_connections tc ON tc.connection_id = r.connection_id
+            JOIN subgroups s ON s.subgroup_id = tc.subgroup_id
+            WHERE r.run_id = ?
+            ORDER BY r.confidence DESC
+            """,
+            (run_id,),
+        )
+        run_stats["connectionsScored"] = [
+            {
+                "subgroup": row["subgroup"],
+                "treatment": row["treatment"],
+                "mechanism": row.get("mechanism"),
+                "evidence_count": int(row.get("evidence_count") or 0),
+                "confidence": row.get("confidence"),
+            }
+            for row in scored
+        ]
     return {"runId": run_id, "runStats": run_stats}
 
 

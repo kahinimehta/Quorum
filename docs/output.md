@@ -15,6 +15,14 @@ What NeuroDiscover produces — ranked recommendations, agent trace, synthetic p
 
 After a run completes, **Step 2** shows pipeline outputs: synthetic cohort, ranked treatments, hypotheses, agent trace, and evidence audit.
 
+At the top, **This run** shows:
+
+- A **progress bar** and compact **agent stepper** (Running → Done) visible while the pipeline executes and after complete
+- **Run settings** used (mode, disease, max papers, keyword, extraction) — changes when you change Step 1
+- **Evidence scored** and **DB delta** for this run — changes when pulls add rows or demo caps differ
+- **Run signature** — a one-line fingerprint (`run_id · mode · max · keyword · scored · +new`)
+- **Support rows** table — per-connection evidence counts and confidence (changes when corpus or caps differ)
+
 ![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }
 

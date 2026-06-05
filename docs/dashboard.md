@@ -104,7 +104,7 @@ flowchart LR
 | Run status | Ready / Running / Complete / Partial / Failed |
 | **Agent pipeline stepper** | During a run: one agent **Running…**, completed **Done**, rest **Waiting…** (polled from `agent_outputs` every ~1.5s). After complete: all **Done** or **Not run** if partial. |
 | **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental / Full), disease, max papers, extraction; **one run button** |
-| **Step 2** | Pipeline diagram, synthetic cohort, ranked outputs, audit trace |
+| **Step 2** | **This run** report (progress bar + settings + signature), pipeline diagram, synthetic cohort, ranked outputs, audit trace |
 
 Timestamps display in **US Eastern** (`America/New_York`).
 
