@@ -150,25 +150,53 @@ def backfill_grant_fields(conn) -> int:
     return updated
 
 
-def run(db_path, text_query: str, limit: int, *, run_id: str | None = None) -> None:
+def _pull_grants_into_conn(
+    conn,
+    text_query: str,
+    limit: int,
+    run_id: str,
+) -> tuple[int, int]:
+    projects = search_grants(text_query, limit=limit)
+    new = 0
+    for project in projects:
+        finding = grant_to_finding(project)
+        if finding and upsert_grant(conn, finding):
+            new += 1
+    backfilled = backfill_grant_fields(conn)
+    log_trace(
+        conn,
+        run_id,
+        4,
+        f"Pulled {len(projects)} grants from NIH RePORTER; stored {new} new rows.",
+        {
+            "query": text_query,
+            "limit": limit,
+            "new_grants": new,
+            "grants_backfilled": backfilled,
+        },
+    )
+    return new, len(projects)
+
+
+def run(
+    db_path,
+    text_query: str,
+    limit: int,
+    *,
+    run_id: str | None = None,
+    conn=None,
+) -> None:
     from db import backend_label, connect
 
     pipeline_run_id = run_id or str(uuid.uuid4())[:8]
-    projects = search_grants(text_query, limit=limit)
-    new = 0
-    with connect(db_path) as conn:
-        for project in projects:
-            finding = grant_to_finding(project)
-            if finding and upsert_grant(conn, finding):
-                new += 1
-        backfilled = backfill_grant_fields(conn)
-        log_trace(
-            conn, pipeline_run_id, 4,
-            f"Pulled {len(projects)} grants from NIH RePORTER; stored {new} new rows.",
-            {"query": text_query, "limit": limit, "new_grants": new, "grants_backfilled": backfilled},
-        )
+    if conn is not None:
+        new, total = _pull_grants_into_conn(conn, text_query, limit, pipeline_run_id)
         conn.commit()
-    print(f"[pull-grants] {backend_label()} — stored {new} new of {len(projects)}. run_id={pipeline_run_id}")
+    else:
+        with connect(db_path) as conn:
+            new, total = _pull_grants_into_conn(conn, text_query, limit, pipeline_run_id)
+            conn.commit()
+    print(f"[pull-grants] {backend_label()} — stored {new} new of {total}. run_id={pipeline_run_id}")
 
 
 def main() -> None:
