@@ -1,0 +1,5 @@
+{% if site.logo %}
+  <img class="site-logo-img" src="{{ site.logo | relative_url }}" alt="{{ site.title }}" width="40" height="40" />
+{% else %}
+  {{ site.title }}
+{% endif %}
