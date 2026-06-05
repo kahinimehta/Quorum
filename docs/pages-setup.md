@@ -29,6 +29,9 @@ The application source code stays in [kahinimehta/Quorum](https://github.com/kah
    - `NEURODISCOVERY_DOCS` — see token options below
 4. Enable GitHub Pages on the org repo: **Settings → Pages → Source: Deploy from branch → `main` / root**
 
+{: .important }
+**Deploy succeeded but site shows 404?** Pushing files to `neurodiscover.github.io` is not enough — you must enable Pages on that repo (step 4). Wait 2–5 minutes, then hard-refresh or try an incognito window. Use **https://neurodiscover.github.io** (not `kahinimehta.github.io/Quorum/`).
+
 ### PAT options (if deploy fails with 403)
 
 **Option A — Classic token (most reliable for cross-repo push)**
@@ -65,6 +68,18 @@ Workflow file: `.github/workflows/deploy-neurodiscover-org-pages.yml`
 ## Preview on Quorum repo (optional)
 
 **Actions → “Deploy documentation to GitHub Pages”** builds Jekyll and publishes to this repo's GitHub Pages environment (project URL, e.g. `kahinimehta.github.io/Quorum/`). Use for PR previews; the canonical public URL is **neurodiscover.github.io**.
+
+---
+
+## Site shows 404 after a successful deploy
+
+| Check | Action |
+|-------|--------|
+| **Pages enabled?** | **neurodiscover/neurodiscover.github.io** → **Settings → Pages** → Source: **Deploy from a branch** → **`main`** / **`/ (root)`** → Save |
+| **Correct URL?** | **https://neurodiscover.github.io** — not the Quorum project URL |
+| **Files on `main`?** | Repo should contain `index.html`, `assets/`, etc. at the root (not a `docs/` subfolder) |
+| **Still 404?** | Wait 2–5 min after enabling Pages; hard-refresh (Cmd+Shift+R) or incognito |
+| **Custom domain?** | Remove any custom domain under Pages unless DNS is configured |
 
 ---
 

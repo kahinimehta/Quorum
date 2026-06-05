@@ -53,6 +53,7 @@ jobs:
             exit 1
           fi
           cd docs/_site
+          touch .nojekyll
           git init
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
