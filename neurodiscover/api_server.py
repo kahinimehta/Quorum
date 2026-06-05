@@ -25,6 +25,7 @@ from typing import Any
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
 from db import backend_label, connect, is_postgres
@@ -652,6 +653,18 @@ def run_discovery(body: RunDiscoveryRequest):
     return {"run_id": run_id, "status": "running", "accepted": True}
 
 
+@app.get("/api/cua/demo")
+def get_cua_demo(run_id: str = "graded6"):
+    """Summary of the bundled CUA demo artifacts (pre-rendered grant proposal)."""
+    from cua_demo import load_demo_summary
+
+    run_id = (run_id or "graded6").strip()[:32]
+    summary = load_demo_summary(run_id)
+    if summary.get("available") and summary.get("report_path"):
+        summary["report_url"] = summary["report_path"]
+    return summary
+
+
 @app.get("/api/synthetic-cohort")
 def get_synthetic_cohort(run_id: str):
     if not run_id:
@@ -665,6 +678,20 @@ def get_synthetic_cohort(run_id: str):
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     return {"run_id": run_id, "synthetic_cohort": cohort}
 
+
+def _mount_cua_demo_static() -> None:
+    from cua_demo import outputs_dir
+
+    cua_out = outputs_dir()
+    if cua_out.is_dir():
+        app.mount(
+            "/cua-demo",
+            StaticFiles(directory=str(cua_out), html=True),
+            name="cua-demo",
+        )
+
+
+_mount_cua_demo_static()
 
 if __name__ == "__main__":
     import uvicorn

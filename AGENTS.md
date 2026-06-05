@@ -86,7 +86,7 @@ its own table. The backend serves the final tables to the dashboard.
 | 3 | Treatment Connection | `subgroups`, `evidence` | `treatment_connections`, `connection_evidence` |
 | 4 | Evidence Scoring (skeptic) | `treatment_connections`, `evidence` | `evidence_strength` col + `agent_outputs` |
 | 5 | Commercial Discovery | scored connections (in-memory from Agent 4) | `commercial_potential` col + `agent_outputs` |
-| 6 | Conclusion Update | scored `treatment_connections` | `recommendations` |
+| 6 | Conclusion Update | scored `treatment_connections` | `recommendations` (orchestrator) · optional `cua/` NIH proposal (read-only, local files) |
 
 Every agent appends one row to `agent_outputs` (run_id, step_order, summary) as it
 runs. The dashboard reads `agent_outputs` to show the "agent trace".

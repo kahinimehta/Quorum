@@ -223,10 +223,10 @@
       max-width: 1400px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 1rem;
     }
-    @media (max-width: 700px) { .tab-nav-inner { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .tab-nav-inner { grid-template-columns: 1fr; } }
     .tab-btn {
       display: flex;
       align-items: flex-start;
@@ -283,6 +283,83 @@
     }
     .tab-btn-results.active { border-color: #22c55e; background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); box-shadow: 0 4px 16px rgba(34, 197, 94, 0.18); }
     .tab-btn-results.active .tab-step { background: #16a34a; }
+    .tab-btn-cua.active { border-color: #7c3aed; background: linear-gradient(135deg, #f5f3ff 0%, #fff 100%); box-shadow: 0 4px 16px rgba(124, 58, 237, 0.18); }
+    .tab-btn-cua.active .tab-step { background: #7c3aed; color: #fff; }
+    .cua-wide { max-width: 1400px; margin: 0 auto; padding: 1rem 1.5rem 2.5rem; }
+    .cua-banner {
+      border-left: 4px solid #7c3aed;
+      background: linear-gradient(90deg, #f5f3ff 0%, #fff 14%);
+      margin-bottom: 1rem;
+    }
+    .cua-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 900px) { .cua-kpi-row { grid-template-columns: repeat(2, 1fr); } }
+    .cua-kpi {
+      text-align: center;
+      padding: 0.65rem 0.5rem;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+    .cua-kpi .val { font-size: 1.2rem; font-weight: 700; color: #5b21b6; }
+    .cua-kpi .lbl { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .cua-grid { display: grid; grid-template-columns: 360px 1fr; gap: 1rem; align-items: start; }
+    @media (max-width: 1000px) { .cua-grid { grid-template-columns: 1fr; } }
+    .cua-side .card { margin-bottom: 0.85rem; }
+    .cua-hyp { font-size: 0.82rem; color: #312e81; line-height: 1.55; margin: 0; }
+    .cua-aim {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.75rem;
+      margin-bottom: 0.5rem;
+      background: #fafbff;
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+    .cua-aim-h { font-weight: 700; color: #5b21b6; font-size: 0.72rem; margin-bottom: 0.25rem; }
+    .cua-sec { font-size: 0.78rem; margin-bottom: 0.65rem; line-height: 1.45; }
+    .cua-sec-h { font-weight: 700; text-transform: capitalize; color: var(--navy); font-size: 0.72rem; }
+    .cua-report-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow);
+      min-height: 720px;
+    }
+    .cua-report-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+      font-size: 0.78rem;
+    }
+    .cua-report-frame {
+      width: 100%;
+      height: 78vh;
+      min-height: 640px;
+      border: 0;
+      display: block;
+      background: #f6f7fb;
+    }
+    .cua-cli {
+      font-size: 0.72rem;
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 0.65rem 0.75rem;
+      overflow-x: auto;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .cua-unavail { color: var(--muted); font-size: 0.85rem; padding: 1rem 0; }
     .view-page-title {
       max-width: 1400px;
       margin: 0 auto;
@@ -1006,6 +1083,13 @@
           <span class="tab-desc">Synthetic cohort, ranked outputs, hypotheses &amp; evidence</span>
         </span>
       </button>
+      <button type="button" class="tab-btn tab-btn-cua" data-view="cua">
+        <span class="tab-step">3</span>
+        <span class="tab-text">
+          <span class="tab-title">Grant Proposal (CUA)</span>
+          <span class="tab-desc">NIH R01 draft from evidence — separate from pipeline rankings</span>
+        </span>
+      </button>
     </div>
   </nav>
 
@@ -1253,6 +1337,59 @@
         <strong>Demo data notice.</strong> Rows with <code>DEMO-*</code> source IDs are seed placeholders.
         Run <code>python3 cli.py pull</code> (not <code>build</code> on team Supabase) to backfill real PMIDs and NCT ids.
         Synthetic patient profiles contain zero real patient data.
+      </div>
+    </div>
+  </div>
+
+  <div id="viewCua" class="hidden">
+    <p class="view-page-title">Step 3 — Grant Proposal (CUA) <span id="cuaSubtitle">Conclusion Update Agent · NIH R01 from team evidence</span></p>
+    <div class="cua-wide">
+      <div class="card cua-banner">
+        <h2 style="margin-top:0;">Separate from Step 2 rankings</h2>
+        <p style="margin:0;font-size:0.85rem;color:var(--muted);line-height:1.5;">
+          The dashboard pipeline writes <strong>Prioritize / Monitor / Reject</strong> tiers (formula, no LLM).
+          <strong>CUA</strong> is an optional Agent&nbsp;6 package that reads the same evidence and produces a
+          multi-round, citation-grounded <strong>NIH grant proposal</strong>. This tab shows the bundled
+          <code>graded6</code> demo run (~400 papers → 60 writer view). Run live against your DB with the CLI below.
+        </p>
+      </div>
+      <div class="cua-kpi-row" id="cuaKpis">
+        <div class="cua-kpi"><div class="val" id="cuaKpiCorpus">—</div><div class="lbl">Corpus papers</div></div>
+        <div class="cua-kpi"><div class="val" id="cuaKpiView">—</div><div class="lbl">Writer view</div></div>
+        <div class="cua-kpi"><div class="val" id="cuaKpiCites">—</div><div class="lbl">Citations</div></div>
+        <div class="cua-kpi"><div class="val" id="cuaKpiF1">—</div><div class="lbl">Critic F1</div></div>
+        <div class="cua-kpi"><div class="val" id="cuaKpiF2">—</div><div class="lbl">Critic F2</div></div>
+      </div>
+      <div id="cuaUnavailable" class="cua-unavail hidden">
+        CUA demo artifacts not found. Ensure <code>cua/outputs/graded6.*</code> exists in the repo.
+      </div>
+      <div class="cua-grid" id="cuaMain">
+        <aside class="cua-side">
+          <div class="card">
+            <h2>Central hypothesis</h2>
+            <p class="cua-hyp" id="cuaHypothesis">Loading…</p>
+          </div>
+          <div class="card">
+            <h2>Specific aims</h2>
+            <div id="cuaAims"></div>
+          </div>
+          <div class="card">
+            <h2>Run live</h2>
+            <p style="font-size:0.75rem;color:var(--muted);margin:0 0 0.5rem;">Read-only against Supabase or local SQLite — writes local JSON only.</p>
+            <pre class="cua-cli">cd cua &amp;&amp; pip install -e .
+export CUA_LIVE=1 ANTHROPIC_API_KEY=...
+python -m cua.nih.run_db \
+  --db "$SUPABASE_DATABASE_URL" \
+  --run-id my-run --capture-content</pre>
+          </div>
+        </aside>
+        <div class="cua-report-wrap">
+          <div class="cua-report-head">
+            <span><strong id="cuaReportTitle">Full pipeline report</strong> · <span id="cuaReportMeta">graded6 demo</span></span>
+            <a class="btn btn-secondary" id="cuaReportOpen" href="#" target="_blank" rel="noopener" style="font-size:0.72rem;padding:0.35rem 0.65rem;">Open in new tab</a>
+          </div>
+          <iframe id="cuaReportFrame" class="cua-report-frame" title="CUA grant proposal report" src="about:blank"></iframe>
+        </div>
       </div>
     </div>
   </div>
@@ -3230,12 +3367,58 @@
       }
     }
 
+    let cuaLoaded = false;
+
+    async function loadCuaTab() {
+      const unavail = document.getElementById('cuaUnavailable');
+      const main = document.getElementById('cuaMain');
+      const kpis = document.getElementById('cuaKpis');
+      try {
+        const r = await fetch(`${API_BASE}/api/cua/demo`);
+        const d = await r.json();
+        if (!d.available) {
+          unavail.classList.remove('hidden');
+          main.classList.add('hidden');
+          kpis.classList.add('hidden');
+          return;
+        }
+        unavail.classList.add('hidden');
+        main.classList.remove('hidden');
+        kpis.classList.remove('hidden');
+        document.getElementById('cuaSubtitle').textContent = d.project_title || 'CUA demo';
+        document.getElementById('cuaHypothesis').textContent = d.central_hypothesis || '—';
+        document.getElementById('cuaKpiCorpus').textContent = d.ingestion?.corpus_n ?? '—';
+        document.getElementById('cuaKpiView').textContent = d.ingestion?.top_k ?? '—';
+        document.getElementById('cuaKpiCites').textContent = d.audit?.citations ?? '—';
+        document.getElementById('cuaKpiF1').textContent = d.audit?.scores?.F1 ?? '—';
+        document.getElementById('cuaKpiF2').textContent = d.audit?.scores?.F2 ?? '—';
+        document.getElementById('cuaReportTitle').textContent = d.project_title || 'Full pipeline report';
+        document.getElementById('cuaReportMeta').textContent =
+          `${d.run_id} · ${d.audit?.obligations_satisfied ?? '—'} obligations satisfied`;
+        const reportUrl = `${API_BASE}${d.report_path || '/cua-demo/graded6.html'}`;
+        document.getElementById('cuaReportFrame').src = reportUrl;
+        document.getElementById('cuaReportOpen').href = reportUrl;
+        const aimsEl = document.getElementById('cuaAims');
+        aimsEl.innerHTML = (d.aims || []).map(a =>
+          `<div class="cua-aim"><div class="cua-aim-h">${a.id || 'aim'} · ${a.citation_count || 0} cites</div>${a.hypothesis || ''}</div>`,
+        ).join('') || '<p class="cua-unavail">No aims in demo artifact.</p>';
+        cuaLoaded = true;
+      } catch (e) {
+        unavail.textContent = 'Could not load CUA demo: ' + (e.message || e);
+        unavail.classList.remove('hidden');
+        main.classList.add('hidden');
+        kpis.classList.add('hidden');
+      }
+    }
+
     function showView(name) {
       document.getElementById('viewInput').classList.toggle('hidden', name !== 'input');
       document.getElementById('viewResults').classList.toggle('hidden', name !== 'results');
+      document.getElementById('viewCua').classList.toggle('hidden', name !== 'cua');
       document.querySelectorAll('.tab-btn').forEach(b => {
         b.classList.toggle('active', b.dataset.view === name);
       });
+      if (name === 'cua' && !cuaLoaded) loadCuaTab();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 

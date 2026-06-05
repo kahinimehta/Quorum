@@ -58,4 +58,4 @@ shot "$OUT/step2-ranked-treatments.png" "http://127.0.0.1:8080/index.html" 2
 shot "$OUT/step2-synthetic-cohort.png" "http://127.0.0.1:8080/index.html" 2
 shot "$OUT/step2-audit-evidence.png" "http://127.0.0.1:8080/index.html" 2
 
-echo "Done."
+echo "Done. For Step 3 (CUA tab) + element crops, use: cd neurodiscover && python3 scripts/capture_dashboard_screenshots.py"
