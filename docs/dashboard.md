@@ -13,38 +13,35 @@ Single-page UI at `neurodiscover/frontend/index.html` — vanilla HTML/CSS/JS, n
 
 ## Quick start
 
-**Python 3.10, 3.11, or 3.12** · macOS, Linux, Windows
+**Python 3.10, 3.11, or 3.12** · macOS, Linux, Windows · `make dashboard` = `python3 cli.py dashboard`
 
-| Platform | Command |
-|----------|---------|
-| **macOS / Linux** | `make dashboard` |
-| **Windows** | `python cli.py dashboard` |
-
-`make dashboard` wraps `python3 cli.py dashboard` and works on **macOS and Linux**. On **Windows** (cmd/PowerShell), use **`python cli.py dashboard`** instead — `make` is not installed by default.
-
-**macOS / Linux:**
+**pip:**
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
+python3 --version          # must be 3.10.x – 3.12.x
 pip install -r requirements.txt
+cp .env.example .env
 make dashboard
 ```
 
-**Windows:**
+**conda (empty environment):**
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
-cd Quorum\neurodiscover
-python -m pip install -r requirements.txt
-python cli.py dashboard
+cd Quorum/neurodiscover
+conda env create -f environment.yml
+conda activate neurodiscover
+cp .env.example .env
+make dashboard
 ```
 
-Equivalents on macOS/Linux:
+Equivalents:
 
 ```bash
 python3 cli.py dashboard
-./dashboard                         # bash script — Git Bash / WSL on Windows too
+./dashboard                         # bash script — Git Bash / WSL on Windows
 ```
 
 Opens **http://127.0.0.1:8080** in your default browser. Use `--no-browser` to skip auto-open. Press **Ctrl+C** to stop API + UI.
@@ -62,8 +59,7 @@ The launcher will:
 
 | Platform | Tip |
 |----------|-----|
-| **macOS / Linux** | `make dashboard` or `python3 cli.py dashboard` |
-| **Windows** | **`python cli.py dashboard`** in cmd/PowerShell (not `make`) |
+| **Windows** | `make` often unavailable — use `python cli.py dashboard` |
 | **Windows** | `./dashboard` requires Git Bash or WSL |
 | **Linux / WSL / SSH / headless** | `--no-browser` then open `http://127.0.0.1:8080` manually |
 | **macOS** | Port 5000 sometimes taken by **AirPlay Receiver** — `--port-api 5001 --port-ui 8081` or disable AirPlay |

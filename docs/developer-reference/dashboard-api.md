@@ -16,8 +16,8 @@ Requires **Python 3.10, 3.11, or 3.12**.
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
-pip install -r requirements.txt   # Windows: python -m pip install -r requirements.txt
-make dashboard                    # macOS/Linux — Windows: python cli.py dashboard
+pip install -r requirements.txt   # or: conda env create -f environment.yml && conda activate neurodiscover
+make dashboard
 ```
 
 Opens **http://127.0.0.1:8080** in your default browser (`--no-browser` to skip). Press **Ctrl+C** to stop API + UI.

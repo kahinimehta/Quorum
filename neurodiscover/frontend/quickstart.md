@@ -80,34 +80,23 @@ playwright install chromium
 
 From `neurodiscover/` (with deps installed and env activated):
 
-| Platform | Command |
-|----------|---------|
-| **macOS / Linux** | `make dashboard` |
-| **Windows** | `python cli.py dashboard` |
-
-`make dashboard` is a Makefile shortcut for `python3 cli.py dashboard` — it works on **macOS and Linux** when `make` is installed. **Windows does not ship with `make`** in Command Prompt or PowerShell; use the **`python`** command there instead.
-
-**macOS / Linux:**
-
 ```bash
 make dashboard
-# same as:
-python3 cli.py dashboard
-./dashboard          # bash wrapper
 ```
 
-**Windows (Command Prompt or PowerShell):**
+**macOS / Linux:** `make dashboard` (same as `python3 cli.py dashboard`). **Windows:** use `python cli.py dashboard`.
+
+Equivalents:
+
+```bash
+python3 cli.py dashboard
+./dashboard          # bash — macOS/Linux; Git Bash or WSL on Windows
+```
+
+On Windows without `make`:
 
 ```bash
 python cli.py dashboard
-```
-
-**Windows (Git Bash / WSL)** — same as Linux:
-
-```bash
-make dashboard
-# or:
-python3 cli.py dashboard
 ```
 
 This will:
@@ -128,8 +117,7 @@ Press **Ctrl+C** to stop.
 
 | Platform | Tip |
 |----------|-----|
-| **macOS / Linux** | `make dashboard` (or `python3 cli.py dashboard`) |
-| **Windows** | Use **`python cli.py dashboard`** — not `make` (unless Git Bash/WSL) |
+| **Windows** | `make` is often not installed — use `python cli.py dashboard` |
 | **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
 | **Linux / WSL / SSH / headless VM** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
 | **macOS** | Port **5000** may conflict with **AirPlay Receiver** (System Settings → General → AirDrop & Handoff) — use alternate ports below or disable AirPlay |

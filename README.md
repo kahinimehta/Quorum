@@ -16,40 +16,30 @@ Agentic system for **commercial development discovery**: continuously ingest lit
 
 ## Quick start
 
-Requires **Python 3.10, 3.11, or 3.12** on macOS, Linux, or Windows.
-
-| Platform | Start the dashboard |
-|----------|---------------------|
-| **macOS / Linux** | `make dashboard` |
-| **Windows** | `python cli.py dashboard` |
-
-**macOS / Linux:**
+Requires **Python 3.10, 3.11, or 3.12** on macOS, Linux, or Windows. `make dashboard` is shorthand for `python3 cli.py dashboard` — not Mac-only.
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
 pip install -r requirements.txt
-cp .env.example .env
+cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
 make dashboard
 ```
 
-**Windows (Command Prompt / PowerShell):**
-
-```bash
-git clone https://github.com/kahinimehta/Quorum.git
-cd Quorum\neurodiscover
-python -m pip install -r requirements.txt
-copy .env.example .env
-python cli.py dashboard
-```
-
-**Conda (any OS):**
+**Conda (empty environment):**
 
 ```bash
 conda env create -f environment.yml
 conda activate neurodiscover
-cp .env.example .env          # Windows: copy .env.example .env
-make dashboard                # macOS/Linux — on Windows use: python cli.py dashboard
+cp .env.example .env
+make dashboard
+```
+
+Same without `make`:
+
+```bash
+python3 cli.py dashboard
+# or: ./dashboard   (bash — macOS, Linux, Git Bash / WSL on Windows)
 ```
 
 This will:
@@ -66,8 +56,7 @@ Press **Ctrl+C** to stop both servers.
 
 | Platform | Tip |
 |----------|-----|
-| **macOS / Linux** | `make dashboard` or `python3 cli.py dashboard` |
-| **Windows** | **`python cli.py dashboard`** — `make` is not available in cmd/PowerShell by default |
+| **Windows** | `make` is often missing — use `python cli.py dashboard` (or `python3` if available) |
 | **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
 | **Linux / WSL / SSH** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
 | **macOS** | Port **5000** may be used by **AirPlay Receiver** — use `--port-api 5001 --port-ui 8081` or disable AirPlay |
