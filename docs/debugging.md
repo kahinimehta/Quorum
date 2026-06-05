@@ -1,0 +1,124 @@
+---
+layout: default
+title: Debugging
+nav_order: 10
+description: "Troubleshoot deploy, dashboard, API, and pipeline runs"
+---
+
+# Debugging
+
+Common issues for **local development**, **GitHub Pages deploy**, and **live demo**.
+
+---
+
+## GitHub Pages (neurodiscover.github.io)
+
+| Symptom | Fix |
+|---------|-----|
+| Deploy Action failed, git exit 128 | Check secret **`NEURODISCOVERY_DOCS`** in Quorum → Settings → Secrets. Classic PAT needs **`repo`** scope; authorize SSO for `neurodiscover` org. |
+| Deploy green but site 404 | **neurodiscover/neurodiscover.github.io** → Settings → Pages → **Deploy from branch** → `main` / **root**. Wait 2–5 min; hard-refresh. |
+| Unstyled / broken links | Confirm `docs/_config.yml` has `url: https://neurodiscover.github.io` and `baseurl: ""`. |
+| Old content after push | Actions → **Deploy docs to neurodiscover.github.io** → confirm latest run on `main` succeeded. |
+
+See [Site publishing](pages-setup) for full setup.
+
+---
+
+## Dashboard & API
+
+### Dashboard won't start
+
+```bash
+cd neurodiscover
+pip install -r requirements.txt
+python3 cli.py validate
+make dashboard
+```
+
+| Error | Fix |
+|-------|-----|
+| Port 5000 or 8080 in use | Stop other processes or use `python3 cli.py dashboard --port 5001 --ui-port 8081` |
+| Module not found | Run from `neurodiscover/` directory; `pip install -r requirements.txt` |
+| DB errors | Local: `python3 cli.py build` (local only). Team Supabase: set `SUPABASE_DATABASE_URL`, **never** `build`. |
+
+### API smoke test
+
+```bash
+curl -s http://127.0.0.1:5000/api/stats
+curl -s http://127.0.0.1:5000/api/runs?limit=3
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' \
+  -d '{"mode":"demo","max_papers":5}'
+```
+
+Expected: JSON with `run_id`, `recommendations`, `agent_outputs`, `runStats`.
+
+---
+
+## Pipeline run status
+
+| UI status | Meaning |
+|-----------|---------|
+| **Complete** | All 6 agents logged for `run_id` + ≥1 recommendation |
+| **Partial** | Stopped early — check agent trace count (e.g. `3/6`) |
+| **Failed** | Exception in orchestrator — see API terminal logs |
+
+### Partial run checklist
+
+- Literature step returned zero rows → check `max_papers`, DB has evidence  
+- Missing Nebius/Ollama keys → set `EXTRACT_BACKEND=none` for metadata-only demo  
+- Team DB empty locally → run `python3 cli.py build` once (local only) or set Supabase URL  
+
+---
+
+## Literature pull
+
+```bash
+cd neurodiscover
+python3 cli.py pull --disease "your condition" --max 10 --no-pubtator
+python3 cli.py scan --max 5
+```
+
+| Issue | Fix |
+|-------|-----|
+| BioMCP not found | Install `biomcp-python`; check `PUBMED_MCP_COMMAND` in `.env` |
+| No new rows | Duplicates skipped — normal for re-pull; try new `--query` |
+| Slow / timeout | Reduce `--max`; use `scan` for incremental |
+| Invented ids rejected | Only BioMCP-returned ids are inserted — expected behavior |
+
+---
+
+## Jekyll docs (local)
+
+```bash
+cd docs
+bundle install
+bundle exec jekyll serve
+# → http://127.0.0.1:4000
+```
+
+| Issue | Fix |
+|-------|-----|
+| `jekyll: command not found` | `bundle exec jekyll serve` |
+| Theme errors | `bundle install` in `docs/`; Ruby 3.3+ |
+
+---
+
+## Logs & trace
+
+| What | Where |
+|------|--------|
+| Agent trace | Dashboard Step 2, or `GET /api/agents?run_id=` |
+| API server logs | Terminal running `api_server.py` / `make dashboard` |
+| GitHub deploy | Quorum → Actions → **Deploy docs to neurodiscover.github.io** |
+| DB inspect | `python3 cli.py show evidence` or `python3 cli.py query "SELECT ..."` |
+
+---
+
+## Safe demo checklist (stage)
+
+- [ ] Run `make dashboard` **before** presenting (not live pull on stage)  
+- [ ] Mode **demo**, max papers **5**  
+- [ ] No `cli.py build` against team Supabase  
+- [ ] Browser at `http://127.0.0.1:8080` (not stale GitHub Pages tab for live UI)  
+- [ ] Fallback: [neurodiscover.github.io](https://neurodiscover.github.io) for docs if local fails  

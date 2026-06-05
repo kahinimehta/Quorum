@@ -48,7 +48,7 @@ Plus `agent_outputs` trace.
 
 | Field | Value |
 |-------|-------|
-| subgroup | GBA-mutation PD |
+| subgroup | GBA-mutation carriers |
 | mechanism | lysosomal dysfunction |
 | treatment | GCase activation |
 | supporting sources | DEMO-PMID-001, DEMO-NCT-001 |
@@ -59,7 +59,7 @@ Plus `agent_outputs` trace.
 {
   "connections": [
     {
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "mechanism": "lysosomal dysfunction",
       "treatment": "GCase activation",
       "source_ids": ["DEMO-PMID-001", "DEMO-NCT-001"],

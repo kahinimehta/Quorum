@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Developer reference
-nav_order: 10
+nav_order: 11
 has_children: true
 description: "Schema, agent I/O, API contracts"
 ---
@@ -27,5 +27,6 @@ Contract documents for schema, agent I/O, backend SQL, and validation. These are
 | [Supabase](supabase) | Team shared DB |
 | [Team env sharing](team-env-sharing) | `.env` distribution |
 | [Downstream agents](remaining-agents) | Agents 2–6 integration notes |
+| [Debugging](../debugging) | Deploy, API, and pipeline troubleshooting |
 
 Also see root [`queries.sql`](https://github.com/kahinimehta/Quorum/blob/main/queries.sql) and [`AGENTS.md`](https://github.com/kahinimehta/Quorum/blob/main/AGENTS.md) in the repo.

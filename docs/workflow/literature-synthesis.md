@@ -16,7 +16,7 @@ description: "Agent 1 — PubMed, trials, grants ingestion"
 
 ## Role
 
-Pull manuscripts and clinical trials for Parkinson's disease, extract structured findings via LLM, and write distilled rows to the `evidence` table. Auto-link evidence to seed subgroups when names match exactly.
+Pull manuscripts and clinical trials for a **configured disease or condition**, extract structured findings via LLM, and write distilled rows to the `evidence` table. Auto-link evidence to seed subgroups when names match exactly.
 
 ## External inputs
 
@@ -56,7 +56,7 @@ methods_text, results_text, discussion_text
 ## CLI
 
 ```bash
-python3 cli.py pull --disease "Parkinson disease" --max 150
+python3 cli.py pull --disease "your condition" --max 150
 python3 cli.py pull --max 50 --include-preprints 20
 python3 cli.py pull --query "GBA GCase lysosomal" --gene GBA
 python3 cli.py scan --max 5                    # incremental

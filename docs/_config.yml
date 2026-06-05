@@ -1,7 +1,7 @@
 title: NeuroDiscover AI
 description: >-
-  Multi-agent Parkinson's disease discovery — hidden patient subgroups,
-  treatment connections, and ranked recommendations.
+  Agentic commercial development discovery — hidden patient subgroups,
+  evidence-linked treatment connections, and ranked portfolio opportunities.
 theme: just-the-docs
 
 url: https://neurodiscover.github.io
@@ -32,7 +32,7 @@ aux_links:
   Dashboard (local):
     - "https://github.com/kahinimehta/Quorum/tree/main/neurodiscover/frontend"
 
-footer_content: "NeuroDiscover · Quorum · NextGen BioAgents Hackathon"
+footer_content: "NeuroDiscover · Quorum · Track 02 Autonomous Research · Final Showcase June 6, 2025"
 
 mermaid:
   version: "10.6.1"

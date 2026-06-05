@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Dashboard
-nav_order: 7
+nav_order: 9
 description: "Run the local dashboard UI"
 ---
 
@@ -59,7 +59,7 @@ Timestamps display in **US Eastern** (`America/New_York`).
 | Panel | Route |
 |-------|--------|
 | DB / KPI tiles | `GET /api/stats` |
-| Subgroups / connections | `GET /api/discover/parkinsons` |
+| Subgroups / connections | `GET /api/discover/parkinsons` (legacy path; indication-agnostic) |
 | Recommendations | `GET /api/recommendations?run_id=` |
 | Recent runs | `GET /api/runs` |
 | Agent trace | `GET /api/agents?run_id=` |

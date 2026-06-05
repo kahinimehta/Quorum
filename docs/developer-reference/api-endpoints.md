@@ -22,7 +22,7 @@ The dashboard reads these routes when browser Supabase keys are unset. Full JSON
 | Method | Path | Notes |
 |--------|------|--------|
 | GET | `/health` | Status + `database` label |
-| GET | `/api/discover/parkinsons` | Subgroups + treatment connections |
+| GET | `/api/discover/parkinsons` | Subgroups + treatment connections (legacy path; indication-agnostic) |
 | GET | `/api/recommendations` | Ranked list; optional `?run_id=` |
 | GET | `/api/agents` | Agent trace; optional `?run_id=` |
 | GET | `/api/stats` | Evidence counts + `lastScanAt` |

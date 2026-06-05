@@ -59,7 +59,7 @@ Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 | Panel | Route |
 |-------|--------|
 | DB / KPI tiles | `GET /api/stats` |
-| Subgroups / connections | `GET /api/discover/parkinsons` |
+| Subgroups / connections | `GET /api/discover/parkinsons` (legacy path; indication-agnostic) |
 | Recommendations | `GET /api/recommendations?run_id=` |
 | Recent runs | `GET /api/runs` |
 | Per-run counts | `GET /api/run-stats?run_id=` |

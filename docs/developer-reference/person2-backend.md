@@ -36,7 +36,7 @@ Example discover payload shape:
 
 ```json
 {
-  "disease": "Parkinson's Disease",
+  "disease": "Configured indication (from seed or pull)",
   "subgroups": [],
   "treatmentConnections": [],
   "recommendation": {}

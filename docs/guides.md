@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Guides
-nav_order: 8
+nav_order: 12
 description: "CLI, API verification, and developer setup"
 ---
 

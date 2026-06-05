@@ -2,22 +2,32 @@
 layout: default
 title: Home
 nav_order: 1
-description: "Purpose, rationale, and quick start for NeuroDiscover AI"
+description: "Agentic commercial development discovery — quick start and overview"
 ---
 
 # NeuroDiscover AI
 
 {: .fs-6 .fw-300 }
 
-Multi-agent Parkinson's disease discovery — hidden patient subgroups, treatment connections, and ranked recommendations for research and development.
+**Quorum** — agentic system for **commercial development discovery**: continuously ingest literature and trials, surface **hidden patient subgroups** inside heterogeneous indications, map **subgroup → mechanism → treatment** connections, and rank opportunities by evidence and commercial potential.
+
+**Live docs:** [https://neurodiscover.github.io](https://neurodiscover.github.io) · **Track:** Autonomous Research (Literature synthesis, hypothesis generation & evidence tracking) · **Partner framing:** Pfizer Commercial Development Discovery
 
 ---
 
-## Purpose
+## What problem we solve
 
-NeuroDiscover is a **multi-agent discovery system** for Parkinson's disease (PD). It ingests public **literature**, **clinical trials**, and **NIH grants**; identifies **patient subgroups**; maps **subgroup → mechanism → treatment** connections; scores evidence and commercial potential; and ranks opportunities for research and development.
+Traditional portfolio review evaluates a **small set** of opportunities over **months**, using expert taxonomies that structurally miss:
 
-Final ranking uses a transparent formula:
+- Patient subgroups hidden inside a heterogeneous indication  
+- Mechanisms that connect conditions thought to be unrelated  
+- White-space signals that only appear when literature, trials, and funding are synthesized continuously  
+
+NeuroDiscover is an **AI-native alternative**: six agents share a SQL evidence store, update conclusions as new sources arrive, and output auditable **Prioritize / Monitor / Reject** tiers.
+
+See [Problem & significance](problem) for full framing and [For judges](for-judges) for rubric alignment.
+
+## How ranking works
 
 ```
 confidence = evidence_strength × 0.55 + commercial_potential × 0.45
@@ -31,11 +41,11 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 
 ## Why this architecture
 
-- **Hidden subgroups** — PD is heterogeneous (genetic, inflammatory, progression rate). One-size-fits-all trials miss signal.
-- **Evidence as contract** — Every claim links to real PMIDs, NCT ids, or grants in a shared SQL database (not hallucinated ids).
-- **Database blackboard** — Six agents run in sequence; each reads prior tables and writes its own. The dashboard and API read the same store.
-- **Safe demo** — Synthetic patient profiles (Patients A–E) illustrate outputs with **no PHI** for judges and stakeholders.
-- **Reproducibility** — Schema in git; local SQLite for laptops; optional team Supabase for shared live data.
+- **Hidden subgroups** — Heterogeneous indications need subgroup-aware discovery, not one-size-fits-all review.  
+- **Evidence as contract** — Every claim links to real PMIDs, NCT ids, or grants (no invented ids).  
+- **Database blackboard** — Agents read/write SQL tables; dashboard and API share one store.  
+- **Safe demo** — Synthetic patient profiles (A–E) illustrate outputs with **no PHI**.  
+- **Indication-agnostic** — Configure disease/condition via CLI or API; demo seed data is illustrative only.
 
 See [Architecture decisions](decisions) for trade-offs.
 
@@ -59,7 +69,7 @@ This will:
 Press **Ctrl+C** to stop both servers.
 
 {: .important }
-**Team live database:** Supabase already holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
+**Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
 
 ## Repository map
 
@@ -73,8 +83,10 @@ Press **Ctrl+C** to stop both servers.
 
 ## Next steps
 
-- [Workflow](workflow/) — six-agent pipeline and per-agent detail
-- [Inputs](input) — what goes into the system
-- [Output examples](output) — JSON shapes and dashboard panels
-- [Team](team) — Quorum contributors
-- [Run the dashboard](dashboard) — UI walkthrough
+- [Problem & significance](problem) — unmet need and track alignment  
+- [Workflow](workflow/) — six-agent pipeline  
+- [Inputs](input) · [Output examples](output)  
+- [Team](team) — interdisciplinary roles  
+- [For judges](for-judges) — rubric mapping  
+- [Debugging](debugging) — deploy, API, and pipeline troubleshooting  
+- [Run the dashboard](dashboard) — UI walkthrough  

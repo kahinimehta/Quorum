@@ -27,17 +27,20 @@ No MongoDB required. If you mirror to Atlas, use field names from the MongoDB ma
 
 ## GET /api/discover/parkinsons
 
+{: .highlight }
+**Legacy route name** — returns subgroups and connections from the current database regardless of configured indication.
+
 Returns disease overview, subgroups, and treatment connections.
 
 ### JSON shape
 
 ```json
 {
-  "disease": "Parkinson's Disease",
+  "disease": "Configured indication (from seed or pull)",
   "subgroups": [
     {
       "subgroupId": 1,
-      "name": "GBA-mutation PD",
+      "name": "GBA-mutation carriers",
       "definingFeatures": "...",
       "evidenceCount": 2
     }
@@ -45,7 +48,7 @@ Returns disease overview, subgroups, and treatment connections.
   "treatmentConnections": [
     {
       "connectionId": 1,
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "mechanism": "lysosomal dysfunction",
       "treatment": "GCase activation",
       "evidenceStrength": null,
@@ -91,7 +94,7 @@ Agent trace for the dashboard pipeline cards.
     {
       "agentName": "Literature Synthesis Agent",
       "stepOrder": 1,
-      "summary": "Pulled 10 raw sources via BioMCP for Parkinson disease.",
+      "summary": "Pulled 10 raw sources via BioMCP for configured disease query.",
       "payload": { "since_year": 2022, "incremental": false },
       "createdAt": "2026-06-01 12:00:00"
     }
@@ -120,7 +123,7 @@ Ranked recommendations from Agent 6.
 {
   "recommendations": [
     {
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "treatment": "GCase activation",
       "confidence": 82.5,
       "tier": "Prioritize",
@@ -240,7 +243,7 @@ Ephemeral Synthea-style demo profiles (not stored in DB).
     {
       "patient_id": "Patient A",
       "patient_letter": "A",
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "subgroup_color": "#2563eb",
       "synthetic_age": 68,
       "synthetic_sex": "M",

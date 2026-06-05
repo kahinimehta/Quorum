@@ -57,7 +57,7 @@ Displayed as 0–100 in the API (internal 0–10 scores × 10).
 
 ```json
 {
-  "subgroup": "GBA-mutation PD",
+  "subgroup": "GBA-mutation carriers",
   "treatment": "GCase activation",
   "confidence": 82.5,
   "tier": "Prioritize",

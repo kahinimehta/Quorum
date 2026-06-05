@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Inputs
-nav_order: 3
+nav_order: 4
 description: "External sources, API requests, and database rows that feed the pipeline"
 ---
 
@@ -29,7 +29,7 @@ Agent 1 (Literature Synthesis) pulls from public APIs via **BioMCP** and optiona
 
 ```bash
 cd neurodiscover
-python3 cli.py pull --disease "Parkinson disease" --max 150
+python3 cli.py pull --disease "your condition" --max 150
 python3 cli.py pull --max 50 --include-preprints 20
 python3 cli.py pull --query "GBA GCase lysosomal" --gene GBA
 python3 cli.py pull-grants --limit 30
@@ -81,9 +81,9 @@ Each row in the `evidence` table is a distilled finding — not raw API JSON.
 
 | Column | Example |
 |--------|---------|
-| `title` | GCase activity and lysosomal dysfunction in GBA-associated Parkinson's |
+| `title` | GCase activity and lysosomal dysfunction in GBA-mutation carriers |
 | `year` | 2023 |
-| `subgroup` | GBA-mutation PD |
+| `subgroup` | GBA-mutation carriers |
 | `mechanism` | lysosomal dysfunction |
 | `treatment` | GCase activation |
 | `key_result` | Reduced GCase activity correlates with faster progression… |
@@ -105,9 +105,9 @@ From `seed_data.json` (placeholder ids — not for live citation):
 {
   "source_type": "literature",
   "source_id": "DEMO-PMID-001",
-  "title": "GCase activity and lysosomal dysfunction in GBA-associated Parkinson's",
+  "title": "GCase activity and lysosomal dysfunction in GBA-mutation carriers",
   "year": 2023,
-  "subgroup": "GBA-mutation PD",
+  "subgroup": "GBA-mutation carriers",
   "mechanism": "lysosomal dysfunction",
   "treatment": "GCase activation",
   "key_result": "Reduced GCase activity correlates with faster progression in GBA carriers.",
@@ -118,17 +118,7 @@ From `seed_data.json` (placeholder ids — not for live citation):
 
 ---
 
-## Subgroup vocabulary (prefer exact match)
-
-Literature extraction prefers these names when applicable:
-
-- GBA-mutation PD
-- LRRK2 PD
-- Alpha-synuclein-high PD
-- Inflammation-high PD
-- Rapid motor progressors
-
-Five seed subgroups in `subgroups` table map to these names.
+Literature extraction prefers consistent subgroup names when the evidence supports them. Demo seed includes five illustrative subgroups (e.g. GBA-mutation carriers, LRRK2 variant subgroup, inflammation-high progressors).
 
 ---
 

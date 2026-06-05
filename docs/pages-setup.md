@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Site publishing
-nav_order: 9
+nav_order: 13
 description: "Deploy docs to neurodiscover.github.io"
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Architecture
-nav_order: 6
+nav_order: 8
 description: "Key design decisions and trade-offs"
 ---
 

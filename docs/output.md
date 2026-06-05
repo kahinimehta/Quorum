@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Output examples
-nav_order: 4
+nav_order: 5
 description: "API JSON shapes, recommendations, synthetic cohort, and dashboard panels"
 ---
 
@@ -20,7 +20,7 @@ Full pipeline response (demo mode, abbreviated):
   "run_id": "a1b2c3d4",
   "recommendations": [
     {
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "treatment": "GCase activation",
       "confidence": 82.5,
       "tier": "Prioritize",
@@ -39,7 +39,7 @@ Full pipeline response (demo mode, abbreviated):
     {
       "patient_id": "Patient A",
       "patient_letter": "A",
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "subgroup_color": "#2563eb",
       "synthetic_age": 68,
       "synthetic_sex": "M",
@@ -71,14 +71,14 @@ Full pipeline response (demo mode, abbreviated):
 {
   "recommendations": [
     {
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "treatment": "GCase activation",
       "confidence": 82.5,
       "tier": "Prioritize",
       "rationale": "Multiple literature and trial sources; strong mechanism alignment."
     },
     {
-      "subgroup": "LRRK2 PD",
+      "subgroup": "LRRK2 variant subgroup",
       "treatment": "LRRK2 inhibition",
       "confidence": 71.2,
       "tier": "Monitor",
@@ -113,7 +113,7 @@ Every run logs one row per agent step in `agent_outputs`:
     {
       "agentName": "Literature Synthesis Agent",
       "stepOrder": 1,
-      "summary": "Pulled 10 raw sources via BioMCP for Parkinson disease.",
+      "summary": "Pulled 10 raw sources via BioMCP for configured disease query.",
       "payload": { "since_year": 2022, "incremental": false },
       "createdAt": "2026-06-01 12:00:00"
     },
@@ -148,7 +148,7 @@ Generated per `run_id` from recommendations + subgroups. **Not stored in the dat
   "synthetic_cohort": [
     {
       "patient_id": "Patient A",
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "top_opportunity": "GCase activation",
       "mechanism": "lysosomal dysfunction",
       "confidence": 82.5,
@@ -212,15 +212,18 @@ Database overview for dashboard KPI tiles:
 
 ## GET /api/discover/parkinsons
 
+{: .highlight }
+**Legacy route name** — the path reflects the hackathon demo seed, not a hard-coded indication. The handler returns whatever subgroups and connections exist in the database for the current run.
+
 Subgroups and treatment connections for the discovery overview panel:
 
 ```json
 {
-  "disease": "Parkinson's Disease",
+  "disease": "Configured indication (from seed or pull)",
   "subgroups": [
     {
       "subgroupId": 1,
-      "name": "GBA-mutation PD",
+      "name": "GBA-mutation carriers",
       "definingFeatures": "GBA1 variant carriers; reduced GCase activity",
       "evidenceCount": 2
     }
@@ -228,7 +231,7 @@ Subgroups and treatment connections for the discovery overview panel:
   "treatmentConnections": [
     {
       "connectionId": 1,
-      "subgroup": "GBA-mutation PD",
+      "subgroup": "GBA-mutation carriers",
       "mechanism": "lysosomal dysfunction",
       "treatment": "GCase activation",
       "evidenceStrength": 8.5,

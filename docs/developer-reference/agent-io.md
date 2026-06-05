@@ -41,7 +41,7 @@ VALUES (?, ?, ?, ?, ?);
 ### CLI (Person 3 data layer)
 
 ```bash
-python3 cli.py pull --disease "Parkinson disease" --max 150          # stage 1: published (default)
+python3 cli.py pull --disease "your condition" --max 150          # stage 1: published (default)
 python3 cli.py pull --max 50 --include-preprints 20                  # + bioRxiv preprints
 python3 cli.py pull --max 50 --with-fulltext                         # OA: PMC → EPMC → Unpaywall sections
 python3 cli.py enrich-with-fulltext --limit 50                       # backfill sections on existing rows
@@ -225,10 +225,12 @@ SELECT * FROM agent_outputs WHERE run_id = ? ORDER BY output_id;
 
 ## Subgroup name vocabulary (prefer exact match)
 
-- GBA-mutation PD
-- LRRK2 PD
-- Alpha-synuclein-high PD
-- Inflammation-high PD
-- Rapid motor progressors
+Demo seed uses illustrative names such as:
 
-Literature agent extraction prompt prefers these names when applicable.
+- GBA-mutation carriers
+- LRRK2 variant subgroup
+- Alpha-synuclein-high subgroup
+- Inflammation-high subgroup
+- Rapid progressors
+
+Literature agent extraction prompt prefers consistent subgroup labels when the evidence supports them.

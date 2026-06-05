@@ -42,13 +42,13 @@ WHERE subgroup IS NOT NULL;
 
 ## Seed vocabulary
 
-Prefer exact match to these five names:
+Demo seed uses five illustrative subgroup names (exact match enables auto-linking):
 
-- GBA-mutation PD
-- LRRK2 PD
-- Alpha-synuclein-high PD
-- Inflammation-high PD
-- Rapid motor progressors
+- GBA-mutation carriers
+- LRRK2 variant subgroup
+- Alpha-synuclein-high subgroup
+- Inflammation-high subgroup
+- Rapid progressors
 
 ## Rules
 
@@ -61,7 +61,7 @@ Prefer exact match to these five names:
 {
   "subgroups": [
     {
-      "name": "GBA-mutation PD",
+      "name": "GBA-mutation carriers",
       "defining_features": "GBA1 variant carriers; reduced GCase activity",
       "mechanisms": ["lysosomal dysfunction"],
       "treatments": ["GCase activation"],
