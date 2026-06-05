@@ -767,10 +767,11 @@ def run(
     pubtator_sample=50,
     with_fulltext: bool = False,
     include_preprints: int = 0,
+    run_id: str | None = None,
 ):
     from db import backend_label, connect
 
-    run_id = str(uuid.uuid4())[:8]
+    run_id = (run_id or str(uuid.uuid4())[:8])[:32]
 
     with connect(db_path) as conn:
         if demo:

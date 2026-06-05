@@ -567,20 +567,25 @@ def _run_agents_2_through_6(
     sg_agent = PatientSubgroupAgent()
     sg_out = sg_agent.run(evidence_rows)
     _persist_subgroups(conn, sg_out, run_id)
+    conn.commit()
 
     tc_agent = TreatmentConnectionAgent()
     tc_out = tc_agent.run(sg_out, evidence_rows)
     _persist_treatment_connections(conn, tc_out, run_id)
+    conn.commit()
 
     es_agent = EvidenceScoringAgent()
     es_out = es_agent.run(tc_out, evidence_rows)
     _persist_evidence_scores(conn, es_out, run_id)
+    conn.commit()
 
     cd_agent = CommercialDiscoveryAgent()
     cd_out = cd_agent.run(es_out)
     _persist_commercial_scores(conn, cd_out, run_id)
+    conn.commit()
 
     recs = _persist_recommendations(conn, run_id)
+    conn.commit()
     return recs, evidence_used
 
 
@@ -592,6 +597,7 @@ def _run_literature_full(
     include_preprints: int,
     with_fulltext: bool,
     extract_backend: str | None,
+    run_id: str | None = None,
 ) -> None:
     if extract_backend:
         os.environ["EXTRACT_BACKEND"] = extract_backend
@@ -608,6 +614,7 @@ def _run_literature_full(
         query=query,
         include_preprints=include_preprints or 0,
         with_fulltext=with_fulltext,
+        run_id=run_id,
     )
 
 
@@ -699,6 +706,7 @@ def run(
             include_preprints=include_preprints,
             with_fulltext=with_fulltext,
             extract_backend=extract_backend,
+            run_id=run_id,
         )
 
     with connect(None) as conn:
@@ -724,7 +732,6 @@ def run(
         recommendations, evidence_used = _run_agents_2_through_6(
             conn, canonical_run_id, max_papers=agent_max
         )
-        conn.commit()
 
         steps = _fetch_steps(conn, canonical_run_id)
         run_stats = _build_run_stats(
