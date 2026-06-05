@@ -55,8 +55,8 @@ Manuscripts, trials, and grants share this table via `source_type`.
 | `mechanism` | TEXT | Agent 1 | Agents 3–6 | |
 | `treatment` | TEXT | Agent 1 | Agents 3–6 | |
 | `key_result` | TEXT | Agent 1 | all | 1–2 sentence distilled finding |
-| `study_type` | TEXT | Agent 1 | Agent 4 | in vitro / mouse / cohort / RCT / Phase 2 … |
-| `sample_size` | INTEGER | Agent 1 | Agent 4 | Powers skeptic scoring |
+| `study_type` | TEXT | Agent 1 | dashboard, future weighting | in vitro / mouse / cohort / RCT / Phase 2 … |
+| `sample_size` | INTEGER | Agent 1 | dashboard, future weighting | Populated on trials; optional on literature |
 | `evidence_snippet` | TEXT | Agent 1 | dashboard | ≤15 word citation line |
 | `url` | TEXT | Agent 1 | dashboard | PubMed or ClinicalTrials.gov link |
 | `doi` | TEXT | Agent 1 | backend | Secondary stable id |
@@ -72,11 +72,11 @@ Manuscripts, trials, and grants share this table via `source_type`.
 | `pulled_at` | TEXT | DB default | backend | First insert time |
 | `last_scanned_at` | TEXT | Agent 1 | scan logic | Updated on incremental scan hits |
 
-**Light processing (Agent 1):** LLM extracts only `subgroup`, `mechanism`, `treatment`, `key_result`, `evidence_snippet`. `study_type` / `sample_size` are left for Agent 4 to parse from `methods_text` / `results_text` when present.
+**Light processing (Agent 1):** LLM extracts `subgroup`, `mechanism`, `treatment`, `key_result`, `evidence_snippet`. Agents 4–5 score from evidence counts and source types in current code (not `study_type` / `sample_size` columns directly).
 
 **Existing DBs:** run migrations in order:
-1. [`migrations/001_evidence_light_processing.sql`](../neurodiscover/migrations/001_evidence_light_processing.sql)
-2. [`migrations/002_evidence_mcp_metadata.sql`](../neurodiscover/migrations/002_evidence_mcp_metadata.sql)
+1. [`../../neurodiscover/migrations/001_evidence_light_processing.sql`](../../neurodiscover/migrations/001_evidence_light_processing.sql)
+2. [`../../neurodiscover/migrations/002_evidence_mcp_metadata.sql`](../../neurodiscover/migrations/002_evidence_mcp_metadata.sql)
 
 Or `python3 cli.py build` locally for a fresh SQLite DB.
 

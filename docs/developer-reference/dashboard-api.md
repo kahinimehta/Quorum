@@ -75,7 +75,7 @@ Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 |--------|----------|
 | Demo / scan / full | `POST /api/run-discovery` |
 
-Body (example): `{ "mode": "demo", "max_papers": 5, "query": null, "with_fulltext": false, "pull_grants": true }`
+Body (example): `{ "mode": "demo", "max_papers": 10, "query": null, "with_fulltext": false, "pull_grants": true }`
 
 Response includes: `run_id`, `recommendations`, `agent_outputs` (alias `steps`), `synthetic_cohort`, `runStats` (processed vs database totals).
 

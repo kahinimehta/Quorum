@@ -31,8 +31,9 @@ Full pipeline response (demo mode, abbreviated):
   "run_id": "a1b2c3d4",
   "recommendations": [
     {
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "treatment": "GCase activation",
+      "mechanism": "lysosomal dysfunction",
       "confidence": 82.5,
       "tier": "Prioritize",
       "rationale": "Strong preclinical and Phase 2 signal for GCase chaperones in GBA carriers."
@@ -50,7 +51,7 @@ Full pipeline response (demo mode, abbreviated):
     {
       "patient_id": "Patient A",
       "patient_letter": "A",
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "subgroup_color": "#2563eb",
       "synthetic_age": 68,
       "synthetic_sex": "M",
@@ -64,7 +65,7 @@ Full pipeline response (demo mode, abbreviated):
   ],
   "runStats": {
     "mode": "demo",
-    "maxPapersRequested": 5,
+    "maxPapersRequested": 10,
     "processed": { "literature": 5, "trial": 0, "grant": 0, "total": 5 },
     "databaseTotals": { "literature": 228, "trial": 39, "grant": 40, "total": 307 },
     "added": { "literature": 0, "trial": 0, "grant": 0, "total": 0 }
@@ -87,14 +88,15 @@ Full pipeline response (demo mode, abbreviated):
 {
   "recommendations": [
     {
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "treatment": "GCase activation",
+      "mechanism": "lysosomal dysfunction",
       "confidence": 82.5,
       "tier": "Prioritize",
       "rationale": "Multiple literature and trial sources; strong mechanism alignment."
     },
     {
-      "subgroup": "LRRK2 variant subgroup",
+      "subgroup": "LRRK2 PD",
       "treatment": "LRRK2 inhibition",
       "confidence": 71.2,
       "tier": "Monitor",
@@ -125,7 +127,7 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 
 *Agent run trace (shared `run_id`) and paginated evidence preview with source links.*
 
-Every run logs one row per agent step in `agent_outputs`:
+Every run logs rows in `agent_outputs`. Literature may log multiple steps (pull / validation). Orchestrator logs agents 2–6 with `stepOrder` **2–6**:
 
 ```json
 {
@@ -134,15 +136,15 @@ Every run logs one row per agent step in `agent_outputs`:
     {
       "agentName": "Literature Synthesis Agent",
       "stepOrder": 1,
-      "summary": "Pulled 10 raw sources via BioMCP for configured disease query.",
-      "payload": { "since_year": 2022, "incremental": false },
+      "summary": "Processed 10 literature rows (demo mode).",
+      "payload": { "incremental": false },
       "createdAt": "2026-06-01 12:00:00"
     },
     {
       "agentName": "Patient Subgroup Agent",
-      "stepOrder": 1,
+      "stepOrder": 2,
       "summary": "Identified 5 subgroups from 10 evidence rows.",
-      "payload": { "subgroup_count": 5 },
+      "payload": { "count": 5 },
       "createdAt": "2026-06-01 12:00:05"
     }
   ]
@@ -153,7 +155,7 @@ Every run logs one row per agent step in `agent_outputs`:
 
 | Status | Meaning |
 |--------|---------|
-| **Complete** | All six agents logged for `run_id` and at least one recommendation exists |
+| **Complete** | Six agents in trace and ≥1 recommendation (or ≥5 recommendations per `run_status.py`) |
 | **Partial** | Stopped early — dashboard shows e.g. `3/6` agents, not `?/6` |
 | **Failed** | Exception during orchestration |
 
@@ -174,7 +176,7 @@ Generated per `run_id` from recommendations + subgroups. **Not stored in the dat
   "synthetic_cohort": [
     {
       "patient_id": "Patient A",
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "top_opportunity": "GCase activation",
       "mechanism": "lysosomal dysfunction",
       "confidence": 82.5,
@@ -239,17 +241,15 @@ Database overview for dashboard KPI tiles:
 ## GET /api/discover/parkinsons
 
 {: .highlight }
-**Legacy route name** — the path reflects the hackathon demo seed, not a hard-coded indication. The handler returns whatever subgroups and connections exist in the database for the current run.
-
-Subgroups and treatment connections for the discovery overview panel:
+**Legacy route** — `disease` is currently hardcoded in `api_server.py` as `"Parkinson's Disease"`. Subgroups and connections reflect the live database.
 
 ```json
 {
-  "disease": "Configured indication (from seed or pull)",
+  "disease": "Parkinson's Disease",
   "subgroups": [
     {
       "subgroupId": 1,
-      "name": "GBA-mutation carriers",
+      "name": "GBA-mutation PD",
       "definingFeatures": "GBA1 variant carriers; reduced GCase activity",
       "evidenceCount": 2
     }
@@ -257,7 +257,7 @@ Subgroups and treatment connections for the discovery overview panel:
   "treatmentConnections": [
     {
       "connectionId": 1,
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "mechanism": "lysosomal dysfunction",
       "treatment": "GCase activation",
       "evidenceStrength": 8.5,

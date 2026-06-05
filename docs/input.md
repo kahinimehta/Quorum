@@ -62,7 +62,10 @@ The form in **Step 1 — Configure & Run** (above) posts the same body the API a
   "mode": "demo",
   "query": null,
   "max_papers": 150,
+  "disease": "Parkinson disease",
+  "include_preprints": 0,
   "with_fulltext": false,
+  "extract_backend": null,
   "pull_grants": true
 }
 ```
@@ -70,10 +73,13 @@ The form in **Step 1 — Configure & Run** (above) posts the same body the API a
 | Field | Values | Meaning |
 |-------|--------|---------|
 | `mode` | `demo` \| `scan` \| `full` | Offline seed / incremental scan / live pull |
-| `max_papers` | integer | Caps literature rows used by agents 2–6 |
+| `max_papers` | **10–500** (API validated) | In **demo** only: caps literature rows for agents 2–6. Ignored for scan/full downstream agents. |
 | `query` | string or null | Optional keyword filter passed to BioMCP |
-| `with_fulltext` | boolean | Fetch OA Methods/Results/Discussion sections |
-| `pull_grants` | boolean | Include NIH RePORTER grants in full mode |
+| `disease` | string | Literature anchor (default `"Parkinson disease"` in API) |
+| `include_preprints` | integer | bioRxiv cap; used in **full** mode |
+| `with_fulltext` | boolean | OA full-text sections; **full** / `pull` paths |
+| `extract_backend` | `nebius` \| `ollama` \| `none` or null | Override `EXTRACT_BACKEND` in `.env` |
+| `pull_grants` | boolean | **Full** mode only: run NIH RePORTER pull (≤30 grants, default PD-focused query if unset) |
 
 ---
 
@@ -92,9 +98,9 @@ Each row in the `evidence` table is a distilled finding — not raw API JSON.
 
 | Column | Example |
 |--------|---------|
-| `title` | GCase activity and lysosomal dysfunction in GBA-mutation carriers |
+| `title` | GCase activity and lysosomal dysfunction in GBA-associated Parkinson's |
 | `year` | 2023 |
-| `subgroup` | GBA-mutation carriers |
+| `subgroup` | GBA-mutation PD |
 | `mechanism` | lysosomal dysfunction |
 | `treatment` | GCase activation |
 | `key_result` | Reduced GCase activity correlates with faster progression… |
@@ -116,9 +122,9 @@ From `seed_data.json` (placeholder ids — not for live citation):
 {
   "source_type": "literature",
   "source_id": "DEMO-PMID-001",
-  "title": "GCase activity and lysosomal dysfunction in GBA-mutation carriers",
+  "title": "GCase activity and lysosomal dysfunction in GBA-associated Parkinson's",
   "year": 2023,
-  "subgroup": "GBA-mutation carriers",
+  "subgroup": "GBA-mutation PD",
   "mechanism": "lysosomal dysfunction",
   "treatment": "GCase activation",
   "key_result": "Reduced GCase activity correlates with faster progression in GBA carriers.",
@@ -129,7 +135,7 @@ From `seed_data.json` (placeholder ids — not for live citation):
 
 ---
 
-Literature extraction prefers consistent subgroup names when the evidence supports them. Demo seed includes five illustrative subgroups (e.g. GBA-mutation carriers, LRRK2 variant subgroup, inflammation-high progressors).
+Literature extraction prefers consistent subgroup names when the evidence supports them. Demo seed uses five names in `seed_data.json` (e.g. `GBA-mutation PD`, `LRRK2 PD`, `Rapid motor progressors`) — exact match enables auto-linking via `subgroup_evidence`.
 
 ---
 
@@ -156,8 +162,12 @@ WHERE e.mechanism IS NOT NULL AND e.treatment IS NOT NULL;
 
 ### Agent 4 — Evidence Scoring
 
+In-memory connections from Agent 3 plus matching evidence rows (orchestrator). Scoring uses `evidence_count` and `source_type` — not `study_type` / `sample_size` directly.
+
+Reference SQL (post-persistence inspection):
+
 ```sql
-SELECT tc.connection_id, e.study_type, e.sample_size, e.access_status, e.key_result
+SELECT tc.connection_id, e.source_type, e.study_type, e.sample_size, e.access_status, e.key_result
 FROM treatment_connections tc
 JOIN connection_evidence ce ON ce.connection_id = tc.connection_id
 JOIN evidence e ON e.evidence_id = ce.evidence_id;
@@ -165,7 +175,7 @@ JOIN evidence e ON e.evidence_id = ce.evidence_id;
 
 ### Agent 5 — Commercial Discovery
 
-Reads `treatment_connections` (mechanism, treatment, subgroup_id) plus external Tavily web search and NIH RePORTER.
+Reads in-memory scored connections from Agent 4. **Heuristic** commercial scoring in `commercial_discovery_agent.py` (no Tavily). Grants are ingested separately via `pull-grants` / full-mode `pull_grants`.
 
 ### Agent 6 — Conclusion Update
 

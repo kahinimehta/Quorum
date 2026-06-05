@@ -49,10 +49,10 @@ flowchart LR
 | 2 | [Patient Subgroup](patient-subgroup) | `evidence` | `subgroups` |
 | 3 | [Treatment Connection](treatment-connection) | `subgroups`, `evidence` | `treatment_connections`, `connection_evidence` |
 | 4 | [Evidence Scoring](evidence-scoring) | connections + evidence | `evidence_strength` |
-| 5 | [Commercial Discovery](commercial-discovery) | connections; Tavily / RePORTER | `commercial_potential` |
+| 5 | [Commercial Discovery](commercial-discovery) | scored connections (in-memory) | `commercial_potential` (via orchestrator) |
 | 6 | [Conclusion Update](conclusion-update) | scored connections | `recommendations` |
 
-Every agent also appends to `agent_outputs` with a shared `run_id`.
+**Agent 1** appends its own `agent_outputs` rows. **Agents 2–6** run in-process; the **orchestrator** (`orchestrator.py`) persists SQL writes and logs `agent_outputs` (step_order 2–6).
 
 ---
 
@@ -60,9 +60,11 @@ Every agent also appends to `agent_outputs` with a shared `run_id`.
 
 | Mode | Behavior | When to use |
 |------|----------|-------------|
-| **demo** | Uses seeded evidence; caps rows with `max_papers` | Stage demos, offline judging |
-| **scan** | Incremental literature via BioMCP; skips LLM for known `source_id`s | Low-cost updates |
-| **full** | Live pull + optional grants | Pre-hackathon data refresh |
+| **demo** | Subprocess `cli.py demo`, then agents 2–6; **`max_papers` caps rows for agents 2–6** | Stage demos, offline judging |
+| **scan** | Subprocess `cli.py scan` (incremental; PubTator skipped); agents 2–6 use **all** subgroup evidence in DB | Low-cost updates |
+| **full** | In-process `literature_agent.run()` + optional `pull-grants` (up to 30 grants); agents 2–6 use **all** subgroup evidence in DB | Live data refresh |
+
+`include_preprints`, `with_fulltext`, and `extract_backend` apply to **full** mode (and `pull`/`full` literature paths). **Scan/demo** subprocess calls ignore preprints/fulltext API flags.
 
 Orchestrator entry: `neurodiscover/orchestrator.py` via `POST /api/run-discovery`.
 
@@ -75,8 +77,8 @@ Orchestrator entry: `neurodiscover/orchestrator.py` via `POST /api/run-discovery
 
 | Status | Rule |
 |--------|------|
-| **Complete** | All six agents logged for `run_id` and ≥1 recommendation |
-| **Partial** | Missing agents or no recommendations — UI shows e.g. `3/6` |
+| **Complete** | All six agents in trace and ≥1 recommendation — or ≥5 recommendations with partial trace (see `run_status.py`) |
+| **Partial** | Fewer than six agents and/or no recommendations — UI shows e.g. `3/6` |
 | **Failed** | Uncaught exception in orchestrator |
 
 ---
@@ -89,7 +91,7 @@ Used by Agent 6 when writing `recommendations`:
 confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 ```
 
-Both scores are on a 0–10 internal scale, displayed as 0–100 confidence in the API.
+Agents 4 and 5 compute **0–10** scores in Python; the orchestrator stores **0–100** on `treatment_connections` (×10). `recommendations.confidence` uses the stored 0–100 values (displayed as 0–100 in the API).
 
 ---
 

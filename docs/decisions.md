@@ -33,7 +33,7 @@ Patient profiles are generated from recommendations + subgroups per `run_id`, la
 
 ## Run status: Complete vs Partial
 
-**Complete** means all six pipeline agents logged output for that `run_id` and recommendations exist. **Partial** means the run stopped early — not a judgment on data quality.
+**Complete** means all six pipeline agents logged output for that `run_id` and ≥1 recommendation exists — or ≥5 recommendations with a partial trace (see `run_status.py`). **Partial** means the run stopped early — not a judgment on data quality.
 
 ## External tools
 
@@ -41,7 +41,7 @@ Patient profiles are generated from recommendations + subgroups per `run_id`, la
 |------|------|
 | **BioMCP** | Unified PubMed + ClinicalTrials.gov |
 | **Nebius / Ollama** | Structured extraction (`EXTRACT_BACKEND`) |
-| **Tavily / NIH RePORTER** | Commercial agent signals |
+| **NIH RePORTER** | Grants via `cli.py pull-grants` or **full** mode (`pull_grants=true`) |
 
 ## Documentation site
 

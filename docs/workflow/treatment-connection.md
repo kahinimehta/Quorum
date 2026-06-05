@@ -10,45 +10,38 @@ description: "Agent 3 — map subgroup to mechanism to treatment"
 
 **Module:** `neurodiscover/agents/treatment_connection_agent.py`  
 **Owner:** Alia Merchant  
-**Step order:** 3
+**Step order:** 3 (orchestrator logs trace)
 
 ---
 
 ## Role
 
-Map **subgroup → mechanism → treatment** triples from evidence and write deduplicated connections with supporting citation links.
+Map **subgroup → mechanism → treatment** triples from in-memory evidence rows and return deduplicated connections with supporting `source_id` lists.
 
 ## Reads
 
-```sql
-SELECT s.subgroup_id, s.name, e.mechanism, e.treatment, e.evidence_id
-FROM evidence e
-JOIN subgroups s ON s.name = e.subgroup
-WHERE e.mechanism IS NOT NULL AND e.treatment IS NOT NULL;
-```
+In-memory evidence rows (from orchestrator) with `subgroup`, `mechanism`, and `treatment` populated — not a live SQL join at agent runtime.
 
-Also consumes in-memory output from Agent 2 for subgroup metadata.
-
-## Writes
+## Writes (via orchestrator)
 
 ```sql
 INSERT INTO treatment_connections (subgroup_id, mechanism, treatment) VALUES (?,?,?);
 INSERT OR IGNORE INTO connection_evidence (connection_id, evidence_id) VALUES (?,?);
 ```
 
-Plus `agent_outputs` trace.
+The orchestrator resolves `subgroup` name → `subgroup_id`, upserts connections, and links `evidence_sources` to `connection_evidence`.
 
 ## Logic (summary)
 
-1. Build a map of `(subgroup, mechanism, treatment)` → supporting evidence rows
-2. Rank connections by evidence count
-3. Insert unique connections and link each to supporting `evidence_id`s via `connection_evidence`
+1. Group evidence by `(subgroup, mechanism, treatment)`
+2. Count supporting rows and collect `source_id`s
+3. Return connection objects for orchestrator persistence
 
 ## Example connection
 
 | Field | Value |
 |-------|-------|
-| subgroup | GBA-mutation carriers |
+| subgroup | GBA-mutation PD (demo seed name) |
 | mechanism | lysosomal dysfunction |
 | treatment | GCase activation |
 | supporting sources | DEMO-PMID-001, DEMO-NCT-001 |
@@ -59,10 +52,10 @@ Plus `agent_outputs` trace.
 {
   "connections": [
     {
-      "subgroup": "GBA-mutation carriers",
+      "subgroup": "GBA-mutation PD",
       "mechanism": "lysosomal dysfunction",
       "treatment": "GCase activation",
-      "source_ids": ["DEMO-PMID-001", "DEMO-NCT-001"],
+      "evidence_sources": ["DEMO-PMID-001", "DEMO-NCT-001"],
       "evidence_count": 2
     }
   ]

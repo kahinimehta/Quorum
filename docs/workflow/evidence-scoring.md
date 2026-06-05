@@ -10,48 +10,47 @@ description: "Agent 4 — skeptic scores connection evidence strength"
 
 **Module:** `neurodiscover/agents/evidence_scoring_agent.py`  
 **Owner:** Alia Merchant  
-**Step order:** 4
+**Step order:** 4 (orchestrator logs trace)
 
 ---
 
 ## Role
 
-Act as a **skeptic** — score how strong the evidence is for each treatment connection based on study type, sample size, access status, and result quality.
+Act as a **skeptic** — score how strong the evidence is for each treatment connection from **evidence count** and **source types** (literature, trial, grant) on matching evidence rows.
 
 ## Reads
 
-```sql
-SELECT tc.connection_id, e.study_type, e.sample_size, e.access_status, e.key_result
-FROM treatment_connections tc
-JOIN connection_evidence ce ON ce.connection_id = tc.connection_id
-JOIN evidence e ON e.evidence_id = ce.evidence_id;
-```
+In-memory `connections` from Agent 3 plus matching rows from the evidence list passed by the orchestrator (same subgroup name).
 
-## Writes
+{: .highlight }
+**Not used in current code:** per-row `study_type`, `sample_size`, or `access_status` (those columns exist on `evidence` for future weighting).
+
+## Writes (via orchestrator)
 
 ```sql
 UPDATE treatment_connections SET evidence_strength = ? WHERE connection_id = ?;
 ```
 
-Plus `agent_outputs` with scoring summary.
+The orchestrator calls `_scale_score()` (×10) before UPDATE, so the DB column holds **0–100**.
 
-## Scoring heuristics
+## Scoring heuristics (code)
 
 | Signal | Effect |
 |--------|--------|
-| RCT / Phase 2 / Phase 3 | Higher weight |
-| Large `sample_size` | Higher weight |
-| `access_status = abstract_only` | Down-weight |
-| Preclinical / mouse only | Moderate weight |
-| Multiple supporting sources | Boost |
+| Base | 5.0 |
+| `evidence_count` ≥ 3 | +1.0 |
+| `evidence_count` ≥ 8 | +1.0 |
+| Has `literature` source | +0.8 |
+| Has `trial` source | +1.0 |
+| Has `grant` source | +0.5 |
 
-Scores are stored on a **0–10** scale internally.
+Capped at 10.0 before orchestrator scaling.
 
-## Example
+## Example (agent output, pre-scale)
 
 | Connection | evidence_strength |
 |------------|-------------------|
 | GBA → GCase activation | 8.5 |
 | Rapid progressors → combination strategy | 5.2 |
 
-Agent 5 adds `commercial_potential`; Agent 6 combines both into `confidence`.
+Agent 5 adds `commercial_potential`; Agent 6 combines scaled DB values into `confidence`.

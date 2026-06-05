@@ -66,7 +66,7 @@ key_result, evidence_snippet, access_type, access_status, full_text_url, is_prep
 methods_text, results_text, discussion_text, url, doi
 ```
 
-Literature rows may omit `study_type` / `sample_size` until Agent 4 parses methods/results.
+Literature rows often omit `study_type` / `sample_size`; trials populate them during Agent 1 extraction.
 
 ### `access_type` / `access_status` values
 
@@ -149,10 +149,12 @@ Plus `agent_outputs`.
 
 ## Agent 4 — Evidence Scoring / Skeptic (Alia)
 
-**Reads:** `treatment_connections` + linked evidence via `connection_evidence`
+**Reads:** in-memory `connections` from Agent 3 plus matching rows from the evidence list the orchestrator passes (same `subgroup` name). Uses `evidence_count` and `source_type` sets — not per-row `study_type` / `sample_size`.
+
+Reference SQL (for inspecting linked evidence after persistence):
 
 ```sql
-SELECT tc.connection_id, e.study_type, e.sample_size, e.access_status, e.key_result
+SELECT tc.connection_id, e.source_type, e.study_type, e.sample_size, e.access_status, e.key_result
 FROM treatment_connections tc
 JOIN connection_evidence ce ON ce.connection_id = tc.connection_id
 JOIN evidence e ON e.evidence_id = ce.evidence_id;
@@ -164,21 +166,21 @@ JOIN evidence e ON e.evidence_id = ce.evidence_id;
 UPDATE treatment_connections SET evidence_strength = ? WHERE connection_id = ?;
 ```
 
-Down-weight `abstract_only` / small `sample_size` in scoring logic. Plus `agent_outputs`.
+The orchestrator calls `_scale_score()` (×10) before UPDATE, so the DB column holds **0–100**. Plus `agent_outputs`.
 
 ---
 
 ## Agent 5 — Commercial Discovery (Alia / Amy)
 
-**Reads:** `treatment_connections` (mechanism, treatment, subgroup_id)  
-**External:** Tavily web search, NIH RePORTER grants API  
+**Reads:** in-memory `scored_connections` from Agent 4  
+**External:** none in current code — heuristic scoring only. Grants enter via `cli.py pull-grants` or **full** mode (`pull_grants=true`), not inside this agent.  
 **Writes:**
 
 ```sql
 UPDATE treatment_connections SET commercial_potential = ? WHERE connection_id = ?;
 ```
 
-Optional: INSERT grant rows into `evidence` with `source_type = 'grant'`. Plus `agent_outputs`.
+The orchestrator scales ×10 before UPDATE. Plus `agent_outputs`.
 
 ---
 
@@ -227,10 +229,10 @@ SELECT * FROM agent_outputs WHERE run_id = ? ORDER BY output_id;
 
 Demo seed uses illustrative names such as:
 
-- GBA-mutation carriers
-- LRRK2 variant subgroup
-- Alpha-synuclein-high subgroup
-- Inflammation-high subgroup
-- Rapid progressors
+- GBA-mutation PD
+- LRRK2 PD
+- Alpha-synuclein-high PD
+- Inflammation-high PD
+- Rapid motor progressors
 
 Literature agent extraction prompt prefers consistent subgroup labels when the evidence supports them.

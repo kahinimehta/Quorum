@@ -6,9 +6,9 @@
 > `SELECT` — the data is ready to query.** Do **NOT** run `cli.py build` (it truncates every
 > table); use `cli.py scan` / `pull` only to *add* more evidence.
 
-Multi-agent system for the NextGen BioAgents Hackathon. It discovers hidden
-Parkinson's disease patient subgroups and subgroup -> treatment connections,
-then ranks them by `confidence = evidence_strength*0.55 + commercial_potential*0.45`.
+Multi-agent system for **commercial development discovery**: hidden patient subgroups,
+subgroup → treatment connections, and ranked portfolio opportunities —
+`confidence = evidence_strength*0.55 + commercial_potential*0.45`.
 
 This file covers the **data layer + Literature Synthesis Agent** (Ayelet's part:
 Person 3 data engineer + one Person 4 agent). Other agents are teammates' work
@@ -82,7 +82,7 @@ its own table. The backend serves the final tables to the dashboard.
 | 2 | Patient Subgroup | `evidence` | `subgroups` |
 | 3 | Treatment Connection | `subgroups`, `evidence` | `treatment_connections`, `connection_evidence` |
 | 4 | Evidence Scoring (skeptic) | `treatment_connections`, `evidence` | `evidence_strength` col + `agent_outputs` |
-| 5 | Commercial Discovery | `treatment_connections`; external: Tavily/RePORTER | `commercial_potential` col + `agent_outputs` |
+| 5 | Commercial Discovery | scored connections (in-memory from Agent 4) | `commercial_potential` col + `agent_outputs` |
 | 6 | Conclusion Update | scored `treatment_connections` | `recommendations` |
 
 Every agent appends one row to `agent_outputs` (run_id, step_order, summary) as it
@@ -112,11 +112,10 @@ Schema is in `neurodiscover/schema.sql` (SQLite) and `neurodiscover/schema.pg.sq
 
 ## External tools
 - BioMCP (`biomcp-python`): unified PubMed + ClinicalTrials.gov access. CLI:
-  `biomcp article search --disease "Parkinson disease"`, `biomcp trial search --condition ...`.
+  `biomcp article search --disease "your condition"`, `biomcp trial search --condition ...`.
 - Nebius / Ollama: `EXTRACT_BACKEND=nebius|ollama|none` for structured extraction (NEBIUS_* or OLLAMA_*).
 - `cli.py pull --query` / `--prompt`: passes `--keyword` to BioMCP while keeping `--disease` anchor.
-- Tavily: live web search for the Commercial Discovery agent (market/white-space signal).
-- NIH RePORTER: free grants API for the commercial agent's "already funded?" check.
+- NIH RePORTER: grants via `cli.py pull-grants` (also optional in **full** pipeline mode when `pull_grants=true`).
 
 ## Anara-inspired patterns (not a runtime dependency)
 Literature agent borrows: unified PubMed+trial search, `access_status` flags,

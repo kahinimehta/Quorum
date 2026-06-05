@@ -41,7 +41,7 @@ curl -s http://127.0.0.1:5000/api/stats
 curl -s http://127.0.0.1:5000/api/recommendations
 curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' \
-  -d '{"mode":"demo","max_papers":5}'
+  -d '{"mode":"demo","max_papers":10}'
 ```
 
 ## Environment
