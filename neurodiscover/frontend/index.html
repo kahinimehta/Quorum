@@ -167,6 +167,9 @@
     .run-status-strip.running { background: #eff6ff; }
     .run-status-strip.running .run-status-pill { background: #dbeafe; color: #1d4ed8; }
     .run-status-strip.running .run-status-pill::before { background: #3b82f6; animation: pulse-dot 1s ease infinite; }
+    .run-status-strip.finalizing { background: #fffbeb; }
+    .run-status-strip.finalizing .run-status-pill { background: #fef3c7; color: #b45309; }
+    .run-status-strip.finalizing .run-status-pill::before { background: #f59e0b; animation: pulse-dot 1s ease infinite; }
     .run-status-strip.complete { background: #f0fdf4; }
     .run-status-strip.complete .run-status-pill { background: #dcfce7; color: #166534; }
     .run-status-strip.complete .run-status-pill::before { background: #22c55e; }
@@ -190,6 +193,7 @@
       background: #f8fafc;
     }
     .run-status-box.running { border-color: #93c5fd; background: #eff6ff; }
+    .run-status-box.finalizing { border-color: #fcd34d; background: #fffbeb; }
     .run-status-box.complete { border-color: #86efac; background: #f0fdf4; }
     .run-status-box.error { border-color: #fca5a5; background: #fef2f2; }
     .status-badge {
@@ -204,6 +208,7 @@
     .status-badge.complete { background: #dcfce7; color: #166534; }
     .status-badge.partial { background: #fef3c7; color: #b45309; }
     .status-badge.running { background: #dbeafe; color: #1d4ed8; }
+    .status-badge.finalizing { background: #fef3c7; color: #b45309; }
     .tab-nav {
       background: #fff;
       border-bottom: 2px solid var(--border);
@@ -1376,6 +1381,66 @@
       };
     }
 
+    function evidenceNoteFromSteps(steps) {
+      for (const step of steps || []) {
+        const name = step.agentName || step.agent_name || '';
+        if (!name.includes('Literature')) continue;
+        const s = step.summary || '';
+        let m = s.match(/using (\d+) of (\d+) existing evidence/i);
+        if (m) return `${m[1]} papers (agents-only)`;
+        m = s.match(/using (\d+) of (\d+) seeded/i);
+        if (m) return `${m[1]} papers (demo)`;
+        m = s.match(/Two-stage pull: (\d+) published/i);
+        if (m) {
+          const trials = (s.match(/(\d+) trials/) || [])[1];
+          return trials ? `${m[1]} papers · ${trials} trials` : `${m[1]} papers`;
+        }
+        m = s.match(/Stored (\d+) new evidence/i);
+        if (m) return `+${m[1]} stored`;
+        m = s.match(/incremental scan/i);
+        if (m) return 'Incremental scan';
+      }
+      return null;
+    }
+
+    function mergePendingRun(apiRow, pending) {
+      if (!pending) return apiRow;
+      const agentsDone = pending.agentsDone ?? apiRow.agentsDone ?? 0;
+      const isFinalizing = pending.status === 'Finalizing' || agentsDone >= PIPELINE_AGENTS.length;
+      const evidenceNote = (apiRow.evidenceNote && apiRow.evidenceNote !== 'In progress…')
+        ? apiRow.evidenceNote
+        : (pending.evidenceNote && pending.evidenceNote !== 'In progress…'
+          ? pending.evidenceNote
+          : (evidenceNoteFromSteps(pending.traceSteps) || apiRow.evidenceNote || 'Finalizing…'));
+      return {
+        ...apiRow,
+        agentsDone,
+        mode: pending.mode || apiRow.mode,
+        status: pending.status === 'Running'
+          ? 'Running'
+          : (isFinalizing && pipelineRunInFlight ? 'Finalizing' : (apiRow.status || pending.status)),
+        statusDetail: isFinalizing && pipelineRunInFlight
+          ? (pending.statusDetail || 'Saving recommendations…')
+          : (apiRow.statusDetail || pending.statusDetail),
+        evidenceNote,
+        recommendations: apiRow.recommendations ?? pending.recommendations ?? 0,
+        pending: pipelineRunInFlight,
+      };
+    }
+
+    function pipelinePhaseFrom(steps, inFlight) {
+      const done = new Set(
+        (steps || [])
+          .filter(s => !s.isError)
+          .map(s => s.agentName || s.agent_name)
+          .filter(Boolean),
+      ).size;
+      if (inFlight && done < PIPELINE_AGENTS.length) return 'running';
+      if (inFlight && done >= PIPELINE_AGENTS.length) return 'finalizing';
+      if (done >= PIPELINE_AGENTS.length) return 'complete';
+      return 'idle';
+    }
+
     function enrichRunStatus(run) {
       const recs = run.recommendations ?? 0;
       if (run.traceSteps && run.traceSteps.length) {
@@ -1472,11 +1537,12 @@
     }
 
     function setRunStatus(state, pillText, detail, meta) {
-      const states = ['idle', 'running', 'complete', 'partial', 'error'];
+      const states = ['idle', 'running', 'finalizing', 'complete', 'partial', 'error'];
       const norm = states.includes(state) ? state : 'idle';
       const pillLabels = {
         idle: 'Ready',
         running: 'Running',
+        finalizing: 'Finalizing',
         complete: 'Complete',
         partial: 'Partial',
         error: 'Failed',
@@ -1708,7 +1774,8 @@
       setKpiSubtitles('in database', 'in database', 'in database', 'in database', 'in database');
       updateHeaderFromStats(s);
       updateEvidenceSummaryBar(null, { literature: lit, trial, grant, total });
-      if (!document.getElementById('globalRunStatus')?.classList.contains('running')) {
+      if (!document.getElementById('globalRunStatus')?.classList.contains('running')
+        && !document.getElementById('globalRunStatus')?.classList.contains('finalizing')) {
         setRunStatus(
           'idle',
           'Ready',
@@ -1935,25 +2002,34 @@
           }));
         }
         runs = runs.map(enrichRunStatus);
-        if (pendingRunRow) {
+        if (pendingRunRow && pipelineRunInFlight) {
           const idx = runs.findIndex(r => r.run_id === pendingRunRow.run_id);
           if (idx >= 0) {
-            runs[idx] = { ...runs[idx], ...pendingRunRow, pending: pipelineRunInFlight };
-          } else if (pipelineRunInFlight) {
-            runs.unshift({ ...pendingRunRow, pending: true });
+            runs[idx] = mergePendingRun(runs[idx], pendingRunRow);
+          } else {
+            runs.unshift({
+              ...pendingRunRow,
+              pending: true,
+              evidenceNote: pendingRunRow.evidenceNote === 'In progress…'
+                ? (evidenceNoteFromSteps(pendingRunRow.traceSteps) || pendingRunRow.evidenceNote)
+                : pendingRunRow.evidenceNote,
+            });
           }
         }
         runs = runs.slice(0, 8);
         runs.forEach(run => {
           const tr = document.createElement('tr');
-          if (run.pending || run.status === 'Running') tr.classList.add('run-row-active');
+          if (run.pending || run.status === 'Running' || run.status === 'Finalizing') {
+            tr.classList.add('run-row-active');
+          }
           const date = formatScanTime(run.started);
           const mode = (run.mode || 'demo').toUpperCase();
           const recs = run.recommendations ?? 0;
           const syn = run.syntheticProfiles ? `✓ ${run.syntheticProfiles} profiles` : (recs > 0 ? '✓ 5 profiles' : '—');
           const status = run.status || 'Partial';
           const statusKey = status === 'Complete' ? 'complete'
-            : (status === 'Running' ? 'running' : 'partial');
+            : (status === 'Running' ? 'running'
+              : (status === 'Finalizing' ? 'finalizing' : 'partial'));
           const evNote = run.evidenceNote || `${recs} recs`;
           const detail = run.statusDetail || `Only ${run.agentsDone ?? 0}/6 agents ran for this run`;
           tr.innerHTML = `<td><code>${escapeHtml(String(run.run_id).slice(0, 8))}</code></td>`
@@ -2160,14 +2236,19 @@
           : '<p style="font-size:0.75rem;color:var(--muted);margin:0.5rem 0 0;">Connection counts appear when agents 3–6 finish.</p>');
     }
 
-    function syncPipelineUi(runId, steps, inProgress) {
+    function syncPipelineUi(runId, steps, phase) {
+      const inProgress = phase === 'running';
+      const finalizing = phase === 'finalizing';
       const doneCount = applyStepperState(steps, inProgress);
       const card = document.getElementById('pipelineProgressCard');
-      if (card) card.classList.toggle('pipeline-active', inProgress);
+      if (card) card.classList.toggle('pipeline-active', inProgress || finalizing);
       const meta = document.getElementById('stepperRunMeta');
+      const lbl = document.getElementById('runProgressLabel');
       if (meta) {
         if (inProgress) {
           meta.textContent = runId ? `Run ${runId} · in progress…` : 'Run in progress…';
+        } else if (finalizing) {
+          meta.textContent = runId ? `Run ${runId} · finalizing…` : 'Finalizing…';
         } else if (runId && doneCount >= PIPELINE_AGENTS.length) {
           meta.textContent = `Run ${runId} · complete`;
         } else if (runId) {
@@ -2176,27 +2257,31 @@
           meta.textContent = 'No active run';
         }
       }
+      if (lbl && finalizing) lbl.textContent = 'Finalizing run…';
+      const mode = (lastRunConfig?.mode || 'pipeline').toUpperCase();
       if (inProgress) {
         setRunStatus(
           'running',
           'Running',
-          `${(lastRunConfig?.mode || 'pipeline').toUpperCase()} run ${runId || '—'} in progress — agents 1→6…`,
-          `Started ${formatEst(new Date())}`,
+          `${mode} run ${runId || '—'} in progress — agents 1→6…`,
+          `${doneCount}/6 agents complete`,
         );
-      } else if (pipelineRunInFlight && doneCount >= PIPELINE_AGENTS.length) {
+      } else if (finalizing) {
         setRunStatus(
-          'complete',
-          'Complete',
-          `Run ${runId || '—'} finished — all 6 agents complete.`,
-          'Open Step 2 for ranked outputs and evidence.',
+          'finalizing',
+          'Finalizing',
+          `Run ${runId || '—'} — all 6 agents done, saving recommendations…`,
+          'Results will appear in Recent runs when finished.',
         );
       }
     }
 
     async function refreshPipelineStepper(runId, steps, mode) {
-      const inProgress = mode === 'running';
-      syncPipelineUi(runId, steps || [], inProgress);
-      if (inProgress) return;
+      const phase = mode === 'running'
+        ? 'running'
+        : pipelinePhaseFrom(steps, pipelineRunInFlight);
+      syncPipelineUi(runId, steps || [], phase);
+      if (mode === 'running') return;
       if (steps && steps.length) return;
       if (!runId) {
         applyStepperState([], false);
@@ -2204,7 +2289,7 @@
       }
       try {
         const fetched = await fetchPipelineSteps(runId);
-        syncPipelineUi(runId, fetched, false);
+        syncPipelineUi(runId, fetched, pipelinePhaseFrom(fetched, pipelineRunInFlight));
       } catch (e) {
         applyStepperState([], false);
       }
@@ -2703,7 +2788,7 @@
         recommendations: 0,
         evidenceNote: 'In progress…',
       };
-      syncPipelineUi(latestRunId, [], true);
+      syncPipelineUi(latestRunId, [], 'running');
       await loadRecentRuns();
       let pollTicks = 0;
       let pollTimer = setInterval(async () => {
@@ -2718,25 +2803,32 @@
         const done = new Set(
           steps.filter(s => !s.isError).map(s => s.agentName || s.agent_name).filter(Boolean),
         );
-        const stillRunning = done.size < PIPELINE_AGENTS.length;
-        syncPipelineUi(latestRunId, steps, stillRunning);
-        if (stillRunning) {
+        const phase = pipelinePhaseFrom(steps, pipelineRunInFlight);
+        syncPipelineUi(latestRunId, steps, phase);
+        const doneCount = done.size;
+        const evNote = evidenceNoteFromSteps(steps);
+        if (phase === 'running') {
           pendingRunRow = {
             ...pendingRunRow,
             run_id: latestRunId,
-            agentsDone: done.size,
-            statusDetail: `${done.size}/6 agents complete…`,
+            traceSteps: steps,
+            agentsDone: doneCount,
+            status: 'Running',
+            statusDetail: `${doneCount}/6 agents complete…`,
+            evidenceNote: evNote || pendingRunRow.evidenceNote,
           };
-        } else if (pipelineRunInFlight) {
+        } else if (phase === 'finalizing') {
           pendingRunRow = {
             ...pendingRunRow,
             run_id: latestRunId,
+            traceSteps: steps,
             agentsDone: PIPELINE_AGENTS.length,
-            status: 'Complete',
-            statusDetail: 'All 6 agents finished — saving results…',
+            status: 'Finalizing',
+            statusDetail: 'Saving recommendations…',
+            evidenceNote: evNote || pendingRunRow.evidenceNote || 'Finalizing…',
           };
         }
-        if (pollTicks % 3 === 0) await loadRecentRuns();
+        if (pollTicks % 2 === 0) await loadRecentRuns();
       }, 1200);
       try {
         const res = await fetch(`${API_BASE}/api/run-discovery`, {
@@ -2764,7 +2856,7 @@
             'Open Step 2 for discovery results.',
           );
         }
-        syncPipelineUi(latestRunId, steps, false);
+        syncPipelineUi(latestRunId, steps, 'complete');
         renderRunReport(latestRunId, lastRunConfig, rs, data.recommendations || [], false);
         await loadRecentRuns();
         await loadResults(latestRunId, {
