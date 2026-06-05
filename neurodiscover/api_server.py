@@ -52,6 +52,7 @@ class RunDiscoveryRequest(BaseModel):
     with_fulltext: bool = False
     extract_backend: str | None = None
     pull_grants: bool = True
+    run_id: str | None = Field(default=None, max_length=32)
 
     @field_validator("max_papers")
     @classmethod
@@ -489,7 +490,7 @@ def get_recommendations(run_id: str | None = None):
 
 @app.post("/api/run-discovery")
 def run_discovery(body: RunDiscoveryRequest):
-    run_id = str(uuid.uuid4())[:8]
+    run_id = (body.run_id or "").strip()[:32] or str(uuid.uuid4())[:8]
     try:
         from orchestrator import run as run_pipeline
 

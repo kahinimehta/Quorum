@@ -1889,9 +1889,13 @@
     async function refreshPipelineStepper(runId, steps, mode) {
       const meta = document.getElementById('stepperRunMeta');
       if (meta) {
-        meta.textContent = runId
-          ? (mode === 'running' ? `Run ${runId} · in progress…` : `Run ${runId}`)
-          : 'No active run';
+        if (mode === 'running') {
+          meta.textContent = runId ? `Run ${runId} · in progress…` : 'Run in progress…';
+        } else if (runId) {
+          meta.textContent = `Run ${runId}`;
+        } else {
+          meta.textContent = 'No active run';
+        }
       }
       if (mode === 'running') {
         updateStepper([], { running: true });
@@ -2392,12 +2396,20 @@
       return document.querySelector('input[name=extract]:checked')?.value || 'nebius';
     }
 
+    function newRunId() {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID().replace(/-/g, '').slice(0, 8);
+      }
+      return Math.random().toString(16).slice(2, 10);
+    }
+
     async function postRun(mode) {
       const btn = document.getElementById('btnRun');
       btn.disabled = true;
       const modeLabel = (MODE_META[mode]?.btn || mode).replace(/^▶\s*/, '');
-      latestRunId = null;
-      refreshPipelineStepper(null, null, 'running');
+      latestRunId = newRunId();
+      updateRunMeta(latestRunId, 0, 0);
+      refreshPipelineStepper(latestRunId, null, 'running');
       setRunStatus(
         'running',
         'Running',
@@ -2410,6 +2422,7 @@
       }
       const body = {
         mode,
+        run_id: latestRunId,
         query: document.getElementById('query').value.trim() || null,
         max_papers: maxPapers,
         disease: document.getElementById('disease').value,
@@ -2426,7 +2439,7 @@
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || res.statusText);
-        latestRunId = data.run_id;
+        latestRunId = data.run_id || latestRunId;
         syntheticCohort = data.synthetic_cohort || [];
         const steps = data.agent_outputs || data.steps || [];
         const rs = data.runStats || null;
