@@ -1,0 +1,18 @@
+# Conda environment for NeuroDiscover (empty env → working install).
+#
+#   conda env create -f environment.yml
+#   conda activate neurodiscover
+#   cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
+#   make dashboard
+#
+# Update after requirements.txt changes:
+#   conda env update -f environment.yml --prune
+
+name: neurodiscover
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.10,<3.13
+  - pip
+  - pip:
+      - -r requirements.txt

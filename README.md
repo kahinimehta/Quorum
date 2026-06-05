@@ -16,13 +16,22 @@ Agentic system for **commercial development discovery**: continuously ingest lit
 
 ## Quick start
 
-Requires **Python 3.10+** on macOS, Linux, or Windows. `make dashboard` is shorthand for `python3 cli.py dashboard` — not Mac-only.
+Requires **Python 3.10, 3.11, or 3.12** on macOS, Linux, or Windows. `make dashboard` is shorthand for `python3 cli.py dashboard` — not Mac-only.
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
 pip install -r requirements.txt
 cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
+make dashboard
+```
+
+**Conda (empty environment):**
+
+```bash
+conda env create -f environment.yml
+conda activate neurodiscover
+cp .env.example .env
 make dashboard
 ```
 

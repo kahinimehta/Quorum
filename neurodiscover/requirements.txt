@@ -1,9 +1,23 @@
-# Runtime deps. sqlite3 is in the Python standard library.
-biomcp-python      # unified PubMed + ClinicalTrials.gov pulls
-openai             # OpenAI-compatible client, pointed at Nebius
-python-dotenv      # optional: auto-load .env
-psycopg[binary]    # Supabase / PostgreSQL when SUPABASE_DATABASE_URL is set
-requests           # NIH RePORTER grants pull
-fastapi
-uvicorn
-pydantic
+# NeuroDiscover runtime dependencies
+#
+# Python: 3.10, 3.11, or 3.12 (required; 3.13+ not yet tested with biomcp-python)
+# sqlite3 is included in the Python standard library.
+#
+# Install (pip / venv):
+#   pip install -r requirements.txt
+#
+# Install (conda — empty environment):
+#   conda env create -f environment.yml
+#   conda activate neurodiscover
+#
+# Optional dev / docs screenshots:
+#   pip install -r requirements-dev.txt
+
+biomcp-python>=0.7.3,<0.8
+openai>=1.40.0
+python-dotenv>=1.0.0
+psycopg[binary]>=3.1.18
+requests>=2.31.0
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0

@@ -17,13 +17,22 @@ From `neurodiscover/`:
 make dashboard
 ```
 
-**Cross-platform:** works on **macOS, Linux, and Windows** with Python 3.10+. `make dashboard` is not Mac-only — it runs `python3 cli.py dashboard` under the hood.
+**Cross-platform:** works on **macOS, Linux, and Windows** with **Python 3.10, 3.11, or 3.12**. `make dashboard` is not Mac-only — it runs `python3 cli.py dashboard` under the hood.
 
 Equivalents:
 
 ```bash
 python3 cli.py dashboard
 ./dashboard          # bash — macOS/Linux; Git Bash or WSL on Windows
+```
+
+**Conda:**
+
+```bash
+conda env create -f environment.yml
+conda activate neurodiscover
+cp .env.example .env
+make dashboard
 ```
 
 On Windows without `make`:

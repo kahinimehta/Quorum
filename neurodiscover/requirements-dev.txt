@@ -1,0 +1,3 @@
+# Optional: not needed for dashboard, API, or cli.py
+-r requirements.txt
+playwright>=1.40.0
