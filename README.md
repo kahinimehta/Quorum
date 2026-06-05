@@ -16,7 +16,24 @@ Agentic system for **commercial development discovery**: continuously ingest lit
   <a href="docs/demo_draft.mp4">Download demo video</a>
 </video>
 
-*Place the file at `docs/demo_draft.mp4` in this repo (same path as your local `Quorum/docs/demo_draft.mp4`) so GitHub can serve it in the README and on the docs site.*
+**File:** `docs/demo_draft.mp4` (~71 MB). Under GitHub’s **100 MB per-file limit** — commit it **directly** (do **not** use Git LFS; LFS breaks the README `<video>` embed).
+
+```bash
+# From your machine (copy into the repo if needed)
+cp /path/to/demo_draft.mp4 docs/demo_draft.mp4
+git add docs/demo_draft.mp4
+git commit -m "docs: add demo draft video"
+git push
+```
+
+GitHub may warn that the file is over 50 MB — that is expected; the push should still succeed.
+
+**Optional — smaller clone / faster load** (re-encode before commit):
+
+```bash
+ffmpeg -i docs/demo_draft.mp4 -vcodec libx264 -crf 28 -preset slow -movflags +faststart docs/demo_draft_compressed.mp4
+mv docs/demo_draft_compressed.mp4 docs/demo_draft.mp4
+```
 
 ---
 
