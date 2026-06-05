@@ -57,6 +57,11 @@ Our design follows patterns surveyed in recent work on **agentic scientific disc
 - **Incremental scan** — skip re-extraction for known sources  
 - Append-only **agent trace** (`agent_outputs`) for reproducibility  
 
+### Selected publications (Track 02)
+
+- [From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery](https://arxiv.org/abs/2508.14111) (arXiv:2508.14111, 2025) — agentic systems across life sciences: hypothesis generation, experimental design, iterative refinement.  
+- [AI, Agentic Models and Lab Automation for Scientific Discovery (scAInce)](https://pmc.ncbi.nlm.nih.gov/articles/PMC12426084/) (Frontiers in AI, PMC12426084, 2025) — arc from automated literature synthesis to self-driving labs; governance under EU AI Act and ISO 42001.
+
 ## Related docs
 
 - [Workflow](workflow/) — per-agent detail  
