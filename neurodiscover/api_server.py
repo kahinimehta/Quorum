@@ -131,6 +131,7 @@ def get_stats():
         "totalEvidence": total[0]["count"] if total else 0,
         "lastScanAt": format_ts_for_api(scan_row.get("last_scan_at")),
         "lastRunId": scan_row.get("last_run_id"),
+        "disease": scan_row.get("disease") or "Parkinson disease",
         "database": backend_label(),
         "supabaseConfigured": bool(os.getenv("SUPABASE_DATABASE_URL") or os.getenv("DATABASE_URL")),
     }

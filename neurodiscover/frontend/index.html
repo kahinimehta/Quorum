@@ -710,7 +710,21 @@
     .field-primary {
       display: flex; align-items: center; gap: 0.5rem;
     }
-    .field-primary input { flex: 1; margin-bottom: 0; }
+    .field-primary input {
+      flex: 1;
+      margin-bottom: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.9rem;
+      color: var(--navy);
+    }
+    .field-primary input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
     .tag-primary {
       font-size: 0.65rem; font-weight: 700;
       background: #dbeafe; color: #1d4ed8;
@@ -954,11 +968,12 @@
     <main>
       <div class="card run-hero">
         <h2>Discovery run configuration</h2>
-        <label>Disease / search query</label>
+        <label>Disease / indication</label>
         <div class="field-primary">
-          <input type="text" id="disease" value="Configured indication" disabled />
+          <input type="text" id="disease" value="Parkinson's disease" placeholder="e.g. Parkinson's disease" />
           <span class="tag-primary">Primary</span>
         </div>
+        <p class="mode-hint" style="margin-top:-0.35rem;">Anchors PubMed and trial search on live pull modes. Demo and rescore use evidence already in the database.</p>
 
         <label>Additional keyword filter (optional)</label>
         <input type="text" id="query" placeholder="e.g. GBA GCase lysosomal" />
@@ -1669,6 +1684,10 @@
       syncDefaultMode(s);
       if (s.supabaseConfigured && document.getElementById('dbTypeBadge')) {
         document.getElementById('dbTypeBadge').textContent = 'Supabase Postgres';
+      }
+      const diseaseEl = document.getElementById('disease');
+      if (diseaseEl && s.disease && !diseaseEl.dataset.userEdited) {
+        diseaseEl.value = s.disease;
       }
     }
 
@@ -2449,6 +2468,9 @@
 
     document.getElementById('maxPapers').addEventListener('input', e => {
       document.getElementById('maxLabel').textContent = e.target.value;
+    });
+    document.getElementById('disease').addEventListener('input', () => {
+      document.getElementById('disease').dataset.userEdited = '1';
     });
     document.querySelectorAll('input[name=mode]').forEach(radio => {
       radio.addEventListener('change', () => {
