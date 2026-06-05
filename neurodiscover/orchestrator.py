@@ -773,26 +773,50 @@ def run(
             _log_agents_only_literature(conn, run_id, disease, max_papers)
             conn.commit()
     elif mode in ("demo", "scan"):
-        _run_literature_in_process(
-            mode,
-            run_id=run_id,
-            disease=disease,
-            query=query,
-            max_papers=max_papers,
-            include_preprints=0,
-            with_fulltext=with_fulltext,
-            extract_backend=extract_backend,
-        )
+        try:
+            _run_literature_in_process(
+                mode,
+                run_id=run_id,
+                disease=disease,
+                query=query,
+                max_papers=max_papers,
+                include_preprints=0,
+                with_fulltext=with_fulltext,
+                extract_backend=extract_backend,
+            )
+        except Exception as exc:
+            with connect(None) as conn:
+                log_step(
+                    conn,
+                    run_id,
+                    AGENT_LITERATURE,
+                    99,
+                    f"Literature phase failed (continuing with agents 2–6): {exc}",
+                    {"error": True, "literature_failed": True},
+                )
+                conn.commit()
     elif mode == "full":
-        _run_literature_full(
-            disease=disease,
-            query=query,
-            max_papers=max_papers,
-            include_preprints=include_preprints,
-            with_fulltext=with_fulltext,
-            extract_backend=extract_backend,
-            run_id=run_id,
-        )
+        try:
+            _run_literature_full(
+                disease=disease,
+                query=query,
+                max_papers=max_papers,
+                include_preprints=include_preprints,
+                with_fulltext=with_fulltext,
+                extract_backend=extract_backend,
+                run_id=run_id,
+            )
+        except Exception as exc:
+            with connect(None) as conn:
+                log_step(
+                    conn,
+                    run_id,
+                    AGENT_LITERATURE,
+                    99,
+                    f"Literature phase failed (continuing with agents 2–6): {exc}",
+                    {"error": True, "literature_failed": True},
+                )
+                conn.commit()
 
     with connect(None) as conn:
         after = _evidence_counts(conn)

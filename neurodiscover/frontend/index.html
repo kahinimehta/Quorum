@@ -1542,18 +1542,54 @@
             : `Only ${done}/${total} agents ran for this run`;
           if (done < 6 && missing) detail += ` — missing: ${missing}`;
         }
+        const complete = run.status === 'Complete'
+          || (done >= 6 && (recs >= 1 || recs === 0))
+          || recs >= 5;
         return {
           ...run,
-          status: run.status || (done >= 6 && recs >= 1 ? 'Complete' : (done >= 6 || recs >= 5 ? 'Complete' : 'Partial')),
+          status: run.status || (complete ? 'Complete' : 'Partial'),
           statusDetail: detail,
           agentsDone: done,
           agentsTotal: total,
         };
       }
-      const steps = (run.steps && run.steps > 0)
-        ? PIPELINE_AGENTS.slice(0, Math.min(run.steps, 6)).map(a => ({ agentName: a }))
-        : [];
-      return { ...run, ...clientAnalyzeTrace(steps, recs) };
+      return { ...run, ...clientAnalyzeTrace([], recs) };
+    }
+
+    function mapApiRunRow(x) {
+      return {
+        run_id: x.runId,
+        traceRows: x.traceRows ?? x.steps,
+        started: x.startedAt,
+        mode: x.mode,
+        modeLabel: x.modeLabel,
+        recommendations: x.recommendations,
+        syntheticProfiles: x.syntheticProfiles,
+        status: x.status,
+        statusDetail: x.statusDetail,
+        agentsDone: x.agentsDone,
+        agentsTotal: x.agentsTotal,
+        agentsMissing: x.agentsMissing,
+        evidenceNote: x.evidenceNote,
+      };
+    }
+
+    async function enrichRunsFromAgentTrace(runs) {
+      await Promise.all(runs.map(async (run) => {
+        try {
+          const ag = await fetch(`${API_BASE}/api/agents?run_id=${encodeURIComponent(run.run_id)}`);
+          if (!ag.ok) return;
+          const trace = await ag.json();
+          run.traceSteps = trace.steps || [];
+          const meta = clientAnalyzeTrace(run.traceSteps, run.recommendations ?? 0);
+          run.status = meta.status;
+          run.statusDetail = meta.statusDetail;
+          run.agentsDone = meta.agentsDone;
+          run.agentsMissing = meta.agentsMissing;
+          run.agentsTotal = meta.agentsTotal;
+        } catch (e) { /* keep list fields */ }
+      }));
+      return runs;
     }
 
     /** DB timestamps are UTC; naive "YYYY-MM-DD HH:MM:SS" strings get a Z suffix. */
@@ -2019,7 +2055,17 @@
       tbody.innerHTML = '';
       try {
         let runs = [];
-        if (sb) {
+        let loadedFromApi = false;
+        try {
+          const r = await fetch(`${API_BASE}/api/runs?limit=8`);
+          if (r.ok) {
+            const d = await r.json();
+            runs = (d.runs || []).map(mapApiRunRow);
+            loadedFromApi = true;
+          }
+        } catch (e) { /* try Supabase fallback */ }
+
+        if (!loadedFromApi && sb) {
           const { data } = await sb.from('agent_outputs')
             .select('run_id,created_at,agent_name')
             .not('run_id', 'is', null)
@@ -2028,19 +2074,20 @@
           const map = {};
           (data || []).forEach(r => {
             if (!map[r.run_id]) {
-              map[r.run_id] = { steps: 0, started: r.created_at, agentNames: new Set() };
+              map[r.run_id] = { traceRows: 0, started: r.created_at, agentNames: new Set() };
             }
-            map[r.run_id].steps++;
+            map[r.run_id].traceRows++;
             if (r.agent_name) map[r.run_id].agentNames.add(String(r.agent_name).trim());
           });
           runs = Object.entries(map)
             .sort((a, b) => String(b[1].started).localeCompare(String(a[1].started)))
-            .slice(0, 5)
+            .slice(0, 8)
             .map(([id, v]) => ({
               run_id: id,
-              steps: v.steps,
+              traceRows: v.traceRows,
               started: v.started,
               agentNames: [...v.agentNames],
+              agentsDone: v.agentNames.size,
             }));
           const ids = runs.map(r => r.run_id);
           if (ids.length) {
@@ -2051,37 +2098,10 @@
             });
             runs.forEach(r => { r.recommendations = recMap[r.run_id] || 0; });
           }
-        } else {
-          const r = await fetch(`${API_BASE}/api/runs?limit=5`);
-          const d = await r.json();
-          runs = (d.runs || []).map(x => ({
-            run_id: x.runId,
-            steps: x.traceRows || x.steps,
-            started: x.startedAt,
-            mode: x.mode,
-            modeLabel: x.modeLabel,
-            recommendations: x.recommendations,
-            syntheticProfiles: x.syntheticProfiles,
-            status: x.status,
-            statusDetail: x.statusDetail,
-            agentsDone: x.agentsDone,
-            agentsMissing: x.agentsMissing,
-            evidenceNote: x.evidenceNote,
-          }));
-          await Promise.all(runs.map(async (run) => {
-            if (run.agentsDone != null && run.statusDetail) return;
-            try {
-              const ag = await fetch(`${API_BASE}/api/agents?run_id=${encodeURIComponent(run.run_id)}`);
-              if (!ag.ok) return;
-              const trace = await ag.json();
-              run.traceSteps = trace.steps || [];
-              const meta = clientAnalyzeTrace(run.traceSteps, run.recommendations ?? 0);
-              run.status = meta.status;
-              run.statusDetail = meta.statusDetail;
-              run.agentsDone = meta.agentsDone;
-              run.agentsMissing = meta.agentsMissing;
-            } catch (e) { /* keep API list fields */ }
-          }));
+        }
+
+        if (runs.length) {
+          await enrichRunsFromAgentTrace(runs);
         }
         runs = runs.map(enrichRunStatus);
         if (pendingRunRow && pipelineRunInFlight) {
@@ -2181,7 +2201,10 @@
             if (st.status === 'failed') {
               throw new Error(st.error || st.statusDetail || 'Pipeline failed');
             }
-            if (st.status === 'complete' || st.status === 'partial') {
+            if (st.status === 'complete') {
+              return fetchPipelineSteps(runId);
+            }
+            if (st.status === 'partial' && (st.agentsDone >= PIPELINE_AGENTS.length || st.recommendations >= 5)) {
               return fetchPipelineSteps(runId);
             }
           }
