@@ -1,0 +1,1851 @@
+{
+  "capture": "content-cap v2 (CONTENT-CAP-ALL; observation-only; not in the trust path)",
+  "best_of_n": [
+    {
+      "round": 0,
+      "label": "synthesizer",
+      "dimension": "F1",
+      "n": 3,
+      "requested": 3,
+      "attempts": 4,
+      "succeeded": 3,
+      "dropped": 1,
+      "chosen_index": 1,
+      "rationale": "best-of-3 ranked on reward=F1; chose candidate 1 (score=82.0); 1 dropped, topped-up to 3/3",
+      "candidates": [
+        {
+          "index": 0,
+          "score": 78.0,
+          "rationale": "Significance claim is well-grounded: names the unmet need (biomarker-guided stratification vs. symptomatic/engagement-only), cites a specific trial result (target engagement without clinical benefit), and anchors the gut-brain/peripheral compartment rationale with citations. Central hypothesis is clear and mechanistically specific (α-syn + immune-metabolic panel → subgroup → mechanism-matched intervention), though it cites nothing — a calibration gap. Innovation claim is concrete and differentiated (prospective coupling of stratification + matched intervention vs. separate efforts), with a specific metabolomic readout (caffeine metabolism) named and cited. Overall: grounded, calibrated, covers F1 well; the uncited hypothesis slightly weakens it.",
+          "chosen": false,
+          "fragment": {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "<parameter name=\"text\">We will investigate whether a peripherally accessible biomarker can be developed and validated to stratify Parkinson's disease (PD) patients for a mechanism-matched disease-modifying intervention, addressing an unmet need that current symptomatic and target-engagement-only strategies have not met. The question is worth investigating because the field has prioritized slowing disease progression through biomarkers and targeted therapies rather than symptom control alone, yet a recent disease-modification trial demonstrated molecular target engagement without detectable clinical benefit, leaving open whether engagement plus biomarker-guided patient selection would change progression. We will examine whether the gut and peripheral immune compartments — proposed as early, accessible sites for diagnosis and intervention in PD — provide a measurable biomarker suitable for stratification, and whether targeting the gut-brain axis offers an opportunity to study disease modification at a prodromal stage. Resolving this would create the opportunity to test, rather than assume, whether mechanism-matched, biomarker-stratified treatment can move the PD pipeline beyond symptomatic management. <parameter name=\"text\">The departure from current practice is to prospectively couple a single workflow — peripheral α-synuclein/immune-metabolic biomarker measurement for participant stratification together with a mechanism-matched gut-brain-axis intervention — rather than pursuing target engagement and biomarker discovery as separate, unlinked efforts. In contrast to disease-modification trials that confirmed molecular engagement without patient selection or clinical effect, and to gut-brain work that has characterized accessible peripheral readouts without using them to allocate a matched therapy, we will build the stratification biomarker and the intervention as one prospectively-linked design, and will examine whether peripheral metabolomic shifts such as caffeine metabolism can serve as a stratifying readout for the targeted subgroup.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "<parameter name=\"text\">We will investigate whether a peripherally accessible biomarker can be developed and validated to stratify Parkinson's disease (PD) patients for a mechanism-matched disease-modifying intervention, addressing an unmet need that current symptomatic and target-engagement-only strategies have not met. The question is worth investigating because the field has prioritized slowing disease progression through biomarkers and targeted therapies rather than symptom control alone, yet a recent disease-modification trial demonstrated molecular target engagement without detectable clinical benefit, leaving open whether engagement plus biomarker-guided patient selection would change progression. We will examine whether the gut and peripheral immune compartments — proposed as early, accessible sites for diagnosis and intervention in PD — provide a measurable biomarker suitable for stratification, and whether targeting the gut-brain axis offers an opportunity to study disease modification at a prodromal stage. Resolving this would create the opportunity to test, rather than assume, whether mechanism-matched, biomarker-stratified treatment can move the PD pipeline beyond symptomatic management.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:39496848",
+                  "literature:40587145",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40079755"
+                ],
+                "evidence_ids": [
+                  "literature:39496848",
+                  "literature:40587145",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40079755"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "<parameter name=\"text\">We hypothesize that a peripherally measured α-synuclein and immune-metabolic biomarker panel, derived from the gut-brain and peripheral immune compartments, will identify a Parkinson's disease subgroup, and we will determine whether a mechanism-matched intervention targeting that axis modifies clinical progression in the biomarker-defined subgroup relative to an unselected population. This hypothesis follows directly from the gap that target engagement alone has not produced clinical benefit and that the peripheral/gut compartment has been nominated as an accessible diagnostic and therapeutic window whose stratifying value remains untested.",
+                "serves_dimension": "F1",
+                "reference_ids": [],
+                "evidence_ids": []
+              },
+              {
+                "id": "innovation",
+                "text": "<parameter name=\"text\">The departure from current practice is to prospectively couple a single workflow — peripheral α-synuclein/immune-metabolic biomarker measurement for participant stratification together with a mechanism-matched gut-brain-axis intervention — rather than pursuing target engagement and biomarker discovery as separate, unlinked efforts. In contrast to disease-modification trials that confirmed molecular engagement without patient selection or clinical effect, and to gut-brain work that has characterized accessible peripheral readouts without using them to allocate a matched therapy, we will build the stratification biomarker and the intervention as one prospectively-linked design, and will examine whether peripheral metabolomic shifts such as caffeine metabolism can serve as a stratifying readout for the targeted subgroup.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40273394"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40273394"
+                ]
+              }
+            ],
+            "provides": {
+              "skeleton": [
+                {
+                  "gap": "Despite a large and diversifying Parkinson's disease (PD) pipeline, the field still lacks a disease-modifying therapeutic anchored to a mechanistically validated, peripherally accessible biomarker that can stratify patients before irreversible neurodegeneration. Two specific barriers converge: (1) candidate disease-modifying agents that engage their molecular target nonetheless fail to alter clinical progression — e.g., ambroxol increased β-glucocerebrosidase yet showed no group differences on clinical endpoints — exposing a disconnect between target engagement and clinical benefit; and (2) the gut-brain axis and peripheral immune compartment are repeatedly nominated as early, accessible windows on α-synuclein pathology, but it remains undetermined whether a peripherally measured biomarker can prospectively identify the patient subgroup in whom a mechanism-matched intervention modifies progression. No study has prospectively coupled a peripheral α-synuclein/immune-metabolic biomarker to participant stratification for a mechanism-matched, gut-brain-targeted disease-modifying intervention in PD.",
+                  "central_hypothesis": "<parameter name=\"text\">We hypothesize that a peripherally measured α-synuclein and immune-metabolic biomarker panel, derived from the gut-brain and peripheral immune compartments, will identify a Parkinson's disease subgroup, and we will determine whether a mechanism-matched intervention targeting that axis modifies clinical progression in the biomarker-defined subgroup relative to an unselected population. This hypothesis follows directly from the gap that target engagement alone has not produced clinical benefit and that the peripheral/gut compartment has been nominated as an accessible diagnostic and therapeutic window whose stratifying value remains untested.",
+                  "aim_stubs": [
+                    {
+                      "id": "aim-1",
+                      "title": "Aim 1: Develop and qualify a peripheral α-synuclein and immune-metabolic biomarker panel from gut-brain and peripheral immune compartments to define a candidate Parkinson's disease stratification subgroup.",
+                      "evidence_keys": [
+                        "literature:41981587",
+                        "literature:40298214",
+                        "literature:40273394",
+                        "grant:R01NS118146",
+                        "grant:IK2BX005760"
+                      ]
+                    },
+                    {
+                      "id": "aim-2",
+                      "title": "Aim 2: Determine whether a mechanism-matched gut-brain-axis intervention modifies clinical progression (MDS-UPDRS) in biomarker-defined versus unselected Parkinson's disease participants.",
+                      "evidence_keys": [
+                        "literature:40079755",
+                        "literature:35750883",
+                        "trial:NCT07312110",
+                        "grant:U01DK140923",
+                        "grant:R01DK135440"
+                      ]
+                    },
+                    {
+                      "id": "aim-3",
+                      "title": "Aim 3: Examine whether peripheral biomarker change tracks target engagement and clinical endpoints to test the engagement-to-benefit link that prior disease-modification trials left unresolved.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "literature:40273394",
+                        "literature:41981587",
+                        "grant:R01NS125592"
+                      ]
+                    }
+                  ],
+                  "significance": "<parameter name=\"text\">We will investigate whether a peripherally accessible biomarker can be developed and validated to stratify Parkinson's disease (PD) patients for a mechanism-matched disease-modifying intervention, addressing an unmet need that current symptomatic and target-engagement-only strategies have not met. The question is worth investigating because the field has prioritized slowing disease progression through biomarkers and targeted therapies rather than symptom control alone, yet a recent disease-modification trial demonstrated molecular target engagement without detectable clinical benefit, leaving open whether engagement plus biomarker-guided patient selection would change progression. We will examine whether the gut and peripheral immune compartments — proposed as early, accessible sites for diagnosis and intervention in PD — provide a measurable biomarker suitable for stratification, and whether targeting the gut-brain axis offers an opportunity to study disease modification at a prodromal stage. Resolving this would create the opportunity to test, rather than assume, whether mechanism-matched, biomarker-stratified treatment can move the PD pipeline beyond symptomatic management.",
+                  "innovation": "<parameter name=\"text\">The departure from current practice is to prospectively couple a single workflow — peripheral α-synuclein/immune-metabolic biomarker measurement for participant stratification together with a mechanism-matched gut-brain-axis intervention — rather than pursuing target engagement and biomarker discovery as separate, unlinked efforts. In contrast to disease-modification trials that confirmed molecular engagement without patient selection or clinical effect, and to gut-brain work that has characterized accessible peripheral readouts without using them to allocate a matched therapy, we will build the stratification biomarker and the intervention as one prospectively-linked design, and will examine whether peripheral metabolomic shifts such as caffeine metabolism can serve as a stratifying readout for the targeted subgroup."
+                }
+              ],
+              "aim_stubs": [
+                {
+                  "id": "aim-1",
+                  "title": "Aim 1: Develop and qualify a peripheral α-synuclein and immune-metabolic biomarker panel from gut-brain and peripheral immune compartments to define a candidate Parkinson's disease stratification subgroup.",
+                  "evidence_keys": [
+                    "literature:41981587",
+                    "literature:40298214",
+                    "literature:40273394",
+                    "grant:R01NS118146",
+                    "grant:IK2BX005760"
+                  ]
+                },
+                {
+                  "id": "aim-2",
+                  "title": "Aim 2: Determine whether a mechanism-matched gut-brain-axis intervention modifies clinical progression (MDS-UPDRS) in biomarker-defined versus unselected Parkinson's disease participants.",
+                  "evidence_keys": [
+                    "literature:40079755",
+                    "literature:35750883",
+                    "trial:NCT07312110",
+                    "grant:U01DK140923",
+                    "grant:R01DK135440"
+                  ]
+                },
+                {
+                  "id": "aim-3",
+                  "title": "Aim 3: Examine whether peripheral biomarker change tracks target engagement and clinical endpoints to test the engagement-to-benefit link that prior disease-modification trials left unresolved.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "literature:40273394",
+                    "literature:41981587",
+                    "grant:R01NS125592"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "index": 1,
+          "score": 82.0,
+          "rationale": "Significance claim is the most precisely grounded of the three: names ambroxol by mechanism (raises β-glucocerebrosidase), cites the specific null clinical outcome in PD dementia, identifies GBA as the largest known genetic risk factor, and links to prodromal gut windows — all with citations. Central hypothesis is specific (GBA-stratified cohort, lysosomal engagement, MDS-UPDRS, comparison to unstratified trials) and cites supporting literature. Innovation claim is mechanistically tight (GBA/lysosomal chloride biology in microglia, α-syn strain readouts, gut-axis markers as unified framework) and cites appropriately. Minor weakness: 'lysosomal chloride and function biology' phrasing is slightly awkward/vague, and the innovation claim hedges with 'we will determine whether… constitutes a more tractable strategy' rather than asserting the departure more crisply. Still the best balance of grounding, calibration, and F1 coverage.",
+          "chosen": true,
+          "fragment": {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials. The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:39496848",
+                  "literature:37786563",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214"
+                ],
+                "evidence_ids": [
+                  "literature:39496848",
+                  "literature:37786563",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:R01NS125317",
+                  "literature:R01NS125592",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:R01NS125317",
+                  "literature:R01NS125592",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:28598856"
+                ]
+              }
+            ],
+            "provides": {
+              "skeleton": [
+                {
+                  "gap": "Disease-modifying therapy for Parkinson's disease (PD) remains unrealized: the field's stated priorities are to slow progression through validated biomarkers and to target mechanisms upstream of dopaminergic loss, yet the pipeline is fragmented across separable mechanistic streams — lysosomal/GBA-glucocerebrosidase biology, alpha-synuclein aggregation and strain properties, the gut–microbiome–brain axis, and peripheral immune involvement — that are pursued in isolation and rarely stratified against a common, prodromal, biomarker-anchored patient subgroup. It remains unknown whether a target-engaging, lysosome-directed intervention can be evaluated for disease-modifying effect within a biomarker-defined early/prodromal PD population, because target engagement and downstream clinical change have not yet been jointly examined in such a stratified design.",
+                  "central_hypothesis": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+                  "aim_stubs": [
+                    {
+                      "id": "aim-1",
+                      "title": "Aim 1: Define and stratify an early/prodromal PD cohort by GBA/glucocerebrosidase status and candidate alpha-synuclein strain and gut-axis biomarkers to establish a biomarker-anchored enrollment framework.",
+                      "evidence_keys": [
+                        "literature:28598856",
+                        "literature:R01NS125592",
+                        "literature:40079755",
+                        "literature:40298214",
+                        "literature:37786563"
+                      ]
+                    },
+                    {
+                      "id": "aim-2",
+                      "title": "Aim 2: Examine whether a lysosome-directed, beta-glucocerebrosidase-engaging intervention produces measurable target engagement and changes in candidate progression biomarkers within the stratified cohort.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "literature:R01NS125317",
+                        "grant:K08NS138592",
+                        "literature:28598856"
+                      ]
+                    },
+                    {
+                      "id": "aim-3",
+                      "title": "Aim 3: Determine whether target engagement tracks with clinical severity (MDS-UPDRS) and whether biomarker stratification and earlier enrollment yield outcomes distinguishable from prior unstratified later-stage PD trials.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "literature:39496848",
+                        "trial:NCT07312110",
+                        "literature:37786563"
+                      ]
+                    }
+                  ],
+                  "significance": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials.",
+                  "innovation": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued."
+                }
+              ],
+              "aim_stubs": [
+                {
+                  "id": "aim-1",
+                  "title": "Aim 1: Define and stratify an early/prodromal PD cohort by GBA/glucocerebrosidase status and candidate alpha-synuclein strain and gut-axis biomarkers to establish a biomarker-anchored enrollment framework.",
+                  "evidence_keys": [
+                    "literature:28598856",
+                    "literature:R01NS125592",
+                    "literature:40079755",
+                    "literature:40298214",
+                    "literature:37786563"
+                  ]
+                },
+                {
+                  "id": "aim-2",
+                  "title": "Aim 2: Examine whether a lysosome-directed, beta-glucocerebrosidase-engaging intervention produces measurable target engagement and changes in candidate progression biomarkers within the stratified cohort.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "literature:R01NS125317",
+                    "grant:K08NS138592",
+                    "literature:28598856"
+                  ]
+                },
+                {
+                  "id": "aim-3",
+                  "title": "Aim 3: Determine whether target engagement tracks with clinical severity (MDS-UPDRS) and whether biomarker stratification and earlier enrollment yield outcomes distinguishable from prior unstratified later-stage PD trials.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "literature:39496848",
+                    "trial:NCT07312110",
+                    "literature:37786563"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "index": 2,
+          "score": 65.0,
+          "rationale": "Significance claim introduces notable overclaim risk by listing symptomatic/neuromodulatory approaches (DBS, rTMS, tDCS, gait rehab) as the contrast — these are not the primary comparators for a biomarker-stratification study and dilute the argument. The framing is broader but less focused. Central hypothesis is reasonable but somewhat composite/diffuse ('gut-microbiome/plasma-metabolomic and peripheral-immune/α-synuclein readouts' bundled together without prioritization), and feasibility/target-engagement as the primary endpoint is a weaker claim than clinical progression. Innovation claim is the most expansive but also the most vague ('studying gut, immune, lysosomal, and neuromodulatory pipelines in isolation') — the neuromodulatory pipeline inclusion is a mismatch with the actual innovation being claimed. Citations are numerous but the breadth signals less calibration. Covers F1 but with more overclaim and diffuseness than the other two.",
+          "chosen": false,
+          "fragment": {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether a prospectively defined panel of peripheral and gut-derived readouts can be validated as an early-stratification tool for Parkinson's disease, addressing an unmet need created because the current therapeutic pipeline is dominated by symptomatic and neuromodulatory approaches (deep brain stimulation, repetitive transcranial magnetic stimulation, transcranial direct current stimulation, and gait/dual-task rehabilitation) rather than by validated disease-modifying entry points. The field has named slowing disease progression through biomarkers and targeted therapies as a top research priority, yet whether prodromal gut and peripheral-immune measures can be turned into a usable biomarker for patient selection remains an open question worth investigating. Determining whether such a readout exists matters because recent target-engaging trials (e.g., a chaperone strategy that raised β-glucocerebrosidase but showed no clinical separation) leave open the question of whether mechanism-matched patient stratification is the missing element for translating engagement into benefit. The departure from current practice is to test, in a single prospective program, an integrated peripheral biomarker layer — coupling gut-microbiome and plasma-metabolomic signatures (including caffeine-metabolism readouts) with peripheral-monocyte/exosomal α-synuclein measures — explicitly as a patient-stratification instrument for a mechanism-matched lysosomal/autophagy-directed intervention, rather than studying gut, immune, lysosomal, and neuromodulatory pipelines in isolation as the current field does. We will examine whether prodromal peripheral-tissue diagnostic measures can be combined with an autophagy-promoting disease-modifying candidate to determine whether biomarker-guided selection is a viable design strategy distinct from the unstratified target-engagement and symptomatic neuromodulation trials that presently dominate.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether a prospectively defined panel of peripheral and gut-derived readouts can be validated as an early-stratification tool for Parkinson's disease, addressing an unmet need created because the current therapeutic pipeline is dominated by symptomatic and neuromodulatory approaches (deep brain stimulation, repetitive transcranial magnetic stimulation, transcranial direct current stimulation, and gait/dual-task rehabilitation) rather than by validated disease-modifying entry points. The field has named slowing disease progression through biomarkers and targeted therapies as a top research priority, yet whether prodromal gut and peripheral-immune measures can be turned into a usable biomarker for patient selection remains an open question worth investigating. Determining whether such a readout exists matters because recent target-engaging trials (e.g., a chaperone strategy that raised β-glucocerebrosidase but showed no clinical separation) leave open the question of whether mechanism-matched patient stratification is the missing element for translating engagement into benefit.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:39762644",
+                  "literature:38758903",
+                  "trial:NCT07554833",
+                  "trial:NCT07395531",
+                  "trial:NCT07611578",
+                  "literature:39496848",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40587145",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:39762644",
+                  "literature:38758903",
+                  "trial:NCT07554833",
+                  "trial:NCT07395531",
+                  "trial:NCT07611578",
+                  "literature:39496848",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:41981587",
+                  "literature:40587145",
+                  "literature:28598856"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that a prospectively defined composite of gut-microbiome/plasma-metabolomic and peripheral-immune/α-synuclein readouts can be operationalized and tested as a stratification biomarker that identifies an early/prodromal Parkinson's disease subgroup in whom a lysosomal/autophagy-directed disease-modifying intervention can be evaluated; we will determine whether this composite distinguishes such a subgroup and whether stratified intervention is feasible and shows measurable target engagement.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40079755",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:40587145",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40079755",
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:40587145",
+                  "literature:28598856"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is to test, in a single prospective program, an integrated peripheral biomarker layer — coupling gut-microbiome and plasma-metabolomic signatures (including caffeine-metabolism readouts) with peripheral-monocyte/exosomal α-synuclein measures — explicitly as a patient-stratification instrument for a mechanism-matched lysosomal/autophagy-directed intervention, rather than studying gut, immune, lysosomal, and neuromodulatory pipelines in isolation as the current field does. We will examine whether prodromal peripheral-tissue diagnostic measures can be combined with an autophagy-promoting disease-modifying candidate to determine whether biomarker-guided selection is a viable design strategy distinct from the unstratified target-engagement and symptomatic neuromodulation trials that presently dominate.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:40298214",
+                  "literature:40587145",
+                  "grant:IK2BX005760",
+                  "literature:40639630",
+                  "literature:42003184"
+                ],
+                "evidence_ids": [
+                  "literature:40273394",
+                  "literature:41981587",
+                  "literature:40298214",
+                  "literature:40587145",
+                  "grant:IK2BX005760",
+                  "literature:40639630",
+                  "literature:42003184"
+                ]
+              }
+            ],
+            "provides": {
+              "skeleton": [
+                {
+                  "gap": "Disease-modifying therapy for Parkinson's disease remains unrealized: the field has organized around α-synuclein aggregation, lysosomal/GBA biology, and the gut-brain axis as candidate entry points, yet these mechanistic programs have advanced largely in parallel from the symptomatic and neuromodulatory therapeutic pipeline (e.g., DBS, rTMS, tDCS, dual-task and gait rehabilitation), and recent target-engaging trials such as ambroxol have not translated mechanistic engagement into measurable clinical benefit. It remains undetermined whether a prodromal, peripherally accessible biomarker readout — built from gut-microbiome/metabolomic signals and peripheral immune/α-synuclein measures — can be defined and prospectively tested as a stratification tool to select patients and time disease-modifying intervention against a lysosomal/autophagy target. The specific barrier is the absence of a validated bridge from candidate peripheral biomarkers to a stratified, mechanism-matched intervention strategy in early/prodromal PD.",
+                  "central_hypothesis": "We hypothesize that a prospectively defined composite of gut-microbiome/plasma-metabolomic and peripheral-immune/α-synuclein readouts can be operationalized and tested as a stratification biomarker that identifies an early/prodromal Parkinson's disease subgroup in whom a lysosomal/autophagy-directed disease-modifying intervention can be evaluated; we will determine whether this composite distinguishes such a subgroup and whether stratified intervention is feasible and shows measurable target engagement.",
+                  "aim_stubs": [
+                    {
+                      "id": "aim-1",
+                      "title": "Aim 1: Define and characterize a candidate peripheral biomarker panel by examining whether gut-microbiome and plasma-metabolomic signatures (including caffeine metabolism) plus peripheral-immune/α-synuclein measures can be quantified reproducibly across an early/prodromal PD cohort.",
+                      "evidence_keys": [
+                        "literature:40273394",
+                        "literature:40298214",
+                        "literature:41981587",
+                        "grant:U01DK140923",
+                        "grant:R01DK135440",
+                        "grant:R01NS118146",
+                        "grant:IK2BX005760"
+                      ]
+                    },
+                    {
+                      "id": "aim-2",
+                      "title": "Aim 2: Test whether the candidate panel stratifies an early/prodromal PD subgroup, evaluating its reproducibility and prospective performance for identifying patients matched to a lysosomal/autophagy-directed disease-modifying strategy.",
+                      "evidence_keys": [
+                        "literature:40079755",
+                        "literature:28598856",
+                        "literature:40587145",
+                        "grant:R01NS125317",
+                        "grant:K08NS138592",
+                        "grant:R01NS125592"
+                      ]
+                    },
+                    {
+                      "id": "aim-3",
+                      "title": "Aim 3: Determine, in preclinical models and a stratified pilot design, whether an autophagy-promoting disease-modifying candidate produces measurable target engagement in the biomarker-defined subgroup as a basis for a future stratified trial.",
+                      "evidence_keys": [
+                        "literature:40639630",
+                        "literature:42003184",
+                        "literature:40587145",
+                        "literature:36722247",
+                        "grant:R01NS078165",
+                        "grant:R21NS126731"
+                      ]
+                    }
+                  ],
+                  "significance": "We will investigate whether a prospectively defined panel of peripheral and gut-derived readouts can be validated as an early-stratification tool for Parkinson's disease, addressing an unmet need created because the current therapeutic pipeline is dominated by symptomatic and neuromodulatory approaches (deep brain stimulation, repetitive transcranial magnetic stimulation, transcranial direct current stimulation, and gait/dual-task rehabilitation) rather than by validated disease-modifying entry points. The field has named slowing disease progression through biomarkers and targeted therapies as a top research priority, yet whether prodromal gut and peripheral-immune measures can be turned into a usable biomarker for patient selection remains an open question worth investigating. Determining whether such a readout exists matters because recent target-engaging trials (e.g., a chaperone strategy that raised β-glucocerebrosidase but showed no clinical separation) leave open the question of whether mechanism-matched patient stratification is the missing element for translating engagement into benefit.",
+                  "innovation": "The departure from current practice is to test, in a single prospective program, an integrated peripheral biomarker layer — coupling gut-microbiome and plasma-metabolomic signatures (including caffeine-metabolism readouts) with peripheral-monocyte/exosomal α-synuclein measures — explicitly as a patient-stratification instrument for a mechanism-matched lysosomal/autophagy-directed intervention, rather than studying gut, immune, lysosomal, and neuromodulatory pipelines in isolation as the current field does. We will examine whether prodromal peripheral-tissue diagnostic measures can be combined with an autophagy-promoting disease-modifying candidate to determine whether biomarker-guided selection is a viable design strategy distinct from the unstratified target-engagement and symptomatic neuromodulation trials that presently dominate."
+                }
+              ],
+              "aim_stubs": [
+                {
+                  "id": "aim-1",
+                  "title": "Aim 1: Define and characterize a candidate peripheral biomarker panel by examining whether gut-microbiome and plasma-metabolomic signatures (including caffeine metabolism) plus peripheral-immune/α-synuclein measures can be quantified reproducibly across an early/prodromal PD cohort.",
+                  "evidence_keys": [
+                    "literature:40273394",
+                    "literature:40298214",
+                    "literature:41981587",
+                    "grant:U01DK140923",
+                    "grant:R01DK135440",
+                    "grant:R01NS118146",
+                    "grant:IK2BX005760"
+                  ]
+                },
+                {
+                  "id": "aim-2",
+                  "title": "Aim 2: Test whether the candidate panel stratifies an early/prodromal PD subgroup, evaluating its reproducibility and prospective performance for identifying patients matched to a lysosomal/autophagy-directed disease-modifying strategy.",
+                  "evidence_keys": [
+                    "literature:40079755",
+                    "literature:28598856",
+                    "literature:40587145",
+                    "grant:R01NS125317",
+                    "grant:K08NS138592",
+                    "grant:R01NS125592"
+                  ]
+                },
+                {
+                  "id": "aim-3",
+                  "title": "Aim 3: Determine, in preclinical models and a stratified pilot design, whether an autophagy-promoting disease-modifying candidate produces measurable target engagement in the biomarker-defined subgroup as a basis for a future stratified trial.",
+                  "evidence_keys": [
+                    "literature:40639630",
+                    "literature:42003184",
+                    "literature:40587145",
+                    "literature:36722247",
+                    "grant:R01NS078165",
+                    "grant:R21NS126731"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "dropped_attempts": [
+        {
+          "attempt": 1,
+          "error": "structured output failed after 3 attempts | stop_reason=tool_use | missing/invalid: central_hypothesis (missing), innovation (missing) | ValidationError: 2 validation errors for _F1Argument\ncentral_hypothesis\n  Field required [type=missing, input_value={'gap': \"Two converging s... 'literature:39496848']}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.12/v/missing\ninnovation\n  Field required [type=missing, input_value={'gap': \"Two converging s... 'literature:39496848']}, input_type=dict]\n    For further information … | tool_use input: {'gap': \"Two converging streams of Parkinson's disease (PD) research remain mechanistically and clinically disconnected. On one side, the gut–brain axis and peripheral biology have emerged as candidate sites of early pathology, with prodromal gastrointestinal dysfunction and peripheral immune/metabo …"
+        }
+      ]
+    }
+  ],
+  "rounds": [
+    {
+      "round": 0,
+      "draft": {
+        "fragments": [
+          {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials. The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:39496848",
+                  "literature:37786563",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214"
+                ],
+                "evidence_ids": [
+                  "literature:39496848",
+                  "literature:37786563",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:R01NS125317",
+                  "literature:R01NS125592",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:R01NS125317",
+                  "literature:R01NS125592",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:28598856"
+                ]
+              }
+            ],
+            "provides": {
+              "skeleton": [
+                {
+                  "gap": "Disease-modifying therapy for Parkinson's disease (PD) remains unrealized: the field's stated priorities are to slow progression through validated biomarkers and to target mechanisms upstream of dopaminergic loss, yet the pipeline is fragmented across separable mechanistic streams — lysosomal/GBA-glucocerebrosidase biology, alpha-synuclein aggregation and strain properties, the gut–microbiome–brain axis, and peripheral immune involvement — that are pursued in isolation and rarely stratified against a common, prodromal, biomarker-anchored patient subgroup. It remains unknown whether a target-engaging, lysosome-directed intervention can be evaluated for disease-modifying effect within a biomarker-defined early/prodromal PD population, because target engagement and downstream clinical change have not yet been jointly examined in such a stratified design.",
+                  "central_hypothesis": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+                  "aim_stubs": [
+                    {
+                      "id": "aim-1",
+                      "title": "Aim 1: Define and stratify an early/prodromal PD cohort by GBA/glucocerebrosidase status and candidate alpha-synuclein strain and gut-axis biomarkers to establish a biomarker-anchored enrollment framework.",
+                      "evidence_keys": [
+                        "literature:28598856",
+                        "literature:R01NS125592",
+                        "literature:40079755",
+                        "literature:40298214",
+                        "literature:37786563"
+                      ]
+                    },
+                    {
+                      "id": "aim-2",
+                      "title": "Aim 2: Examine whether a lysosome-directed, beta-glucocerebrosidase-engaging intervention produces measurable target engagement and changes in candidate progression biomarkers within the stratified cohort.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "literature:R01NS125317",
+                        "grant:K08NS138592",
+                        "literature:28598856"
+                      ]
+                    },
+                    {
+                      "id": "aim-3",
+                      "title": "Aim 3: Determine whether target engagement tracks with clinical severity (MDS-UPDRS) and whether biomarker stratification and earlier enrollment yield outcomes distinguishable from prior unstratified later-stage PD trials.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "literature:39496848",
+                        "trial:NCT07312110",
+                        "literature:37786563"
+                      ]
+                    }
+                  ],
+                  "significance": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials.",
+                  "innovation": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued."
+                }
+              ],
+              "aim_stubs": [
+                {
+                  "id": "aim-1",
+                  "title": "Aim 1: Define and stratify an early/prodromal PD cohort by GBA/glucocerebrosidase status and candidate alpha-synuclein strain and gut-axis biomarkers to establish a biomarker-anchored enrollment framework.",
+                  "evidence_keys": [
+                    "literature:28598856",
+                    "literature:R01NS125592",
+                    "literature:40079755",
+                    "literature:40298214",
+                    "literature:37786563"
+                  ]
+                },
+                {
+                  "id": "aim-2",
+                  "title": "Aim 2: Examine whether a lysosome-directed, beta-glucocerebrosidase-engaging intervention produces measurable target engagement and changes in candidate progression biomarkers within the stratified cohort.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "literature:R01NS125317",
+                    "grant:K08NS138592",
+                    "literature:28598856"
+                  ]
+                },
+                {
+                  "id": "aim-3",
+                  "title": "Aim 3: Determine whether target engagement tracks with clinical severity (MDS-UPDRS) and whether biomarker stratification and earlier enrollment yield outcomes distinguishable from prior unstratified later-stage PD trials.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "literature:39496848",
+                    "trial:NCT07312110",
+                    "literature:37786563"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-1",
+            "serves_dimension": "F2",
+            "text": "Prospective observational cohort design enrolling early/prodromal participants (target n≈300; powered for ≥3 strata with ≥60/stratum after attrition) plus matched controls, with annual follow-up over the grant period. Stratifying assays: (1) GBA genotyping (targeted sequencing panel) plus peripheral β-glucocerebrosidase enzymatic activity in dried blood spots/leukocytes; (2) candidate alpha-synuclein seed amplification assay (seed conformer/RT-QuIC–type readout) on CSF and accessible peripheral tissue, with conformational/strain phenotyping; (3) gut-axis panel — stool 16S/shotgun microbiome, plasma metabolomics including caffeine-metabolism markers, and standardized GI-symptom instruments. Cross-modal integration via unsupervised clustering (consensus k-means / latent class) and a supervised multi-marker classifier; rigor controls include pre-registered analysis plan, blinded assay batching, technical replicates for test–retest reliability (target intraclass correlation thresholds), split-half internal validation, and false-discovery correction. Expertise/resources assumed (F3): a movement-disorders clinical recruitment site with prodromal-screening capacity, a CLIA-grade genetics/enzymology lab, an alpha-synuclein seed-assay core, a microbiome/metabolomics core with biobanking and standardized stool/CSF collection, and a biostatistics team for multi-omic integration.",
+            "claims": [
+              {
+                "id": "aim-1::hypothesis",
+                "text": "We will investigate whether GBA/glucocerebrosidase enzymatic status, candidate alpha-synuclein seed conformer (\"strain\") signatures, and gut-axis biomarkers can be jointly measured in a prospectively enrolled early/prodromal PD cohort to define discrete, prospectively trackable enrollment strata — examining whether a multi-marker classifier separates GBA-variant, seed-positive, and gut-axis-altered subgroups with reproducible (split-half/test-retest) assignment.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:37786563",
+                  "literature:35750883",
+                  "literature:40273394",
+                  "literature:40587145",
+                  "grant:R01NS125592",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:37786563",
+                  "literature:35750883",
+                  "literature:40273394",
+                  "literature:40587145",
+                  "grant:R01NS125592",
+                  "literature:39496848"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-1",
+                  "hypothesis": "We will investigate whether GBA/glucocerebrosidase enzymatic status, candidate alpha-synuclein seed conformer (\"strain\") signatures, and gut-axis biomarkers can be jointly measured in a prospectively enrolled early/prodromal PD cohort to define discrete, prospectively trackable enrollment strata — examining whether a multi-marker classifier separates GBA-variant, seed-positive, and gut-axis-altered subgroups with reproducible (split-half/test-retest) assignment.",
+                  "rationale": "GBA mutations are described as the single largest genetic risk factor for idiopathic PD and offer a window into pre-clinical disease, motivating GBA/GCase status as a stratifying axis; β-glucocerebrosidase is a tractable, measurable target. A prodromal subgroup is proposed to show rostral spread of pathological alpha-synuclein from the gut, supporting alpha-synuclein seed/strain assays and gut-axis sampling as complementary strata. Distinct alpha-synuclein strain properties have been proposed to track diagnostic and progression subtypes. Neuroimaging and metabolomic/microbiota biomarkers are being advanced for early discrepant diagnosis. Together these justify building a biomarker-anchored enrollment framework rather than enrolling on clinical phenotype alone.",
+                  "approach": "Prospective observational cohort design enrolling early/prodromal participants (target n≈300; powered for ≥3 strata with ≥60/stratum after attrition) plus matched controls, with annual follow-up over the grant period. Stratifying assays: (1) GBA genotyping (targeted sequencing panel) plus peripheral β-glucocerebrosidase enzymatic activity in dried blood spots/leukocytes; (2) candidate alpha-synuclein seed amplification assay (seed conformer/RT-QuIC–type readout) on CSF and accessible peripheral tissue, with conformational/strain phenotyping; (3) gut-axis panel — stool 16S/shotgun microbiome, plasma metabolomics including caffeine-metabolism markers, and standardized GI-symptom instruments. Cross-modal integration via unsupervised clustering (consensus k-means / latent class) and a supervised multi-marker classifier; rigor controls include pre-registered analysis plan, blinded assay batching, technical replicates for test–retest reliability (target intraclass correlation thresholds), split-half internal validation, and false-discovery correction. Expertise/resources assumed (F3): a movement-disorders clinical recruitment site with prodromal-screening capacity, a CLIA-grade genetics/enzymology lab, an alpha-synuclein seed-assay core, a microbiome/metabolomics core with biobanking and standardized stool/CSF collection, and a biostatistics team for multi-omic integration.",
+                  "expected_outcomes": "We expect to define ≥3 reproducible enrollment strata (e.g., GBA-variant/low-GCase; seed-positive; gut-axis–altered, with overlaps quantified) and to report assay performance metrics: classifier discrimination of strata with cross-validated AUC, test–retest reliability of each biomarker meeting pre-specified ICC thresholds, and a documented SOP-anchored enrollment framework deliverable for downstream aims. Outcomes are framed descriptively (prevalence and co-occurrence of marker-defined subgroups, reliability), consistent with the exploratory, unscored evidence base; no causal or progression-prediction claims are asserted here.",
+                  "pitfalls_alternatives": "Pitfalls: (1) prodromal enrollment is slow and phenotypically heterogeneous — mitigated by multi-site recruitment and broad screening, with an alternative of enriching via at-risk referrals (e.g., hyposmia, RBD, GI-symptom clinics) per gut-axis framing. (2) Peripheral β-glucocerebrosidase and seed-amplification assays may show batch/inter-lab variability and incomplete peripheral-tissue sensitivity — mitigated by blinded batching, spiked controls, replicate test–retest, and a fallback to CSF-only seed readout if peripheral sensitivity is insufficient. (3) alpha-synuclein \"strain\" conformer distinctions may not cleanly separate in vivo as proposed — alternative is to treat seed status as binary plus continuous seeding-kinetics metrics rather than discrete strains. (4) Microbiome/metabolomic signals are confounded by diet, medication, and transit — mitigated by covariate capture, diet logs, and adjustment, with caffeine-metabolite markers as an orthogonal readout. (5) Small per-stratum n limits multivariate stability — mitigated by penalized models, internal split-half validation, and explicit reporting of uncertainty rather than over-fitted classifiers.",
+                  "citation_ids": [
+                    "literature:28598856",
+                    "literature:40079755",
+                    "literature:40298214",
+                    "literature:37786563",
+                    "literature:35750883",
+                    "literature:40273394",
+                    "literature:40587145",
+                    "grant:R01NS125592",
+                    "literature:39496848"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-2",
+            "serves_dimension": "F2",
+            "text": "Within the Aim 1 stratified cohort (GBA-variant carriers vs. non-carriers), we will run a randomized, double-blind, placebo-controlled pharmacodynamic study of a lysosome-directed, GCase-engaging agent (e.g., a small-molecule chaperone) at two dose levels, mirroring the engagement-confirmation design used previously. Primary pharmacodynamic readout: GCase enzymatic activity assayed in peripheral blood mononuclear cells/dried blood spots and, where consented, in CSF, at baseline and across treatment, with a pre-specified engagement threshold (e.g., >=1.5-fold increase over placebo). Candidate progression biomarkers (exploratory, not efficacy): CSF/plasma alpha-synuclein seed-amplification and aggregation measures, lysosomal substrate/sphingolipid panels (glucosylceramide species), and neurodegeneration markers (e.g., NfL), supported by mechanistic rationale from lysosomal and sphingolipid programs. Imaging substudy: synaptic/dopamine-transporter PET to anchor progression context. In parallel, SH-SY5Y and patient-derived cellular models will quantify GCase activity, substrate clearance, and autophagic flux to confirm mechanism-of-engagement and establish assay reproducibility. Statistics: mixed-effects models with stratum (GBA vs. non-GBA) × treatment interaction; a priori power calculation targeting the engagement effect size from prior data; multiplicity control across exploratory biomarkers (FDR). Expertise/resources assumed (F3): a stratified/genotyped recruitment pipeline with CLIA genotyping, validated GCase enzymatic and SAA assay platforms with documented intra/inter-assay CVs, CSF collection and PET imaging capacity, a biorepository, statistical/biostatistics support, and lysosomal-biochemistry laboratory capability—competencies represented across the lysosomal/sphingolipid and imaging grant programs cited.",
+            "claims": [
+              {
+                "id": "aim-2::hypothesis",
+                "text": "We will examine whether a lysosome-directed intervention that engages beta-glucocerebrosidase (GCase) produces measurable, dose-related target engagement (increased peripheral and CNS GCase activity) and whether such engagement is accompanied by detectable changes in candidate progression biomarkers within the GBA-stratified versus non-GBA cohort; we make no claim of clinical efficacy or causal disease modification at this exploratory stage.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "grant:K08NS138592",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:ZIATR000432",
+                  "grant:ZIADK056014",
+                  "literature:39496848",
+                  "grant:R01NS124819",
+                  "literature:36722247",
+                  "literature:40639630"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "grant:K08NS138592",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:ZIATR000432",
+                  "grant:ZIADK056014",
+                  "literature:39496848",
+                  "grant:R01NS124819",
+                  "literature:36722247",
+                  "literature:40639630"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-2",
+                  "hypothesis": "We will examine whether a lysosome-directed intervention that engages beta-glucocerebrosidase (GCase) produces measurable, dose-related target engagement (increased peripheral and CNS GCase activity) and whether such engagement is accompanied by detectable changes in candidate progression biomarkers within the GBA-stratified versus non-GBA cohort; we make no claim of clinical efficacy or causal disease modification at this exploratory stage.",
+                  "rationale": "GBA variants are the single largest genetic risk factor for PD and offer a window to study early/pre-clinical disease and rational lysosomal therapeutics. A prior randomized trial of the GCase-engaging chaperone ambroxol demonstrated pharmacodynamic target engagement (increased GCase levels) even though it did not show group differences on clinical outcomes, underscoring that target engagement and biomarker movement should be assessed as distinct, intermediate endpoints before efficacy can be inferred. Convergent mechanistic work links LRRK2, lysosomal/chloride homeostasis, sphingolipid biology, and cAbl signaling to GCase/lysosomal function in PD and Gaucher-PD, motivating a target-engagement-first design. The broader field prioritizes biomarker-anchored, target-engagement-gated disease-modification studies.",
+                  "approach": "Within the Aim 1 stratified cohort (GBA-variant carriers vs. non-carriers), we will run a randomized, double-blind, placebo-controlled pharmacodynamic study of a lysosome-directed, GCase-engaging agent (e.g., a small-molecule chaperone) at two dose levels, mirroring the engagement-confirmation design used previously. Primary pharmacodynamic readout: GCase enzymatic activity assayed in peripheral blood mononuclear cells/dried blood spots and, where consented, in CSF, at baseline and across treatment, with a pre-specified engagement threshold (e.g., >=1.5-fold increase over placebo). Candidate progression biomarkers (exploratory, not efficacy): CSF/plasma alpha-synuclein seed-amplification and aggregation measures, lysosomal substrate/sphingolipid panels (glucosylceramide species), and neurodegeneration markers (e.g., NfL), supported by mechanistic rationale from lysosomal and sphingolipid programs. Imaging substudy: synaptic/dopamine-transporter PET to anchor progression context. In parallel, SH-SY5Y and patient-derived cellular models will quantify GCase activity, substrate clearance, and autophagic flux to confirm mechanism-of-engagement and establish assay reproducibility. Statistics: mixed-effects models with stratum (GBA vs. non-GBA) × treatment interaction; a priori power calculation targeting the engagement effect size from prior data; multiplicity control across exploratory biomarkers (FDR). Expertise/resources assumed (F3): a stratified/genotyped recruitment pipeline with CLIA genotyping, validated GCase enzymatic and SAA assay platforms with documented intra/inter-assay CVs, CSF collection and PET imaging capacity, a biorepository, statistical/biostatistics support, and lysosomal-biochemistry laboratory capability—competencies represented across the lysosomal/sphingolipid and imaging grant programs cited.",
+                  "expected_outcomes": "We expect to determine whether the intervention meets the pre-specified target-engagement threshold (e.g., a dose-related increase in PBMC/CSF GCase activity vs. placebo), with engagement plausibly more pronounced or more interpretable in the GBA-stratified subgroup. We expect to characterize whether candidate progression biomarkers (alpha-synuclein seeding, glucosylceramide species, NfL) show measurable, direction-of-effect changes accompanying engagement, reported as exploratory effect-size estimates with confidence intervals rather than confirmatory efficacy claims. We expect validated, reproducible assay performance (reported CVs) and a quantitative engagement-to-biomarker dataset that gates a future powered disease-modification trial. Consistent with the prior trial, we explicitly anticipate that engagement may occur without detectable clinical change, and the aim is structured so a null biomarker result is still informative.",
+                  "pitfalls_alternatives": "Pitfall 1 — engagement without biomarker movement: as in the ambroxol trial, GCase may rise while downstream biomarkers do not change within the study window; mitigation: pre-specify engagement as the primary endpoint and biomarkers as exploratory, and extend the dosing/observation window. Pitfall 2 — assay variability: GCase activity and SAA readouts can have high inter-lab variability; mitigation: lock assay SOPs, run blinded duplicate samples, report intra/inter-assay CVs, and use cellular models for orthogonal confirmation. Pitfall 3 — insufficient CNS penetration / peripheral-only engagement: mitigation: include CSF sampling and, if CNS engagement is unconfirmed, pivot to an agent or dose with documented CNS exposure, or use surrogate sphingolipid CSF markers. Pitfall 4 — stratum recruitment shortfall (GBA carriers): mitigation: multi-site genotype-enriched recruitment and adaptive enrollment targets; if carrier numbers are limited, pre-specify pooled analysis with genotype as a covariate. Pitfall 5 — confounding by concurrent LRRK2/lysosomal pathway heterogeneity: mitigation: collect LRRK2 status and lysosomal-pathway covariates and model them. Alternative strategy: if the clinical agent is delayed, the cellular-model arm can independently establish mechanism-of-engagement and assay readiness, de-risking the human substudy.",
+                  "citation_ids": [
+                    "literature:40587145",
+                    "literature:28598856",
+                    "grant:K08NS138592",
+                    "grant:R01NS125317",
+                    "grant:ZIAHG200336",
+                    "grant:ZIATR000432",
+                    "grant:ZIADK056014",
+                    "literature:39496848",
+                    "grant:R01NS124819",
+                    "literature:36722247",
+                    "literature:40639630"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-3",
+            "serves_dimension": "F2",
+            "text": "We will enroll early-stage PD participants (Hoehn & Yahr ≤2, within a defined time-from-diagnosis window) and prospectively stratify into biomarker-positive and biomarker-negative strata using a pre-specified baseline assay (genotyping for GBA variants plus a peripheral/CSF β-glucocerebrosidase or lysosomal readout). The primary engagement readout is the pharmacodynamic shift in the target biomarker (modeled on the β-glucocerebrosidase increase reported in); the clinical readout is change in MDS-UPDRS total and Part III over the trial, harmonized with the MDS-UPDRS framework used by ongoing progression trials. We will additionally capture a neuroimaging stratification/engagement covariate. Analysis: a pre-specified mixed-effects model of MDS-UPDRS change over time with biomarker-engagement and stratum × time interaction terms; sample size powered on the expected effect from contemporaneous MDS-UPDRS trials, with the stratified early-enrollment cohort compared descriptively and via covariate-adjusted models against published outcome distributions from prior unstratified later-stage trials. Required expertise/resources (F3): movement-disorders clinicians MDS-UPDRS-certified for rating reliability, a GCLP-grade lysosomal/genotyping biomarker laboratory, neuroimaging core capacity, and a biostatistics team for longitudinal/interaction modeling.",
+            "claims": [
+              {
+                "id": "aim-3::hypothesis",
+                "text": "We will investigate whether the degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) tracks with change in clinical severity measured by MDS-UPDRS, and whether prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage yields outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials. This is framed at the exploratory rung; we do not assert that target engagement causes or is associated with clinical change.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:39496848",
+                  "trial:NCT07312110",
+                  "literature:37786563",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:39496848",
+                  "trial:NCT07312110",
+                  "literature:37786563",
+                  "literature:28598856"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-3",
+                  "hypothesis": "We will investigate whether the degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) tracks with change in clinical severity measured by MDS-UPDRS, and whether prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage yields outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials. This is framed at the exploratory rung; we do not assert that target engagement causes or is associated with clinical change.",
+                  "rationale": "Prior disease-modification trials have demonstrated target engagement without detecting differences on primary or secondary clinical outcomes, raising the exploratory question of whether engagement and clinical severity move together and whether the failure to distinguish outcomes reflected late-stage, unstratified enrollment. GBA/lysosomal mutation carriers can be identified at a pre-clinical or early stage, offering a population in which to examine early, stratified enrollment, and current research priorities explicitly emphasize biomarker-guided, targeted, progression-slowing strategies. Neuroimaging-based diagnostic biomarkers provide candidate stratification and engagement readouts, and contemporaneous MDS-UPDRS-anchored progression trials provide the comparison framework for clinical severity.",
+                  "approach": "We will enroll early-stage PD participants (Hoehn & Yahr ≤2, within a defined time-from-diagnosis window) and prospectively stratify into biomarker-positive and biomarker-negative strata using a pre-specified baseline assay (genotyping for GBA variants plus a peripheral/CSF β-glucocerebrosidase or lysosomal readout). The primary engagement readout is the pharmacodynamic shift in the target biomarker (modeled on the β-glucocerebrosidase increase reported in); the clinical readout is change in MDS-UPDRS total and Part III over the trial, harmonized with the MDS-UPDRS framework used by ongoing progression trials. We will additionally capture a neuroimaging stratification/engagement covariate. Analysis: a pre-specified mixed-effects model of MDS-UPDRS change over time with biomarker-engagement and stratum × time interaction terms; sample size powered on the expected effect from contemporaneous MDS-UPDRS trials, with the stratified early-enrollment cohort compared descriptively and via covariate-adjusted models against published outcome distributions from prior unstratified later-stage trials. Required expertise/resources (F3): movement-disorders clinicians MDS-UPDRS-certified for rating reliability, a GCLP-grade lysosomal/genotyping biomarker laboratory, neuroimaging core capacity, and a biostatistics team for longitudinal/interaction modeling.",
+                  "expected_outcomes": "If the hypothesis is supported, the magnitude of target engagement will co-vary with MDS-UPDRS change across participants (examined descriptively and via the engagement × time term, e.g., a detectable gradient in slope), and the biomarker-positive, early-enrollment stratum will show an MDS-UPDRS outcome distribution distinguishable from historical unstratified later-stage trial benchmarks (e.g., a pre-specified between-stratum difference in mean change). A plausible null — consistent with prior data — is robust target engagement with no detectable separation in MDS-UPDRS; either result is informative for prioritizing biomarker-guided, early-enrollment trial design.",
+                  "pitfalls_alternatives": "Pitfalls: (1) Target engagement may again occur without measurable clinical separation; we mitigate by pre-specifying engagement-clinical concordance as an exploratory objective rather than a confirmatory endpoint, and by enriching for early/biomarker-positive participants where progression signal may be more tractable. (2) Historical comparison to prior unstratified later-stage trials is confounded by cohort, era, and rating drift; we mitigate with MDS-UPDRS rater certification, covariate adjustment, and harmonized scoring. (3) Biomarker assay variability could misclassify strata; we will use duplicate GCLP assays and orthogonal genotyping plus an imaging covariate. (4) Slow early-stage progression may underpower change detection within trial duration; alternatives include extending follow-up, adding sensitive motor/imaging progression measures, or using a biomarker-defined progression endpoint as a co-primary, consistent with stated field priorities. (5) Recruiting sufficient biomarker-positive early-stage carriers may be difficult; alternative is multi-site enrollment and pre-screening registries.",
+                  "citation_ids": [
+                    "literature:40587145",
+                    "literature:39496848",
+                    "trial:NCT07312110",
+                    "literature:37786563",
+                    "literature:28598856"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "draft": {
+        "fragments": [
+          {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials. The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:39496848",
+                  "literature:37786563",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214"
+                ],
+                "evidence_ids": [
+                  "literature:39496848",
+                  "literature:37786563",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:R01NS125317",
+                  "literature:R01NS125592",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:28598856"
+                ]
+              }
+            ],
+            "provides": {
+              "skeleton": [
+                {
+                  "gap": "Disease-modifying therapy for Parkinson's disease (PD) remains unrealized: the field's stated priorities are to slow progression through validated biomarkers and to target mechanisms upstream of dopaminergic loss, yet the pipeline is fragmented across separable mechanistic streams — lysosomal/GBA-glucocerebrosidase biology, alpha-synuclein aggregation and strain properties, the gut–microbiome–brain axis, and peripheral immune involvement — that are pursued in isolation and rarely stratified against a common, prodromal, biomarker-anchored patient subgroup. It remains unknown whether a target-engaging, lysosome-directed intervention can be evaluated for disease-modifying effect within a biomarker-defined early/prodromal PD population, because target engagement and downstream clinical change have not yet been jointly examined in such a stratified design.",
+                  "central_hypothesis": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+                  "aim_stubs": [
+                    {
+                      "id": "aim-1",
+                      "title": "Aim 1: Define and stratify an early/prodromal PD cohort by GBA/glucocerebrosidase status and candidate alpha-synuclein strain and gut-axis biomarkers to establish a biomarker-anchored enrollment framework.",
+                      "evidence_keys": [
+                        "literature:28598856",
+                        "literature:40079755",
+                        "literature:40298214",
+                        "literature:37786563"
+                      ]
+                    },
+                    {
+                      "id": "aim-2",
+                      "title": "Aim 2: Examine whether a lysosome-directed, beta-glucocerebrosidase-engaging intervention produces measurable target engagement and changes in candidate progression biomarkers within the stratified cohort.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "grant:K08NS138592",
+                        "literature:28598856"
+                      ]
+                    },
+                    {
+                      "id": "aim-3",
+                      "title": "Aim 3: Determine whether target engagement tracks with clinical severity (MDS-UPDRS) and whether biomarker stratification and earlier enrollment yield outcomes distinguishable from prior unstratified later-stage PD trials.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "literature:39496848",
+                        "trial:NCT07312110",
+                        "literature:37786563"
+                      ]
+                    }
+                  ],
+                  "significance": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials.",
+                  "innovation": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued."
+                }
+              ],
+              "aim_stubs": [
+                {
+                  "id": "aim-1",
+                  "title": "Aim 1: Define and stratify an early/prodromal PD cohort by GBA/glucocerebrosidase status and candidate alpha-synuclein strain and gut-axis biomarkers to establish a biomarker-anchored enrollment framework.",
+                  "evidence_keys": [
+                    "literature:28598856",
+                    "literature:40079755",
+                    "literature:40298214",
+                    "literature:37786563"
+                  ]
+                },
+                {
+                  "id": "aim-2",
+                  "title": "Aim 2: Examine whether a lysosome-directed, beta-glucocerebrosidase-engaging intervention produces measurable target engagement and changes in candidate progression biomarkers within the stratified cohort.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "grant:K08NS138592",
+                    "literature:28598856"
+                  ]
+                },
+                {
+                  "id": "aim-3",
+                  "title": "Aim 3: Determine whether target engagement tracks with clinical severity (MDS-UPDRS) and whether biomarker stratification and earlier enrollment yield outcomes distinguishable from prior unstratified later-stage PD trials.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "literature:39496848",
+                    "trial:NCT07312110",
+                    "literature:37786563"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-1",
+            "serves_dimension": "F2",
+            "text": "Prospective observational cohort design enrolling early/prodromal participants (target n≈300; powered for ≥3 strata with ≥60/stratum after attrition) plus matched controls, with annual follow-up over the grant period. Stratifying assays: (1) GBA genotyping (targeted sequencing panel) plus peripheral β-glucocerebrosidase enzymatic activity in dried blood spots/leukocytes; (2) candidate alpha-synuclein seed amplification assay (seed conformer/RT-QuIC–type readout) on CSF and accessible peripheral tissue, with conformational/strain phenotyping; (3) gut-axis panel — stool 16S/shotgun microbiome, plasma metabolomics including caffeine-metabolism markers, and standardized GI-symptom instruments. Cross-modal integration via unsupervised clustering (consensus k-means / latent class) and a supervised multi-marker classifier; rigor controls include pre-registered analysis plan, blinded assay batching, technical replicates for test–retest reliability (target intraclass correlation thresholds), split-half internal validation, and false-discovery correction. Expertise/resources assumed (F3): a movement-disorders clinical recruitment site with prodromal-screening capacity, a CLIA-grade genetics/enzymology lab, an alpha-synuclein seed-assay core, a microbiome/metabolomics core with biobanking and standardized stool/CSF collection, and a biostatistics team for multi-omic integration.",
+            "claims": [
+              {
+                "id": "aim-1::hypothesis",
+                "text": "We will investigate whether GBA/glucocerebrosidase enzymatic status, candidate alpha-synuclein seed conformer (\"strain\") signatures, and gut-axis biomarkers can be jointly measured in a prospectively enrolled early/prodromal PD cohort to define discrete, prospectively trackable enrollment strata — examining whether a multi-marker classifier separates GBA-variant, seed-positive, and gut-axis-altered subgroups with reproducible (split-half/test-retest) assignment.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:37786563",
+                  "literature:35750883",
+                  "literature:40273394",
+                  "literature:40587145",
+                  "grant:R01NS125592",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:37786563",
+                  "literature:35750883",
+                  "literature:40273394",
+                  "literature:40587145",
+                  "grant:R01NS125592",
+                  "literature:39496848"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-1",
+                  "hypothesis": "We will investigate whether GBA/glucocerebrosidase enzymatic status, candidate alpha-synuclein seed conformer (\"strain\") signatures, and gut-axis biomarkers can be jointly measured in a prospectively enrolled early/prodromal PD cohort to define discrete, prospectively trackable enrollment strata — examining whether a multi-marker classifier separates GBA-variant, seed-positive, and gut-axis-altered subgroups with reproducible (split-half/test-retest) assignment.",
+                  "rationale": "GBA mutations are described as the single largest genetic risk factor for idiopathic PD and offer a window into pre-clinical disease, motivating GBA/GCase status as a stratifying axis; β-glucocerebrosidase is a tractable, measurable target. A prodromal subgroup is proposed to show rostral spread of pathological alpha-synuclein from the gut, supporting alpha-synuclein seed/strain assays and gut-axis sampling as complementary strata. Distinct alpha-synuclein strain properties have been proposed to track diagnostic and progression subtypes. Neuroimaging and metabolomic/microbiota biomarkers are being advanced for early discrepant diagnosis. Together these justify building a biomarker-anchored enrollment framework rather than enrolling on clinical phenotype alone.",
+                  "approach": "Prospective observational cohort design enrolling early/prodromal participants (target n≈300; powered for ≥3 strata with ≥60/stratum after attrition) plus matched controls, with annual follow-up over the grant period. Stratifying assays: (1) GBA genotyping (targeted sequencing panel) plus peripheral β-glucocerebrosidase enzymatic activity in dried blood spots/leukocytes; (2) candidate alpha-synuclein seed amplification assay (seed conformer/RT-QuIC–type readout) on CSF and accessible peripheral tissue, with conformational/strain phenotyping; (3) gut-axis panel — stool 16S/shotgun microbiome, plasma metabolomics including caffeine-metabolism markers, and standardized GI-symptom instruments. Cross-modal integration via unsupervised clustering (consensus k-means / latent class) and a supervised multi-marker classifier; rigor controls include pre-registered analysis plan, blinded assay batching, technical replicates for test–retest reliability (target intraclass correlation thresholds), split-half internal validation, and false-discovery correction. Expertise/resources assumed (F3): a movement-disorders clinical recruitment site with prodromal-screening capacity, a CLIA-grade genetics/enzymology lab, an alpha-synuclein seed-assay core, a microbiome/metabolomics core with biobanking and standardized stool/CSF collection, and a biostatistics team for multi-omic integration.",
+                  "expected_outcomes": "Framed descriptively and exploratorily: comparable cohort and biomarker literature suggests it would be reasonable to anticipate that a multi-marker classifier might separate the candidate strata with cross-validated AUC in the modest-to-moderate range (roughly 0.65-0.80) rather than near-perfect discrimination, given the substantial pathway overlap reported between GBA- and LRRK2-associated lysosomal phenotypes. Subgroup co-occurrence is likely to be non-trivial — overlap between GBA-low-GCase, seed-positive, and gut-axis-altered subsets could plausibly involve 20-40% of stratified participants sharing membership, consistent with the cross-pathway contamination seen in trafficking/aggregation work (,). For reliability, lysosomal-enzyme and SAA platforms in comparable programs suggest test-retest ICCs in the ~0.7-0.85 band may be achievable for genotyping-anchored and well-batched enzymatic readouts, while microbiome/metabolomic features may show lower stability (ICC possibly <0.6) requiring the diet/medication covariate adjustment noted above. The deliverable would suggestively be an SOP-anchored enrollment framework with quantified per-marker reliability and prevalence/co-occurrence tables — no progression-prediction or causal claim is implied, only descriptive separability and reproducibility metrics.",
+                  "pitfalls_alternatives": "Comparable multi-omic prodromal-cohort work points to several failure modes this aim could plausibly encounter. (1) Enrollment heterogeneity and slow accrual: preclinical-marker cohorts of parkinsonism illustrate that prodromal screening yields phenotypically diffuse samples where marker-defined subgroups overlap heavily, eroding the ≥60/stratum target after attrition; a contingency is to enrich via gut-axis at-risk channels — myenteric/enteric synucleinopathy and GI-macrophage screening routes (,) suggest GI-symptom and RBD/hyposmia referral streams as a recruitment multiplier, with adaptive per-stratum quotas. (2) Cross-pathway contamination of strata: GBA status does not partition cleanly from LRRK2-driven biology — the GBA×LRRK2 intersection in Lewy body dementia and LRRK2-counteracting RAB-phosphatase effects on autophagy/alpha-synuclein aggregation imply that a 'GBA-variant' stratum may carry mixed lysosomal/autophagic phenotypes, blurring cluster boundaries; a fallback is to collect LRRK2 status and autophagic-flux covariates and model strata as overlapping rather than disjoint. (3) Seed-conformer 'strain' separation may fail in vivo: vesicular trafficking/endocytosis and clearance studies of alpha-synuclein (,) suggest conformer behavior is sensitive to trafficking context, so discrete strain assignment may not reproduce — the proposal's own fallback to binary seed status plus continuous seeding-kinetics metrics is consistent with this risk. (4) Gut-axis confounding: microbiome/metabolomic signals are diet-, transit-, and macrophage-state dependent (,), risking spurious clusters; covariate capture, diet logs, and caffeine-metabolite orthogonal readouts are appropriate, with sensitivity analyses excluding transit-altering medications. (5) Assay reliability/batch drift in GCase and SAA readouts (echoing variability documented across lysosomal-biochemistry programs, e.g.,) could depress test-retest ICC below threshold; blinded batching, spiked controls, and replicate ICC reporting mitigate, with a CSF-only seed fallback if peripheral sensitivity is insufficient.",
+                  "citation_ids": [
+                    "literature:28598856",
+                    "literature:40079755",
+                    "literature:40298214",
+                    "literature:37786563",
+                    "literature:35750883",
+                    "literature:40273394",
+                    "literature:40587145",
+                    "grant:R01NS125592",
+                    "literature:39496848"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-2",
+            "serves_dimension": "F2",
+            "text": "Within the Aim 1 stratified cohort (GBA-variant carriers vs. non-carriers), we will run a randomized, double-blind, placebo-controlled pharmacodynamic study of a lysosome-directed, GCase-engaging agent (e.g., a small-molecule chaperone) at two dose levels, mirroring the engagement-confirmation design used previously. Primary pharmacodynamic readout: GCase enzymatic activity assayed in peripheral blood mononuclear cells/dried blood spots and, where consented, in CSF, at baseline and across treatment, with a pre-specified engagement threshold (e.g., >=1.5-fold increase over placebo). Candidate progression biomarkers (exploratory, not efficacy): CSF/plasma alpha-synuclein seed-amplification and aggregation measures, lysosomal substrate/sphingolipid panels (glucosylceramide species), and neurodegeneration markers (e.g., NfL), supported by mechanistic rationale from lysosomal and sphingolipid programs. Imaging substudy: synaptic/dopamine-transporter PET to anchor progression context. In parallel, SH-SY5Y and patient-derived cellular models will quantify GCase activity, substrate clearance, and autophagic flux to confirm mechanism-of-engagement and establish assay reproducibility. Statistics: mixed-effects models with stratum (GBA vs. non-GBA) × treatment interaction; a priori power calculation targeting the engagement effect size from prior data; multiplicity control across exploratory biomarkers (FDR). Expertise/resources assumed (F3): a stratified/genotyped recruitment pipeline with CLIA genotyping, validated GCase enzymatic and SAA assay platforms with documented intra/inter-assay CVs, CSF collection and PET imaging capacity, a biorepository, statistical/biostatistics support, and lysosomal-biochemistry laboratory capability—competencies represented across the lysosomal/sphingolipid and imaging grant programs cited.",
+            "claims": [
+              {
+                "id": "aim-2::hypothesis",
+                "text": "We will examine whether a lysosome-directed intervention that engages beta-glucocerebrosidase (GCase) produces measurable, dose-related target engagement (increased peripheral and CNS GCase activity) and whether such engagement is accompanied by detectable changes in candidate progression biomarkers within the GBA-stratified versus non-GBA cohort; we make no claim of clinical efficacy or causal disease modification at this exploratory stage.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "grant:K08NS138592",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:ZIATR000432",
+                  "grant:ZIADK056014",
+                  "literature:39496848",
+                  "grant:R01NS124819",
+                  "literature:36722247",
+                  "literature:40639630"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "grant:K08NS138592",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:ZIATR000432",
+                  "grant:ZIADK056014",
+                  "literature:39496848",
+                  "grant:R01NS124819",
+                  "literature:36722247",
+                  "literature:40639630"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-2",
+                  "hypothesis": "We will examine whether a lysosome-directed intervention that engages beta-glucocerebrosidase (GCase) produces measurable, dose-related target engagement (increased peripheral and CNS GCase activity) and whether such engagement is accompanied by detectable changes in candidate progression biomarkers within the GBA-stratified versus non-GBA cohort; we make no claim of clinical efficacy or causal disease modification at this exploratory stage.",
+                  "rationale": "GBA variants are the single largest genetic risk factor for PD and offer a window to study early/pre-clinical disease and rational lysosomal therapeutics. A prior randomized trial of the GCase-engaging chaperone ambroxol demonstrated pharmacodynamic target engagement (increased GCase levels) even though it did not show group differences on clinical outcomes, underscoring that target engagement and biomarker movement should be assessed as distinct, intermediate endpoints before efficacy can be inferred. Convergent mechanistic work links LRRK2, lysosomal/chloride homeostasis, sphingolipid biology, and cAbl signaling to GCase/lysosomal function in PD and Gaucher-PD, motivating a target-engagement-first design. The broader field prioritizes biomarker-anchored, target-engagement-gated disease-modification studies.",
+                  "approach": "Within the Aim 1 stratified cohort (GBA-variant carriers vs. non-carriers), we will run a randomized, double-blind, placebo-controlled pharmacodynamic study of a lysosome-directed, GCase-engaging agent (e.g., a small-molecule chaperone) at two dose levels, mirroring the engagement-confirmation design used previously. Primary pharmacodynamic readout: GCase enzymatic activity assayed in peripheral blood mononuclear cells/dried blood spots and, where consented, in CSF, at baseline and across treatment, with a pre-specified engagement threshold (e.g., >=1.5-fold increase over placebo). Candidate progression biomarkers (exploratory, not efficacy): CSF/plasma alpha-synuclein seed-amplification and aggregation measures, lysosomal substrate/sphingolipid panels (glucosylceramide species), and neurodegeneration markers (e.g., NfL), supported by mechanistic rationale from lysosomal and sphingolipid programs. Imaging substudy: synaptic/dopamine-transporter PET to anchor progression context. In parallel, SH-SY5Y and patient-derived cellular models will quantify GCase activity, substrate clearance, and autophagic flux to confirm mechanism-of-engagement and establish assay reproducibility. Statistics: mixed-effects models with stratum (GBA vs. non-GBA) × treatment interaction; a priori power calculation targeting the engagement effect size from prior data; multiplicity control across exploratory biomarkers (FDR). Expertise/resources assumed (F3): a stratified/genotyped recruitment pipeline with CLIA genotyping, validated GCase enzymatic and SAA assay platforms with documented intra/inter-assay CVs, CSF collection and PET imaging capacity, a biorepository, statistical/biostatistics support, and lysosomal-biochemistry laboratory capability—competencies represented across the lysosomal/sphingolipid and imaging grant programs cited.",
+                  "expected_outcomes": "Exploratory expectations grounded in the comparison literature: it is reasonable to anticipate that a chaperone-type agent could meet a dose-related GCase increase, plausibly in the ~1.3-2.0-fold range over placebo in peripheral compartments, with the engagement threshold (>=1.5-fold) more readily met peripherally than in CSF — consistent with the engagement-translation gaps highlighted in Gaucher pharmacotherapy reviews and lysosomal-trafficking work,. Downstream candidate biomarkers would suggestively show small and uncertain direction-of-effect changes: glucosylceramide species might decrease modestly while alpha-synuclein seeding and NfL may show little detectable movement within the trial window, reported as effect-size estimates with wide confidence intervals rather than confirmatory shifts. Assay performance could plausibly target intra-assay CVs in the ~5-15% range and inter-assay CVs that may exceed 15-20% absent strict SOP control, per the lysosomal-enzyme variability seen across comparable programs (,). The structurally anticipated outcome — robust engagement with null or ambiguous biomarker movement — would itself be informative for gating a future powered trial; no efficacy or causal disease-modification claim is asserted.",
+                  "pitfalls_alternatives": "The 'road not taken' literature flags concrete risks for a GCase-engagement pharmacodynamic study. (1) Engagement without downstream biomarker movement: the Gaucher pharmacotherapy horizon review underscores that even substrate-reduction/chaperone strategies that robustly raise GCase or lower glucosylceramide have historically shown dissociation between enzymatic engagement and downstream neurodegenerative markers — so a >=1.5-fold GCase rise may not be accompanied by SAA, sphingolipid, or NfL shifts within the window; pre-specifying engagement as primary and extending the observation window mitigates this. (2) Assay variability undermining the engagement threshold: lysosomal-biochemistry programs (,) and lysosomal ion/pH-homeostasis work (,) show GCase activity is sensitive to lysosomal pH and assay conditions, inflating inter-assay CVs; locked SOPs, blinded duplicates, and cellular orthogonal confirmation are appropriate, with explicit CV reporting. (3) Insufficient CNS penetration / peripheral-only engagement: chaperone and lysosomal-trafficking biology ( on BORCS5/lysosomal function; on Lamp1/lipid transport) suggests peripheral PBMC engagement may not predict CNS engagement; CSF sampling and a CSF sphingolipid surrogate, or a pivot to a documented-CNS-exposure agent/dose, are reasonable contingencies. (4) Cross-pathway confounding: LRRK2-mediated and autophagy-counteracting mechanisms (,,,) imply LRRK2/autophagy heterogeneity could mask or mimic GCase-driven biomarker change; collecting LRRK2 status and autophagic-flux covariates and modeling them is warranted. (5) Stratum recruitment shortfall and cellular-model translation gap: SH-SY5Y and patient-derived models may over- or under-state engagement relative to humans (cellular vesicular-clearance and toxicity systems, e.g.,,); pooled genotype-as-covariate analysis if carrier numbers are limited, and using the cellular arm to de-risk assay readiness, are sensible fallbacks.",
+                  "citation_ids": [
+                    "literature:40587145",
+                    "literature:28598856",
+                    "grant:K08NS138592",
+                    "grant:R01NS125317",
+                    "grant:ZIAHG200336",
+                    "grant:ZIATR000432",
+                    "grant:ZIADK056014",
+                    "literature:39496848",
+                    "grant:R01NS124819",
+                    "literature:36722247",
+                    "literature:40639630"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-3",
+            "serves_dimension": "F2",
+            "text": "We will enroll early-stage PD participants (Hoehn & Yahr ≤2, within a defined time-from-diagnosis window) and prospectively stratify into biomarker-positive and biomarker-negative strata using a pre-specified baseline assay (genotyping for GBA variants plus a peripheral/CSF β-glucocerebrosidase or lysosomal readout). The primary engagement readout is the pharmacodynamic shift in the target biomarker (modeled on the β-glucocerebrosidase increase reported in); the clinical readout is change in MDS-UPDRS total and Part III over the trial, harmonized with the MDS-UPDRS framework used by ongoing progression trials. We will additionally capture a neuroimaging stratification/engagement covariate. Analysis: a pre-specified mixed-effects model of MDS-UPDRS change over time with biomarker-engagement and stratum × time interaction terms; sample size powered on the expected effect from contemporaneous MDS-UPDRS trials, with the stratified early-enrollment cohort compared descriptively and via covariate-adjusted models against published outcome distributions from prior unstratified later-stage trials. Required expertise/resources (F3): movement-disorders clinicians MDS-UPDRS-certified for rating reliability, a GCLP-grade lysosomal/genotyping biomarker laboratory, neuroimaging core capacity, and a biostatistics team for longitudinal/interaction modeling.",
+            "claims": [
+              {
+                "id": "aim-3::hypothesis",
+                "text": "The degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) is associated with change in clinical severity measured by MDS-UPDRS, and prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage correlates with outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:39496848",
+                  "trial:NCT07312110",
+                  "literature:37786563",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:39496848",
+                  "trial:NCT07312110",
+                  "literature:37786563",
+                  "literature:28598856"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-3",
+                  "hypothesis": "The degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) is associated with change in clinical severity measured by MDS-UPDRS, and prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage correlates with outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials.",
+                  "rationale": "Prior disease-modification trials have demonstrated target engagement without detecting differences on primary or secondary clinical outcomes, raising the exploratory question of whether engagement and clinical severity move together and whether the failure to distinguish outcomes reflected late-stage, unstratified enrollment. GBA/lysosomal mutation carriers can be identified at a pre-clinical or early stage, offering a population in which to examine early, stratified enrollment, and current research priorities explicitly emphasize biomarker-guided, targeted, progression-slowing strategies. Neuroimaging-based diagnostic biomarkers provide candidate stratification and engagement readouts, and contemporaneous MDS-UPDRS-anchored progression trials provide the comparison framework for clinical severity.",
+                  "approach": "We will enroll early-stage PD participants (Hoehn & Yahr ≤2, within a defined time-from-diagnosis window) and prospectively stratify into biomarker-positive and biomarker-negative strata using a pre-specified baseline assay (genotyping for GBA variants plus a peripheral/CSF β-glucocerebrosidase or lysosomal readout). The primary engagement readout is the pharmacodynamic shift in the target biomarker (modeled on the β-glucocerebrosidase increase reported in); the clinical readout is change in MDS-UPDRS total and Part III over the trial, harmonized with the MDS-UPDRS framework used by ongoing progression trials. We will additionally capture a neuroimaging stratification/engagement covariate. Analysis: a pre-specified mixed-effects model of MDS-UPDRS change over time with biomarker-engagement and stratum × time interaction terms; sample size powered on the expected effect from contemporaneous MDS-UPDRS trials, with the stratified early-enrollment cohort compared descriptively and via covariate-adjusted models against published outcome distributions from prior unstratified later-stage trials. Required expertise/resources (F3): movement-disorders clinicians MDS-UPDRS-certified for rating reliability, a GCLP-grade lysosomal/genotyping biomarker laboratory, neuroimaging core capacity, and a biostatistics team for longitudinal/interaction modeling.",
+                  "expected_outcomes": "Hedged, comparison-grounded projections: contemporaneous MDS-UPDRS progression trials suggest early-stage annualized total-score worsening is often modest (on the order of ~3-6 points/year, with Part III a fraction of that), so any engagement×time slope gradient that might emerge would plausibly be small (a difference of perhaps ~1-3 MDS-UPDRS points/year between high- and low-engagement participants) and statistically fragile within trial duration. The biomarker-positive early-enrollment stratum might show an outcome distribution descriptively distinguishable from historical unstratified later-stage benchmarks, but given the engagement-clinical dissociation repeatedly seen in lysosomal-targeted therapeutics, a plausible and explicitly anticipated null is robust target engagement with no detectable MDS-UPDRS separation. Imaging-anchored progression measures () may provide more sensitive between-stratum contrasts than clinical scales alone. Either outcome — a detectable slope gradient or a clean null — would be reported descriptively with confidence intervals and treated as informative for prioritizing biomarker-guided, early-enrollment trial design; no causal or associative claim about engagement driving clinical change is asserted.",
+                  "pitfalls_alternatives": "Comparable clinical/biomarker-progression efforts suggest the following hazards. (1) Engagement-clinical dissociation: as with the Gaucher therapeutic record, robust target engagement may not separate MDS-UPDRS trajectories within trial duration, so concordance must remain an exploratory objective; enriching for early/biomarker-positive participants where progression signal may be more tractable is the appropriate hedge. (2) Confounded historical comparison: benchmarking the stratified early-enrollment cohort against prior unstratified later-stage trials risks cohort-, era-, and rating-drift confounds — preclinical-marker and progression-context programs (, PET/phMR progression imaging) show such cross-study comparisons are fragile; MDS-UPDRS rater certification, covariate adjustment, and harmonized scoring mitigate, with imaging anchors as an internal calibration. (3) Slow early-stage progression underpowering change detection: H&Y<=2 cohorts progress slowly, so the engagement×time slope gradient may be small; adding sensitive motor/imaging progression endpoints (DAT or mGlu/dopamine PET context,) or a biomarker-defined co-primary is a reasonable contingency. (4) Stratum misclassification: GBA/lysosomal stratification can be blurred by overlapping LRRK2/autophagy biology (,,) and by enzymatic assay variability (,); duplicate GCLP assays, orthogonal genotyping, and an imaging covariate reduce this. (5) Biomarker-positive early-stage carrier recruitment shortfall: multi-site enrollment and pre-screening registries are warranted, given the heterogeneity documented in preclinical-marker cohorts.",
+                  "citation_ids": [
+                    "literature:40587145",
+                    "literature:39496848",
+                    "trial:NCT07312110",
+                    "literature:37786563",
+                    "literature:28598856"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "draft": {
+        "fragments": [
+          {
+            "stage": "synthesizer",
+            "section": "significance_innovation",
+            "segment_id": null,
+            "serves_dimension": "F1",
+            "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials. The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued.",
+            "claims": [
+              {
+                "id": "significance",
+                "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:39496848",
+                  "literature:37786563",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214"
+                ],
+                "evidence_ids": [
+                  "literature:39496848",
+                  "literature:37786563",
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214"
+                ]
+              },
+              {
+                "id": "central-hypothesis",
+                "text": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "literature:39496848"
+                ]
+              },
+              {
+                "id": "innovation",
+                "text": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued.",
+                "serves_dimension": "F1",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:R01NS125317",
+                  "literature:R01NS125592",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:28598856"
+                ]
+              }
+            ],
+            "provides": {
+              "skeleton": [
+                {
+                  "gap": "Disease-modifying therapy for Parkinson's disease (PD) remains unrealized: the field's stated priorities are to slow progression through validated biomarkers and to target mechanisms upstream of dopaminergic loss, yet the pipeline is fragmented across separable mechanistic streams — lysosomal/GBA-glucocerebrosidase biology, alpha-synuclein aggregation and strain properties, the gut–microbiome–brain axis, and peripheral immune involvement — that are pursued in isolation and rarely stratified against a common, prodromal, biomarker-anchored patient subgroup. It remains unknown whether a target-engaging, lysosome-directed intervention can be evaluated for disease-modifying effect within a biomarker-defined early/prodromal PD population, because target engagement and downstream clinical change have not yet been jointly examined in such a stratified design.",
+                  "central_hypothesis": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+                  "aim_stubs": [
+                    {
+                      "id": "aim-1",
+                      "title": "Aim 1: Define and stratify an early/prodromal PD cohort by GBA/glucocerebrosidase status and candidate alpha-synuclein strain and gut-axis biomarkers to establish a biomarker-anchored enrollment framework.",
+                      "evidence_keys": [
+                        "literature:28598856",
+                        "literature:40079755",
+                        "literature:40298214",
+                        "literature:37786563"
+                      ]
+                    },
+                    {
+                      "id": "aim-2",
+                      "title": "Aim 2: Examine whether a lysosome-directed, beta-glucocerebrosidase-engaging intervention produces measurable target engagement and changes in candidate progression biomarkers within the stratified cohort.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "grant:K08NS138592",
+                        "literature:28598856"
+                      ]
+                    },
+                    {
+                      "id": "aim-3",
+                      "title": "Aim 3: Determine whether target engagement tracks with clinical severity (MDS-UPDRS) and whether biomarker stratification and earlier enrollment yield outcomes distinguishable from prior unstratified later-stage PD trials.",
+                      "evidence_keys": [
+                        "literature:40587145",
+                        "literature:39496848",
+                        "trial:NCT07312110",
+                        "literature:37786563"
+                      ]
+                    }
+                  ],
+                  "significance": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials.",
+                  "innovation": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued."
+                }
+              ],
+              "aim_stubs": [
+                {
+                  "id": "aim-1",
+                  "title": "Aim 1: Define and stratify an early/prodromal PD cohort by GBA/glucocerebrosidase status and candidate alpha-synuclein strain and gut-axis biomarkers to establish a biomarker-anchored enrollment framework.",
+                  "evidence_keys": [
+                    "literature:28598856",
+                    "literature:40079755",
+                    "literature:40298214",
+                    "literature:37786563"
+                  ]
+                },
+                {
+                  "id": "aim-2",
+                  "title": "Aim 2: Examine whether a lysosome-directed, beta-glucocerebrosidase-engaging intervention produces measurable target engagement and changes in candidate progression biomarkers within the stratified cohort.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "grant:K08NS138592",
+                    "literature:28598856"
+                  ]
+                },
+                {
+                  "id": "aim-3",
+                  "title": "Aim 3: Determine whether target engagement tracks with clinical severity (MDS-UPDRS) and whether biomarker stratification and earlier enrollment yield outcomes distinguishable from prior unstratified later-stage PD trials.",
+                  "evidence_keys": [
+                    "literature:40587145",
+                    "literature:39496848",
+                    "trial:NCT07312110",
+                    "literature:37786563"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-1",
+            "serves_dimension": "F2",
+            "text": "Prospective observational cohort design enrolling early/prodromal participants (target n≈300; powered for ≥3 strata with ≥60/stratum after attrition) plus matched controls, with annual follow-up over the grant period. Stratifying assays: (1) GBA genotyping (targeted sequencing panel) plus peripheral β-glucocerebrosidase enzymatic activity in dried blood spots/leukocytes; (2) candidate alpha-synuclein seed amplification assay (seed conformer/RT-QuIC–type readout) on CSF and accessible peripheral tissue, with conformational/strain phenotyping; (3) gut-axis panel — stool 16S/shotgun microbiome, plasma metabolomics including caffeine-metabolism markers, and standardized GI-symptom instruments. Cross-modal integration via unsupervised clustering (consensus k-means / latent class) and a supervised multi-marker classifier; rigor controls include pre-registered analysis plan, blinded assay batching, technical replicates for test–retest reliability (target intraclass correlation thresholds), split-half internal validation, and false-discovery correction. Expertise/resources assumed (F3): a movement-disorders clinical recruitment site with prodromal-screening capacity, a CLIA-grade genetics/enzymology lab, an alpha-synuclein seed-assay core, a microbiome/metabolomics core with biobanking and standardized stool/CSF collection, and a biostatistics team for multi-omic integration.",
+            "claims": [
+              {
+                "id": "aim-1::hypothesis",
+                "text": "We will investigate whether GBA/glucocerebrosidase enzymatic status, candidate alpha-synuclein seed conformer (\"strain\") signatures, and gut-axis biomarkers can be jointly measured in a prospectively enrolled early/prodromal PD cohort to define discrete, prospectively trackable enrollment strata — examining whether a multi-marker classifier separates GBA-variant, seed-positive, and gut-axis-altered subgroups with reproducible (split-half/test-retest) assignment.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:37786563",
+                  "literature:35750883",
+                  "literature:40273394",
+                  "literature:40587145",
+                  "grant:R01NS125592",
+                  "literature:39496848"
+                ],
+                "evidence_ids": [
+                  "literature:28598856",
+                  "literature:40079755",
+                  "literature:40298214",
+                  "literature:37786563",
+                  "literature:35750883",
+                  "literature:40273394",
+                  "literature:40587145",
+                  "grant:R01NS125592",
+                  "literature:39496848"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-1",
+                  "hypothesis": "We will investigate whether GBA/glucocerebrosidase enzymatic status, candidate alpha-synuclein seed conformer (\"strain\") signatures, and gut-axis biomarkers can be jointly measured in a prospectively enrolled early/prodromal PD cohort to define discrete, prospectively trackable enrollment strata — examining whether a multi-marker classifier separates GBA-variant, seed-positive, and gut-axis-altered subgroups with reproducible (split-half/test-retest) assignment.",
+                  "rationale": "GBA mutations are described as the single largest genetic risk factor for idiopathic PD and offer a window into pre-clinical disease, motivating GBA/GCase status as a stratifying axis; β-glucocerebrosidase is a tractable, measurable target. A prodromal subgroup is proposed to show rostral spread of pathological alpha-synuclein from the gut, supporting alpha-synuclein seed/strain assays and gut-axis sampling as complementary strata. Distinct alpha-synuclein strain properties have been proposed to track diagnostic and progression subtypes. Neuroimaging and metabolomic/microbiota biomarkers are being advanced for early discrepant diagnosis. Together these justify building a biomarker-anchored enrollment framework rather than enrolling on clinical phenotype alone.",
+                  "approach": "Prospective observational cohort design enrolling early/prodromal participants (target n≈300; powered for ≥3 strata with ≥60/stratum after attrition) plus matched controls, with annual follow-up over the grant period. Stratifying assays: (1) GBA genotyping (targeted sequencing panel) plus peripheral β-glucocerebrosidase enzymatic activity in dried blood spots/leukocytes; (2) candidate alpha-synuclein seed amplification assay (seed conformer/RT-QuIC–type readout) on CSF and accessible peripheral tissue, with conformational/strain phenotyping; (3) gut-axis panel — stool 16S/shotgun microbiome, plasma metabolomics including caffeine-metabolism markers, and standardized GI-symptom instruments. Cross-modal integration via unsupervised clustering (consensus k-means / latent class) and a supervised multi-marker classifier; rigor controls include pre-registered analysis plan, blinded assay batching, technical replicates for test–retest reliability (target intraclass correlation thresholds), split-half internal validation, and false-discovery correction. Expertise/resources assumed (F3): a movement-disorders clinical recruitment site with prodromal-screening capacity, a CLIA-grade genetics/enzymology lab, an alpha-synuclein seed-assay core, a microbiome/metabolomics core with biobanking and standardized stool/CSF collection, and a biostatistics team for multi-omic integration.",
+                  "expected_outcomes": "Framed descriptively: comparable cohort and biomarker literature suggests it would be reasonable to anticipate that a multi-marker classifier might separate candidate strata with cross-validated AUC in the modest-to-moderate range (roughly 0.65-0.80) rather than near-perfect discrimination, given the GBA-LRRK2 lysosomal-pathway overlap reported in Lewy body dementia and LRRK2-neurotoxicity programs. Subgroup co-occurrence is plausibly non-trivial — overlap between GBA-low-GCase, seed-positive, and gut-axis-altered subsets could involve on the order of 20-40% of stratified participants sharing membership, consistent with cross-pathway aggregation/trafficking findings (PPM1H/autophagy, Rab27 endocytosis). For reliability, lysosomal-enzyme and SAA platforms in comparable programs suggest test-retest ICCs in the ~0.7-0.85 band may be achievable for genotyping-anchored, well-batched enzymatic readouts, while microbiome/metabolomic features may show lower stability (ICC possibly <0.6), requiring the diet/medication covariate adjustment noted above and consistent with the diet/transit/macrophage dependence seen in gut-axis work. The deliverable would suggestively be an SOP-anchored enrollment framework with quantified per-marker reliability and prevalence/co-occurrence tables; no progression-prediction or causal claim is implied, only descriptive separability and reproducibility metrics.",
+                  "pitfalls_alternatives": "Comparable multi-omic prodromal-cohort work suggests several concrete failure modes for joint GBA/seed/gut-axis stratification. (1) Slow accrual and phenotypically diffuse samples: preclinical-marker parkinsonism cohorts illustrate that prodromal screening yields heterogeneous enrollees in whom marker-defined subgroups overlap heavily, which could erode the >=60/stratum target after attrition; a contingency suggested by enteric-synucleinopathy and gut-LRRK2 epithelial work is to add GI-symptom / enteric-macrophage at-risk referral streams as a recruitment multiplier with adaptive per-stratum quotas. (2) Cross-pathway contamination of strata: the GBA-LRRK2 intersection documented in Lewy body dementia, and the LRRK2-counteracting RAB-phosphatase (PPM1H) effects on axonal autophagy and alpha-synuclein aggregation, imply a nominal 'GBA-variant' stratum may carry mixed lysosomal/autophagic biology that blurs cluster boundaries; a reasonable fallback is to collect LRRK2 status and autophagic-flux covariates and model strata as overlapping rather than disjoint. (3) Seed-conformer 'strain' separation may not reproduce in vivo: alpha-synuclein endocytosis/clearance (Rab27) and vesicular-trafficking work suggest conformer behavior is sensitive to trafficking context, so discrete strain assignment could be unstable across replicates — the proposal's own fallback to binary seed status plus continuous seeding-kinetics metrics is consistent with this risk. (4) Gut-axis confounding: microbiome and metabolomic signals are diet-, transit-, and macrophage-state dependent (echoing enteric-macrophage and gut-epithelial LRRK2 work), risking spurious clusters; diet logging, caffeine-metabolite orthogonal readouts, and sensitivity analyses excluding transit-altering medications are appropriate. (5) Assay reliability / batch drift in GCase and SAA: lysosomal-biochemistry and lysosomal pH/ion-homeostasis programs document that GCase activity is sensitive to assay conditions, which could depress test-retest ICC below threshold; blinded batching, spiked controls, replicate ICC reporting, and a CSF-only seed fallback if peripheral sensitivity is insufficient are sensible mitigations.",
+                  "citation_ids": [
+                    "literature:28598856",
+                    "literature:40079755",
+                    "literature:40298214",
+                    "literature:37786563",
+                    "literature:35750883",
+                    "literature:40273394",
+                    "literature:40587145",
+                    "grant:R01NS125592",
+                    "literature:39496848"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-2",
+            "serves_dimension": "F2",
+            "text": "Within the Aim 1 stratified cohort (GBA-variant carriers vs. non-carriers), we will run a randomized, double-blind, placebo-controlled pharmacodynamic study of a lysosome-directed, GCase-engaging agent (e.g., a small-molecule chaperone) at two dose levels, mirroring the engagement-confirmation design used previously. Primary pharmacodynamic readout: GCase enzymatic activity assayed in peripheral blood mononuclear cells/dried blood spots and, where consented, in CSF, at baseline and across treatment, with a pre-specified engagement threshold (e.g., >=1.5-fold increase over placebo). Candidate progression biomarkers (exploratory, not efficacy): CSF/plasma alpha-synuclein seed-amplification and aggregation measures, lysosomal substrate/sphingolipid panels (glucosylceramide species), and neurodegeneration markers (e.g., NfL), supported by mechanistic rationale from lysosomal and sphingolipid programs. Imaging substudy: synaptic/dopamine-transporter PET to anchor progression context. In parallel, SH-SY5Y and patient-derived cellular models will quantify GCase activity, substrate clearance, and autophagic flux to confirm mechanism-of-engagement and establish assay reproducibility. Statistics: mixed-effects models with stratum (GBA vs. non-GBA) × treatment interaction; a priori power calculation targeting the engagement effect size from prior data; multiplicity control across exploratory biomarkers (FDR). Expertise/resources assumed (F3): a stratified/genotyped recruitment pipeline with CLIA genotyping, validated GCase enzymatic and SAA assay platforms with documented intra/inter-assay CVs, CSF collection and PET imaging capacity, a biorepository, statistical/biostatistics support, and lysosomal-biochemistry laboratory capability—competencies represented across the lysosomal/sphingolipid and imaging grant programs cited.",
+            "claims": [
+              {
+                "id": "aim-2::hypothesis",
+                "text": "We will examine whether a lysosome-directed intervention that engages beta-glucocerebrosidase (GCase) produces measurable, dose-related target engagement (increased peripheral and CNS GCase activity) and whether such engagement is accompanied by detectable changes in candidate progression biomarkers within the GBA-stratified versus non-GBA cohort; we make no claim of clinical efficacy or causal disease modification at this exploratory stage.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "grant:K08NS138592",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:ZIATR000432",
+                  "grant:ZIADK056014",
+                  "literature:39496848",
+                  "grant:R01NS124819",
+                  "literature:36722247",
+                  "literature:40639630"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:28598856",
+                  "grant:K08NS138592",
+                  "grant:R01NS125317",
+                  "grant:ZIAHG200336",
+                  "grant:ZIATR000432",
+                  "grant:ZIADK056014",
+                  "literature:39496848",
+                  "grant:R01NS124819",
+                  "literature:36722247",
+                  "literature:40639630"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-2",
+                  "hypothesis": "We will examine whether a lysosome-directed intervention that engages beta-glucocerebrosidase (GCase) produces measurable, dose-related target engagement (increased peripheral and CNS GCase activity) and whether such engagement is accompanied by detectable changes in candidate progression biomarkers within the GBA-stratified versus non-GBA cohort; we make no claim of clinical efficacy or causal disease modification at this exploratory stage.",
+                  "rationale": "GBA variants are the single largest genetic risk factor for PD and offer a window to study early/pre-clinical disease and rational lysosomal therapeutics. A prior randomized trial of the GCase-engaging chaperone ambroxol demonstrated pharmacodynamic target engagement (increased GCase levels) even though it did not show group differences on clinical outcomes, underscoring that target engagement and biomarker movement should be assessed as distinct, intermediate endpoints before efficacy can be inferred. Convergent mechanistic work links LRRK2, lysosomal/chloride homeostasis, sphingolipid biology, and cAbl signaling to GCase/lysosomal function in PD and Gaucher-PD, motivating a target-engagement-first design. The broader field prioritizes biomarker-anchored, target-engagement-gated disease-modification studies.",
+                  "approach": "Within the Aim 1 stratified cohort (GBA-variant carriers vs. non-carriers), we will run a randomized, double-blind, placebo-controlled pharmacodynamic study of a lysosome-directed, GCase-engaging agent (e.g., a small-molecule chaperone) at two dose levels, mirroring the engagement-confirmation design used previously. Primary pharmacodynamic readout: GCase enzymatic activity assayed in peripheral blood mononuclear cells/dried blood spots and, where consented, in CSF, at baseline and across treatment, with a pre-specified engagement threshold (e.g., >=1.5-fold increase over placebo). Candidate progression biomarkers (exploratory, not efficacy): CSF/plasma alpha-synuclein seed-amplification and aggregation measures, lysosomal substrate/sphingolipid panels (glucosylceramide species), and neurodegeneration markers (e.g., NfL), supported by mechanistic rationale from lysosomal and sphingolipid programs. Imaging substudy: synaptic/dopamine-transporter PET to anchor progression context. In parallel, SH-SY5Y and patient-derived cellular models will quantify GCase activity, substrate clearance, and autophagic flux to confirm mechanism-of-engagement and establish assay reproducibility. Statistics: mixed-effects models with stratum (GBA vs. non-GBA) × treatment interaction; a priori power calculation targeting the engagement effect size from prior data; multiplicity control across exploratory biomarkers (FDR). Expertise/resources assumed (F3): a stratified/genotyped recruitment pipeline with CLIA genotyping, validated GCase enzymatic and SAA assay platforms with documented intra/inter-assay CVs, CSF collection and PET imaging capacity, a biorepository, statistical/biostatistics support, and lysosomal-biochemistry laboratory capability—competencies represented across the lysosomal/sphingolipid and imaging grant programs cited.",
+                  "expected_outcomes": "Exploratory expectations grounded in the comparison literature: it is reasonable to anticipate that a chaperone-type agent could meet a dose-related GCase increase, plausibly in the ~1.3-2.0-fold range over placebo in peripheral compartments, with the >=1.5-fold threshold more readily met peripherally than in CSF — consistent with the engagement-translation gaps highlighted in the Gaucher pharmacotherapy review and lysosomal-trafficking work (BORCS5, Lamp1). Downstream candidate biomarkers would suggestively show small and uncertain direction-of-effect changes: glucosylceramide species might decrease modestly while alpha-synuclein seeding and NfL may show little detectable movement within the trial window, reported as effect-size estimates with wide confidence intervals rather than confirmatory shifts. Assay performance could plausibly target intra-assay CVs in the ~5-15% range and inter-assay CVs that may exceed 15-20% absent strict SOP control, per the lysosomal-enzyme and pH-homeostasis variability seen across comparable programs. The structurally anticipated outcome — robust engagement with null or ambiguous biomarker movement — would itself be informative for gating a future powered trial; no efficacy or causal disease-modification claim is asserted.",
+                  "pitfalls_alternatives": "The 'road not taken' literature flags concrete risks for a GCase-engagement pharmacodynamic study. (1) Engagement without downstream biomarker movement: a recent Gaucher pharmacotherapy horizon review underscores that even substrate-reduction/chaperone strategies that robustly raise GCase or lower glucosylceramide have historically shown dissociation between enzymatic engagement and downstream neurodegenerative markers — so a >=1.5-fold GCase rise may not be accompanied by SAA, sphingolipid, or NfL shifts within the window; pre-specifying engagement as primary and extending the observation window mitigates this. (2) Assay variability undermining the engagement threshold: lysosomal-biochemistry programs and lysosomal ion/pH-homeostasis work show GCase activity is sensitive to lysosomal pH and assay conditions, which could inflate inter-assay CVs and destabilize the threshold; locked SOPs, blinded duplicates, cellular orthogonal confirmation, and explicit CV reporting are appropriate. (3) Insufficient CNS penetration / peripheral-only engagement: chaperone and lysosomal-trafficking biology (BORCS5 in neuronal lysosomal function; Lamp1/lipid transport in vesicle identity) suggests peripheral PBMC engagement may not predict CNS engagement; CSF sampling, a CSF sphingolipid surrogate, or a pivot to a documented-CNS-exposure agent/dose are reasonable contingencies. (4) Cross-pathway confounding: LRRK2-mediated neurotoxicity and autophagy-counteracting mechanisms (PPM1H/axonal autophagy; neuron-specific autophagy enhancement rescuing alpha-synuclein toxicity) imply LRRK2/autophagy heterogeneity could mask or mimic GCase-driven biomarker change; collecting LRRK2 status and autophagic-flux covariates and modeling them is warranted. (5) Stratum recruitment shortfall and cellular-model translation gap: SH-SY5Y and patient-derived models may over- or under-state engagement relative to humans (vesicular dopamine-toxicity and clearance systems); pooled genotype-as-covariate analysis if carrier numbers are limited, and using the cellular arm to de-risk assay readiness, are sensible fallbacks.",
+                  "citation_ids": [
+                    "literature:40587145",
+                    "literature:28598856",
+                    "grant:K08NS138592",
+                    "grant:R01NS125317",
+                    "grant:ZIAHG200336",
+                    "grant:ZIATR000432",
+                    "grant:ZIADK056014",
+                    "literature:39496848",
+                    "grant:R01NS124819",
+                    "literature:36722247",
+                    "literature:40639630"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "stage": "aim_architect",
+            "section": "aims",
+            "segment_id": "aim-3",
+            "serves_dimension": "F2",
+            "text": "We will enroll early-stage PD participants (Hoehn & Yahr ≤2, within a defined time-from-diagnosis window) and prospectively stratify into biomarker-positive and biomarker-negative strata using a pre-specified baseline assay (genotyping for GBA variants plus a peripheral/CSF β-glucocerebrosidase or lysosomal readout). The primary engagement readout is the pharmacodynamic shift in the target biomarker (modeled on the β-glucocerebrosidase increase reported in); the clinical readout is change in MDS-UPDRS total and Part III over the trial, harmonized with the MDS-UPDRS framework used by ongoing progression trials. We will additionally capture a neuroimaging stratification/engagement covariate. Analysis: a pre-specified mixed-effects model of MDS-UPDRS change over time with biomarker-engagement and stratum × time interaction terms; sample size powered on the expected effect from contemporaneous MDS-UPDRS trials, with the stratified early-enrollment cohort compared descriptively and via covariate-adjusted models against published outcome distributions from prior unstratified later-stage trials. Required expertise/resources (F3): movement-disorders clinicians MDS-UPDRS-certified for rating reliability, a GCLP-grade lysosomal/genotyping biomarker laboratory, neuroimaging core capacity, and a biostatistics team for longitudinal/interaction modeling.",
+            "claims": [
+              {
+                "id": "aim-3::hypothesis",
+                "text": "The degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) is associated with change in clinical severity measured by MDS-UPDRS, and prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage correlates with outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials.",
+                "serves_dimension": "F2",
+                "reference_ids": [
+                  "literature:40587145",
+                  "literature:39496848",
+                  "trial:NCT07312110",
+                  "literature:37786563",
+                  "literature:28598856"
+                ],
+                "evidence_ids": [
+                  "literature:40587145",
+                  "literature:39496848",
+                  "trial:NCT07312110",
+                  "literature:37786563",
+                  "literature:28598856"
+                ]
+              }
+            ],
+            "provides": {
+              "aims": [
+                {
+                  "id": "aim-3",
+                  "hypothesis": "The degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) is associated with change in clinical severity measured by MDS-UPDRS, and prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage correlates with outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials.",
+                  "rationale": "Prior disease-modification trials have demonstrated target engagement without detecting differences on primary or secondary clinical outcomes, raising the exploratory question of whether engagement and clinical severity move together and whether the failure to distinguish outcomes reflected late-stage, unstratified enrollment. GBA/lysosomal mutation carriers can be identified at a pre-clinical or early stage, offering a population in which to examine early, stratified enrollment, and current research priorities explicitly emphasize biomarker-guided, targeted, progression-slowing strategies. Neuroimaging-based diagnostic biomarkers provide candidate stratification and engagement readouts, and contemporaneous MDS-UPDRS-anchored progression trials provide the comparison framework for clinical severity.",
+                  "approach": "We will enroll early-stage PD participants (Hoehn & Yahr ≤2, within a defined time-from-diagnosis window) and prospectively stratify into biomarker-positive and biomarker-negative strata using a pre-specified baseline assay (genotyping for GBA variants plus a peripheral/CSF β-glucocerebrosidase or lysosomal readout). The primary engagement readout is the pharmacodynamic shift in the target biomarker (modeled on the β-glucocerebrosidase increase reported in); the clinical readout is change in MDS-UPDRS total and Part III over the trial, harmonized with the MDS-UPDRS framework used by ongoing progression trials. We will additionally capture a neuroimaging stratification/engagement covariate. Analysis: a pre-specified mixed-effects model of MDS-UPDRS change over time with biomarker-engagement and stratum × time interaction terms; sample size powered on the expected effect from contemporaneous MDS-UPDRS trials, with the stratified early-enrollment cohort compared descriptively and via covariate-adjusted models against published outcome distributions from prior unstratified later-stage trials. Required expertise/resources (F3): movement-disorders clinicians MDS-UPDRS-certified for rating reliability, a GCLP-grade lysosomal/genotyping biomarker laboratory, neuroimaging core capacity, and a biostatistics team for longitudinal/interaction modeling.",
+                  "expected_outcomes": "Hedged, comparison-grounded projections: contemporaneous MDS-UPDRS progression trials suggest early-stage annualized total-score worsening is often modest (on the order of ~3-6 points/year, with Part III a fraction of that), so any engagement x time slope gradient that might emerge would plausibly be small (a difference of perhaps ~1-3 MDS-UPDRS points/year between high- and low-engagement participants) and statistically fragile within trial duration. The biomarker-positive early-enrollment stratum might show an outcome distribution descriptively distinguishable from historical unstratified later-stage benchmarks, but given the engagement-clinical dissociation repeatedly seen in lysosomal-targeted therapeutics (Gaucher horizon review), a plausible and explicitly anticipated null is robust target engagement with no detectable MDS-UPDRS separation. Imaging-anchored progression measures (PET/phMR mGlu/dopamine context) may provide more sensitive between-stratum contrasts than clinical scales alone. Either outcome — a detectable slope gradient or a clean null — would be reported descriptively with confidence intervals and treated as informative for prioritizing biomarker-guided, early-enrollment trial design; no causal or associative claim about engagement driving clinical change is asserted.",
+                  "pitfalls_alternatives": "Comparable clinical/biomarker-progression efforts suggest the following hazards. (1) Engagement-clinical dissociation: as with the Gaucher therapeutic record summarized in the recent horizon review, robust target engagement may not separate MDS-UPDRS trajectories within trial duration, so concordance must remain an exploratory objective; enriching for early/biomarker-positive participants where progression signal may be more tractable is the appropriate hedge. (2) Confounded historical comparison: benchmarking a stratified early-enrollment cohort against prior unstratified later-stage trials risks cohort-, era-, and rating-drift confounds — preclinical-marker and PET/phMR progression-imaging programs show such cross-study comparisons are fragile; MDS-UPDRS rater certification, covariate adjustment, and harmonized scoring mitigate, with imaging anchors as internal calibration. (3) Slow early-stage progression underpowering change detection: H&Y<=2 cohorts progress slowly, so the engagement x time slope gradient may be small; adding sensitive motor/imaging progression endpoints (DAT or mGlu/dopamine PET context, motor-cortical dopamine-release dynamics) or a biomarker-defined co-primary is a reasonable contingency. (4) Stratum misclassification: GBA/lysosomal stratification can be blurred by overlapping LRRK2/autophagy biology (GBA-LRRK2 intersection in Lewy body dementia; LRRK2-neurotoxicity; PPM1H/autophagy) and by enzymatic assay variability (lysosomal-biochemistry and pH-homeostasis programs); duplicate GCLP assays, orthogonal genotyping, and an imaging covariate reduce this. (5) Biomarker-positive early-stage carrier recruitment shortfall: multi-site enrollment and pre-screening registries are warranted, given the heterogeneity documented in preclinical-marker cohorts.",
+                  "citation_ids": [
+                    "literature:40587145",
+                    "literature:39496848",
+                    "trial:NCT07312110",
+                    "literature:37786563",
+                    "literature:28598856"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "reviser_hedges": [
+    {
+      "round": 0,
+      "hedges": [
+        {
+          "claim_id": "aim-3::hypothesis",
+          "before": "We will investigate whether the degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) tracks with change in clinical severity measured by MDS-UPDRS, and whether prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage yields outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials. This is framed at the exploratory rung; we do not assert that target engagement causes or is associated with clinical change.",
+          "after": "The degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) is associated with change in clinical severity measured by MDS-UPDRS, and prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage correlates with outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials."
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "hedges": []
+    }
+  ],
+  "critique": [
+    {
+      "round": 0,
+      "decision": "revise",
+      "dimension_scores": {
+        "F1": {
+          "score": 4,
+          "justification": "F1-1 names the barrier (coupling lysosomal target engagement to clinical benefit in a biomarker-stratified prodromal PD subgroup; ambroxol's null clinical result despite GBA engagement) and why it matters to the pipeline, with corpus citations. F1-2 states a single central hypothesis following from the gap. F1-3 names a concrete departure (prospective coupling of beta-glucocerebrosidase/lysosomal biology to a GBA-anchored prodromal subgroup with integrated SAA-strain + gut-axis stratification). Claims are calibrated to L3 (open questions, 'whether', 'remains unresolved') consistent with moderate evidence. However, the innovation claim cites literature:R01NS125317 and literature:R01NS125592, which are flagged as orphans (not in source set) — fabricated/out-of-corpus citations violating X-1. [code penalties: -3 fabricated-citation]",
+          "spans": [
+            "drop-orphan:literature:R01NS125317",
+            "drop-orphan:literature:R01NS125592"
+          ]
+        },
+        "F2": {
+          "score": 4,
+          "justification": "Each aim states an explicit testable objective (F2-1) and names methods at judgeable specificity (F2-2): n~300 with stratum sizing, GBA genotyping panel, DBS/leukocyte GCase activity, RT-QuIC-type SAA, 16S/shotgun + metabolomics, consensus k-means/latent class + supervised classifier (aim-1); RCT double-blind two-dose PD study, PBMC/DBS/CSF GCase with >=1.5-fold engagement threshold, NfL/sphingolipid panels, DAT-PET, SH-SY5Y + patient-derived models, mixed-effects with stratum x treatment, FDR (aim-2); H&Y<=2 cohort, MDS-UPDRS total/Part III, mixed-effects stratum x time (aim-3). Calibration is good — exploratory rung explicitly stated, no claim of efficacy/causation. WEAKNESS: F2-3 pitfalls/alternative-strategies is NOT clearly satisfied — rigor controls (blinding, FDR, test-retest) are present but no aim contains a dedicated failure-mode/alternative-strategies paragraph addressing engagement failure, assay variability, or attrition with fallback plans. F2-4 expected outcomes are weak/implicit — aims state what will be measured and a threshold for engagement, but do not state predicted result magnitudes tied to each hypothesis (e.g., expected classifier separation, expected correlation). aim-2 hypothesis also cites grant:R01NS125317 (orphan). [code penalties: -3 overclaim]",
+          "spans": [
+            "hedge:aim-3::hypothesis:L3"
+          ]
+        },
+        "F3": {
+          "score": 6,
+          "justification": "F3-1 satisfied for all three aims: each surfaces assumed expertise/resources (movement-disorders recruitment site, CLIA/GCLP genetics-enzymology lab, SAA core, microbiome/metabolomics + biobank, PET/imaging core, biostatistics). F3-2 is respected — the draft frames resources as 'assumed' / 'required' and makes no assertion of F3 sufficiency, deferring to external confirmation. Scored but not gated; out-of-corpus grant citations in aims are the main blemish.",
+          "spans": []
+        }
+      },
+      "segment_scores": {
+        "aim-1": {
+          "dimension": "F2",
+          "score": 6,
+          "justification": "aim aim-1: grounded and calibrated"
+        },
+        "aim-2": {
+          "dimension": "F2",
+          "score": 6,
+          "justification": "aim aim-2: grounded and calibrated"
+        },
+        "aim-3": {
+          "dimension": "F2",
+          "score": 3,
+          "justification": "aim aim-3: 1 overclaim(s), 0 fabricated citation(s)"
+        }
+      },
+      "flagged_obligations": [
+        "X-1",
+        "X-2",
+        "F2-3/aim-1",
+        "F2-3/aim-2",
+        "F2-3/aim-3",
+        "F2-4/aim-1",
+        "F2-4/aim-2",
+        "F2-4/aim-3"
+      ]
+    },
+    {
+      "round": 1,
+      "decision": "revise",
+      "dimension_scores": {
+        "F1": {
+          "score": 7,
+          "justification": "F1-1 names a specific barrier (coupling target engagement to clinical benefit; ambroxol's failed PDD trial despite engagement) and why it matters to the PD pipeline, with multiple corpus citations. F1-2 states a single explicit central hypothesis following from the named gap. F1-3 names a concrete departure (prospective coupling of GCase/lysosomal target to a biomarker-defined prodromal GBA-anchored subgroup; unified strain + gut-axis stratification framework) rather than a generic 'novel.' Claims are hedged ('whether,' 'we will investigate,' 'open question') and stay at or below L3 given moderate-grade evidence; citations all in corpus. Well-calibrated and complete for F1.",
+          "spans": []
+        },
+        "F2": {
+          "score": 4,
+          "justification": "F2-1 satisfied for all three aims (explicit testable objectives). F2-2 satisfied: methods named at adequate specificity (n~300, >=60/stratum, RT-QuIC/SAA, 16S/shotgun, mixed-effects models, FDR, engagement threshold >=1.5-fold, H&Y<=2, MDS-UPDRS). However F2-3 (pitfalls / alternative-strategies addressing failure modes) is NOT met for any aim — no aim contains a distinct pitfalls/alternatives paragraph addressing target-engagement failure, assay variability, or model limitations; rigor controls are not a substitute for a failure-mode/contingency discussion. F2-4 (quantitative expected outcomes tied to hypothesis) is also weak: aims state objectives and a single engagement threshold but do not give expected-outcome targets (e.g., effect sizes, correlation/separation thresholds tied to each hypothesis). These two unmet obligations across all three aims cap the score.",
+          "spans": []
+        },
+        "F3": {
+          "score": 6,
+          "justification": "F3-1 satisfied for all three aims: each surfaces the assumed expertise/resources (movement-disorders recruitment site, CLIA/GCLP genetics-enzymology lab, SAA core, microbiome/metabolomics core, PET/imaging core, biostatistics). F3-2 satisfied: the draft frames resources as 'assumed' and makes no self-assertion of F3 sufficiency, leaving it for external confirmation. Calibrated and grounded.",
+          "spans": []
+        }
+      },
+      "segment_scores": {
+        "aim-1": {
+          "dimension": "F2",
+          "score": 5,
+          "justification": "aim aim-1: grounded and calibrated"
+        },
+        "aim-2": {
+          "dimension": "F2",
+          "score": 5,
+          "justification": "aim aim-2: grounded and calibrated"
+        },
+        "aim-3": {
+          "dimension": "F2",
+          "score": 4,
+          "justification": "aim aim-3: grounded and calibrated"
+        }
+      },
+      "flagged_obligations": [
+        "F2-3/aim-1",
+        "F2-3/aim-2",
+        "F2-3/aim-3",
+        "F2-4/aim-1",
+        "F2-4/aim-2",
+        "F2-4/aim-3"
+      ]
+    },
+    {
+      "round": 2,
+      "decision": "revise",
+      "dimension_scores": {
+        "F1": {
+          "score": 7,
+          "justification": "F1: scored",
+          "spans": []
+        },
+        "F2": {
+          "score": 5,
+          "justification": "F2: scored",
+          "spans": []
+        },
+        "F3": {
+          "score": 6,
+          "justification": "",
+          "spans": []
+        }
+      },
+      "segment_scores": {
+        "aim-1": {
+          "dimension": "F2",
+          "score": 5,
+          "justification": "aim aim-1: grounded and calibrated"
+        },
+        "aim-2": {
+          "dimension": "F2",
+          "score": 5,
+          "justification": "aim aim-2: grounded and calibrated"
+        },
+        "aim-3": {
+          "dimension": "F2",
+          "score": 5,
+          "justification": "aim aim-3: grounded and calibrated"
+        }
+      },
+      "flagged_obligations": [
+        "F2-3/aim-1",
+        "F2-3/aim-2",
+        "F2-3/aim-3"
+      ]
+    }
+  ],
+  "conditioner": {
+    "obligations": [
+      {
+        "id": "F1-1",
+        "dimension": "F1",
+        "requirement": "Significance names the specific barrier to progress in Parkinson's disease drug discovery, biomarker validation, or therapeutic development pipeline and states why resolving it matters to the field, with >=1 corpus citation."
+      },
+      {
+        "id": "F1-2",
+        "dimension": "F1",
+        "requirement": "A single central hypothesis for the Parkinson's disease pipeline intervention is stated explicitly and follows from the named gap."
+      },
+      {
+        "id": "F1-3",
+        "dimension": "F1",
+        "requirement": "Innovation names the specific departure from current concepts/methods/practice in Parkinson's disease research (e.g., novel target, assay, animal model, biomarker, or therapeutic mechanism—not a generic 'novel')."
+      },
+      {
+        "id": "F2-1/aim-1",
+        "dimension": "F2",
+        "requirement": "Aim 1 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'validate target X in model Y', 'demonstrate biomarker Z predicts outcome W')."
+      },
+      {
+        "id": "F2-1/aim-2",
+        "dimension": "F2",
+        "requirement": "Aim 2 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'validate target X in model Y', 'demonstrate biomarker Z predicts outcome W')."
+      },
+      {
+        "id": "F2-1/aim-3",
+        "dimension": "F2",
+        "requirement": "Aim 3 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'validate target X in model Y', 'demonstrate biomarker Z predicts outcome W')."
+      },
+      {
+        "id": "F2-2/aim-1",
+        "dimension": "F2",
+        "requirement": "Aim 1's approach names the key methods/design at enough specificity to judge rigor (e.g., cell type, transgenic line, assay platform, sample size, statistical test—not goals alone)."
+      },
+      {
+        "id": "F2-2/aim-2",
+        "dimension": "F2",
+        "requirement": "Aim 2's approach names the key methods/design at enough specificity to judge rigor (e.g., cell type, transgenic line, assay platform, sample size, statistical test—not goals alone)."
+      },
+      {
+        "id": "F2-2/aim-3",
+        "dimension": "F2",
+        "requirement": "Aim 3's approach names the key methods/design at enough specificity to judge rigor (e.g., cell type, transgenic line, assay platform, sample size, statistical test—not goals alone)."
+      },
+      {
+        "id": "F2-3/aim-1",
+        "dimension": "F2",
+        "requirement": "Aim 1 includes a pitfalls / alternative-strategies paragraph addressing potential failure modes (e.g., target engagement failure, assay variability, model limitations)."
+      },
+      {
+        "id": "F2-3/aim-2",
+        "dimension": "F2",
+        "requirement": "Aim 2 includes a pitfalls / alternative-strategies paragraph addressing potential failure modes (e.g., target engagement failure, assay variability, model limitations)."
+      },
+      {
+        "id": "F2-3/aim-3",
+        "dimension": "F2",
+        "requirement": "Aim 3 includes a pitfalls / alternative-strategies paragraph addressing potential failure modes (e.g., target engagement failure, assay variability, model limitations)."
+      },
+      {
+        "id": "F2-4/aim-1",
+        "dimension": "F2",
+        "requirement": "Aim 1 states expected outcomes tied to its hypothesis (e.g., 'target X will show >=50% knockdown in model Y', 'biomarker Z will correlate with motor decline with r>=0.7')."
+      },
+      {
+        "id": "F2-4/aim-2",
+        "dimension": "F2",
+        "requirement": "Aim 2 states expected outcomes tied to its hypothesis (e.g., 'target X will show >=50% knockdown in model Y', 'biomarker Z will correlate with motor decline with r>=0.7')."
+      },
+      {
+        "id": "F2-4/aim-3",
+        "dimension": "F2",
+        "requirement": "Aim 3 states expected outcomes tied to its hypothesis (e.g., 'target X will show >=50% knockdown in model Y', 'biomarker Z will correlate with motor decline with r>=0.7')."
+      },
+      {
+        "id": "F3-1/aim-1",
+        "dimension": "F3",
+        "requirement": "Aim 1 surfaces the expertise and resources its approach assumes (e.g., transgenic colony access, biomarker assay platform, computational infrastructure), for investigator/environment confirmation."
+      },
+      {
+        "id": "F3-1/aim-2",
+        "dimension": "F3",
+        "requirement": "Aim 2 surfaces the expertise and resources its approach assumes (e.g., transgenic colony access, biomarker assay platform, computational infrastructure), for investigator/environment confirmation."
+      },
+      {
+        "id": "F3-1/aim-3",
+        "dimension": "F3",
+        "requirement": "Aim 3 surfaces the expertise and resources its approach assumes (e.g., transgenic colony access, biomarker assay platform, computational infrastructure), for investigator/environment confirmation."
+      },
+      {
+        "id": "F3-2",
+        "dimension": "F3",
+        "requirement": "The agent does not assert F3 sufficiency for the Parkinson's disease pipeline proposal; self_score defaults to insufficient pending external confirmation."
+      },
+      {
+        "id": "X-1",
+        "dimension": "X",
+        "requirement": "Every empirical claim in the Parkinson's disease pipeline proposal carries an evidence_id and every citation is in corpus (inv-1)."
+      },
+      {
+        "id": "X-2",
+        "dimension": "X",
+        "requirement": "No claim's assertiveness exceeds the rung its evidence grade permits (inv-3)."
+      }
+    ],
+    "budget": {
+      "sections": {
+        "significance": 600,
+        "innovation": 300,
+        "aims": 2400
+      },
+      "total_word_limit": 3300
+    }
+  },
+  "grounding": [
+    {
+      "round": 0,
+      "n_references": 18,
+      "all_in_source_set": false,
+      "orphan_ids": [
+        "literature:R01NS125317",
+        "literature:R01NS125592"
+      ]
+    },
+    {
+      "round": 1,
+      "n_references": 18,
+      "all_in_source_set": true,
+      "orphan_ids": []
+    },
+    {
+      "round": 2,
+      "n_references": 18,
+      "all_in_source_set": true,
+      "orphan_ids": []
+    }
+  ],
+  "booster": [
+    {
+      "round": 0,
+      "unselected_total": 340,
+      "subset_size": 24,
+      "cap": 24,
+      "dropped": 316,
+      "aims": [
+        {
+          "aim_id": "aim-1",
+          "drawn_from": [
+            "grant:R01NS058487",
+            "grant:F30NS129283",
+            "grant:R01DK138465",
+            "grant:R01AG082373",
+            "grant:F31NS135928",
+            "grant:R01NS120625",
+            "grant:R01NS103931"
+          ],
+          "dropped_non_corpus": [
+            "grant:42166327"
+          ]
+        },
+        {
+          "aim_id": "aim-2",
+          "drawn_from": [
+            "literature:42153355",
+            "grant:R01NS103931",
+            "grant:R01AG081283",
+            "grant:R01GM133172",
+            "grant:R01GM141553",
+            "grant:K08NS131581",
+            "grant:R01NS064934",
+            "grant:K08NS123428",
+            "grant:R01AG082373",
+            "grant:R01ES023839",
+            "grant:F31NS135928"
+          ],
+          "dropped_non_corpus": [
+            "grant:42166327"
+          ]
+        },
+        {
+          "aim_id": "aim-3",
+          "drawn_from": [
+            "literature:42153355",
+            "grant:R01NS058487",
+            "grant:R01NS124777",
+            "grant:R01AG082373",
+            "grant:R01NS064934",
+            "grant:R01NS103931",
+            "grant:R01GM141553"
+          ],
+          "dropped_non_corpus": [
+            "grant:42166327"
+          ]
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "unselected_total": 340,
+      "subset_size": 24,
+      "cap": 24,
+      "dropped": 316,
+      "aims": [
+        {
+          "aim_id": "aim-1",
+          "drawn_from": [
+            "grant:F30NS129283",
+            "grant:F31NS135928",
+            "grant:R01AG082373",
+            "grant:R01DK138465",
+            "literature:42166327",
+            "grant:R01NS058487",
+            "grant:R01NS064934",
+            "grant:R01GM141553",
+            "grant:R01GM133172",
+            "grant:R01ES034846"
+          ],
+          "dropped_non_corpus": []
+        },
+        {
+          "aim_id": "aim-2",
+          "drawn_from": [
+            "literature:42153355",
+            "literature:42166327",
+            "grant:K08NS131581",
+            "grant:K08NS123428",
+            "grant:R01AG081283",
+            "grant:R01GM141553",
+            "grant:R01GM133172",
+            "grant:R01NS064934",
+            "grant:R01ES023839",
+            "grant:R01NS103931"
+          ],
+          "dropped_non_corpus": []
+        },
+        {
+          "aim_id": "aim-3",
+          "drawn_from": [
+            "literature:42153355",
+            "literature:42166327",
+            "grant:R01AG082373",
+            "grant:R01NS064934",
+            "grant:R01NS058487",
+            "grant:R01NS124777",
+            "grant:F32NS141898",
+            "grant:R01GM141553",
+            "grant:R01GM133172"
+          ],
+          "dropped_non_corpus": []
+        }
+      ]
+    }
+  ]
+}
