@@ -8,24 +8,57 @@ From `neurodiscover/`:
 make dashboard
 ```
 
-Same as `python3 cli.py dashboard` or `./dashboard`.
+**Cross-platform:** works on **macOS, Linux, and Windows** with Python 3.10+. `make dashboard` is not Mac-only — it runs `python3 cli.py dashboard` under the hood.
+
+Equivalents:
+
+```bash
+python3 cli.py dashboard
+./dashboard          # bash — macOS/Linux; Git Bash or WSL on Windows
+```
+
+On Windows without `make`:
+
+```bash
+python cli.py dashboard
+```
 
 This will:
 
 1. Install dependencies (unless `--skip-install`)
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-3. Run one offline **demo** pipeline pass
+3. Run one offline **demo** pipeline pass (unless `--skip-pipeline`)
 4. Start API on **5000** and UI on **8080**
-5. Open **http://127.0.0.1:8080** in your default browser
+5. Open **http://127.0.0.1:8080** in your default browser (unless `--no-browser`)
 
 Press **Ctrl+C** to stop.
 
-### Useful flags
+## Platform notes
+
+| Platform | Tip |
+|----------|-----|
+| **Windows** | `make` is often not installed — use `python cli.py dashboard` |
+| **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
+| **Linux / WSL / SSH / headless VM** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
+| **macOS** | Port **5000** may conflict with **AirPlay Receiver** (System Settings → General → AirDrop & Handoff) — use alternate ports below or disable AirPlay |
+| **Any OS** | Missing packages? Run `pip install -r requirements.txt` first |
+
+## Useful flags
 
 ```bash
-python3 cli.py dashboard --fresh           # rebuild local DB
-python3 cli.py dashboard --skip-pipeline   # servers only
 python3 cli.py dashboard --no-browser      # do not auto-open browser
+python3 cli.py dashboard --skip-pipeline   # start API + UI only
+python3 cli.py dashboard --fresh           # rebuild local DB
+python3 cli.py dashboard --skip-install    # skip pip install step
+python3 cli.py dashboard --port-api 5001 --port-ui 8081   # alternate ports
+```
+
+Minimal path (no auto-install, no browser):
+
+```bash
+pip install -r requirements.txt
+python3 cli.py dashboard --no-browser
+# → open http://127.0.0.1:8080 manually
 ```
 
 ## Using the UI
@@ -41,6 +74,8 @@ python3 cli.py dashboard --no-browser      # do not auto-open browser
 After each run, the KPI strip and summary bar show **this run** counts (e.g. 5 papers used) separately from **in database** totals.
 
 ## Manual setup (optional)
+
+If you prefer two terminals instead of the one-command launcher:
 
 ```bash
 cd neurodiscover
@@ -89,5 +124,6 @@ Up to five illustrative profiles (Patients A–E) per run. Returned in `POST /ap
 
 ## More detail
 
+- Web docs: [neurodiscover.github.io](https://neurodiscover.github.io) — [Dashboard](https://neurodiscover.github.io/dashboard/) · [Debugging](https://neurodiscover.github.io/debugging/)
 - Architecture: [`../../docs/dashboard.md`](../../docs/dashboard.md) · API: [`../../docs/developer-reference/dashboard-api.md`](../../docs/developer-reference/dashboard-api.md)
 - API shapes: [`../../docs/developer-reference/backend-queries.md`](../../docs/developer-reference/backend-queries.md)

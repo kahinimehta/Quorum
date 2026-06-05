@@ -51,6 +51,8 @@ See [Architecture decisions](decisions) for trade-offs.
 
 ## Quick start
 
+**Works on macOS, Linux, and Windows** — you only need **Python 3.10+** and a browser. `make dashboard` is shorthand for `python3 cli.py dashboard`; it is not Mac-specific.
+
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
@@ -59,14 +61,36 @@ cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
 make dashboard
 ```
 
+Same without `make`:
+
+```bash
+python3 cli.py dashboard
+# or: ./dashboard   (bash — macOS, Linux, Git Bash / WSL on Windows)
+```
+
 This will:
 
-1. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-2. Run one offline **demo** pipeline pass
-3. Start the API on **port 5000** and UI on **port 8080**
-4. Open **http://127.0.0.1:8080** in your browser
+1. Install dependencies if needed (unless `--skip-install`)
+2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
+3. Run one offline **demo** pipeline pass
+4. Start the API on **port 5000** and UI on **port 8080**
+5. Open **http://127.0.0.1:8080** in your default browser (skip with `--no-browser`)
 
 Press **Ctrl+C** to stop both servers.
+
+### Platform notes
+
+| Platform | Tip |
+|----------|-----|
+| **Windows** | `make` is often missing — use `python cli.py dashboard` (or `python3` if available) |
+| **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
+| **Linux / WSL / SSH** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
+| **macOS** | Port **5000** may be used by **AirPlay Receiver** — use `--port-api 5001 --port-ui 8081` or disable AirPlay in System Settings |
+| **Any OS** | Port in use? `python3 cli.py dashboard --port-api 5001 --port-ui 8081 --no-browser` |
+
+Useful flags: `--no-browser`, `--skip-pipeline` (servers only), `--fresh` (rebuild local DB).
+
+Full dashboard walkthrough: [Run the dashboard](dashboard). Troubleshooting: [Debugging](debugging).
 
 {: .important }
 **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.

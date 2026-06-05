@@ -13,12 +13,50 @@ Single-page UI at `neurodiscover/frontend/index.html` — vanilla HTML/CSS/JS, n
 
 ## Quick start
 
+**Cross-platform:** macOS, Linux, and Windows (with Python 3). `make dashboard` is equivalent to `python3 cli.py dashboard` — not Mac-only.
+
 ```bash
 cd neurodiscover
+pip install -r requirements.txt   # first time only
 make dashboard
 ```
 
-Opens **http://127.0.0.1:8080** (`--no-browser` to skip). Press **Ctrl+C** to stop API + UI.
+Equivalents:
+
+```bash
+python3 cli.py dashboard
+./dashboard                         # bash script — Git Bash / WSL on Windows
+```
+
+Opens **http://127.0.0.1:8080** in your default browser. Use `--no-browser` to skip auto-open. Press **Ctrl+C** to stop API + UI.
+
+The launcher will:
+
+1. Install dependencies (unless `--skip-install`)
+2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
+3. Run one offline **demo** pipeline pass (unless `--skip-pipeline`)
+4. Start FastAPI on **5000** and static UI on **8080**
+
+### Platform notes
+
+| Platform | Tip |
+|----------|-----|
+| **Windows** | `make` often unavailable — use `python cli.py dashboard` |
+| **Windows** | `./dashboard` requires Git Bash or WSL |
+| **Linux / WSL / SSH / headless** | `--no-browser` then open `http://127.0.0.1:8080` manually |
+| **macOS** | Port 5000 sometimes taken by **AirPlay Receiver** — `--port-api 5001 --port-ui 8081` or disable AirPlay |
+| **Any OS** | Ports busy? `--port-api 5001 --port-ui 8081` |
+
+### Useful flags
+
+```bash
+python3 cli.py dashboard --no-browser      # do not auto-open browser
+python3 cli.py dashboard --skip-pipeline   # start servers only
+python3 cli.py dashboard --fresh           # rebuild local SQLite DB
+python3 cli.py dashboard --port-api 5001 --port-ui 8081
+```
+
+See also [Debugging](debugging) if the dashboard fails to start.
 
 ## Data flow
 

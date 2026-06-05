@@ -32,12 +32,17 @@ See [Site publishing](pages-setup) for full setup.
 cd neurodiscover
 pip install -r requirements.txt
 python3 cli.py validate
-make dashboard
+python3 cli.py dashboard --no-browser
 ```
+
+{: .highlight }
+**Not Mac-only:** `make dashboard` works on macOS, Linux, and Windows. On Windows use `python cli.py dashboard` if `make` is missing. On headless/SSH use `--no-browser` and open `http://127.0.0.1:8080` manually. On macOS, port 5000 may conflict with AirPlay — use `--port-api 5001 --port-ui 8081`.
 
 | Error | Fix |
 |-------|-----|
-| Port 5000 or 8080 in use | Stop other processes or use `python3 cli.py dashboard --port 5001 --ui-port 8081` |
+| Port 5000 or 8080 in use | Stop other processes or use `python3 cli.py dashboard --port-api 5001 --port-ui 8081` |
+| `make: command not found` | Use `python3 cli.py dashboard` instead |
+| Browser does not open | Expected on SSH/WSL — use `--no-browser` and open the URL manually |
 | Module not found | Run from `neurodiscover/` directory; `pip install -r requirements.txt` |
 | DB errors | Local: `python3 cli.py build` (local only). Team Supabase: set `SUPABASE_DATABASE_URL`, **never** `build`. |
 
