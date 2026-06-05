@@ -278,6 +278,8 @@ def get_run_stats(run_id: str):
             SELECT s.name AS subgroup, tc.treatment, tc.mechanism,
                    (SELECT COUNT(*) FROM connection_evidence ce
                     WHERE ce.connection_id = tc.connection_id) AS evidence_count,
+                   (SELECT COUNT(DISTINCT se.evidence_id) FROM subgroup_evidence se
+                    WHERE se.subgroup_id = s.subgroup_id) AS subgroup_evidence_count,
                    r.confidence
             FROM recommendations r
             JOIN treatment_connections tc ON tc.connection_id = r.connection_id
@@ -293,6 +295,7 @@ def get_run_stats(run_id: str):
                 "treatment": row["treatment"],
                 "mechanism": row.get("mechanism"),
                 "evidence_count": int(row.get("evidence_count") or 0),
+                "subgroup_evidence_count": int(row.get("subgroup_evidence_count") or 0),
                 "confidence": row.get("confidence"),
             }
             for row in scored
