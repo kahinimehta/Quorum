@@ -5,7 +5,7 @@ parent: Developer reference
 nav_order: 1
 ---
 
-# Database Contract — NeuroDiscover (Quorum)
+# Database schema — NeuroDiscover (Quorum)
 
 **Owner:** Person 3 (Ayelet, Data Engineer)  
 **Schema source of truth:** [`schema.sql`](../../neurodiscover/schema.sql) (SQLite) and [`schema.pg.sql`](../../neurodiscover/schema.pg.sql) (Postgres)  
@@ -164,7 +164,7 @@ SQLite is the blackboard, but **each developer keeps their own local file**.
 
 | Artifact | In git? | Notes |
 |----------|---------|-------|
-| `neurodiscover/schema.sql` | Yes | Team contract — never diverge silently |
+| `neurodiscover/schema.sql` | Yes | Schema source of truth — keep in sync with code |
 | `neurodiscover/seed_data.json` | Yes | Reproducible demo; everyone runs `cli.py build` |
 | `neurodiscover/neurodiscover.db` | **No** (`.gitignore`) | Built locally; do not commit or merge binary DBs |
 | Optional demo snapshot | Rarely, `demo` branch only | Judge backup if APIs fail — prefer seed + pre-pull |
@@ -193,4 +193,4 @@ Cost driver is **Nebius LLM**, not BioMCP (free).
 
 ## Do not change without team sync
 
-Renaming columns or tables requires notifying **Person 2 (backend)** and **Person 4 (agents)**. The schema is the team contract.
+Renaming columns or tables requires updating `schema.sql`, `schema.pg.sql`, [`docs/developer-reference/database.md`](database), and [`docs/developer-reference/agent-io.md`](agent-io).

@@ -104,7 +104,7 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 
 ## Related docs
 
-- JSON contracts: [Backend queries](backend-queries)
+- JSON shapes: [Backend queries](backend-queries)
 - Endpoint list: [API endpoints](api-endpoints)
 - Agent I/O: [Agent I/O](agent-io)
 - Mockup notes (archived): [`../../neurodiscover/frontend/mockup-v2.md`](../../neurodiscover/frontend/mockup-v2.md)

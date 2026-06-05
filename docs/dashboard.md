@@ -117,6 +117,6 @@ See [Output examples](output) for the response shape.
 
 ## Related developer docs
 
-- [Dashboard API reference](developer-reference/dashboard-api) — full API contract
+- [Dashboard API reference](developer-reference/dashboard-api) — API reference
 - [Backend queries](developer-reference/backend-queries) — SQL + JSON shapes
 - [API endpoints](developer-reference/api-endpoints) — route list

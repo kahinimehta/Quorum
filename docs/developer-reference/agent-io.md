@@ -5,10 +5,10 @@ parent: Developer reference
 nav_order: 2
 ---
 
-# Agent I/O Contract — NeuroDiscover (Quorum)
+# Agent I/O — NeuroDiscover (Quorum)
 
-**Owner:** Person 4 (multi-agent logic). Literature section by Ayelet.  
-**Database contract:** [Database schema](database)
+**Owner:** Alia / team agents. Literature section by Ayelet.  
+**Schema:** [Database schema](database)
 
 Every agent **reads** prior tables, **writes** its own output, and **appends** to `agent_outputs`.
 

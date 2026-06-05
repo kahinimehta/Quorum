@@ -58,15 +58,7 @@ cp .env.example .env
 
 See [Supabase setup](developer-reference/supabase) and [Team env sharing](developer-reference/team-env-sharing).
 
-## Contract documents
-
-Developer reference pages (schema, agent I/O, validation):
-
-- [Database schema](developer-reference/database)
-- [Agent I/O](developer-reference/agent-io)
-- [Backend queries](developer-reference/backend-queries)
-- [Validation](developer-reference/validation)
-- [Literature pull](developer-reference/literature-pull)
+See [Developer reference](developer-reference/) for schema, agent I/O, and API docs.
 
 ## Site publishing
 

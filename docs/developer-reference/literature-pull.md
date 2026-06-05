@@ -66,7 +66,7 @@ If the command is unset or fails, fallbacks run automatically:
 1. Clone/install your team's PubMed/bioRxiv MCP repos locally.
 2. Wrap each in a thin shell script that accepts `search --json '<payload>'` and prints JSON hits.
 3. Set `PUBMED_MCP_COMMAND` / `BIORXIV_MCP_COMMAND` in `.env`.
-4. No code changes required unless the MCP uses a different CLI contract — then adjust `ingestion/mcp_clients.py`.
+4. No code changes required unless the MCP uses a different CLI interface — then adjust `ingestion/mcp_clients.py`.
 
 CI does **not** require MCP repos; direct API fallbacks are the default path.
 

@@ -14,22 +14,22 @@ This file covers the **data layer + Literature Synthesis Agent** (Ayelet's part:
 Person 3 data engineer + one Person 4 agent). Other agents are teammates' work
 but all share the database below.
 
-## Team contract docs (read before coding)
+## Documentation
 
-| Doc | Audience |
-|-----|----------|
-| [`docs/developer-reference/database.md`](docs/developer-reference/database.md) | Everyone — schema, SQLite vs MongoDB, field ownership |
-| [`docs/developer-reference/agent-io.md`](docs/developer-reference/agent-io.md) | Person 4 — what each agent reads/writes |
-| [`docs/developer-reference/backend-queries.md`](docs/developer-reference/backend-queries.md) | Person 2 — API SQL + JSON shapes |
-| [`queries.sql`](queries.sql) | Person 2 — copy-paste SELECTs |
-| [`docs/developer-reference/supabase.md`](docs/developer-reference/supabase.md) | Team shared live DB (free tier) |
-| [`docs/developer-reference/person2-backend.md`](docs/developer-reference/person2-backend.md) | Person 2 Supabase connection |
-| [`docs/dashboard.md`](docs/dashboard.md) | Dashboard UI (local run) |
-| [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) | Dashboard + API contract |
-| [`docs/developer-reference/api-endpoints.md`](docs/developer-reference/api-endpoints.md) | FastAPI route list |
-| [`docs/developer-reference/validation.md`](docs/developer-reference/validation.md) | Extraction QA after pull |
+| Doc | Purpose |
+|-----|---------|
+| [`docs/developer-reference/database.md`](docs/developer-reference/database.md) | Schema — tables, columns, SQLite vs Postgres |
+| [`docs/developer-reference/agent-io.md`](docs/developer-reference/agent-io.md) | Agent reads/writes |
+| [`docs/developer-reference/backend-queries.md`](docs/developer-reference/backend-queries.md) | API SQL + JSON shapes |
+| [`queries.sql`](queries.sql) | Copy-paste SELECTs |
+| [`docs/developer-reference/supabase.md`](docs/developer-reference/supabase.md) | Team shared DB |
+| [`docs/developer-reference/person2-backend.md`](docs/developer-reference/person2-backend.md) | Supabase + FastAPI |
+| [`docs/dashboard.md`](docs/dashboard.md) | Dashboard UI |
+| [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) | Dashboard + API |
+| [`docs/developer-reference/api-endpoints.md`](docs/developer-reference/api-endpoints.md) | FastAPI routes |
+| [`docs/developer-reference/validation.md`](docs/developer-reference/validation.md) | Extraction QA |
 | [neurodiscover.github.io](https://neurodiscover.github.io) | Public docs site |
-| [`neurodiscover/frontend/quickstart.md`](neurodiscover/frontend/quickstart.md) | Run UI in &lt; 5 min (no Supabase keys OK) |
+| [`neurodiscover/frontend/quickstart.md`](neurodiscover/frontend/quickstart.md) | Run UI in &lt; 5 min |
 
 **Canonical store:** SQLite locally, or **Supabase Postgres** when `SUPABASE_DATABASE_URL` is set. Table is **`evidence`**, not `papers`.
 
@@ -102,8 +102,7 @@ Schema is in `neurodiscover/schema.sql` (SQLite) and `neurodiscover/schema.pg.sq
 - `scan_state` — singleton tracking last literature scan (incremental mode).
 
 ## Conventions (important)
-- **The schema is the team contract.** Do not rename columns without telling
-  Person 2 (backend) and Person 4 (agents). Backend reads `evidence` (NOT `papers`).
+- **Do not rename columns** without updating `schema.sql`, `schema.pg.sql`, and [`docs/developer-reference/database.md`](docs/developer-reference/database.md). Backend reads `evidence` (NOT `papers`).
 - **Never invent PMIDs / NCT ids.** Seed `source_id`s are placeholders (`DEMO-*`).
   The literature agent backfills real ids via `pull`. Do not present DEMO ids as real.
 - **Demo mode is the safe path.** Never run a live API call live on stage; pre-run

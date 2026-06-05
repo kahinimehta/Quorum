@@ -10,7 +10,7 @@ import random
 import string
 from typing import Any
 
-# Subgroup accent colors (UI contract)
+# Subgroup accent colors (dashboard UI)
 SUBGROUP_COLORS: dict[str, str] = {
     "GBA-mutation PD": "#2563eb",
     "LRRK2 PD": "#0d9488",

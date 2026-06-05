@@ -68,7 +68,7 @@ More detail: [`docs/dashboard.md`](docs/dashboard.md) · [`neurodiscover/fronten
 | Cursor / coding agents | [`AGENTS.md`](AGENTS.md) |
 | Humans onboarding | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 | **Project docs (web)** | **[neurodiscover.github.io](https://neurodiscover.github.io)** — Jekyll + Just the Docs ([source](docs/index.md)) |
-| Database contract | [`docs/developer-reference/database.md`](docs/developer-reference/database.md) |
+| Database schema | [`docs/developer-reference/database.md`](docs/developer-reference/database.md) |
 
 **Storage:** SQLite locally, or **Supabase Postgres** for the team shared DB (`SUPABASE_DATABASE_URL`). Table name is **`evidence`**, not `papers`. See [`docs/developer-reference/database.md`](docs/developer-reference/database.md) and [`docs/developer-reference/supabase.md`](docs/developer-reference/supabase.md).
 
@@ -114,7 +114,7 @@ Quorum/
       quickstart.md          # Dashboard quick start
 ```
 
-Dashboard docs: [`docs/dashboard.md`](docs/dashboard.md) (UI) · [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) (API contract).
+Dashboard docs: [`docs/dashboard.md`](docs/dashboard.md) (UI) · [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) (API reference).
 
 ## Team
 

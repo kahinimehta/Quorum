@@ -198,4 +198,4 @@ INSERT INTO agent_outputs (run_id, agent_name, step_order, summary, payload)
 VALUES (?, ?, ?, ?, ?);
 ```
 
-See [Agent I/O contract](developer-reference/agent-io) for full SQL and payload shapes.
+See [Agent I/O](developer-reference/agent-io) for full SQL and payload shapes.

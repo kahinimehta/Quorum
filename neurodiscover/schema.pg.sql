@@ -1,5 +1,5 @@
 -- NeuroDiscover — PostgreSQL schema (Supabase)
--- Same contract as schema.sql. Apply once in Supabase SQL Editor or: python3 cli.py init-supabase
+-- Same tables/columns as schema.sql. Apply once in Supabase SQL Editor or: python3 cli.py init-supabase
 
 -- 1. EVIDENCE
 CREATE TABLE IF NOT EXISTS evidence (

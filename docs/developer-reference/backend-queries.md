@@ -5,7 +5,7 @@ parent: Developer reference
 nav_order: 3
 ---
 
-# Backend Query Guide — Person 2
+# Backend queries
 
 **Database file:** `neurodiscover/neurodiscover.db` (SQLite, inside `neurodiscover/` package dir — see `paths.py`)  
 **Full SQL:** [`queries.sql`](../../queries.sql)  

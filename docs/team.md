@@ -18,7 +18,7 @@ description: "Quorum — interdisciplinary team for NeuroDiscover AI"
 | **Alia Merchant** | Strategy · commercialization | Product framing, stakeholder story, downstream agents, demo readiness |
 | **Amy He** | ML · agent infrastructure | Discovery agents, scoring logic, commercial signals, agent patterns |
 | **Ayelet Peres** | Computational biology · data | Literature Agent, ingestion, schema, Supabase, validation |
-| **Kahini Mehta** | Neuroscience · engineering | Database contract, orchestrator, API, dashboard, integration |
+| **Kahini Mehta** | Neuroscience · engineering | Schema, orchestrator, API, dashboard, integration |
 | **William Yakah** | Workflow · agentic UX | Demo narrative, cross-agent usability, workflow design |
 
 {: .highlight }
@@ -62,7 +62,7 @@ Postdoc at Yale School of Medicine in computational immunology, immunogenomics, 
 
 Third-year PhD student in Columbia's Neurobiology and Behavior program working with human single-neuron and MRI data. Focus on analysis pipelines and computational modeling using Bayesian and machine learning methods. Passionate about open science and reproducibility.
 
-**On this project:** Database contract, orchestrator, FastAPI backend, dashboard UI, synthetic cohort layer, and integration testing.
+**On this project:** Database schema, orchestrator, FastAPI backend, dashboard UI, synthetic cohort layer, and integration testing.
 
 ---
 
@@ -100,6 +100,6 @@ flowchart TB
   DB --> Out[Dashboard + docs site]
 ```
 
-- **Contract-first:** `schema.sql` + `developer-reference/agent-io.md` before agent code diverged  
+- **Schema-first:** `schema.sql` + `developer-reference/agent-io.md` before agent code diverged  
 - **Shared `run_id`:** every agent appends to `agent_outputs` for audit  
 - **Safe demo path:** offline seed + synthetic cohort agreed early for showcase reliability  

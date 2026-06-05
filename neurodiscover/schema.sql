@@ -1,7 +1,5 @@
 -- NeuroDiscover (Quorum) — SQLite schema
--- Person 3 (Data Engineer) deliverable.
--- This is the contract between the agent pipeline (Person 4),
--- the DB (Person 3), and the backend API (Person 2). Lock the field names.
+-- Source of truth for tables/columns. See docs/developer-reference/database.md
 
 PRAGMA foreign_keys = ON;
 PRAGMA journal_mode = WAL;

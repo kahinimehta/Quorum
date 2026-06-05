@@ -1,5 +1,5 @@
 """
-NeuroDiscover Backend API (FastAPI) — contract in docs/developer-reference/backend-queries.md
+NeuroDiscover Backend API (FastAPI) — see docs/developer-reference/backend-queries.md
 
 Run: python3 api_server.py   (port 5000)
 

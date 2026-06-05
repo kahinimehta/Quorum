@@ -99,4 +99,4 @@ Agents 4 and 5 compute **0–10** scores in Python; the orchestrator stores **0�
 
 - [Inputs](input) — SQL reads and API request bodies
 - [Output examples](output) — JSON responses
-- [Agent I/O contract](developer-reference/agent-io) — full SQL for developers
+- [Agent I/O](developer-reference/agent-io) — full SQL for developers

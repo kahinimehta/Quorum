@@ -49,7 +49,7 @@ python3 cli.py validate
 
 ## Database rules
 
-- **In git:** `schema.sql`, `schema.pg.sql`, `seed_data.json` — reproducible contract.
+- **In git:** `schema.sql`, `schema.pg.sql`, `seed_data.json` — reproducible schema and demo seed.
 - **Not in git:** `neurodiscover.db`, `.env`, `SUPABASE_DATABASE_URL` — never commit secrets or `.db` files.
 - **Team live DB:** Supabase when `SUPABASE_DATABASE_URL` is set — see [`docs/developer-reference/supabase.md`](docs/developer-reference/supabase.md).
 - **Parallel testing (local):** `export NEURODISCOVER_DB=/tmp/yourname.db` then `python3 cli.py build`.
@@ -62,4 +62,4 @@ python3 cli.py validate
 
 ## Team channel blurb (copy-paste)
 
-> DB contract is in **Quorum/docs/developer-reference/database.md**. Build with `cd neurodiscover && python3 cli.py build`. Table is **evidence**, not papers. Do not commit `.db` files. Agent I/O: **docs/developer-reference/agent-io.md**.
+> Schema: **Quorum/docs/developer-reference/database.md**. Local build: `cd neurodiscover && python3 cli.py build`. Table is **evidence**, not papers. Do not commit `.db` files. Agent I/O: **docs/developer-reference/agent-io.md**.

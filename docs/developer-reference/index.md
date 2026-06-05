@@ -3,12 +3,12 @@ layout: default
 title: Developer reference
 nav_order: 11
 has_children: true
-description: "Schema, agent I/O, API contracts"
+description: "Schema, agent I/O, API reference"
 ---
 
 # Developer reference
 
-Contract documents for schema, agent I/O, backend SQL, and validation. These are the source of truth for Person 2 (backend) and Person 4 (agents).
+Schema, agent I/O, backend SQL, validation, and API docs. Start with [Database schema](database) and [Agent I/O](agent-io) when changing agents or tables.
 
 ---
 
@@ -21,7 +21,7 @@ Contract documents for schema, agent I/O, backend SQL, and validation. These are
 | [Backend queries](backend-queries) | API — SQL + JSON shapes |
 | [API endpoints](api-endpoints) | Route list |
 | [Person 2 backend](person2-backend) | Supabase handoff |
-| [Dashboard API](dashboard-api) | Dashboard ↔ API contract |
+| [Dashboard API](dashboard-api) | Dashboard ↔ API |
 | [Literature pull](literature-pull) | BioMCP, MCP env vars |
 | [Validation](validation) | Extraction QA |
 | [Supabase](supabase) | Team shared DB |

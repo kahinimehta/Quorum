@@ -13,7 +13,7 @@ Why we built NeuroDiscover this way.
 
 ## SQLite / Postgres, not MongoDB
 
-Early working docs mentioned MongoDB `papers`. The team contract is SQL table **`evidence`** with FK integrity, shared via Supabase Session pooler or local `neurodiscover.db`.
+Early working docs mentioned MongoDB `papers`. The canonical store is SQL table **`evidence`** with FK integrity, shared via Supabase Session pooler or local `neurodiscover.db`.
 
 ## Database as blackboard
 
