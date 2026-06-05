@@ -19,6 +19,40 @@
   color: #64748b;
 }
 
+.home-meta {
+  margin: 1rem 0 1.25rem;
+
+  table {
+    margin-bottom: 0;
+    font-size: 0.92rem;
+  }
+
+  tr {
+    border-top: none;
+  }
+
+  td {
+    border: none;
+    padding: 0.2rem 0;
+    vertical-align: top;
+  }
+
+  td:first-child {
+    width: 5.5rem;
+    padding-right: 1rem;
+    color: #64748b;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+.home-lede {
+  max-width: 40rem;
+  line-height: 1.55;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
 .team-member {
   border-left: 4px solid #2563eb;
   padding-left: 1rem;

@@ -7,11 +7,24 @@ description: "Agentic commercial development discovery — quick start and overv
 
 # NeuroDiscover AI
 
-{: .fs-6 .fw-300 }
+{: .fs-5 .fw-300 }
 
-**Quorum** — agentic system for **commercial development discovery**: continuously ingest literature and trials, surface **hidden patient subgroups** inside heterogeneous indications, map **subgroup → mechanism → treatment** connections, and rank opportunities by evidence and commercial potential.
+Six agents · one evidence store · ranked commercial discovery
 
-**Live docs:** [https://neurodiscover.github.io](https://neurodiscover.github.io) · **Track:** Autonomous Research (Literature synthesis, hypothesis generation & evidence tracking) · **Partner framing:** Pfizer Commercial Development Discovery
+<div class="home-meta" markdown="1">
+
+| | |
+|:--|:--|
+| Team | **Quorum** |
+| Track | **02 — Autonomous Research** |
+| Partner | Pfizer Commercial Development Discovery |
+| Code | [github.com/kahinimehta/Quorum](https://github.com/kahinimehta/Quorum) |
+
+</div>
+
+{: .home-lede }
+
+Continuously ingest literature and trials, surface hidden patient subgroups, map subgroup → mechanism → treatment, and rank opportunities by evidence and commercial potential.
 
 ---
 
@@ -51,46 +64,21 @@ See [Architecture decisions](decisions) for trade-offs.
 
 ## Quick start
 
-**Works on macOS, Linux, and Windows** — you only need **Python 3.10+** and a browser. `make dashboard` is shorthand for `python3 cli.py dashboard`; it is not Mac-specific.
+Requires **Python 3.10+** on macOS, Linux, or Windows.
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
 pip install -r requirements.txt
-cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
-make dashboard
+make dashboard    # same as: python3 cli.py dashboard
 ```
 
-Same without `make`:
+Opens **http://127.0.0.1:8080** (API on port 5000). Press **Ctrl+C** to stop.
 
-```bash
-python3 cli.py dashboard
-# or: ./dashboard   (bash — macOS, Linux, Git Bash / WSL on Windows)
-```
+{: .highlight }
+**Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the URL manually.
 
-This will:
-
-1. Install dependencies if needed (unless `--skip-install`)
-2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-3. Run one offline **demo** pipeline pass
-4. Start the API on **port 5000** and UI on **port 8080**
-5. Open **http://127.0.0.1:8080** in your default browser (skip with `--no-browser`)
-
-Press **Ctrl+C** to stop both servers.
-
-### Platform notes
-
-| Platform | Tip |
-|----------|-----|
-| **Windows** | `make` is often missing — use `python cli.py dashboard` (or `python3` if available) |
-| **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
-| **Linux / WSL / SSH** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
-| **macOS** | Port **5000** may be used by **AirPlay Receiver** — use `--port-api 5001 --port-ui 8081` or disable AirPlay in System Settings |
-| **Any OS** | Port in use? `python3 cli.py dashboard --port-api 5001 --port-ui 8081 --no-browser` |
-
-Useful flags: `--no-browser`, `--skip-pipeline` (servers only), `--fresh` (rebuild local DB).
-
-Full dashboard walkthrough: [Run the dashboard](dashboard). Troubleshooting: [Debugging](debugging).
+Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Debugging](debugging)
 
 {: .important }
 **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
