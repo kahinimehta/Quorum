@@ -28,6 +28,16 @@ Continuously ingest literature and trials, surface hidden patient subgroups, map
 
 ---
 
+## Demo (draft)
+
+<div class="video-embed">
+  <iframe src="https://www.youtube.com/embed/32vsR5R4hHM" title="NeuroDiscover demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+[Watch on YouTube](https://youtu.be/32vsR5R4hHM)
+
+---
+
 ## What problem we solve
 
 Traditional portfolio review evaluates a **small set** of opportunities over **months**, using expert taxonomies that structurally miss:

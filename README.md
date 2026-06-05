@@ -1,25 +1,12 @@
 # Quorum — NeuroDiscover AI
 
-> **Collaborators:** The **dashboard**, **demo video** (YouTube — see below), and **[docs site](https://neurodiscover.github.io)** are still being edited. Expect layout and copy changes before the showcase.
+> **Collaborators:** The **dashboard**, **demo video** ([docs home](https://neurodiscover.github.io)), and **[docs site](https://neurodiscover.github.io)** are still being edited. Expect layout and copy changes before the showcase.
 
 **Quorum** — six agents, one evidence store, ranked commercial discovery.
 
 Agentic system for **commercial development discovery**: continuously ingest literature and trials, surface hidden patient subgroups inside heterogeneous indications, map **subgroup → mechanism → treatment** connections, and rank opportunities by evidence and commercial potential.
 
 **Live docs:** [neurodiscover.github.io](https://neurodiscover.github.io) · **Track:** 02 — Autonomous Research · **Partner framing:** Pfizer Commercial Development Discovery
-
----
-
-## Demo (draft)
-
-<!-- Replace VIDEO_ID with your YouTube id (from youtube.com/watch?v=VIDEO_ID) -->
-[![Watch the NeuroDiscover demo on YouTube](https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
-
-**YouTube:** [youtube.com/watch?v=VIDEO_ID](https://www.youtube.com/watch?v=VIDEO_ID)
-
-Upload `docs/demo_draft.mp4` as **Unlisted** or **Public**, then swap `VIDEO_ID` in the lines above. You can remove the local `docs/demo_draft.mp4` from git — no need to commit the 71 MB file.
-
-The [docs site](https://neurodiscover.github.io) can show an inline player (iframes work there); add the same embed to `docs/index.md` if you want it on the home page.
 
 ---
 
