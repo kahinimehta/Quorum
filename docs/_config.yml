@@ -9,7 +9,7 @@ baseurl: ""
 
 permalink: pretty
 
-logo: "/assets/images/logo-icon.png"
+logo: "/assets/images/neurodiscover-logo-mark.png"
 
 favicon_ico: "/assets/images/favicon.png"
 
@@ -59,4 +59,4 @@ defaults:
       path: ""
     values:
       layout: default
-      image: /assets/images/neurodiscover-ai-logo.png
+      image: /assets/images/neurodiscover-logo-mark.png

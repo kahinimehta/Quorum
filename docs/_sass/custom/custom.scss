@@ -99,11 +99,12 @@
 
 .site-logo-img {
   display: block;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: auto;
+  height: 2.5rem;
+  max-width: 11rem;
   flex: 0 0 auto;
   object-fit: contain;
-  object-position: center;
+  object-position: left center;
   margin: 0;
 }
 
