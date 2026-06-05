@@ -642,6 +642,37 @@ def _run_agents_2_through_6(
     return recs, evidence_used, connection_snapshots, scoring_eligible
 
 
+def _run_literature_in_process(
+    mode: str,
+    *,
+    run_id: str,
+    disease: str,
+    query: str | None,
+    max_papers: int,
+    include_preprints: int,
+    with_fulltext: bool,
+    extract_backend: str | None,
+) -> None:
+    """Run literature agent in-process with the dashboard run_id (live progress commits)."""
+    if extract_backend:
+        os.environ["EXTRACT_BACKEND"] = extract_backend
+
+    from agents.literature_agent import run as run_literature
+
+    run_literature(
+        None,
+        disease,
+        2020,
+        max_papers,
+        demo=(mode == "demo"),
+        incremental=(mode == "scan"),
+        query=query,
+        include_preprints=include_preprints or 0,
+        with_fulltext=with_fulltext,
+        run_id=run_id,
+    )
+
+
 def _run_literature_full(
     *,
     disease: str,
@@ -742,12 +773,13 @@ def run(
             _log_agents_only_literature(conn, run_id, disease, max_papers)
             conn.commit()
     elif mode in ("demo", "scan"):
-        _subprocess_cli(
+        _run_literature_in_process(
             mode,
+            run_id=run_id,
             disease=disease,
             query=query,
             max_papers=max_papers,
-            include_preprints=include_preprints if mode == "full" else 0,
+            include_preprints=0,
             with_fulltext=with_fulltext,
             extract_backend=extract_backend,
         )

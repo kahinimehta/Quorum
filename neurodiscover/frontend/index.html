@@ -740,6 +740,8 @@
       border-radius: 999px;
       transition: width 0.45s ease;
     }
+      transition: width 0.45s ease;
+    }
     .run-progress-label {
       font-size: 0.72rem;
       color: var(--muted);
@@ -1286,6 +1288,69 @@
       'Commercial Discovery Agent',
       'Conclusion Update Agent',
     ];
+    const LITERATURE_AGENT = PIPELINE_AGENTS[0];
+    const LITERATURE_WEIGHT = 45;
+    const DOWNSTREAM_WEIGHT = 11;
+
+    function literatureSteps(steps) {
+      return (steps || []).filter(s => (s.agentName || s.agent_name || '').includes('Literature'));
+    }
+
+    function isLiteratureComplete(steps) {
+      return literatureSteps(steps).some(s =>
+        /Stored \d+ new evidence|Demo mode:|Agents-only:/i.test(s.summary || ''),
+      );
+    }
+
+    function isAgentComplete(agentName, steps) {
+      if (agentName === LITERATURE_AGENT) return isLiteratureComplete(steps);
+      return (steps || []).some(s =>
+        !s.isError && (s.agentName || s.agent_name) === agentName,
+      );
+    }
+
+    function getLiteratureProgress(steps) {
+      const lit = literatureSteps(steps);
+      if (!lit.length) return { fraction: 0, label: 'Starting literature…' };
+      const latest = lit[lit.length - 1];
+      const payload = latest.payload || {};
+      if (payload.progress != null && payload.total) {
+        const frac = Math.min(1, Number(payload.progress) / Math.max(1, Number(payload.total)));
+        return { fraction: frac, label: latest.summary || 'Processing sources…' };
+      }
+      if (/Stored \d+ new/.test(latest.summary || '')) {
+        return { fraction: 1, label: latest.summary };
+      }
+      if (/Two-stage pull:/.test(latest.summary || '')) {
+        return { fraction: 0.15, label: 'Search complete — extracting…' };
+      }
+      if (/Starting literature/.test(latest.summary || '')) {
+        return { fraction: 0.05, label: latest.summary };
+      }
+      return { fraction: 0.08, label: latest.summary || 'Literature running…' };
+    }
+
+    function computePipelineProgress(steps, inProgress) {
+      let pct = 0;
+      if (isLiteratureComplete(steps)) {
+        pct += LITERATURE_WEIGHT;
+      } else if (inProgress) {
+        pct += LITERATURE_WEIGHT * getLiteratureProgress(steps).fraction;
+      }
+      PIPELINE_AGENTS.slice(1).forEach(agent => {
+        if (isAgentComplete(agent, steps)) pct += DOWNSTREAM_WEIGHT;
+      });
+      return Math.min(100, Math.round(pct));
+    }
+
+    function countCompletedAgents(steps) {
+      return PIPELINE_AGENTS.filter(a => isAgentComplete(a, steps)).length;
+    }
+
+    function activeRunningAgent(steps, inProgress) {
+      if (!inProgress) return null;
+      return PIPELINE_AGENTS.find(a => !isAgentComplete(a, steps)) || null;
+    }
 
     function _shortAgent(name) {
       return String(name || '').replace(/ Agent$/, '').trim();
@@ -1429,12 +1494,7 @@
     }
 
     function pipelinePhaseFrom(steps, inFlight) {
-      const done = new Set(
-        (steps || [])
-          .filter(s => !s.isError)
-          .map(s => s.agentName || s.agent_name)
-          .filter(Boolean),
-      ).size;
+      const done = countCompletedAgents(steps);
       if (inFlight && done < PIPELINE_AGENTS.length) return 'running';
       if (inFlight && done >= PIPELINE_AGENTS.length) return 'finalizing';
       if (done >= PIPELINE_AGENTS.length) return 'complete';
@@ -2090,17 +2150,13 @@
 
     function applyStepperState(steps, inProgress) {
       const completed = new Set(
-        (steps || [])
-          .filter(s => !s.isError)
-          .map(s => s.agentName || s.agent_name)
-          .filter(Boolean),
+        PIPELINE_AGENTS.filter(a => isAgentComplete(a, steps)),
       );
       const partialRun = !inProgress && steps && steps.length > 0 && completed.size < PIPELINE_AGENTS.length;
-      const doneCount = PIPELINE_AGENTS.filter(a => completed.has(a)).length;
-      const pct = Math.round((doneCount / PIPELINE_AGENTS.length) * 100);
-      const runningAgent = inProgress
-        ? (PIPELINE_AGENTS.find(a => !completed.has(a)) || null)
-        : null;
+      const doneCount = completed.size;
+      const pct = computePipelineProgress(steps, inProgress);
+      const runningAgent = activeRunningAgent(steps, inProgress);
+      const litLabel = getLiteratureProgress(steps).label;
 
       document.querySelectorAll('#pipelineStepper li').forEach(li => {
         li.classList.remove('done', 'ready', 'idle', 'active', 'running', 'error');
@@ -2111,7 +2167,17 @@
           if (stateEl) stateEl.textContent = 'Done';
         } else if (runningAgent && a === runningAgent) {
           li.classList.add('running');
-          if (stateEl) stateEl.textContent = 'Running…';
+          if (stateEl) {
+            if (a === LITERATURE_AGENT) {
+              const lit = getLiteratureProgress(steps);
+              const p = lit.fraction > 0 && lit.fraction < 1
+                ? ` · ${Math.round(lit.fraction * 100)}%`
+                : '';
+              stateEl.textContent = `Running…${p}`;
+            } else {
+              stateEl.textContent = 'Running…';
+            }
+          }
         } else if (partialRun) {
           li.classList.add('error');
           if (stateEl) stateEl.textContent = 'Not run';
@@ -2127,13 +2193,22 @@
       const fill = document.getElementById('runProgressFill');
       const pctEl = document.getElementById('runProgressPct');
       const lbl = document.getElementById('runProgressLabel');
-      if (fill) fill.style.width = `${inProgress && doneCount === 0 ? 8 : pct}%`;
+      if (fill) fill.style.width = `${inProgress && pct === 0 ? 4 : pct}%`;
       if (pctEl) pctEl.textContent = `${pct}%`;
       if (lbl) {
-        if (inProgress) lbl.textContent = doneCount === 0 ? 'Starting pipeline…' : `${doneCount}/6 agents complete`;
-        else if (doneCount >= 6) lbl.textContent = 'Pipeline complete';
-        else if (doneCount > 0) lbl.textContent = `${doneCount}/6 agents (partial run)`;
-        else lbl.textContent = 'Pipeline idle';
+        if (inProgress && runningAgent === LITERATURE_AGENT) {
+          lbl.textContent = litLabel;
+        } else if (inProgress) {
+          lbl.textContent = doneCount === 0
+            ? 'Starting pipeline…'
+            : `${doneCount}/6 agents complete`;
+        } else if (doneCount >= PIPELINE_AGENTS.length) {
+          lbl.textContent = 'Pipeline complete';
+        } else if (doneCount > 0) {
+          lbl.textContent = `${doneCount}/6 agents (partial run)`;
+        } else {
+          lbl.textContent = 'Pipeline idle';
+        }
       }
       return doneCount;
     }
@@ -2260,11 +2335,16 @@
       if (lbl && finalizing) lbl.textContent = 'Finalizing run…';
       const mode = (lastRunConfig?.mode || 'pipeline').toUpperCase();
       if (inProgress) {
+        const lit = getLiteratureProgress(steps);
+        const pct = computePipelineProgress(steps, true);
+        const runningAgent = activeRunningAgent(steps, inProgress);
         setRunStatus(
           'running',
           'Running',
-          `${mode} run ${runId || '—'} in progress — agents 1→6…`,
-          `${doneCount}/6 agents complete`,
+          runningAgent === LITERATURE_AGENT && lit.label
+            ? lit.label
+            : `${mode} run ${runId || '—'} in progress — agents 1→6…`,
+          `${pct}% · ${doneCount}/6 agents complete`,
         );
       } else if (finalizing) {
         setRunStatus(
@@ -2800,12 +2880,9 @@
         } catch (e) { /* keep client id */ }
         const steps = await fetchPipelineSteps(pollId);
         if (pollId !== latestRunId) latestRunId = pollId;
-        const done = new Set(
-          steps.filter(s => !s.isError).map(s => s.agentName || s.agent_name).filter(Boolean),
-        );
+        const doneCount = countCompletedAgents(steps);
         const phase = pipelinePhaseFrom(steps, pipelineRunInFlight);
         syncPipelineUi(latestRunId, steps, phase);
-        const doneCount = done.size;
         const evNote = evidenceNoteFromSteps(steps);
         if (phase === 'running') {
           pendingRunRow = {
@@ -2829,7 +2906,7 @@
           };
         }
         if (pollTicks % 2 === 0) await loadRecentRuns();
-      }, 1200);
+      }, 500);
       try {
         const res = await fetch(`${API_BASE}/api/run-discovery`, {
           method: 'POST',

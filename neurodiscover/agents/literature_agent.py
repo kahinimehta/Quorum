@@ -707,6 +707,12 @@ def log_trace(conn, run_id, step, summary, payload=None):
     )
 
 
+def log_trace_commit(conn, run_id, step, summary, payload=None) -> None:
+    """Write agent trace and commit so the dashboard poll can see live progress."""
+    log_trace(conn, run_id, step, summary, payload)
+    conn.commit()
+
+
 # ---------- orchestration ----------------------------------------------
 def enrich_with_fulltext(db_path, limit: int = 50) -> None:
     """Backfill methods/results/discussion on existing literature PMIDs."""
@@ -792,6 +798,20 @@ def run(
             print(f"[demo] {backend_label()} — {used}/{n} evidence rows (max={cap}). run_id={run_id}")
             return
 
+        log_trace_commit(
+            conn,
+            run_id,
+            0,
+            f"Starting literature {'scan' if incremental else 'pull'} for {disease}…",
+            {
+                "phase": "starting",
+                "max_items": max_items,
+                "incremental": incremental,
+                "progress": 0,
+                "total": max_items,
+            },
+        )
+
         scan = get_scan_state(conn)
         effective_since = since_year
         if incremental and scan.get("last_scan_at"):
@@ -836,17 +856,21 @@ def run(
             )
 
         all_enriched = published_enriched + preprint_enriched + trial_enriched
-        log_trace(
+        total_sources = len(all_enriched)
+        log_trace_commit(
             conn, run_id, 1,
             f"Two-stage pull: {len(published_enriched)} published, "
             f"{len(preprint_enriched)} preprints, {len(trial_enriched)} trials.",
             {
+                "phase": "fetched",
                 "since_year": effective_since,
                 "incremental": incremental,
                 "query": query,
                 "gene": gene,
                 "published_stats": pub_stats,
                 "preprint_stats": preprint_stats,
+                "progress": 0,
+                "total": total_sources,
             },
         )
 
@@ -865,8 +889,9 @@ def run(
         }
         with_sections = 0
         new_findings: list[dict] = []
+        progress_every = max(1, min(5, total_sources // 25 or 1))
 
-        for enriched in all_enriched:
+        for idx, enriched in enumerate(all_enriched, start=1):
             meta = enriched.get("meta") or _metadata_from_item(
                 enriched["source_type"], enriched["raw"],
             )
@@ -908,6 +933,23 @@ def run(
                 new_findings.append(finding)
                 new += 1
 
+            if idx % progress_every == 0 or idx == total_sources:
+                log_trace_commit(
+                    conn,
+                    run_id,
+                    1,
+                    f"Processing {idx}/{total_sources} sources "
+                    f"({new} new, {skipped} skipped)…",
+                    {
+                        "phase": "extracting",
+                        "progress": idx,
+                        "total": total_sources,
+                        "new": new,
+                        "skipped": skipped,
+                        "rejected": rejected,
+                    },
+                )
+
         validation_summary = None
         if validate_pull and new_findings:
             from validation.report import print_validation_report
@@ -945,16 +987,17 @@ def run(
             "extract_failed": extract_failed,
             "validation": validation_summary,
         }
-        log_trace(conn, run_id, 2,
-                  f"Stored {new} new evidence rows ({skipped} existing skipped, {rejected} rejected).",
-                  payload)
+        log_trace_commit(
+            conn, run_id, 2,
+            f"Stored {new} new evidence rows ({skipped} existing skipped, {rejected} rejected).",
+            payload,
+        )
         if validation_summary:
-            log_trace(
+            log_trace_commit(
                 conn, run_id, 3,
                 "Extraction validation report recorded.",
                 validation_summary,
             )
-        conn.commit()
         mode = "scan" if incremental else "pull"
         lit_new = sum(1 for f in new_findings if f.get("source_type") == "literature")
         pre_new = sum(1 for f in new_findings if f.get("is_preprint"))
