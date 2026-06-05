@@ -8,8 +8,8 @@ nav_order: 1
 # Database Contract — NeuroDiscover (Quorum)
 
 **Owner:** Person 3 (Ayelet, Data Engineer)  
-**Schema source of truth:** [`schema.sql`](../schema.sql) (SQLite) and [`schema.pg.sql`](../schema.pg.sql) (Supabase)  
-**Team shared DB:** [Supabase](SUPABASE.md) (free Postgres) — set `SUPABASE_DATABASE_URL` in `.env`
+**Schema source of truth:** [`schema.sql`](../../neurodiscover/schema.sql) (SQLite) and [`schema.pg.sql`](../../neurodiscover/schema.pg.sql) (Postgres)  
+**Team shared DB:** [Supabase](supabase) (free Postgres) — set `SUPABASE_DATABASE_URL` in `.env`
 
 ## Where the database lives
 
@@ -22,7 +22,7 @@ Same table names in both modes. **Table is `evidence`, not `papers`.**
 
 ## SQLite vs MongoDB (working doc)
 
-The working doc mentions MongoDB. **Use Supabase Postgres or local SQLite** with this schema — not a separate `papers` collection. Person 2: see [`PERSON2_BACKEND.md`](PERSON2_BACKEND.md).
+The working doc mentions MongoDB. **Use Supabase Postgres or local SQLite** with this schema — not a separate `papers` collection. Person 2: see [Person 2 backend](person2-backend).
 
 ## Entity relationship
 
@@ -80,7 +80,7 @@ Manuscripts, trials, and grants share this table via `source_type`.
 
 Or `python3 cli.py build` locally for a fresh SQLite DB.
 
-See [`LITERATURE_PULL.md`](LITERATURE_PULL.md) for two-stage pull details.
+See [Literature pull](literature-pull) for two-stage pull details.
 
 **Dedup:** `UNIQUE(source_type, source_id)` — re-pulls insert with `INSERT OR IGNORE`.
 

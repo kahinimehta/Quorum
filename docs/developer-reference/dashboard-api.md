@@ -18,7 +18,7 @@ make dashboard
 
 Opens **http://127.0.0.1:8080** in your default browser (`--no-browser` to skip). Press **Ctrl+C** to stop API + UI.
 
-Details: [`../neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md).
+Details: [`../../neurodiscover/frontend/QUICKSTART.md`](../../neurodiscover/frontend/QUICKSTART.md).
 
 ## Data flow
 
@@ -102,7 +102,7 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 
 ## Related docs
 
-- JSON contracts: [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md)
-- Endpoint list: [`PERSON2_API_ENDPOINTS.md`](PERSON2_API_ENDPOINTS.md)
-- Agent I/O: [`AGENT_IO.md`](AGENT_IO.md)
-- Mockup notes (archived): [`../neurodiscover/frontend/MOCKUP_V2.md`](../neurodiscover/frontend/MOCKUP_V2.md)
+- JSON contracts: [Backend queries](backend-queries)
+- Endpoint list: [API endpoints](api-endpoints)
+- Agent I/O: [Agent I/O](agent-io)
+- Mockup notes (archived): [`../../neurodiscover/frontend/MOCKUP_V2.md`](../../neurodiscover/frontend/MOCKUP_V2.md)

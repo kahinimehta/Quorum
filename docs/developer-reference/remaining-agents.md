@@ -34,4 +34,4 @@ Evidence rows from the `evidence` table (subgroup, mechanism, treatment, source_
 confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 ```
 
-See [`AGENT_IO.md`](AGENT_IO.md) and [`DASHBOARD.md`](DASHBOARD.md).
+See [Agent I/O](agent-io) and [Dashboard API](dashboard-api).

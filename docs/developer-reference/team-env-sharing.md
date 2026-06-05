@@ -11,7 +11,7 @@ nav_order: 10
 
 ## Your local checklist
 
-1. Fill [`../.env`](../.env) (copy from [`.env.example`](../.env.example)).
+1. Fill [`../../neurodiscover/.env`](../../neurodiscover/.env) (copy from [`.env.example`](../../neurodiscover/.env.example)).
 2. Regenerate the share file:
    ```bash
    python3 scripts/export_team_keys.py
@@ -52,4 +52,4 @@ python3 cli.py validate
 python3 cli.py show
 ```
 
-See also [`SUPABASE.md`](SUPABASE.md) and [`PERSON2_BACKEND.md`](PERSON2_BACKEND.md).
+See also [Supabase](supabase) and [Person 2 backend](person2-backend).

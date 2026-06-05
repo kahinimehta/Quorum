@@ -53,17 +53,17 @@ cp .env.example .env
 | `EXTRACT_BACKEND` | `nebius` \| `ollama` \| `none` |
 | `NEBIUS_*` / `OLLAMA_*` | LLM extraction credentials |
 
-See [Supabase setup](SUPABASE) and [Team env sharing](TEAM_ENV_SHARING).
+See [Supabase setup](developer-reference/supabase) and [Team env sharing](developer-reference/team-env-sharing).
 
 ## Contract documents
 
 Developer reference pages (schema, agent I/O, validation):
 
-- [Database schema](DATABASE)
-- [Agent I/O](AGENT_IO)
-- [Backend queries](BACKEND_QUERIES)
-- [Validation](VALIDATION)
-- [Literature pull](LITERATURE_PULL)
+- [Database schema](developer-reference/database)
+- [Agent I/O](developer-reference/agent-io)
+- [Backend queries](developer-reference/backend-queries)
+- [Validation](developer-reference/validation)
+- [Literature pull](developer-reference/literature-pull)
 
 ## Site publishing
 

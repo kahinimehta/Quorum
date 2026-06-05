@@ -8,7 +8,7 @@ nav_order: 2
 # Agent I/O Contract — NeuroDiscover (Quorum)
 
 **Owner:** Person 4 (multi-agent logic). Literature section by Ayelet.  
-**Database contract:** [`DATABASE.md`](DATABASE.md)
+**Database contract:** [Database schema](database)
 
 Every agent **reads** prior tables, **writes** its own output, and **appends** to `agent_outputs`.
 
@@ -50,7 +50,7 @@ python3 cli.py pull-grants --limit 30
 python3 cli.py scan --max 5
 ```
 
-See [`LITERATURE_PULL.md`](LITERATURE_PULL.md) for MCP env vars (`PUBMED_MCP_COMMAND`, `BIORXIV_MCP_COMMAND`, `UNPAYWALL_EMAIL`).
+See [Literature pull](literature-pull) for MCP env vars (`PUBMED_MCP_COMMAND`, `BIORXIV_MCP_COMMAND`, `UNPAYWALL_EMAIL`).
 
 `EXTRACT_BACKEND=nebius|ollama|none` selects LLM for **core discovery** fields on literature (5 fields). Trials still use the fuller prompt (`study_type`, `sample_size`).
 

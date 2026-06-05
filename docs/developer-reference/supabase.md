@@ -43,7 +43,7 @@ Share the URI via **Discord / 1Password** — **never commit** `.env`.
 **Option A — SQL Editor**
 
 1. Supabase dashboard → **SQL Editor** → New query.
-2. Paste [`neurodiscover/schema.pg.sql`](../neurodiscover/schema.pg.sql) → Run.
+2. Paste [`neurodiscover/schema.pg.sql`](../../neurodiscover/schema.pg.sql) → Run.
 
 **Option B — CLI**
 
@@ -97,7 +97,7 @@ from psycopg.rows import dict_row
 conn = psycopg.connect(os.environ["SUPABASE_DATABASE_URL"], row_factory=dict_row)
 ```
 
-See [`queries.sql`](../queries.sql) and [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md). Table is **`evidence`**, not `papers`.
+See [`queries.sql`](../../queries.sql) and [Backend queries](backend-queries). Table is **`evidence`**, not `papers`.
 
 ## 6. What to ignore in the Supabase UI
 

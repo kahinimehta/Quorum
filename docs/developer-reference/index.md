@@ -16,16 +16,16 @@ Contract documents for schema, agent I/O, backend SQL, and validation. These are
 
 | Page | Audience |
 |------|----------|
-| [Database schema](DATABASE) | Everyone — tables, columns, SQLite vs Postgres |
-| [Agent I/O](AGENT_IO) | Agent authors — reads/writes per agent |
-| [Backend queries](BACKEND_QUERIES) | API — SQL + JSON shapes |
-| [API endpoints](PERSON2_API_ENDPOINTS) | Route list |
-| [Person 2 backend](PERSON2_BACKEND) | Supabase handoff |
-| [Dashboard API](DASHBOARD) | Dashboard ↔ API contract |
-| [Literature pull](LITERATURE_PULL) | BioMCP, MCP env vars |
-| [Validation](VALIDATION) | Extraction QA |
-| [Supabase](SUPABASE) | Team shared DB |
-| [Team env sharing](TEAM_ENV_SHARING) | `.env` distribution |
-| [Downstream agents](REMAINING_AGENTS) | Agents 2–6 integration notes |
+| [Database schema](database) | Everyone — tables, columns, SQLite vs Postgres |
+| [Agent I/O](agent-io) | Agent authors — reads/writes per agent |
+| [Backend queries](backend-queries) | API — SQL + JSON shapes |
+| [API endpoints](api-endpoints) | Route list |
+| [Person 2 backend](person2-backend) | Supabase handoff |
+| [Dashboard API](dashboard-api) | Dashboard ↔ API contract |
+| [Literature pull](literature-pull) | BioMCP, MCP env vars |
+| [Validation](validation) | Extraction QA |
+| [Supabase](supabase) | Team shared DB |
+| [Team env sharing](team-env-sharing) | `.env` distribution |
+| [Downstream agents](remaining-agents) | Agents 2–6 integration notes |
 
 Also see root [`queries.sql`](https://github.com/kahinimehta/Quorum/blob/main/queries.sql) and [`AGENTS.md`](https://github.com/kahinimehta/Quorum/blob/main/AGENTS.md) in the repo.

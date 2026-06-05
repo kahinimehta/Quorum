@@ -76,4 +76,4 @@ python3 cli.py demo                            # offline; no API
 
 ## Validation
 
-After pull, optional consistency checks and PubTator grounding run automatically. See [Validation](VALIDATION).
+After pull, optional consistency checks and PubTator grounding run automatically. See [Validation](developer-reference/validation).

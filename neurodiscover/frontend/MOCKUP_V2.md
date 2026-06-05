@@ -2,7 +2,7 @@
 
 The dashboard UI is implemented in `index.html` on branch `kahini/dashboard`.
 
-**Canonical doc:** [`../../docs/DASHBOARD.md`](../../docs/DASHBOARD.md)
+**Canonical doc:** [`../../docs/developer-reference/dashboard-api.md`](../../docs/developer-reference/dashboard-api.md)
 
 **Quickstart:** [`QUICKSTART.md`](QUICKSTART.md)
 

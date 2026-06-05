@@ -8,8 +8,8 @@ nav_order: 3
 # Backend Query Guide — Person 2
 
 **Database file:** `neurodiscover.db` (SQLite, repo root)  
-**Full SQL:** [`queries.sql`](../queries.sql)  
-**Schema:** [`DATABASE.md`](DATABASE.md)
+**Full SQL:** [`queries.sql`](../../queries.sql)  
+**Schema:** [Database schema](database)
 
 ## Connection (Python example)
 
@@ -19,9 +19,9 @@ conn = sqlite3.connect("neurodiscover.db")
 conn.row_factory = sqlite3.Row
 ```
 
-Implemented server: `neurodiscover/api_server.py` (FastAPI). See [`PERSON2_API_ENDPOINTS.md`](PERSON2_API_ENDPOINTS.md).
+Implemented server: `neurodiscover/api_server.py` (FastAPI). See [API endpoints](api-endpoints).
 
-No MongoDB required. If you mirror to Atlas, use field names from the MongoDB mapping table in `DATABASE.md`. Collection: **`evidence`**, not `papers`.
+No MongoDB required. If you mirror to Atlas, use field names from the MongoDB mapping table in [Database schema](database). Collection: **`evidence`**, not `papers`.
 
 ---
 
@@ -276,7 +276,7 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
 
 **Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, **do not** run `build`, then `validate`, `api_server.py`, and the same `curl` lines.
 
-See [`neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md).
+See [`neurodiscover/frontend/QUICKSTART.md`](../../neurodiscover/frontend/QUICKSTART.md).
 
 ---
 

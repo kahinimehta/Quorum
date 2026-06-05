@@ -89,5 +89,5 @@ Up to five illustrative profiles (Patients A–E) per run. Returned in `POST /ap
 
 ## More detail
 
-- Architecture: [`../../docs/DASHBOARD.md`](../../docs/DASHBOARD.md)
-- API shapes: [`../../docs/BACKEND_QUERIES.md`](../../docs/BACKEND_QUERIES.md)
+- Architecture: [`../../docs/dashboard.md`](../../docs/dashboard.md) · API: [`../../docs/developer-reference/dashboard-api.md`](../../docs/developer-reference/dashboard-api.md)
+- API shapes: [`../../docs/developer-reference/backend-queries.md`](../../docs/developer-reference/backend-queries.md)

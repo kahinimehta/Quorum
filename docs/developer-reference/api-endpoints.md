@@ -9,7 +9,7 @@ nav_order: 4
 
 Backend: `neurodiscover/api_server.py` (**FastAPI**, port **5000**).
 
-The dashboard reads these routes when browser Supabase keys are unset. Full JSON shapes: [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md). UI guide: [`DASHBOARD.md`](DASHBOARD.md).
+The dashboard reads these routes when browser Supabase keys are unset. Full JSON shapes: [Backend queries](backend-queries). UI guide: [Dashboard API](dashboard-api).
 
 ## Safety
 

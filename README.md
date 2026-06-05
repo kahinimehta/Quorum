@@ -9,9 +9,9 @@ Hackathon project: continuous discovery of Parkinson's disease patient subgroups
 | Cursor / coding agents | [`AGENTS.md`](AGENTS.md) |
 | Humans onboarding | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 | **Project docs (web)** | **[neurodiscover.github.io](https://neurodiscover.github.io)** — Jekyll + Just the Docs ([source](docs/index.md)) |
-| Database contract | [`docs/DATABASE.md`](docs/DATABASE.md) |
+| Database contract | [`docs/developer-reference/database.md`](docs/developer-reference/database.md) |
 
-**Storage:** SQLite locally, or **Supabase Postgres** for the team shared DB (`SUPABASE_DATABASE_URL`). Not MongoDB — the working doc's `papers` collection maps to **`evidence`**. See [`docs/DATABASE.md`](docs/DATABASE.md) and [`docs/SUPABASE.md`](docs/SUPABASE.md).
+**Storage:** SQLite locally, or **Supabase Postgres** for the team shared DB (`SUPABASE_DATABASE_URL`). Not MongoDB — the working doc's `papers` collection maps to **`evidence`**. See [`docs/developer-reference/database.md`](docs/developer-reference/database.md) and [`docs/developer-reference/supabase.md`](docs/developer-reference/supabase.md).
 
 ## Build the database
 
@@ -52,7 +52,7 @@ Quorum/
       index.html             # Dashboard UI
 ```
 
-Dashboard docs: [`docs/DASHBOARD.md`](docs/DASHBOARD.md).
+Dashboard docs: [`docs/dashboard.md`](docs/dashboard.md) (UI) · [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) (API contract).
 
 ## Team
 

@@ -78,6 +78,6 @@ See [Output examples](output) for the response shape.
 
 ## Related developer docs
 
-- [Dashboard API reference](DASHBOARD) — full API contract
-- [Backend queries](BACKEND_QUERIES) — SQL + JSON shapes
-- [API endpoints](PERSON2_API_ENDPOINTS) — route list
+- [Dashboard API reference](developer-reference/dashboard-api) — full API contract
+- [Backend queries](developer-reference/backend-queries) — SQL + JSON shapes
+- [API endpoints](developer-reference/api-endpoints) — route list

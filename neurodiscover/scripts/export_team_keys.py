@@ -108,7 +108,7 @@ def main() -> None:
     lines.extend([
         "## Who needs what",
         "- Person 2 (backend SQL): SUPABASE_DATABASE_URL only",
-        "- Person 4 agents (Python): SUPABASE_DATABASE_URL + read AGENT_IO.md",
+        "- Person 4 agents (Python): SUPABASE_DATABASE_URL + read docs/developer-reference/agent-io.md",
         "- Person 5 (Next.js): NEXT_PUBLIC_* ; optional service role for server routes",
         "- Literature pull: add NEBIUS_* (team default); optional EXTRACT_BACKEND=ollama for local runs",
         "",

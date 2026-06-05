@@ -2,7 +2,7 @@
 
 > **🟢 DB STATUS: LIVE.** Supabase already holds **307 real evidence rows** (228 papers,
 > 39 trials, 40 NIH grants), plus the 5 subgroups and their evidence links. **Just set the
-> Session-pooler `SUPABASE_DATABASE_URL` (see [`docs/SUPABASE.md`](docs/SUPABASE.md)) and
+> Session-pooler `SUPABASE_DATABASE_URL` (see [`docs/developer-reference/supabase.md`](docs/developer-reference/supabase.md)) and
 > `SELECT` — the data is ready to query.** Do **NOT** run `cli.py build` (it truncates every
 > table); use `cli.py scan` / `pull` only to *add* more evidence.
 
@@ -18,17 +18,17 @@ but all share the database below.
 
 | Doc | Audience |
 |-----|----------|
-| [`docs/DATABASE.md`](docs/DATABASE.md) | Everyone — schema, SQLite vs MongoDB, field ownership |
-| [`docs/AGENT_IO.md`](docs/AGENT_IO.md) | Person 4 — what each agent reads/writes |
-| [`docs/BACKEND_QUERIES.md`](docs/BACKEND_QUERIES.md) | Person 2 — API SQL + JSON shapes |
+| [`docs/developer-reference/database.md`](docs/developer-reference/database.md) | Everyone — schema, SQLite vs MongoDB, field ownership |
+| [`docs/developer-reference/agent-io.md`](docs/developer-reference/agent-io.md) | Person 4 — what each agent reads/writes |
+| [`docs/developer-reference/backend-queries.md`](docs/developer-reference/backend-queries.md) | Person 2 — API SQL + JSON shapes |
 | [`queries.sql`](queries.sql) | Person 2 — copy-paste SELECTs |
-| [`docs/SUPABASE.md`](docs/SUPABASE.md) | Team shared live DB (free tier) |
-| [`docs/PERSON2_BACKEND.md`](docs/PERSON2_BACKEND.md) | Person 2 Supabase connection |
-| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard + API UI |
-| [`docs/PERSON2_API_ENDPOINTS.md`](docs/PERSON2_API_ENDPOINTS.md) | FastAPI route list |
-| [`docs/VALIDATION.md`](docs/VALIDATION.md) | Extraction QA after pull |
-| [`docs/index.html`](docs/index.html) | GitHub Pages — purpose, team, workflow (enable Pages from `/docs`) |
-| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Dashboard architecture + quick verify |
+| [`docs/developer-reference/supabase.md`](docs/developer-reference/supabase.md) | Team shared live DB (free tier) |
+| [`docs/developer-reference/person2-backend.md`](docs/developer-reference/person2-backend.md) | Person 2 Supabase connection |
+| [`docs/dashboard.md`](docs/dashboard.md) | Dashboard UI (local run) |
+| [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) | Dashboard + API contract |
+| [`docs/developer-reference/api-endpoints.md`](docs/developer-reference/api-endpoints.md) | FastAPI route list |
+| [`docs/developer-reference/validation.md`](docs/developer-reference/validation.md) | Extraction QA after pull |
+| [neurodiscover.github.io](https://neurodiscover.github.io) | Public docs site |
 | [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Run UI in &lt; 5 min (no Supabase keys OK) |
 
 **Canonical store:** SQLite locally, or **Supabase Postgres** when `SUPABASE_DATABASE_URL` is set. Table is **`evidence`**, not `papers`.
@@ -67,9 +67,10 @@ Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatic
 
 | Doc | Purpose |
 |-----|---------|
-| [`docs/DASHBOARD.md`](docs/DASHBOARD.md) | Architecture + UI map |
+| [`docs/dashboard.md`](docs/dashboard.md) | Run the UI locally |
+| [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) | Architecture + API map |
 | [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Step-by-step |
-| [`docs/BACKEND_QUERIES.md`](docs/BACKEND_QUERIES.md) | API JSON shapes |
+| [`docs/developer-reference/backend-queries.md`](docs/developer-reference/backend-queries.md) | API JSON shapes |
 
 ## Architecture: 6 agents, database is the blackboard
 The pipeline runs in order. Each agent READS what the previous wrote and WRITES
@@ -88,7 +89,7 @@ Every agent appends one row to `agent_outputs` (run_id, step_order, summary) as 
 runs. The dashboard reads `agent_outputs` to show the "agent trace".
 
 ## Database (SQLite or Supabase)
-Schema is in `neurodiscover/schema.sql` (SQLite) and `neurodiscover/schema.pg.sql` (Postgres). See [`docs/DATABASE.md`](docs/DATABASE.md).
+Schema is in `neurodiscover/schema.sql` (SQLite) and `neurodiscover/schema.pg.sql` (Postgres). See [`docs/developer-reference/database.md`](docs/developer-reference/database.md).
 
 - `evidence` — one row per source. `source_type` is `literature` | `trial` | `grant`.
   Includes `doi`, `access_status`, `access_type` (`published_oa` | `published_paywalled` | `preprint`), `is_preprint`.

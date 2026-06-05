@@ -97,4 +97,4 @@ Both scores are on a 0–10 internal scale, displayed as 0–100 confidence in t
 
 - [Inputs](input) — SQL reads and API request bodies
 - [Output examples](output) — JSON responses
-- [Agent I/O contract](AGENT_IO) — full SQL for developers
+- [Agent I/O contract](developer-reference/agent-io) — full SQL for developers

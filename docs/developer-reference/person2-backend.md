@@ -26,11 +26,11 @@ SUPABASE_DATABASE_URL=postgresql://...
 | Agent trace | `agent_outputs` |
 | Final ranking | `recommendations` |
 
-Full column list: [`DATABASE.md`](DATABASE.md).
+Full column list: [Database schema](database).
 
 ## Endpoints → SQL
 
-Copy from [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md) and [`queries.sql`](../queries.sql).
+Copy from [Backend queries](backend-queries) and [`queries.sql`](../../queries.sql).
 
 Example discover payload shape:
 
@@ -52,7 +52,7 @@ Example discover payload shape:
 1. **Local / no keys:** omit `SUPABASE_DATABASE_URL`, run `python3 cli.py build`, then `python3 api_server.py`.
 2. **Team Supabase:** get `SUPABASE_DATABASE_URL` from Person 3 — **do not** run `build` on shared DB.
 3. Confirm tables: `python3 cli.py validate`.
-4. Routes in `neurodiscover/api_server.py` — see [`BACKEND_QUERIES.md`](BACKEND_QUERIES.md) and [`PERSON2_API_ENDPOINTS.md`](PERSON2_API_ENDPOINTS.md).
+4. Routes in `neurodiscover/api_server.py` — see [Backend queries](backend-queries) and [API endpoints](api-endpoints).
 
 ## Quick verify
 
@@ -64,6 +64,6 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
 ```
 
-Dashboard: [`../neurodiscover/frontend/QUICKSTART.md`](../neurodiscover/frontend/QUICKSTART.md). Architecture: [`DASHBOARD.md`](DASHBOARD.md).
+Dashboard: [`../../neurodiscover/frontend/QUICKSTART.md`](../../neurodiscover/frontend/QUICKSTART.md). Architecture: [Dashboard API](dashboard-api).
 
-See [`SUPABASE.md`](SUPABASE.md) for project creation and schema apply.
+See [Supabase](supabase) for project creation and schema apply.
