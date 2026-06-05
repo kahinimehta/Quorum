@@ -29,4 +29,6 @@ Schema, agent I/O, backend SQL, validation, and API docs. Start with [Database s
 | [Downstream agents](remaining-agents) | Agents 2–6 integration notes |
 | [Debugging](../debugging) | Deploy, API, and pipeline troubleshooting |
 
+See also [Design & engineering](../design) — modularity, blackboard pattern, and technical proficiency overview.
+
 Also see root [`queries.sql`](https://github.com/kahinimehta/Quorum/blob/main/queries.sql) and [`AGENTS.md`](https://github.com/kahinimehta/Quorum/blob/main/AGENTS.md) in the repo.

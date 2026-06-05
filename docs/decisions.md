@@ -46,3 +46,5 @@ Patient profiles are generated from recommendations + subgroups per `run_id`, la
 ## Documentation site
 
 This site uses [Just the Docs](https://github.com/just-the-docs/just-the-docs) on GitHub Pages. Published to **https://neurodiscover.github.io** via the `neurodiscover/neurodiscover.github.io` org repo (see [Site publishing](pages-setup)).
+
+For modularity, layering, and engineering patterns (not just trade-offs), see [Design & engineering](design).

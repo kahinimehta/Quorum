@@ -68,7 +68,7 @@ Scores **scale with per-connection evidence count** — new literature, trials, 
 - **Safe demo** — Synthetic patient profiles (A–E) illustrate outputs with **no PHI**.  
 - **Indication-agnostic** — Configure disease/condition via CLI or API; demo seed data is illustrative only.
 
-See [Architecture decisions](decisions) for trade-offs.
+See [Architecture decisions](decisions) for trade-offs · [Design & engineering](design) for modularity and technical patterns.
 
 ## Quick start
 
@@ -105,6 +105,7 @@ Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Deb
 
 - [Problem & significance](problem) — unmet need and track alignment  
 - [Workflow](workflow/) — six-agent pipeline  
+- [Design & engineering](design) — modularity, blackboard pattern, technical proficiency  
 - [Inputs](input) · [Output examples](output)  
 - [Team](team) — interdisciplinary roles  
 - [Debugging](debugging) — deploy, API, and pipeline troubleshooting  
