@@ -14,7 +14,10 @@ Run, verify, and extend NeuroDiscover.
 ## Dashboard
 
 ```bash
-cd neurodiscover && make dashboard
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum/neurodiscover
+pip install -r requirements.txt
+make dashboard
 ```
 
 ## CLI (data & agents)
