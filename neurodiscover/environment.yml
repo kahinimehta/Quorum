@@ -3,7 +3,8 @@
 #   conda env create -f environment.yml
 #   conda activate neurodiscover
 #   cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
-#   make dashboard
+#   make dashboard         # macOS/Linux
+#   python cli.py dashboard   # Windows (cmd/PowerShell)
 #
 # Update after requirements.txt changes:
 #   conda env update -f environment.yml --prune
