@@ -36,8 +36,8 @@ The launcher will:
 1. Install dependencies (unless `--skip-install`)
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
 3. Run one pipeline pass before serving (unless `--skip-pipeline`):
-   - **Local SQLite:** offline **demo** with `max_papers=10`
-   - **Team Supabase:** **agents-only** — runs agents 2–6 on all existing evidence (no literature pull, no truncate)
+   - **Local SQLite:** **Demo sample** with `max_papers=10`
+   - **Team Supabase:** **Rescore DB** (`agents-only`) on all existing evidence
 4. Start FastAPI on **5000** and static UI on **8080**
 
 ### Platform notes
@@ -102,7 +102,7 @@ flowchart LR
 | Header | DB status, evidence totals, synthetic cohort badge, run id |
 | KPI strip | Per-type counts; **this run** vs **in database** |
 | Run status | Ready / Running / Complete / Partial / Failed |
-| **Step 1** | Configure & run — mode, max papers, extraction options |
+| **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental / Full), max papers, extraction; **one run button** |
 | **Step 2** | Pipeline diagram, synthetic cohort, ranked outputs, audit trace |
 
 Timestamps display in **US Eastern** (`America/New_York`).

@@ -13,12 +13,23 @@ What NeuroDiscover consumes — external evidence sources, API request bodies, a
 
 ## Dashboard — Step 1 (Configure & Run)
 
-The UI maps directly to pipeline inputs: mode, keyword filter, max papers, source toggles, and extraction backend.
+The UI maps directly to pipeline inputs: **one pipeline mode** (segmented control), keyword filter, max papers, pull options (full mode only), and extraction backend. A **single Run button** uses whichever mode is selected — there is no separate incremental-scan button.
 
 ![Step 1 — Configure & run pipeline](/assets/images/dashboard/step1-configure-run.png)
 {: .doc-screenshot }
 
-*Step 1 maps UI controls to `POST /api/run-discovery` — demo mode, max papers, optional keyword filter, and source options.*
+*Step 1 — pick a pipeline mode, optional keyword filter, then click the run button (label matches the selected mode).*
+
+### Pipeline modes (Step 1)
+
+| UI mode | API `mode` | What it does |
+|---------|------------|--------------|
+| **Rescore DB** | `agents-only` | Skip literature pull; run agents 2–6 on evidence already in the database (default on team Supabase). |
+| **Demo sample** | `demo` | Offline; uses existing rows, no live PubMed pull; caps literature rows for agents 2–6. |
+| **Incremental scan** | `scan` | Pull new papers/trials only; skip LLM for known source IDs; then all six agents. |
+| **Full live pull** | `full` | Live PubMed + trials + optional preprints, full text, and NIH grants; then all six agents. |
+
+Preprint, full-text, and grant toggles apply only to **Full live pull**.
 
 ---
 

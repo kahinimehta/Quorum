@@ -53,7 +53,7 @@ flowchart LR
 | Header | DB status, evidence totals, synthetic cohort badge, run id |
 | KPI strip + summary bar | Per-type counts; **this run** vs **in database** after a pipeline run |
 | Run status strip | Ready / Running / Complete / Partial / Failed |
-| **Step 1** | Configure & run — mode, max papers, extraction, pull options |
+| **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), max papers, extraction; single run button |
 | **Step 2** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses, audit trace, evidence table |
 
 Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).

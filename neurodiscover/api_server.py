@@ -24,7 +24,7 @@ from typing import Any
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from db import backend_label, connect, is_postgres
 from run_status import analyze_run_trace
@@ -46,12 +46,20 @@ app.add_middleware(
 class RunDiscoveryRequest(BaseModel):
     mode: str = "demo"
     query: str | None = None
-    max_papers: int = Field(default=150, ge=10, le=500)
+    max_papers: int = Field(default=150, ge=0, le=500)
     disease: str = "Parkinson disease"
     include_preprints: int = 0
     with_fulltext: bool = False
     extract_backend: str | None = None
     pull_grants: bool = True
+
+    @field_validator("max_papers")
+    @classmethod
+    def validate_max_papers(cls, value: int, info) -> int:
+        mode = (info.data.get("mode") or "demo").lower().replace("_", "-")
+        if mode != "agents-only" and 0 < value < 10:
+            raise ValueError("max_papers must be at least 10 unless mode is agents-only with 0 for all rows")
+        return value
 
 
 def _query(sql: str, params: tuple = ()) -> list[dict[str, Any]]:

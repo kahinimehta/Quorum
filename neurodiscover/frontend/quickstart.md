@@ -74,8 +74,8 @@ python3 cli.py dashboard --no-browser
 
 ## Using the UI
 
-1. **Step 1 — Configure & Run** — set mode (Demo / Incremental scan / Full), max papers, keywords, extraction backend.
-2. Click **Run Discovery Pipeline** or **Incremental Scan Only**.
+1. **Step 1 — Configure & Run** — pick **pipeline mode** (Rescore DB / Demo sample / Incremental scan / Full live pull), max papers, keywords, extraction backend.
+2. Click the **run button** (label matches the selected mode, e.g. *Run incremental scan*).
 3. **Step 2 — Discovery Results** — synthetic cohort, ranked treatments, hypotheses, agent trace, evidence table.
 
 `make dashboard` only runs demo once at startup. Change settings and rerun from Step 1 while the servers stay up.
