@@ -68,7 +68,31 @@ def log_step(
     )
 
 
-def _get_canonical_run_id(conn, fallback: str) -> str:
+def _get_canonical_run_id(
+    conn, fallback: str, *, after_literature_subprocess: bool = False
+) -> str:
+    """
+    Resolve the run_id agents 2–6 should use.
+
+    After demo/scan subprocess, literature logs a fresh run_id but does not always
+    update scan_state (demo never does). Prefer the latest literature trace row so
+    downstream agents attach to the same run as agent 1.
+    """
+    if after_literature_subprocess:
+        conn.execute(
+            "SELECT run_id FROM agent_outputs WHERE agent_name = ? "
+            "ORDER BY output_id DESC LIMIT 1",
+            (AGENT_LITERATURE,),
+        )
+        row = conn.fetchone()
+        if row and row.get("run_id"):
+            lit_run_id = str(row["run_id"])
+            conn.execute(
+                "UPDATE scan_state SET last_run_id = ? WHERE id = 1",
+                (lit_run_id,),
+            )
+            return lit_run_id
+
     conn.execute("SELECT last_run_id FROM scan_state WHERE id = 1")
     row = conn.fetchone()
     if row and row.get("last_run_id"):
@@ -673,7 +697,11 @@ def run(
         if mode == "agents-only":
             canonical_run_id = run_id
         else:
-            canonical_run_id = _get_canonical_run_id(conn, run_id)
+            canonical_run_id = _get_canonical_run_id(
+                conn,
+                run_id,
+                after_literature_subprocess=(mode in ("demo", "scan")),
+            )
 
         if mode == "demo":
             agent_max = max_papers

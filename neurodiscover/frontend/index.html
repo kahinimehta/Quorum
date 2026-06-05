@@ -1844,7 +1844,7 @@
           if (stateEl) stateEl.textContent = 'Done';
         } else if (!markedReady && steps && steps.length) {
           li.classList.add('ready');
-          if (stateEl) stateEl.textContent = 'Next';
+          if (stateEl) stateEl.textContent = 'Not run';
           markedReady = true;
         } else {
           li.classList.add('idle');

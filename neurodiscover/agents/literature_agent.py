@@ -786,6 +786,7 @@ def run(
                 f"(max_papers={cap}) for {disease}.",
                 {"max_papers": cap, "demo_rows_used": used, "demo_rows_total": n},
             )
+            update_scan_state(conn, disease, run_id)
             conn.commit()
             print(f"[demo] {backend_label()} — {used}/{n} evidence rows (max={cap}). run_id={run_id}")
             return
