@@ -26,15 +26,9 @@ Six agents · one evidence store · ranked commercial discovery
 
 Continuously ingest literature and trials, surface hidden patient subgroups, map subgroup → mechanism → treatment, and rank opportunities by evidence and commercial potential.
 
----
-
-## Demo (draft)
-
 <div class="video-embed">
-  <iframe src="https://www.youtube.com/embed/32vsR5R4hHM" title="NeuroDiscover demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/32vsR5R4hHM" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
-
-[Watch on YouTube](https://youtu.be/32vsR5R4hHM)
 
 ---
 
