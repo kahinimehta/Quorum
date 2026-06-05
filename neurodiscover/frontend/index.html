@@ -2159,13 +2159,7 @@
       };
       try {
         steps = await tryFetch(clientRunId);
-        if (steps.length < PIPELINE_AGENTS.length) {
-          const s = await fetch(`${API_BASE}/api/stats`).then(r => r.json());
-          if (s.lastRunId && s.lastRunId !== clientRunId) {
-            const alt = await tryFetch(s.lastRunId);
-            if (alt.length > steps.length) steps = alt;
-          }
-        }
+        // Do not follow scan_state.lastRunId — on a shared DB it may belong to another run.
       } catch (e) { /* keep partial */ }
       return steps;
     }
@@ -2896,13 +2890,8 @@
       let pollTicks = 0;
       let pollTimer = setInterval(async () => {
         pollTicks += 1;
-        let pollId = latestRunId;
-        try {
-          const s = await fetch(`${API_BASE}/api/stats`).then(r => r.json());
-          if (s.lastRunId) pollId = s.lastRunId;
-        } catch (e) { /* keep client id */ }
+        const pollId = latestRunId;
         const steps = await fetchPipelineSteps(pollId);
-        if (pollId !== latestRunId) latestRunId = pollId;
         const doneCount = countCompletedAgents(steps);
         const phase = pipelinePhaseFrom(steps, pipelineRunInFlight);
         syncPipelineUi(latestRunId, steps, phase);

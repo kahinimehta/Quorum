@@ -2,12 +2,10 @@
 Pipeline orchestrator — wires agents 1→6 against the shared DB blackboard.
 
 Modes:
-  demo / scan      — literature via cli.py subprocess, then agents 2–6 in-process
-  full             — literature_agent.run (live pull) + optional grants, then agents 2–6
-  agents-only      — skip literature pull; run agents 2–6 on existing evidence (Supabase)
+  demo / scan / full — literature_agent.run in-process (same run_id as caller), then agents 2–6
+  agents-only        — skip literature pull; run agents 2–6 on existing evidence (Supabase)
 
-Agent 1 generates its own run_id; agents 2–6 use scan_state.last_run_id after step 1.
-agents-only uses the caller's run_id and logs a lightweight literature trace row.
+All modes use the caller's run_id end-to-end so dashboard polling and recommendations stay aligned.
 """
 from __future__ import annotations
 
@@ -72,34 +70,32 @@ def _get_canonical_run_id(
     conn, fallback: str, *, after_literature: bool = False
 ) -> str:
     """
-    Resolve the run_id agents 2–6 should use.
+    Resolve the run_id agents 2–6 should use (legacy helper).
 
-    After any literature phase, prefer the latest Literature Synthesis trace row
-    so downstream agents attach to the same run as agent 1 (demo/scan/full).
+    Prefer trace rows for the caller's run_id so concurrent runs on a shared DB
+    do not cross-attach. Fall back to scan_state / latest literature only when
+    the caller has no literature trace yet.
     """
     if after_literature:
         conn.execute(
-            "SELECT run_id FROM agent_outputs WHERE agent_name = ? "
-            "ORDER BY output_id DESC LIMIT 1",
-            (AGENT_LITERATURE,),
+            "SELECT 1 FROM agent_outputs WHERE run_id = ? AND agent_name = ? LIMIT 1",
+            (fallback, AGENT_LITERATURE),
         )
-        row = conn.fetchone()
-        if row and row.get("run_id"):
-            lit_run_id = str(row["run_id"])
+        if conn.fetchone():
             conn.execute(
                 "UPDATE scan_state SET last_run_id = ? WHERE id = 1",
-                (lit_run_id,),
+                (fallback,),
             )
-            return lit_run_id
+        return fallback
 
     conn.execute("SELECT last_run_id FROM scan_state WHERE id = 1")
     row = conn.fetchone()
     if row and row.get("last_run_id"):
         return str(row["last_run_id"])
     conn.execute(
-        "SELECT run_id FROM agent_outputs WHERE agent_name = ? "
+        "SELECT run_id FROM agent_outputs WHERE agent_name = ? AND run_id = ? "
         "ORDER BY output_id DESC LIMIT 1",
-        (AGENT_LITERATURE,),
+        (AGENT_LITERATURE, fallback),
     )
     row = conn.fetchone()
     if row and row.get("run_id"):
@@ -800,14 +796,12 @@ def run(
 
     with connect(None) as conn:
         after = _evidence_counts(conn)
-        if mode == "agents-only":
-            canonical_run_id = run_id
-        else:
-            canonical_run_id = _get_canonical_run_id(
-                conn,
-                run_id,
-                after_literature=(mode in ("demo", "scan", "full")),
-            )
+        # Literature runs in-process with the caller's run_id; keep agents 2–6 on the same id.
+        canonical_run_id = run_id
+        conn.execute(
+            "UPDATE scan_state SET last_run_id = ? WHERE id = 1",
+            (run_id,),
+        )
 
         if mode == "full" and pull_grants:
             _run_grants_pull(conn, canonical_run_id)
