@@ -73,6 +73,7 @@ Full pipeline response (demo mode, abbreviated):
   ],
   "runStats": {
     "mode": "demo",
+    "modeLabel": "Demo sample",
     "maxPapersRequested": 10,
     "processed": { "literature": 5, "trial": 0, "grant": 0, "total": 5 },
     "databaseTotals": { "literature": 228, "trial": 39, "grant": 40, "total": 307 },
@@ -136,7 +137,16 @@ Scores **update every pipeline run** (agents 2–6 recompute from the full `evid
 
 Confidence may stay flat when `Stored 0 new`, when new rows lack extraction fields, or when **Rescore** runs on the same corpus without new scored rows. **Demo** and **Rescore** cap literature only — trials always count. Results charts prefer **this run’s** `recommendations` over global connection totals.
 
-Recent runs **Evidence** column (full mode): `+29 stored · 4 papers · 25 trials` — stored count includes all new row types; only scored rows affect confidence.
+Recent runs **Mode** column uses human labels (`Incremental scan`, `Full live pull`, …). **Evidence** column examples:
+
+| Mode | Example evidence note |
+|------|------------------------|
+| Incremental scan | `150 searched · +3 new · 147 skipped · incremental` |
+| Full live pull | `150 papers · 5 trials · +12 stored · 138 skipped` |
+| Rescore DB | `182 rows rescored (no pull)` |
+| Demo sample | `10 papers (demo sample)` |
+
+Only scored rows (with subgroup tags) affect confidence — see [Inputs](input).
 
 ---
 
@@ -147,7 +157,7 @@ Recent runs **Evidence** column (full mode): `+29 stored · 4 papers · 25 trial
 
 *Agent run trace (shared `run_id`) and paginated evidence preview with source links.*
 
-Every run logs rows in `agent_outputs`. Literature may log multiple steps (pull / validation). Orchestrator logs agents 2–6 with `stepOrder` **2–6**:
+Every run logs rows in `agent_outputs`. Literature logs **mode-specific** summaries and live progress commits during scan/pull:
 
 ```json
 {
@@ -155,17 +165,48 @@ Every run logs rows in `agent_outputs`. Literature may log multiple steps (pull 
   "steps": [
     {
       "agentName": "Literature Synthesis Agent",
-      "stepOrder": 1,
-      "summary": "Processed 10 literature rows (demo mode).",
-      "payload": { "incremental": false },
-      "createdAt": "2026-06-01 12:00:00"
+      "stepOrder": 0,
+      "summary": "Starting incremental scan for Parkinson's…",
+      "payload": { "pipeline_mode": "scan", "incremental": true, "progress": 0, "total": 150 }
+    },
+    {
+      "agentName": "Literature Synthesis Agent",
+      "stepOrder": 2,
+      "summary": "Incremental scan complete: stored 3 new evidence rows (147 existing skipped, 0 rejected).",
+      "payload": { "pipeline_mode": "scan", "new_evidence": 3, "skipped_duplicates": 147 }
     },
     {
       "agentName": "Patient Subgroup Agent",
       "stepOrder": 2,
-      "summary": "Identified 5 subgroups from 10 evidence rows.",
-      "payload": { "count": 5 },
-      "createdAt": "2026-06-01 12:00:05"
+      "summary": "Identified 5 subgroups from 182 evidence rows.",
+      "payload": { "count": 5 }
+    }
+  ]
+}
+```
+
+Full live pull uses **Full live pull complete: stored N new…** and `"pipeline_mode": "full"` in payloads.
+
+### GET /api/runs
+
+```json
+{
+  "runs": [
+    {
+      "runId": "8aaa41ec",
+      "mode": "scan",
+      "modeLabel": "Incremental scan",
+      "evidenceNote": "150 searched · +3 new · 147 skipped · incremental",
+      "status": "Complete",
+      "statusDetail": "All 6 agents finished · 6 recommendation(s)"
+    },
+    {
+      "runId": "c88de439",
+      "mode": "full",
+      "modeLabel": "Full live pull",
+      "evidenceNote": "150 papers · 5 trials · +12 stored · 138 skipped",
+      "status": "Complete",
+      "statusDetail": "All 6 agents finished · 6 recommendation(s)"
     }
   ]
 }

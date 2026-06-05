@@ -228,6 +228,8 @@ def _build_run_stats(
     connections_scored: list[dict[str, Any]] | None = None,
     scoring_eligible: dict[str, int] | None = None,
 ) -> dict[str, Any]:
+    from pipeline_mode import mode_label
+
     lit = _parse_literature_step(steps)
     delta = {
         "literature": after["literature"] - before["literature"],
@@ -246,6 +248,7 @@ def _build_run_stats(
     display_max = max_papers if max_papers and max_papers > 0 else after["literature"]
     out: dict[str, Any] = {
         "mode": mode,
+        "modeLabel": mode_label(mode),
         "maxPapersRequested": display_max,
         "databaseTotals": after,
         "databaseBefore": before,
@@ -343,6 +346,7 @@ def _log_agents_only_literature(
         f"(no literature pull).",
         {
             "agents_only": True,
+            "pipeline_mode": "agents-only",
             "evidence_rows_used": used,
             "evidence_rows_total": total,
             "max_papers": max_papers if max_papers and max_papers > 0 else None,
@@ -642,6 +646,37 @@ def _run_agents_2_through_6(
     return recs, evidence_used, connection_snapshots, scoring_eligible
 
 
+def _run_literature_in_process(
+    mode: str,
+    *,
+    run_id: str,
+    disease: str,
+    query: str | None,
+    max_papers: int,
+    include_preprints: int,
+    with_fulltext: bool,
+    extract_backend: str | None,
+) -> None:
+    """Run literature agent in-process with the dashboard run_id (live progress commits)."""
+    if extract_backend:
+        os.environ["EXTRACT_BACKEND"] = extract_backend
+
+    from agents.literature_agent import run as run_literature
+
+    run_literature(
+        None,
+        disease,
+        2020,
+        max_papers,
+        demo=(mode == "demo"),
+        incremental=(mode == "scan"),
+        query=query,
+        include_preprints=include_preprints or 0,
+        with_fulltext=with_fulltext,
+        run_id=run_id,
+    )
+
+
 def _run_literature_full(
     *,
     disease: str,
@@ -742,12 +777,13 @@ def run(
             _log_agents_only_literature(conn, run_id, disease, max_papers)
             conn.commit()
     elif mode in ("demo", "scan"):
-        _subprocess_cli(
+        _run_literature_in_process(
             mode,
+            run_id=run_id,
             disease=disease,
             query=query,
             max_papers=max_papers,
-            include_preprints=include_preprints if mode == "full" else 0,
+            include_preprints=0,
             with_fulltext=with_fulltext,
             extract_backend=extract_backend,
         )

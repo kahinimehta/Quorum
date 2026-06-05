@@ -26,8 +26,8 @@ The UI maps directly to pipeline inputs: **one pipeline mode** (segmented contro
 |---------|------------|--------------|
 | **Rescore DB** | `agents-only` | Skip literature pull; run agents 2–6 on evidence already in the database (default on team Supabase). |
 | **Demo sample** | `demo` | Offline; uses existing rows, no live PubMed pull; caps literature rows for agents 2–6. |
-| **Incremental scan** | `scan` | Pull new papers/trials only; skip LLM for known source IDs; then all six agents. |
-| **Full live pull** | `full` | Live PubMed + trials + optional preprints, full text, and NIH grants; then all six agents. |
+| **Incremental scan** | `scan` | Pull new papers/trials only; skip LLM for known source IDs; trace says **Incremental scan complete**; Recent runs evidence column tagged `incremental`. |
+| **Full live pull** | `full` | Live PubMed + trials + optional preprints, full text, and NIH grants; trace says **Full live pull complete**; evidence column shows papers/trials stored. |
 
 Preprint, full-text, and grant toggles apply only to **Full live pull**.
 

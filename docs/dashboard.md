@@ -102,9 +102,9 @@ flowchart LR
 | Header | DB status, evidence totals, synthetic cohort badge, run id |
 | KPI strip | Per-type counts; **this run** vs **in database** |
 | Run status | Ready / Running / Complete / Partial / Failed |
-| **Agent pipeline stepper** | During a run: one agent **Running…**, completed **Done**, rest **Waiting…** (polled from `agent_outputs` every ~1.5s). After complete: all **Done** or **Not run** if partial. |
-| **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental / Full), disease, max papers, extraction; **one run button** |
-| **Step 2** | **This run** report (progress bar + settings + signature), pipeline diagram, synthetic cohort, ranked outputs, audit trace |
+| **Agent pipeline stepper** | On **Step 1** sidebar during a run: weighted progress bar, per-agent **Running…** / **Done**, literature sub-progress from live commits (polled every ~500ms). Step 2 shows results only — no duplicate stepper. |
+| **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
+| **Step 2** | **This run** report (settings + signature + support table), pipeline diagram, synthetic cohort, ranked outputs, audit trace |
 
 Timestamps display in **US Eastern** (`America/New_York`).
 
@@ -129,6 +129,19 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
 ```
 
 See [Output examples](output) for the response shape.
+
+### Recent runs — mode labels
+
+The **Recent runs** table and `/api/runs` distinguish all four pipeline modes with stable labels (not generic `SCAN` / `FULL`):
+
+| API `mode` | UI label | Evidence column example |
+|------------|----------|-------------------------|
+| `agents-only` | Rescore DB | `110 rows rescored (no pull)` |
+| `demo` | Demo sample | `10 papers (demo sample)` |
+| `scan` | Incremental scan | `150 searched · +3 new · 147 skipped · incremental` |
+| `full` | Full live pull | `150 papers · 5 trials · +12 stored · 138 skipped` |
+
+Literature agent trace summaries are mode-specific: **Incremental scan complete: …** vs **Full live pull complete: …** (see `pipeline_mode.py`).
 
 ## Related developer docs
 
