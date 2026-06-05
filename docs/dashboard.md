@@ -16,7 +16,8 @@ Single-page UI at `neurodiscover/frontend/index.html` — vanilla HTML/CSS/JS, n
 **Cross-platform:** macOS, Linux, and Windows (with Python 3). `make dashboard` is equivalent to `python3 cli.py dashboard` — not Mac-only.
 
 ```bash
-cd neurodiscover
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum/neurodiscover
 pip install -r requirements.txt   # first time only
 make dashboard
 ```

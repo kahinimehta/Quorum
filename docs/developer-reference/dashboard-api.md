@@ -12,7 +12,9 @@ Single-page UI: `neurodiscover/frontend/index.html` (vanilla HTML/CSS/JS, no bui
 ## Quick start
 
 ```bash
-cd neurodiscover
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum/neurodiscover
+pip install -r requirements.txt
 make dashboard
 ```
 

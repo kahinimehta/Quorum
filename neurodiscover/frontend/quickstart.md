@@ -1,5 +1,14 @@
 # NeuroDiscover Dashboard — Quickstart
 
+## Get the repo
+
+```bash
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum/neurodiscover
+pip install -r requirements.txt
+cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
+```
+
 ## One command
 
 From `neurodiscover/`:
