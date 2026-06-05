@@ -72,8 +72,8 @@ The form in **Step 1 — Configure & Run** (above) posts the same body the API a
 
 | Field | Values | Meaning |
 |-------|--------|---------|
-| `mode` | `demo` \| `scan` \| `full` | Offline seed / incremental scan / live pull |
-| `max_papers` | **10–500** (API validated) | In **demo** only: caps literature rows for agents 2–6. Ignored for scan/full downstream agents. |
+| `mode` | `demo` \| `scan` \| `full` \| `agents-only` | Offline seed / incremental scan / live pull / downstream-only on existing evidence |
+| `max_papers` | **10–500** (API validated) | In **demo**: caps literature rows for agents 2–6. In **agents-only**: optional cap (0 or omit = all rows). Ignored for scan/full downstream agents. |
 | `query` | string or null | Optional keyword filter passed to BioMCP |
 | `disease` | string | Literature anchor (default `"Parkinson disease"` in API) |
 | `include_preprints` | integer | bioRxiv cap; used in **full** mode |

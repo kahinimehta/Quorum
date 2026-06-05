@@ -84,14 +84,20 @@ def main(argv: list[str] | None = None) -> int:
         subprocess.run([py, "cli.py", "validate"], cwd=HERE, check=True)
 
     if not args.skip_pipeline:
-        print("[dashboard] Running offline demo pipeline…")
         from orchestrator import run as run_pipeline
 
         run_id = str(uuid.uuid4())[:8]
-        result = run_pipeline(run_id, "demo", max_papers=10)
-        print(f"[dashboard] Pipeline done — run_id={result['run_id']}, "
-              f"recommendations={len(result.get('recommendations', []))}, "
-              f"synthetic={len(result.get('synthetic_cohort', []))}")
+        if is_postgres():
+            print("[dashboard] Running agents 2–6 on team Supabase evidence (no literature pull)…")
+            result = run_pipeline(run_id, "agents-only", max_papers=0)
+        else:
+            print("[dashboard] Running offline demo pipeline…")
+            result = run_pipeline(run_id, "demo", max_papers=10)
+        print(
+            f"[dashboard] Pipeline done — run_id={result['run_id']}, "
+            f"recommendations={len(result.get('recommendations', []))}, "
+            f"synthetic={len(result.get('synthetic_cohort', []))}"
+        )
 
     print(f"[dashboard] Starting API on http://127.0.0.1:{args.port_api}")
     api = _popen([py, "api_server.py"], cwd=HERE)

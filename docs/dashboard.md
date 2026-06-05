@@ -35,7 +35,9 @@ The launcher will:
 
 1. Install dependencies (unless `--skip-install`)
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-3. Run one offline **demo** pipeline pass with `max_papers=10` (unless `--skip-pipeline`)
+3. Run one pipeline pass before serving (unless `--skip-pipeline`):
+   - **Local SQLite:** offline **demo** with `max_papers=10`
+   - **Team Supabase:** **agents-only** — runs agents 2–6 on all existing evidence (no literature pull, no truncate)
 4. Start FastAPI on **5000** and static UI on **8080**
 
 ### Platform notes
@@ -58,6 +60,18 @@ python3 cli.py dashboard --port-api 5001 --port-ui 8081
 ```
 
 See also [Debugging](debugging) if the dashboard fails to start.
+
+## Team Supabase
+
+Set `SUPABASE_DATABASE_URL` in `.env` (Session pooler URI). Then:
+
+```bash
+make dashboard
+```
+
+Same command as local — the launcher detects Postgres, **skips `build`**, and runs **agents-only** on the full evidence corpus so connections, scores, and recommendations populate before the UI opens. Never run `cli.py build` on the team DB.
+
+Optional browser keys (`SUPABASE_URL` + `SUPABASE_ANON_KEY`) enable direct read-only Supabase queries from the UI; the default path is still FastAPI → Postgres.
 
 ## Data flow
 

@@ -37,7 +37,7 @@ This will:
 
 1. Install dependencies if needed (unless `--skip-install`)
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-3. Run one offline **demo** pipeline pass
+3. Run one pipeline pass — **demo** locally (`max_papers=10`) or **agents-only** on team Supabase (all existing evidence)
 4. Start the API on **port 5000** and UI on **port 8080**
 5. Open **http://127.0.0.1:8080** in your default browser (skip with `--no-browser`)
 
@@ -57,7 +57,7 @@ Useful flags: `--no-browser`, `--skip-pipeline` (servers only), `--fresh` (rebui
 
 More detail: [`docs/dashboard.md`](docs/dashboard.md) · [`neurodiscover/frontend/quickstart.md`](neurodiscover/frontend/quickstart.md) · [Debugging](https://neurodiscover.github.io/debugging/)
 
-> **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
+> **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env`, run **`make dashboard`** (same command) — agents 2–6 run automatically on the full corpus. **Do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
 
 ---
 

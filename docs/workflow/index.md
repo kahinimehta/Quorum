@@ -60,15 +60,17 @@ flowchart LR
 
 | Mode | Behavior | When to use |
 |------|----------|-------------|
-| **demo** | Subprocess `cli.py demo`, then agents 2–6; **`max_papers` caps rows for agents 2–6** | Stage demos, offline judging |
+| **demo** | Subprocess `cli.py demo`, then agents 2–6; **`max_papers` caps rows for agents 2–6** | Stage demos, offline judging (local SQLite) |
+| **agents-only** | Skip literature pull; log agent 1 trace; agents 2–6 on existing DB evidence | **`make dashboard` on team Supabase**; re-score after pull |
 | **scan** | Subprocess `cli.py scan` (incremental; PubTator skipped); agents 2–6 use **all** subgroup evidence in DB | Low-cost updates |
 | **full** | In-process `literature_agent.run()` + optional `pull-grants` (up to 30 grants); agents 2–6 use **all** subgroup evidence in DB | Live data refresh |
 
 `include_preprints`, `with_fulltext`, and `extract_backend` apply to **full** mode (and `pull`/`full` literature paths). **Scan/demo** subprocess calls ignore preprints/fulltext API flags.
 
-Orchestrator entry: `neurodiscover/orchestrator.py` via `POST /api/run-discovery`.
+Orchestrator entry: `neurodiscover/orchestrator.py` via `POST /api/run-discovery` or `make dashboard`.
 
 - **demo / scan** — literature via `cli.py` subprocess, then agents 2–6 in-process
+- **agents-only** — no literature subprocess; agents 2–6 on existing evidence (Supabase dashboard startup)
 - **full** — `literature_agent.run()` (+ optional grants), then agents 2–6
 
 ---

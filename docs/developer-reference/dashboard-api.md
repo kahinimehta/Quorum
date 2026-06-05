@@ -20,6 +20,8 @@ make dashboard
 
 Opens **http://127.0.0.1:8080** in your default browser (`--no-browser` to skip). Press **Ctrl+C** to stop API + UI.
 
+With **team Supabase** (`SUPABASE_DATABASE_URL` in `.env`), the same command skips `build` and runs **agents-only** before serving so connections and recommendations are populated on first load.
+
 Details: [`../../neurodiscover/frontend/quickstart.md`](../../neurodiscover/frontend/quickstart.md).
 
 ## Data flow
@@ -73,18 +75,19 @@ Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 
 | Action | Endpoint |
 |--------|----------|
-| Demo / scan / full | `POST /api/run-discovery` |
+| Demo / scan / full / agents-only | `POST /api/run-discovery` |
 
 Body (example): `{ "mode": "demo", "max_papers": 10, "query": null, "with_fulltext": false, "pull_grants": true }`
 
 Response includes: `run_id`, `recommendations`, `agent_outputs` (alias `steps`), `synthetic_cohort`, `runStats` (processed vs database totals).
 
-Orchestrator behavior (unchanged):
+Orchestrator modes:
 
 - **demo / scan** — literature via `cli.py` subprocess, then agents 2–6 in-process
+- **agents-only** — no literature subprocess; agents 2–6 on existing DB evidence (`make dashboard` on Supabase)
 - **full** — `literature_agent.run()` (+ optional grants), then agents 2–6
 
-Demo mode caps literature rows used by downstream agents to `max_papers`.
+**demo** caps literature rows used by downstream agents to `max_papers`. **agents-only** uses all evidence unless `max_papers` is set.
 
 ## Synthetic cohort
 

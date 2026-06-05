@@ -156,7 +156,9 @@ Trigger the agent pipeline (`orchestrator.py`).
 { "mode": "demo", "query": null, "max_papers": 150 }
 ```
 
-`mode`: `demo` | `scan` | `full`
+`mode`: `demo` | `scan` | `full` | `agents-only`
+
+**agents-only** — skip literature pull; run agents 2–6 on existing evidence. Used automatically by `make dashboard` when `SUPABASE_DATABASE_URL` is set. Optional `max_papers` cap (API minimum 10; orchestrator accepts `0` = all rows).
 
 **Response:**
 

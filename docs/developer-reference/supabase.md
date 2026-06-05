@@ -77,9 +77,10 @@ python3 cli.py scan --max 5
 python3 cli.py pull --max 10
 python3 cli.py show evidence
 python3 cli.py validate
+make dashboard    # agents-only on Supabase: connections + recommendations on startup
 ```
 
-Initial real evidence is loaded by the data engineer before demo; use `scan` for incremental updates.
+Initial real evidence is loaded by the data engineer before demo; use `scan` for incremental updates. **`make dashboard`** with `SUPABASE_DATABASE_URL` set runs **agents-only** (agents 2–6 on all existing rows) — no `build`, no literature re-pull.
 
 ## 5. Person 2 — backend connection
 

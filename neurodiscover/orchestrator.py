@@ -2,10 +2,12 @@
 Pipeline orchestrator — wires agents 1→6 against the shared DB blackboard.
 
 Modes:
-  demo / scan — literature via cli.py subprocess, then agents 2–6 in-process
-  full        — literature_agent.run (live pull) + optional grants, then agents 2–6
+  demo / scan      — literature via cli.py subprocess, then agents 2–6 in-process
+  full             — literature_agent.run (live pull) + optional grants, then agents 2–6
+  agents-only      — skip literature pull; run agents 2–6 on existing evidence (Supabase)
 
 Agent 1 generates its own run_id; agents 2–6 use scan_state.last_run_id after step 1.
+agents-only uses the caller's run_id and logs a lightweight literature trace row.
 """
 from __future__ import annotations
 
@@ -159,6 +161,10 @@ def _parse_literature_step(steps: list[dict[str, Any]]) -> dict[str, int]:
         if m:
             out["demoUsed"] = int(m.group(1))
             out["demoDbTotal"] = int(m.group(2))
+        m = re.search(r"Agents-only: using (\d+) of (\d+)", summary)
+        if m:
+            out["demoUsed"] = int(m.group(1))
+            out["demoDbTotal"] = int(m.group(2))
         elif "Demo" in summary:
             m = re.search(r"(\d+)", summary)
             if m:
@@ -184,14 +190,17 @@ def _build_run_stats(
         "total": after["total"] - before["total"],
     }
     pulled_lit = lit["published"] + lit["preprints"]
-    if mode == "demo":
+    if mode == "agents-only":
+        processed_lit = lit.get("demoUsed") or evidence_used["literature"]
+    elif mode == "demo":
         processed_lit = lit.get("demoUsed") or evidence_used["literature"]
     else:
         cap = max_papers if max_papers > 0 else pulled_lit
         processed_lit = min(cap, pulled_lit) if pulled_lit else delta["literature"]
+    display_max = max_papers if max_papers and max_papers > 0 else after["literature"]
     return {
         "mode": mode,
-        "maxPapersRequested": max_papers,
+        "maxPapersRequested": display_max,
         "databaseTotals": after,
         "databaseBefore": before,
         "delta": delta,
@@ -251,6 +260,45 @@ def _subprocess_cli(
     if result.returncode != 0:
         err = (result.stderr or result.stdout or "cli failed").strip()
         raise RuntimeError(f"cli.py {mode} failed: {err}")
+
+
+def _log_agents_only_literature(
+    conn,
+    run_id: str,
+    disease: str,
+    max_papers: int,
+) -> None:
+    """Log agent 1 trace without a literature subprocess (existing DB evidence only)."""
+    conn.execute("SELECT COUNT(*) AS n FROM evidence")
+    total = int(conn.fetchone()["n"])
+    conn.execute(
+        "SELECT source_type, COUNT(*) AS c FROM evidence GROUP BY source_type"
+    )
+    by_type = {r["source_type"]: int(r["c"]) for r in conn.fetchall()}
+    lit_total = by_type.get("literature", 0)
+    if max_papers and max_papers > 0:
+        used_lit = min(lit_total, max_papers)
+        used = used_lit + by_type.get("trial", 0) + by_type.get("grant", 0)
+    else:
+        used = total
+    log_step(
+        conn,
+        run_id,
+        AGENT_LITERATURE,
+        1,
+        f"Agents-only: using {used} of {total} existing evidence rows for {disease} "
+        f"(no literature pull).",
+        {
+            "agents_only": True,
+            "evidence_rows_used": used,
+            "evidence_rows_total": total,
+            "max_papers": max_papers if max_papers and max_papers > 0 else None,
+        },
+    )
+    conn.execute(
+        "UPDATE scan_state SET disease = ?, last_run_id = ? WHERE id = 1",
+        (disease, run_id),
+    )
 
 
 def _persist_subgroups(conn, output: dict[str, Any], run_id: str) -> None:
@@ -588,14 +636,18 @@ def run(
     """
     Execute the discovery pipeline. Returns run_id, recommendations, agent_outputs, synthetic_cohort.
     """
-    mode = (mode or "demo").lower()
-    if mode not in ("demo", "scan", "full"):
+    mode = (mode or "demo").lower().replace("_", "-")
+    if mode not in ("demo", "scan", "full", "agents-only"):
         raise ValueError(f"Unknown mode: {mode}")
 
     with connect(None) as conn:
         before = _evidence_counts(conn)
 
-    if mode in ("demo", "scan"):
+    if mode == "agents-only":
+        with connect(None) as conn:
+            _log_agents_only_literature(conn, run_id, disease, max_papers)
+            conn.commit()
+    elif mode in ("demo", "scan"):
         _subprocess_cli(
             mode,
             disease=disease,
@@ -618,9 +670,17 @@ def run(
 
     with connect(None) as conn:
         after = _evidence_counts(conn)
-        canonical_run_id = _get_canonical_run_id(conn, run_id)
+        if mode == "agents-only":
+            canonical_run_id = run_id
+        else:
+            canonical_run_id = _get_canonical_run_id(conn, run_id)
 
-        agent_max = max_papers if mode == "demo" else None
+        if mode == "demo":
+            agent_max = max_papers
+        elif mode == "agents-only":
+            agent_max = max_papers if max_papers and max_papers > 0 else None
+        else:
+            agent_max = None
         recommendations, evidence_used = _run_agents_2_through_6(
             conn, canonical_run_id, max_papers=agent_max
         )

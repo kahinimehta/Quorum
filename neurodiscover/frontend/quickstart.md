@@ -36,7 +36,9 @@ This will:
 
 1. Install dependencies (unless `--skip-install`)
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-3. Run one offline **demo** pipeline pass with `max_papers=10` (unless `--skip-pipeline`)
+3. Run one pipeline pass before serving (unless `--skip-pipeline`):
+   - **Local SQLite:** offline **demo** with `max_papers=10`
+   - **Team Supabase:** **agents-only** on all existing evidence (no literature pull)
 4. Start API on **5000** and UI on **8080**
 5. Open **http://127.0.0.1:8080** in your default browser (unless `--no-browser`)
 
@@ -80,6 +82,8 @@ python3 cli.py dashboard --no-browser
 
 **Local demo:** leave `SUPABASE_DATABASE_URL` unset. **Never** run `cli.py build` on the team Supabase DB.
 
+**Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, then run `make dashboard` — same command. The launcher runs **agents-only** (agents 2–6 on the full corpus) so connections and recommendations appear on first load.
+
 After each run, the KPI strip and summary bar show **this run** counts (e.g. 5 papers used) separately from **in database** totals.
 
 ## Manual setup (optional)
@@ -113,7 +117,16 @@ In `.env`:
 
 ```bash
 python3 cli.py validate   # not build
+make dashboard            # agents-only pipeline + API + UI
+```
+
+Or API only:
+
+```bash
 python3 api_server.py
+curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
+  -H 'Content-Type: application/json' \
+  -d '{"mode":"agents-only","max_papers":0}'
 ```
 
 ## Verify API

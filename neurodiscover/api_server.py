@@ -217,7 +217,9 @@ def get_run_stats(run_id: str):
         if step.get("agentName") != "Literature Synthesis Agent":
             continue
         summary = (step.get("summary") or "").lower()
-        if "demo" in summary:
+        if "agents-only" in summary:
+            mode = "agents-only"
+        elif "demo" in summary:
             mode = "demo"
         elif "scan" in summary or "incremental" in summary:
             mode = "scan"
@@ -235,7 +237,7 @@ def get_run_stats(run_id: str):
         after = _evidence_counts(conn)
 
     lit = _parse_literature_step(steps)
-    if mode == "demo" and lit.get("demoUsed"):
+    if mode in ("demo", "agents-only") and lit.get("demoUsed"):
         evidence_used = {
             "literature": lit["demoUsed"],
             "trial": 0,
@@ -291,7 +293,9 @@ def list_runs(limit: int = 5):
         )
         if summaries:
             s = summaries[0].get("summary") or ""
-            if "scan" in s.lower() or "incremental" in s.lower():
+            if "agents-only" in s.lower():
+                mode = "agents-only"
+            elif "scan" in s.lower() or "incremental" in s.lower():
                 mode = "scan"
             elif "demo" in s.lower():
                 mode = "demo"
@@ -304,7 +308,9 @@ def list_runs(limit: int = 5):
             db = _evidence_counts(conn)
         lit = _parse_literature_step(steps)
         ev_note = f"+{lit.get('newStored', 0)} new"
-        if mode == "demo" and lit.get("demoUsed"):
+        if mode == "agents-only" and lit.get("demoUsed"):
+            ev_note = f"{lit['demoUsed']} papers (agents-only)"
+        elif mode == "demo" and lit.get("demoUsed"):
             ev_note = f"{lit['demoUsed']} papers (demo)"
         elif lit.get("published"):
             ev_note = f"{lit['published']} pulled · +{lit.get('newStored', 0)} new"

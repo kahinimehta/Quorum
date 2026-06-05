@@ -17,8 +17,12 @@ Run, verify, and extend NeuroDiscover.
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
 pip install -r requirements.txt
+cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
 make dashboard
 ```
+
+**Local SQLite:** builds seed DB if needed, runs demo pipeline (`max_papers=10`).  
+**Team Supabase:** skips build, runs **agents-only** on existing evidence (connections + recommendations written automatically).
 
 ## CLI (data & agents)
 

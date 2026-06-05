@@ -63,7 +63,10 @@ make dashboard
 # → http://127.0.0.1:8080  (Ctrl+C to stop)
 ```
 
-Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip). Leave `SUPABASE_DATABASE_URL` unset for local demo.
+Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip).
+
+- **Local:** leave `SUPABASE_DATABASE_URL` unset — builds seed DB, runs demo (`max_papers=10`).
+- **Team Supabase:** set `SUPABASE_DATABASE_URL` — skips `build`, runs **agents-only** (agents 2–6 on all existing evidence).
 
 | Doc | Purpose |
 |-----|---------|
