@@ -1,0 +1,4198 @@
+{
+  "corpus_n": 400,
+  "top_k": 60,
+  "config": {
+    "top_k": 60,
+    "cluster_similarity_threshold": 0.5,
+    "per_cluster_cap": 2,
+    "polarity_aware": true,
+    "relevance_weight": 1.0
+  },
+  "ranking_method": "key_finding_token_jaccard_clustering + topic_relevance + recency_tiebreak (deterministic, rule-based; NO embeddings, NO LLM)",
+  "possible_contradiction_cluster_ids": [],
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "representative_id": "grant:IK2BX005760",
+      "member_ids": [
+        "grant:IK2BX005760",
+        "grant:F30NS129283",
+        "grant:F31NS141335",
+        "grant:I01BX006539",
+        "grant:IK2RX003253"
+      ],
+      "count": 5,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 1,
+      "representative_id": "grant:F31ES034985",
+      "member_ids": [
+        "grant:F31ES034985"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 2,
+      "representative_id": "grant:F31NS134319",
+      "member_ids": [
+        "grant:F31NS134319"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 3,
+      "representative_id": "grant:F31NS135928",
+      "member_ids": [
+        "grant:F31NS135928"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 4,
+      "representative_id": "grant:F31NS139616",
+      "member_ids": [
+        "grant:F31NS139616"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 5,
+      "representative_id": "grant:F31NS145649",
+      "member_ids": [
+        "grant:F31NS145649"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 6,
+      "representative_id": "grant:F32NS141898",
+      "member_ids": [
+        "grant:F32NS141898",
+        "grant:R01AG085688"
+      ],
+      "count": 2,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 7,
+      "representative_id": "grant:K00MH133546",
+      "member_ids": [
+        "grant:K00MH133546"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 8,
+      "representative_id": "grant:K08NS123428",
+      "member_ids": [
+        "grant:K08NS123428"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 9,
+      "representative_id": "grant:K08NS131581",
+      "member_ids": [
+        "grant:K08NS131581"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 10,
+      "representative_id": "grant:K08NS138592",
+      "member_ids": [
+        "grant:K08NS138592"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 11,
+      "representative_id": "grant:R00ES032488",
+      "member_ids": [
+        "grant:R00ES032488"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 12,
+      "representative_id": "grant:R00ES033723",
+      "member_ids": [
+        "grant:R00ES033723",
+        "grant:R35GM150857"
+      ],
+      "count": 2,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 13,
+      "representative_id": "grant:R01AG081283",
+      "member_ids": [
+        "grant:R01AG081283"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 14,
+      "representative_id": "grant:R01AG082373",
+      "member_ids": [
+        "grant:R01AG082373"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 15,
+      "representative_id": "grant:R01AG086495",
+      "member_ids": [
+        "grant:R01AG086495"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 16,
+      "representative_id": "grant:R01DK135440",
+      "member_ids": [
+        "grant:R01DK135440"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 17,
+      "representative_id": "grant:R01DK138465",
+      "member_ids": [
+        "grant:R01DK138465"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 18,
+      "representative_id": "grant:R01ES023839",
+      "member_ids": [
+        "grant:R01ES023839"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 19,
+      "representative_id": "grant:R01ES034270",
+      "member_ids": [
+        "grant:R01ES034270"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 20,
+      "representative_id": "grant:R01ES034846",
+      "member_ids": [
+        "grant:R01ES034846"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 21,
+      "representative_id": "grant:R01GM133172",
+      "member_ids": [
+        "grant:R01GM133172",
+        "grant:R35GM152038"
+      ],
+      "count": 2,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 22,
+      "representative_id": "grant:ZIATR000432",
+      "member_ids": [
+        "grant:ZIATR000432",
+        "grant:R01GM141553"
+      ],
+      "count": 2,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 23,
+      "representative_id": "grant:R01NS027699",
+      "member_ids": [
+        "grant:R01NS027699",
+        "grant:R37NS115139"
+      ],
+      "count": 2,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 24,
+      "representative_id": "grant:R01NS058487",
+      "member_ids": [
+        "grant:R01NS058487"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 25,
+      "representative_id": "grant:R35ES030523",
+      "member_ids": [
+        "grant:R35ES030523",
+        "grant:R01NS064934"
+      ],
+      "count": 2,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 26,
+      "representative_id": "grant:R01NS078165",
+      "member_ids": [
+        "grant:R01NS078165"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 27,
+      "representative_id": "grant:R01NS099623",
+      "member_ids": [
+        "grant:R01NS099623"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 28,
+      "representative_id": "grant:R01NS103931",
+      "member_ids": [
+        "grant:R01NS103931"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 29,
+      "representative_id": "grant:R01NS118146",
+      "member_ids": [
+        "grant:R01NS118146"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 30,
+      "representative_id": "grant:R01NS119897",
+      "member_ids": [
+        "grant:R01NS119897"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 31,
+      "representative_id": "grant:ZIAAG000936",
+      "member_ids": [
+        "grant:ZIAAG000936",
+        "grant:R01NS120625"
+      ],
+      "count": 2,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 32,
+      "representative_id": "grant:R01NS125592",
+      "member_ids": [
+        "grant:R01NS125592",
+        "grant:R01NS124777"
+      ],
+      "count": 2,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 33,
+      "representative_id": "grant:R01NS124819",
+      "member_ids": [
+        "grant:R01NS124819",
+        "grant:R01NS131137"
+      ],
+      "count": 2,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 34,
+      "representative_id": "grant:R01NS124848",
+      "member_ids": [
+        "grant:R01NS124848"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 35,
+      "representative_id": "grant:R01NS125317",
+      "member_ids": [
+        "grant:R01NS125317"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 36,
+      "representative_id": "grant:R01NS126203",
+      "member_ids": [
+        "grant:R01NS126203"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 37,
+      "representative_id": "grant:R01NS126588",
+      "member_ids": [
+        "grant:R01NS126588",
+        "grant:ZIAAG000937"
+      ],
+      "count": 2,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 38,
+      "representative_id": "grant:R01NS129517",
+      "member_ids": [
+        "grant:R01NS129517"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 39,
+      "representative_id": "grant:R01NS129711",
+      "member_ids": [
+        "grant:R01NS129711"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 40,
+      "representative_id": "grant:R01NS133742",
+      "member_ids": [
+        "grant:R01NS133742"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 41,
+      "representative_id": "grant:R03NS144936",
+      "member_ids": [
+        "grant:R03NS144936"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 42,
+      "representative_id": "grant:R15CA305552",
+      "member_ids": [
+        "grant:R15CA305552"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 43,
+      "representative_id": "grant:R21ES037434",
+      "member_ids": [
+        "grant:R21ES037434"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 44,
+      "representative_id": "grant:R21NS126731",
+      "member_ids": [
+        "grant:R21NS126731"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 45,
+      "representative_id": "grant:R21NS136895",
+      "member_ids": [
+        "grant:R21NS136895"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 46,
+      "representative_id": "grant:R35GM142869",
+      "member_ids": [
+        "grant:R35GM142869"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 47,
+      "representative_id": "grant:U01DK140923",
+      "member_ids": [
+        "grant:U01DK140923"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 48,
+      "representative_id": "grant:U19AG071754",
+      "member_ids": [
+        "grant:U19AG071754"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 49,
+      "representative_id": "grant:U19NS110456",
+      "member_ids": [
+        "grant:U19NS110456",
+        "grant:ZIAHL001055"
+      ],
+      "count": 2,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 50,
+      "representative_id": "grant:ZIAAG000539",
+      "member_ids": [
+        "grant:ZIAAG000539"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 51,
+      "representative_id": "grant:ZIAAG000939",
+      "member_ids": [
+        "grant:ZIAAG000939"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 52,
+      "representative_id": "grant:ZIAAG000948",
+      "member_ids": [
+        "grant:ZIAAG000948"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 53,
+      "representative_id": "grant:ZIAAI001086",
+      "member_ids": [
+        "grant:ZIAAI001086"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 54,
+      "representative_id": "grant:ZIABC011744",
+      "member_ids": [
+        "grant:ZIABC011744"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 55,
+      "representative_id": "grant:ZIADK056014",
+      "member_ids": [
+        "grant:ZIADK056014"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 56,
+      "representative_id": "grant:ZIADK056016",
+      "member_ids": [
+        "grant:ZIADK056016"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 57,
+      "representative_id": "grant:ZIADK075145",
+      "member_ids": [
+        "grant:ZIADK075145"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 58,
+      "representative_id": "grant:ZIAES103310",
+      "member_ids": [
+        "grant:ZIAES103310"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 59,
+      "representative_id": "grant:ZIAHG200336",
+      "member_ids": [
+        "grant:ZIAHG200336"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 60,
+      "representative_id": "grant:ZIANS002946",
+      "member_ids": [
+        "grant:ZIANS002946"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 61,
+      "representative_id": "grant:ZIANS003034",
+      "member_ids": [
+        "grant:ZIANS003034"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 62,
+      "representative_id": "grant:ZIANS003135",
+      "member_ids": [
+        "grant:ZIANS003135"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 63,
+      "representative_id": "grant:ZIATR000430",
+      "member_ids": [
+        "grant:ZIATR000430"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 64,
+      "representative_id": "literature:10.1101/001685",
+      "member_ids": [
+        "literature:10.1101/001685"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 65,
+      "representative_id": "literature:10.1101/002485",
+      "member_ids": [
+        "literature:10.1101/002485"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 66,
+      "representative_id": "literature:10.1101/004036",
+      "member_ids": [
+        "literature:10.1101/004036"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 67,
+      "representative_id": "literature:10.1101/004192",
+      "member_ids": [
+        "literature:10.1101/004192"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 68,
+      "representative_id": "literature:10.1101/004325",
+      "member_ids": [
+        "literature:10.1101/004325"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 69,
+      "representative_id": "literature:10.1101/004374",
+      "member_ids": [
+        "literature:10.1101/004374"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 70,
+      "representative_id": "literature:10.1101/004416",
+      "member_ids": [
+        "literature:10.1101/004416"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 71,
+      "representative_id": "literature:10.1101/004473",
+      "member_ids": [
+        "literature:10.1101/004473"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 72,
+      "representative_id": "literature:10.1101/005264",
+      "member_ids": [
+        "literature:10.1101/005264"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 73,
+      "representative_id": "literature:10.1101/005660",
+      "member_ids": [
+        "literature:10.1101/005660"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 74,
+      "representative_id": "literature:10.1101/006155",
+      "member_ids": [
+        "literature:10.1101/006155"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 75,
+      "representative_id": "literature:10.1101/006544",
+      "member_ids": [
+        "literature:10.1101/006544"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 76,
+      "representative_id": "literature:10.1101/006965",
+      "member_ids": [
+        "literature:10.1101/006965"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 77,
+      "representative_id": "literature:10.1101/007765",
+      "member_ids": [
+        "literature:10.1101/007765"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 78,
+      "representative_id": "literature:10.1101/2020.02.23.961599",
+      "member_ids": [
+        "literature:10.1101/2020.02.23.961599"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 79,
+      "representative_id": "literature:10.1101/2022.06.01.494130",
+      "member_ids": [
+        "literature:10.1101/2022.06.01.494130"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 80,
+      "representative_id": "literature:10.1101/2022.08.03.22278207",
+      "member_ids": [
+        "literature:10.1101/2022.08.03.22278207"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 81,
+      "representative_id": "literature:10.1101/2022.10.03.510717",
+      "member_ids": [
+        "literature:10.1101/2022.10.03.510717"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 82,
+      "representative_id": "literature:10.1101/2022.12.15.520449",
+      "member_ids": [
+        "literature:10.1101/2022.12.15.520449"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 83,
+      "representative_id": "literature:10.1101/2023.02.01.522707",
+      "member_ids": [
+        "literature:10.1101/2023.02.01.522707"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 84,
+      "representative_id": "literature:10.1101/2023.03.11.532176",
+      "member_ids": [
+        "literature:10.1101/2023.03.11.532176"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 85,
+      "representative_id": "literature:10.1101/2023.05.23.541929",
+      "member_ids": [
+        "literature:10.1101/2023.05.23.541929"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 86,
+      "representative_id": "literature:10.1101/2023.10.04.560803",
+      "member_ids": [
+        "literature:10.1101/2023.10.04.560803"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 87,
+      "representative_id": "literature:10.1101/2024.04.28.591482",
+      "member_ids": [
+        "literature:10.1101/2024.04.28.591482"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 88,
+      "representative_id": "literature:10.1101/2024.06.19.24308302",
+      "member_ids": [
+        "literature:10.1101/2024.06.19.24308302"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 89,
+      "representative_id": "literature:10.1101/2024.09.05.24313131",
+      "member_ids": [
+        "literature:10.1101/2024.09.05.24313131"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 90,
+      "representative_id": "literature:10.1101/2024.12.13.24318996",
+      "member_ids": [
+        "literature:10.1101/2024.12.13.24318996"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 91,
+      "representative_id": "literature:10.1101/2024.12.20.629583",
+      "member_ids": [
+        "literature:10.1101/2024.12.20.629583"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 92,
+      "representative_id": "literature:10.1101/2025.01.30.25320306",
+      "member_ids": [
+        "literature:10.1101/2025.01.30.25320306"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 93,
+      "representative_id": "literature:10.1101/2025.06.09.658641",
+      "member_ids": [
+        "literature:10.1101/2025.06.09.658641"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 94,
+      "representative_id": "literature:10.1101/2025.06.10.658866",
+      "member_ids": [
+        "literature:10.1101/2025.06.10.658866"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 95,
+      "representative_id": "literature:10.1101/2025.07.07.662960",
+      "member_ids": [
+        "literature:10.1101/2025.07.07.662960"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 96,
+      "representative_id": "literature:10.1101/2025.08.13.25333123",
+      "member_ids": [
+        "literature:10.1101/2025.08.13.25333123"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 97,
+      "representative_id": "literature:10.1101/2025.08.22.25334259",
+      "member_ids": [
+        "literature:10.1101/2025.08.22.25334259"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 98,
+      "representative_id": "literature:10.1101/2025.09.08.25335343",
+      "member_ids": [
+        "literature:10.1101/2025.09.08.25335343"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 99,
+      "representative_id": "literature:10.1101/2025.10.13.682210",
+      "member_ids": [
+        "literature:10.1101/2025.10.13.682210"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 100,
+      "representative_id": "literature:10.1101/2025.11.08.687161",
+      "member_ids": [
+        "literature:10.1101/2025.11.08.687161"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 101,
+      "representative_id": "literature:10.1101/530535",
+      "member_ids": [
+        "literature:10.1101/530535"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 102,
+      "representative_id": "literature:10.20944/preprints202408.2167.v2",
+      "member_ids": [
+        "literature:10.20944/preprints202408.2167.v2"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 103,
+      "representative_id": "literature:10.20944/preprints202509.1666.v1",
+      "member_ids": [
+        "literature:10.20944/preprints202509.1666.v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 104,
+      "representative_id": "literature:10.21203/rs.3.rs-1285855/v1",
+      "member_ids": [
+        "literature:10.21203/rs.3.rs-1285855/v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 105,
+      "representative_id": "literature:10.21203/rs.3.rs-1559790/v1",
+      "member_ids": [
+        "literature:10.21203/rs.3.rs-1559790/v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 106,
+      "representative_id": "literature:10.21203/rs.3.rs-174850/v1",
+      "member_ids": [
+        "literature:10.21203/rs.3.rs-174850/v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 107,
+      "representative_id": "literature:10.21203/rs.3.rs-3128098/v1",
+      "member_ids": [
+        "literature:10.21203/rs.3.rs-3128098/v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 108,
+      "representative_id": "literature:10.21203/rs.3.rs-4232431/v1",
+      "member_ids": [
+        "literature:10.21203/rs.3.rs-4232431/v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 109,
+      "representative_id": "literature:10.21203/rs.3.rs-4583055/v1",
+      "member_ids": [
+        "literature:10.21203/rs.3.rs-4583055/v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 110,
+      "representative_id": "literature:10.21203/rs.3.rs-5411701/v1",
+      "member_ids": [
+        "literature:10.21203/rs.3.rs-5411701/v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 111,
+      "representative_id": "literature:10.21203/rs.3.rs-6231369/v1",
+      "member_ids": [
+        "literature:10.21203/rs.3.rs-6231369/v1"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 112,
+      "representative_id": "literature:23831180",
+      "member_ids": [
+        "literature:23831180"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 113,
+      "representative_id": "literature:25425650",
+      "member_ids": [
+        "literature:25425650"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 114,
+      "representative_id": "literature:25582445",
+      "member_ids": [
+        "literature:25582445"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 115,
+      "representative_id": "literature:25617759",
+      "member_ids": [
+        "literature:25617759"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 116,
+      "representative_id": "literature:25650534",
+      "member_ids": [
+        "literature:25650534"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 117,
+      "representative_id": "literature:25979701",
+      "member_ids": [
+        "literature:25979701"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 118,
+      "representative_id": "literature:26020005",
+      "member_ids": [
+        "literature:26020005"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 119,
+      "representative_id": "literature:26078453",
+      "member_ids": [
+        "literature:26078453"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 120,
+      "representative_id": "literature:26090080",
+      "member_ids": [
+        "literature:26090080"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 121,
+      "representative_id": "literature:26396237",
+      "member_ids": [
+        "literature:26396237"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 122,
+      "representative_id": "literature:26469270",
+      "member_ids": [
+        "literature:26469270"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 123,
+      "representative_id": "literature:26911687",
+      "member_ids": [
+        "literature:26911687"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 124,
+      "representative_id": "literature:27132526",
+      "member_ids": [
+        "literature:27132526"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 125,
+      "representative_id": "literature:27162249",
+      "member_ids": [
+        "literature:27162249"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 126,
+      "representative_id": "literature:27199637",
+      "member_ids": [
+        "literature:27199637"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 127,
+      "representative_id": "literature:27226559",
+      "member_ids": [
+        "literature:27226559"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 128,
+      "representative_id": "literature:27230456",
+      "member_ids": [
+        "literature:27230456"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 129,
+      "representative_id": "literature:27251035",
+      "member_ids": [
+        "literature:27251035"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 130,
+      "representative_id": "literature:27314512",
+      "member_ids": [
+        "literature:27314512"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 131,
+      "representative_id": "literature:27316720",
+      "member_ids": [
+        "literature:27316720"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 132,
+      "representative_id": "literature:27385586",
+      "member_ids": [
+        "literature:27385586"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 133,
+      "representative_id": "literature:27500181",
+      "member_ids": [
+        "literature:27500181"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 134,
+      "representative_id": "literature:27539639",
+      "member_ids": [
+        "literature:27539639"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 135,
+      "representative_id": "literature:27549180",
+      "member_ids": [
+        "literature:27549180"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 136,
+      "representative_id": "literature:27577098",
+      "member_ids": [
+        "literature:27577098"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 137,
+      "representative_id": "literature:27723662",
+      "member_ids": [
+        "literature:27723662"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 138,
+      "representative_id": "literature:27859541",
+      "member_ids": [
+        "literature:27859541"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 139,
+      "representative_id": "literature:27866808",
+      "member_ids": [
+        "literature:27866808"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 140,
+      "representative_id": "literature:27939437",
+      "member_ids": [
+        "literature:27939437"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 141,
+      "representative_id": "literature:28164844",
+      "member_ids": [
+        "literature:28164844"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 142,
+      "representative_id": "literature:28189343",
+      "member_ids": [
+        "literature:28189343"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 143,
+      "representative_id": "literature:28216145",
+      "member_ids": [
+        "literature:28216145"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 144,
+      "representative_id": "literature:28220542",
+      "member_ids": [
+        "literature:28220542"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 145,
+      "representative_id": "literature:28251677",
+      "member_ids": [
+        "literature:28251677"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 146,
+      "representative_id": "literature:28295625",
+      "member_ids": [
+        "literature:28295625"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 147,
+      "representative_id": "literature:28451991",
+      "member_ids": [
+        "literature:28451991"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 148,
+      "representative_id": "literature:28586141",
+      "member_ids": [
+        "literature:28586141"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 149,
+      "representative_id": "literature:28598856",
+      "member_ids": [
+        "literature:28598856"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 150,
+      "representative_id": "literature:28751472",
+      "member_ids": [
+        "literature:28751472"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 151,
+      "representative_id": "literature:28764903",
+      "member_ids": [
+        "literature:28764903"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 152,
+      "representative_id": "literature:28810246",
+      "member_ids": [
+        "literature:28810246"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 153,
+      "representative_id": "literature:29018983",
+      "member_ids": [
+        "literature:29018983"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 154,
+      "representative_id": "literature:29072332",
+      "member_ids": [
+        "literature:29072332"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 155,
+      "representative_id": "literature:29113464",
+      "member_ids": [
+        "literature:29113464"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 156,
+      "representative_id": "literature:29162163",
+      "member_ids": [
+        "literature:29162163"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 157,
+      "representative_id": "literature:29166931",
+      "member_ids": [
+        "literature:29166931"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 158,
+      "representative_id": "literature:29177506",
+      "member_ids": [
+        "literature:29177506"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 159,
+      "representative_id": "literature:29357897",
+      "member_ids": [
+        "literature:29357897"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 160,
+      "representative_id": "literature:29400127",
+      "member_ids": [
+        "literature:29400127"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 161,
+      "representative_id": "literature:29473513",
+      "member_ids": [
+        "literature:29473513"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 162,
+      "representative_id": "literature:29563162",
+      "member_ids": [
+        "literature:29563162"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 163,
+      "representative_id": "literature:29718367",
+      "member_ids": [
+        "literature:29718367"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 164,
+      "representative_id": "literature:29935433",
+      "member_ids": [
+        "literature:29935433"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 165,
+      "representative_id": "literature:30048714",
+      "member_ids": [
+        "literature:30048714"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 166,
+      "representative_id": "literature:30108544",
+      "member_ids": [
+        "literature:30108544"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 167,
+      "representative_id": "literature:30173732",
+      "member_ids": [
+        "literature:30173732"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 168,
+      "representative_id": "literature:30210429",
+      "member_ids": [
+        "literature:30210429"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 169,
+      "representative_id": "literature:30411383",
+      "member_ids": [
+        "literature:30411383"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 170,
+      "representative_id": "literature:30482313",
+      "member_ids": [
+        "literature:30482313"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 171,
+      "representative_id": "literature:30507963",
+      "member_ids": [
+        "literature:30507963"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 172,
+      "representative_id": "literature:30579934",
+      "member_ids": [
+        "literature:30579934"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 173,
+      "representative_id": "literature:30640362",
+      "member_ids": [
+        "literature:30640362"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 174,
+      "representative_id": "literature:30704685",
+      "member_ids": [
+        "literature:30704685"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 175,
+      "representative_id": "literature:30709905",
+      "member_ids": [
+        "literature:30709905"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 176,
+      "representative_id": "literature:30737340",
+      "member_ids": [
+        "literature:30737340"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 177,
+      "representative_id": "literature:30778210",
+      "member_ids": [
+        "literature:30778210"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 178,
+      "representative_id": "literature:30880213",
+      "member_ids": [
+        "literature:30880213"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 179,
+      "representative_id": "literature:30898266",
+      "member_ids": [
+        "literature:30898266"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 180,
+      "representative_id": "literature:30945962",
+      "member_ids": [
+        "literature:30945962"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 181,
+      "representative_id": "literature:30957634",
+      "member_ids": [
+        "literature:30957634"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 182,
+      "representative_id": "literature:30966861",
+      "member_ids": [
+        "literature:30966861"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 183,
+      "representative_id": "literature:31066807",
+      "member_ids": [
+        "literature:31066807"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 184,
+      "representative_id": "literature:31188151",
+      "member_ids": [
+        "literature:31188151"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 185,
+      "representative_id": "literature:31327219",
+      "member_ids": [
+        "literature:31327219"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 186,
+      "representative_id": "literature:31388798",
+      "member_ids": [
+        "literature:31388798"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 187,
+      "representative_id": "literature:31464647",
+      "member_ids": [
+        "literature:31464647"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 188,
+      "representative_id": "literature:31498131",
+      "member_ids": [
+        "literature:31498131"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 189,
+      "representative_id": "literature:31625879",
+      "member_ids": [
+        "literature:31625879"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 190,
+      "representative_id": "literature:31733700",
+      "member_ids": [
+        "literature:31733700"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 191,
+      "representative_id": "literature:31761059",
+      "member_ids": [
+        "literature:31761059"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 192,
+      "representative_id": "literature:31831380",
+      "member_ids": [
+        "literature:31831380"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 193,
+      "representative_id": "literature:31930374",
+      "member_ids": [
+        "literature:31930374"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 194,
+      "representative_id": "literature:31980808",
+      "member_ids": [
+        "literature:31980808"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 195,
+      "representative_id": "literature:31996623",
+      "member_ids": [
+        "literature:31996623"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 196,
+      "representative_id": "literature:32164850",
+      "member_ids": [
+        "literature:32164850"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 197,
+      "representative_id": "literature:32209651",
+      "member_ids": [
+        "literature:32209651"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 198,
+      "representative_id": "literature:32250352",
+      "member_ids": [
+        "literature:32250352"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 199,
+      "representative_id": "literature:32279711",
+      "member_ids": [
+        "literature:32279711"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 200,
+      "representative_id": "literature:32286126",
+      "member_ids": [
+        "literature:32286126"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 201,
+      "representative_id": "literature:32385113",
+      "member_ids": [
+        "literature:32385113"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 202,
+      "representative_id": "literature:32441370",
+      "member_ids": [
+        "literature:32441370"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 203,
+      "representative_id": "literature:32509770",
+      "member_ids": [
+        "literature:32509770"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 204,
+      "representative_id": "literature:32737460",
+      "member_ids": [
+        "literature:32737460"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 205,
+      "representative_id": "literature:32796584",
+      "member_ids": [
+        "literature:32796584"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 206,
+      "representative_id": "literature:32807174",
+      "member_ids": [
+        "literature:32807174"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 207,
+      "representative_id": "literature:32824536",
+      "member_ids": [
+        "literature:32824536"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 208,
+      "representative_id": "literature:32848613",
+      "member_ids": [
+        "literature:32848613"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 209,
+      "representative_id": "literature:32986090",
+      "member_ids": [
+        "literature:32986090"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 210,
+      "representative_id": "literature:33177976",
+      "member_ids": [
+        "literature:33177976"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 211,
+      "representative_id": "literature:33198335",
+      "member_ids": [
+        "literature:33198335"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 212,
+      "representative_id": "literature:33242662",
+      "member_ids": [
+        "literature:33242662"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 213,
+      "representative_id": "literature:33244188",
+      "member_ids": [
+        "literature:33244188"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 214,
+      "representative_id": "literature:33252908",
+      "member_ids": [
+        "literature:33252908"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 215,
+      "representative_id": "literature:33300446",
+      "member_ids": [
+        "literature:33300446"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 216,
+      "representative_id": "literature:33338469",
+      "member_ids": [
+        "literature:33338469"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 217,
+      "representative_id": "literature:33475606",
+      "member_ids": [
+        "literature:33475606"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 218,
+      "representative_id": "literature:33509901",
+      "member_ids": [
+        "literature:33509901"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 219,
+      "representative_id": "literature:33514916",
+      "member_ids": [
+        "literature:33514916"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 220,
+      "representative_id": "literature:33606887",
+      "member_ids": [
+        "literature:33606887"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 221,
+      "representative_id": "literature:33609962",
+      "member_ids": [
+        "literature:33609962"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 222,
+      "representative_id": "literature:33640967",
+      "member_ids": [
+        "literature:33640967"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 223,
+      "representative_id": "literature:33704660",
+      "member_ids": [
+        "literature:33704660"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 224,
+      "representative_id": "literature:33718454",
+      "member_ids": [
+        "literature:33718454"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 225,
+      "representative_id": "literature:33802786",
+      "member_ids": [
+        "literature:33802786"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 226,
+      "representative_id": "literature:33846604",
+      "member_ids": [
+        "literature:33846604"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 227,
+      "representative_id": "literature:33860738",
+      "member_ids": [
+        "literature:33860738"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 228,
+      "representative_id": "literature:33889127",
+      "member_ids": [
+        "literature:33889127"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 229,
+      "representative_id": "literature:34021620",
+      "member_ids": [
+        "literature:34021620"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 230,
+      "representative_id": "literature:34110246",
+      "member_ids": [
+        "literature:34110246"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 231,
+      "representative_id": "literature:34194295",
+      "member_ids": [
+        "literature:34194295"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 232,
+      "representative_id": "literature:34313548",
+      "member_ids": [
+        "literature:34313548"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 233,
+      "representative_id": "literature:34450264",
+      "member_ids": [
+        "literature:34450264"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 234,
+      "representative_id": "literature:34618942",
+      "member_ids": [
+        "literature:34618942"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 235,
+      "representative_id": "literature:34762687",
+      "member_ids": [
+        "literature:34762687"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 236,
+      "representative_id": "literature:34841503",
+      "member_ids": [
+        "literature:34841503"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 237,
+      "representative_id": "literature:34914695",
+      "member_ids": [
+        "literature:34914695"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 238,
+      "representative_id": "literature:34984729",
+      "member_ids": [
+        "literature:34984729"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 239,
+      "representative_id": "literature:34996879",
+      "member_ids": [
+        "literature:34996879"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 240,
+      "representative_id": "literature:35034740",
+      "member_ids": [
+        "literature:35034740"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 241,
+      "representative_id": "literature:35246670",
+      "member_ids": [
+        "literature:35246670"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 242,
+      "representative_id": "literature:35263320",
+      "member_ids": [
+        "literature:35263320"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 243,
+      "representative_id": "literature:35521944",
+      "member_ids": [
+        "literature:35521944"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 244,
+      "representative_id": "literature:35562261",
+      "member_ids": [
+        "literature:35562261"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 245,
+      "representative_id": "literature:35626675",
+      "member_ids": [
+        "literature:35626675"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 246,
+      "representative_id": "literature:35750883",
+      "member_ids": [
+        "literature:35750883"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 247,
+      "representative_id": "literature:35932311",
+      "member_ids": [
+        "literature:35932311"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 248,
+      "representative_id": "literature:36075637",
+      "member_ids": [
+        "literature:36075637"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 249,
+      "representative_id": "literature:36109294",
+      "member_ids": [
+        "literature:36109294"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 250,
+      "representative_id": "literature:36222766",
+      "member_ids": [
+        "literature:36222766"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 251,
+      "representative_id": "literature:36455790",
+      "member_ids": [
+        "literature:36455790"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 252,
+      "representative_id": "literature:36554429",
+      "member_ids": [
+        "literature:36554429"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 253,
+      "representative_id": "literature:36593694",
+      "member_ids": [
+        "literature:36593694"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 254,
+      "representative_id": "literature:36601680",
+      "member_ids": [
+        "literature:36601680"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 255,
+      "representative_id": "literature:36722247",
+      "member_ids": [
+        "literature:36722247"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 256,
+      "representative_id": "literature:36843420",
+      "member_ids": [
+        "literature:36843420"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 257,
+      "representative_id": "literature:36901867",
+      "member_ids": [
+        "literature:36901867"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 258,
+      "representative_id": "literature:37063480",
+      "member_ids": [
+        "literature:37063480"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 259,
+      "representative_id": "literature:37080432",
+      "member_ids": [
+        "literature:37080432"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 260,
+      "representative_id": "literature:37155866",
+      "member_ids": [
+        "literature:37155866"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 261,
+      "representative_id": "literature:37159496",
+      "member_ids": [
+        "literature:37159496"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 262,
+      "representative_id": "literature:37240451",
+      "member_ids": [
+        "literature:37240451"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 263,
+      "representative_id": "literature:37365181",
+      "member_ids": [
+        "literature:37365181"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 264,
+      "representative_id": "literature:37403161",
+      "member_ids": [
+        "literature:37403161"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 265,
+      "representative_id": "literature:37403223",
+      "member_ids": [
+        "literature:37403223"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 266,
+      "representative_id": "literature:37422929",
+      "member_ids": [
+        "literature:37422929"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 267,
+      "representative_id": "literature:37490970",
+      "member_ids": [
+        "literature:37490970"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 268,
+      "representative_id": "literature:37569538",
+      "member_ids": [
+        "literature:37569538"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 269,
+      "representative_id": "literature:37582679",
+      "member_ids": [
+        "literature:37582679"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 270,
+      "representative_id": "literature:37674720",
+      "member_ids": [
+        "literature:37674720"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 271,
+      "representative_id": "literature:37786563",
+      "member_ids": [
+        "literature:37786563"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 272,
+      "representative_id": "literature:37879897",
+      "member_ids": [
+        "literature:37879897"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 273,
+      "representative_id": "literature:37937646",
+      "member_ids": [
+        "literature:37937646"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 274,
+      "representative_id": "literature:37962096",
+      "member_ids": [
+        "literature:37962096"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 275,
+      "representative_id": "literature:37975788",
+      "member_ids": [
+        "literature:37975788"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 276,
+      "representative_id": "literature:38070393",
+      "member_ids": [
+        "literature:38070393"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 277,
+      "representative_id": "literature:38075821",
+      "member_ids": [
+        "literature:38075821"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 278,
+      "representative_id": "literature:38117656",
+      "member_ids": [
+        "literature:38117656"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 279,
+      "representative_id": "literature:38129277",
+      "member_ids": [
+        "literature:38129277"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 280,
+      "representative_id": "literature:38307024",
+      "member_ids": [
+        "literature:38307024"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 281,
+      "representative_id": "literature:38429947",
+      "member_ids": [
+        "literature:38429947"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 282,
+      "representative_id": "literature:38485660",
+      "member_ids": [
+        "literature:38485660"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 283,
+      "representative_id": "literature:38526011",
+      "member_ids": [
+        "literature:38526011"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 284,
+      "representative_id": "literature:38529501",
+      "member_ids": [
+        "literature:38529501"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 285,
+      "representative_id": "literature:38758903",
+      "member_ids": [
+        "literature:38758903"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 286,
+      "representative_id": "literature:38797393",
+      "member_ids": [
+        "literature:38797393"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 287,
+      "representative_id": "literature:38953416",
+      "member_ids": [
+        "literature:38953416"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 288,
+      "representative_id": "literature:39000225",
+      "member_ids": [
+        "literature:39000225"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 289,
+      "representative_id": "literature:39064171",
+      "member_ids": [
+        "literature:39064171"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 290,
+      "representative_id": "literature:39073794",
+      "member_ids": [
+        "literature:39073794"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 291,
+      "representative_id": "literature:39073834",
+      "member_ids": [
+        "literature:39073834"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 292,
+      "representative_id": "literature:39091827",
+      "member_ids": [
+        "literature:39091827",
+        "literature:39281856"
+      ],
+      "count": 2,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 293,
+      "representative_id": "literature:40114783",
+      "member_ids": [
+        "literature:40114783",
+        "literature:39108519"
+      ],
+      "count": 2,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 294,
+      "representative_id": "literature:39136812",
+      "member_ids": [
+        "literature:39136812"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 295,
+      "representative_id": "literature:39228454",
+      "member_ids": [
+        "literature:39228454"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 296,
+      "representative_id": "literature:39331104",
+      "member_ids": [
+        "literature:39331104"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 297,
+      "representative_id": "literature:39379705",
+      "member_ids": [
+        "literature:39379705"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 298,
+      "representative_id": "literature:39390438",
+      "member_ids": [
+        "literature:39390438"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 299,
+      "representative_id": "literature:39449004",
+      "member_ids": [
+        "literature:39449004"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 300,
+      "representative_id": "literature:39496848",
+      "member_ids": [
+        "literature:39496848"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 301,
+      "representative_id": "literature:39588689",
+      "member_ids": [
+        "literature:39588689"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 302,
+      "representative_id": "literature:39666171",
+      "member_ids": [
+        "literature:39666171"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 303,
+      "representative_id": "literature:39762644",
+      "member_ids": [
+        "literature:39762644"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 304,
+      "representative_id": "literature:39868860",
+      "member_ids": [
+        "literature:39868860"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 305,
+      "representative_id": "literature:39893159",
+      "member_ids": [
+        "literature:39893159"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 306,
+      "representative_id": "literature:39971932",
+      "member_ids": [
+        "literature:39971932"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 307,
+      "representative_id": "literature:40079755",
+      "member_ids": [
+        "literature:40079755"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 308,
+      "representative_id": "literature:40136601",
+      "member_ids": [
+        "literature:40136601"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 309,
+      "representative_id": "literature:40253741",
+      "member_ids": [
+        "literature:40253741"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 310,
+      "representative_id": "literature:40273394",
+      "member_ids": [
+        "literature:40273394"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 311,
+      "representative_id": "literature:40298214",
+      "member_ids": [
+        "literature:40298214"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 312,
+      "representative_id": "literature:40320462",
+      "member_ids": [
+        "literature:40320462"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 313,
+      "representative_id": "literature:40333681",
+      "member_ids": [
+        "literature:40333681"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 314,
+      "representative_id": "literature:40343851",
+      "member_ids": [
+        "literature:40343851"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 315,
+      "representative_id": "literature:40440058",
+      "member_ids": [
+        "literature:40440058"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 316,
+      "representative_id": "literature:40523620",
+      "member_ids": [
+        "literature:40523620"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 317,
+      "representative_id": "literature:40523921",
+      "member_ids": [
+        "literature:40523921"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 318,
+      "representative_id": "literature:40587145",
+      "member_ids": [
+        "literature:40587145"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 319,
+      "representative_id": "literature:40621605",
+      "member_ids": [
+        "literature:40621605"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 320,
+      "representative_id": "literature:40639630",
+      "member_ids": [
+        "literature:40639630"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 321,
+      "representative_id": "literature:40650193",
+      "member_ids": [
+        "literature:40650193"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 322,
+      "representative_id": "literature:40676250",
+      "member_ids": [
+        "literature:40676250"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 323,
+      "representative_id": "literature:40776425",
+      "member_ids": [
+        "literature:40776425"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 324,
+      "representative_id": "literature:40790282",
+      "member_ids": [
+        "literature:40790282"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 325,
+      "representative_id": "literature:40802138",
+      "member_ids": [
+        "literature:40802138"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 326,
+      "representative_id": "literature:40926031",
+      "member_ids": [
+        "literature:40926031"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 327,
+      "representative_id": "literature:40950072",
+      "member_ids": [
+        "literature:40950072"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 328,
+      "representative_id": "literature:41031878",
+      "member_ids": [
+        "literature:41031878"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 329,
+      "representative_id": "literature:41082984",
+      "member_ids": [
+        "literature:41082984"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 330,
+      "representative_id": "literature:41103722",
+      "member_ids": [
+        "literature:41103722"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 331,
+      "representative_id": "literature:41110294",
+      "member_ids": [
+        "literature:41110294"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 332,
+      "representative_id": "literature:41164302",
+      "member_ids": [
+        "literature:41164302"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 333,
+      "representative_id": "literature:41195411",
+      "member_ids": [
+        "literature:41195411"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 334,
+      "representative_id": "literature:41217513",
+      "member_ids": [
+        "literature:41217513"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 335,
+      "representative_id": "literature:41229914",
+      "member_ids": [
+        "literature:41229914"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 336,
+      "representative_id": "literature:41261661",
+      "member_ids": [
+        "literature:41261661"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 337,
+      "representative_id": "literature:41702332",
+      "member_ids": [
+        "literature:41702332"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 338,
+      "representative_id": "literature:41834923",
+      "member_ids": [
+        "literature:41834923"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 339,
+      "representative_id": "literature:41981587",
+      "member_ids": [
+        "literature:41981587"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 340,
+      "representative_id": "literature:42003184",
+      "member_ids": [
+        "literature:42003184"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 341,
+      "representative_id": "literature:42153355",
+      "member_ids": [
+        "literature:42153355"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 342,
+      "representative_id": "literature:42166327",
+      "member_ids": [
+        "literature:42166327"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 343,
+      "representative_id": "trial:NCT04566341",
+      "member_ids": [
+        "trial:NCT04566341"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 344,
+      "representative_id": "trial:NCT05094011",
+      "member_ids": [
+        "trial:NCT05094011"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 345,
+      "representative_id": "trial:NCT05286736",
+      "member_ids": [
+        "trial:NCT05286736"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 346,
+      "representative_id": "trial:NCT05931575",
+      "member_ids": [
+        "trial:NCT05931575"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 347,
+      "representative_id": "trial:NCT06113640",
+      "member_ids": [
+        "trial:NCT06113640"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 348,
+      "representative_id": "trial:NCT06459154",
+      "member_ids": [
+        "trial:NCT06459154"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 349,
+      "representative_id": "trial:NCT06536348",
+      "member_ids": [
+        "trial:NCT06536348"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 350,
+      "representative_id": "trial:NCT06538298",
+      "member_ids": [
+        "trial:NCT06538298"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 351,
+      "representative_id": "trial:NCT06580977",
+      "member_ids": [
+        "trial:NCT06580977"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 352,
+      "representative_id": "trial:NCT06629389",
+      "member_ids": [
+        "trial:NCT06629389"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 353,
+      "representative_id": "trial:NCT06680830",
+      "member_ids": [
+        "trial:NCT06680830"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 354,
+      "representative_id": "trial:NCT06705517",
+      "member_ids": [
+        "trial:NCT06705517"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 355,
+      "representative_id": "trial:NCT06817772",
+      "member_ids": [
+        "trial:NCT06817772"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 356,
+      "representative_id": "trial:NCT06915987",
+      "member_ids": [
+        "trial:NCT06915987"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 357,
+      "representative_id": "trial:NCT06918938",
+      "member_ids": [
+        "trial:NCT06918938"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 358,
+      "representative_id": "trial:NCT06965374",
+      "member_ids": [
+        "trial:NCT06965374"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 359,
+      "representative_id": "trial:NCT07015346",
+      "member_ids": [
+        "trial:NCT07015346"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 360,
+      "representative_id": "trial:NCT07023224",
+      "member_ids": [
+        "trial:NCT07023224"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 361,
+      "representative_id": "trial:NCT07106021",
+      "member_ids": [
+        "trial:NCT07106021"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 362,
+      "representative_id": "trial:NCT07114354",
+      "member_ids": [
+        "trial:NCT07114354"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 363,
+      "representative_id": "trial:NCT07148700",
+      "member_ids": [
+        "trial:NCT07148700"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 364,
+      "representative_id": "trial:NCT07154511",
+      "member_ids": [
+        "trial:NCT07154511"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 365,
+      "representative_id": "trial:NCT07163156",
+      "member_ids": [
+        "trial:NCT07163156"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 366,
+      "representative_id": "trial:NCT07204652",
+      "member_ids": [
+        "trial:NCT07204652",
+        "trial:NCT07217054"
+      ],
+      "count": 2,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 367,
+      "representative_id": "trial:NCT07229651",
+      "member_ids": [
+        "trial:NCT07229651"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 368,
+      "representative_id": "trial:NCT07257393",
+      "member_ids": [
+        "trial:NCT07257393"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 369,
+      "representative_id": "trial:NCT07284719",
+      "member_ids": [
+        "trial:NCT07284719"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 370,
+      "representative_id": "trial:NCT07312110",
+      "member_ids": [
+        "trial:NCT07312110"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 371,
+      "representative_id": "trial:NCT07316751",
+      "member_ids": [
+        "trial:NCT07316751"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 372,
+      "representative_id": "trial:NCT07337226",
+      "member_ids": [
+        "trial:NCT07337226"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 373,
+      "representative_id": "trial:NCT07359716",
+      "member_ids": [
+        "trial:NCT07359716"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 374,
+      "representative_id": "trial:NCT07378722",
+      "member_ids": [
+        "trial:NCT07378722"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 375,
+      "representative_id": "trial:NCT07395531",
+      "member_ids": [
+        "trial:NCT07395531"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 376,
+      "representative_id": "trial:NCT07554833",
+      "member_ids": [
+        "trial:NCT07554833"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 377,
+      "representative_id": "trial:NCT07568067",
+      "member_ids": [
+        "trial:NCT07568067"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 378,
+      "representative_id": "trial:NCT07572903",
+      "member_ids": [
+        "trial:NCT07572903"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 379,
+      "representative_id": "trial:NCT07578272",
+      "member_ids": [
+        "trial:NCT07578272"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 380,
+      "representative_id": "trial:NCT07610031",
+      "member_ids": [
+        "trial:NCT07610031"
+      ],
+      "count": 1,
+      "shown_in_topk": false,
+      "possible_contradiction": false
+    },
+    {
+      "cluster_id": 381,
+      "representative_id": "trial:NCT07611578",
+      "member_ids": [
+        "trial:NCT07611578"
+      ],
+      "count": 1,
+      "shown_in_topk": true,
+      "possible_contradiction": false
+    }
+  ],
+  "excluded_ids": [
+    "grant:F30NS129283",
+    "grant:F31ES034985",
+    "grant:F31NS135928",
+    "grant:F31NS141335",
+    "grant:F32NS141898",
+    "grant:I01BX006539",
+    "grant:IK2RX003253",
+    "grant:K00MH133546",
+    "grant:K08NS123428",
+    "grant:K08NS131581",
+    "grant:R00ES032488",
+    "grant:R01AG081283",
+    "grant:R01AG082373",
+    "grant:R01AG085688",
+    "grant:R01DK138465",
+    "grant:R01ES023839",
+    "grant:R01ES034270",
+    "grant:R01ES034846",
+    "grant:R01GM133172",
+    "grant:R01GM141553",
+    "grant:R01NS027699",
+    "grant:R01NS058487",
+    "grant:R01NS064934",
+    "grant:R01NS103931",
+    "grant:R01NS120625",
+    "grant:R01NS124777",
+    "grant:R01NS124848",
+    "grant:R01NS129517",
+    "grant:R01NS129711",
+    "grant:R01NS131137",
+    "grant:R03NS144936",
+    "grant:R15CA305552",
+    "grant:R21ES037434",
+    "grant:R21NS136895",
+    "grant:R35GM142869",
+    "grant:R35GM150857",
+    "grant:R35GM152038",
+    "grant:R37NS115139",
+    "grant:U19AG071754",
+    "grant:U19NS110456",
+    "grant:ZIAAG000937",
+    "grant:ZIAAI001086",
+    "grant:ZIABC011744",
+    "grant:ZIADK056016",
+    "grant:ZIADK075145",
+    "grant:ZIAHL001055",
+    "grant:ZIANS002946",
+    "grant:ZIANS003034",
+    "grant:ZIANS003135",
+    "literature:10.1101/001685",
+    "literature:10.1101/002485",
+    "literature:10.1101/004036",
+    "literature:10.1101/004192",
+    "literature:10.1101/004325",
+    "literature:10.1101/004374",
+    "literature:10.1101/004416",
+    "literature:10.1101/004473",
+    "literature:10.1101/005264",
+    "literature:10.1101/005660",
+    "literature:10.1101/006155",
+    "literature:10.1101/006544",
+    "literature:10.1101/006965",
+    "literature:10.1101/007765",
+    "literature:10.1101/2020.02.23.961599",
+    "literature:10.1101/2022.06.01.494130",
+    "literature:10.1101/2022.08.03.22278207",
+    "literature:10.1101/2022.10.03.510717",
+    "literature:10.1101/2022.12.15.520449",
+    "literature:10.1101/2023.02.01.522707",
+    "literature:10.1101/2023.03.11.532176",
+    "literature:10.1101/2023.05.23.541929",
+    "literature:10.1101/2023.10.04.560803",
+    "literature:10.1101/2024.04.28.591482",
+    "literature:10.1101/2024.06.19.24308302",
+    "literature:10.1101/2024.09.05.24313131",
+    "literature:10.1101/2024.12.13.24318996",
+    "literature:10.1101/2024.12.20.629583",
+    "literature:10.1101/2025.01.30.25320306",
+    "literature:10.1101/2025.06.09.658641",
+    "literature:10.1101/2025.06.10.658866",
+    "literature:10.1101/2025.07.07.662960",
+    "literature:10.1101/2025.08.13.25333123",
+    "literature:10.1101/2025.08.22.25334259",
+    "literature:10.1101/2025.09.08.25335343",
+    "literature:10.1101/2025.10.13.682210",
+    "literature:10.1101/2025.11.08.687161",
+    "literature:10.1101/530535",
+    "literature:10.20944/preprints202408.2167.v2",
+    "literature:10.20944/preprints202509.1666.v1",
+    "literature:10.21203/rs.3.rs-1285855/v1",
+    "literature:10.21203/rs.3.rs-1559790/v1",
+    "literature:10.21203/rs.3.rs-174850/v1",
+    "literature:10.21203/rs.3.rs-3128098/v1",
+    "literature:10.21203/rs.3.rs-4232431/v1",
+    "literature:10.21203/rs.3.rs-4583055/v1",
+    "literature:10.21203/rs.3.rs-5411701/v1",
+    "literature:10.21203/rs.3.rs-6231369/v1",
+    "literature:23831180",
+    "literature:25425650",
+    "literature:25582445",
+    "literature:25617759",
+    "literature:25650534",
+    "literature:25979701",
+    "literature:26020005",
+    "literature:26078453",
+    "literature:26090080",
+    "literature:26396237",
+    "literature:26469270",
+    "literature:26911687",
+    "literature:27132526",
+    "literature:27162249",
+    "literature:27199637",
+    "literature:27226559",
+    "literature:27230456",
+    "literature:27251035",
+    "literature:27314512",
+    "literature:27316720",
+    "literature:27385586",
+    "literature:27500181",
+    "literature:27539639",
+    "literature:27549180",
+    "literature:27577098",
+    "literature:27723662",
+    "literature:27859541",
+    "literature:27866808",
+    "literature:27939437",
+    "literature:28164844",
+    "literature:28189343",
+    "literature:28216145",
+    "literature:28220542",
+    "literature:28251677",
+    "literature:28295625",
+    "literature:28451991",
+    "literature:28586141",
+    "literature:28751472",
+    "literature:28764903",
+    "literature:28810246",
+    "literature:29018983",
+    "literature:29072332",
+    "literature:29113464",
+    "literature:29162163",
+    "literature:29166931",
+    "literature:29177506",
+    "literature:29357897",
+    "literature:29400127",
+    "literature:29473513",
+    "literature:29563162",
+    "literature:29718367",
+    "literature:29935433",
+    "literature:30048714",
+    "literature:30108544",
+    "literature:30173732",
+    "literature:30210429",
+    "literature:30411383",
+    "literature:30482313",
+    "literature:30507963",
+    "literature:30579934",
+    "literature:30640362",
+    "literature:30704685",
+    "literature:30709905",
+    "literature:30737340",
+    "literature:30778210",
+    "literature:30880213",
+    "literature:30898266",
+    "literature:30945962",
+    "literature:30957634",
+    "literature:30966861",
+    "literature:31066807",
+    "literature:31188151",
+    "literature:31327219",
+    "literature:31388798",
+    "literature:31464647",
+    "literature:31498131",
+    "literature:31625879",
+    "literature:31733700",
+    "literature:31761059",
+    "literature:31831380",
+    "literature:31930374",
+    "literature:31980808",
+    "literature:31996623",
+    "literature:32164850",
+    "literature:32209651",
+    "literature:32250352",
+    "literature:32279711",
+    "literature:32286126",
+    "literature:32385113",
+    "literature:32441370",
+    "literature:32509770",
+    "literature:32737460",
+    "literature:32796584",
+    "literature:32807174",
+    "literature:32824536",
+    "literature:32848613",
+    "literature:32986090",
+    "literature:33177976",
+    "literature:33198335",
+    "literature:33242662",
+    "literature:33244188",
+    "literature:33252908",
+    "literature:33300446",
+    "literature:33338469",
+    "literature:33475606",
+    "literature:33509901",
+    "literature:33514916",
+    "literature:33606887",
+    "literature:33609962",
+    "literature:33640967",
+    "literature:33704660",
+    "literature:33718454",
+    "literature:33802786",
+    "literature:33846604",
+    "literature:33860738",
+    "literature:33889127",
+    "literature:34021620",
+    "literature:34110246",
+    "literature:34313548",
+    "literature:34450264",
+    "literature:34618942",
+    "literature:34762687",
+    "literature:34841503",
+    "literature:34914695",
+    "literature:34984729",
+    "literature:34996879",
+    "literature:35246670",
+    "literature:35263320",
+    "literature:35521944",
+    "literature:35562261",
+    "literature:35626675",
+    "literature:35932311",
+    "literature:36075637",
+    "literature:36109294",
+    "literature:36222766",
+    "literature:36455790",
+    "literature:36593694",
+    "literature:36601680",
+    "literature:36843420",
+    "literature:36901867",
+    "literature:37063480",
+    "literature:37080432",
+    "literature:37155866",
+    "literature:37159496",
+    "literature:37240451",
+    "literature:37365181",
+    "literature:37403161",
+    "literature:37403223",
+    "literature:37422929",
+    "literature:37490970",
+    "literature:37569538",
+    "literature:37582679",
+    "literature:37674720",
+    "literature:37879897",
+    "literature:37937646",
+    "literature:37962096",
+    "literature:37975788",
+    "literature:38070393",
+    "literature:38075821",
+    "literature:38117656",
+    "literature:38129277",
+    "literature:38307024",
+    "literature:38429947",
+    "literature:38485660",
+    "literature:38526011",
+    "literature:38529501",
+    "literature:38797393",
+    "literature:38953416",
+    "literature:39000225",
+    "literature:39064171",
+    "literature:39073794",
+    "literature:39073834",
+    "literature:39091827",
+    "literature:39108519",
+    "literature:39136812",
+    "literature:39228454",
+    "literature:39281856",
+    "literature:39331104",
+    "literature:39379705",
+    "literature:39390438",
+    "literature:39449004",
+    "literature:39588689",
+    "literature:39666171",
+    "literature:39868860",
+    "literature:39893159",
+    "literature:39971932",
+    "literature:40114783",
+    "literature:40136601",
+    "literature:40253741",
+    "literature:40320462",
+    "literature:40333681",
+    "literature:40440058",
+    "literature:40523620",
+    "literature:40523921",
+    "literature:40621605",
+    "literature:40650193",
+    "literature:40676250",
+    "literature:40776425",
+    "literature:40790282",
+    "literature:40802138",
+    "literature:40926031",
+    "literature:40950072",
+    "literature:41031878",
+    "literature:41082984",
+    "literature:41103722",
+    "literature:41110294",
+    "literature:41164302",
+    "literature:41195411",
+    "literature:41217513",
+    "literature:41229914",
+    "literature:41261661",
+    "literature:41702332",
+    "literature:41834923",
+    "literature:42153355",
+    "literature:42166327",
+    "trial:NCT04566341",
+    "trial:NCT05286736",
+    "trial:NCT05931575",
+    "trial:NCT06113640",
+    "trial:NCT06459154",
+    "trial:NCT06538298",
+    "trial:NCT06580977",
+    "trial:NCT06629389",
+    "trial:NCT06680830",
+    "trial:NCT06705517",
+    "trial:NCT06817772",
+    "trial:NCT06915987",
+    "trial:NCT06918938",
+    "trial:NCT06965374",
+    "trial:NCT07015346",
+    "trial:NCT07023224",
+    "trial:NCT07106021",
+    "trial:NCT07114354",
+    "trial:NCT07148700",
+    "trial:NCT07154511",
+    "trial:NCT07163156",
+    "trial:NCT07204652",
+    "trial:NCT07217054",
+    "trial:NCT07229651",
+    "trial:NCT07257393",
+    "trial:NCT07284719",
+    "trial:NCT07316751",
+    "trial:NCT07610031"
+  ],
+  "guardrail": "key_finding_clustering_diversity_floor",
+  "anti_confirmation": "MITIGATION ONLY — spreads findings not stances; pending skeptic grade / Agent-2/3 tags",
+  "honesty": "Clustering gives a real diversity axis and tames redundancy, but with grade flat it spreads FINDINGS, not STANCES — it MITIGATES confirmation bias, it does NOT prevent it. Corroboration count is NOT calibration. The negation penalty is weak partial mitigation; the possible_contradiction flag is the safety net."
+}

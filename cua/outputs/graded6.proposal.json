@@ -1,0 +1,694 @@
+{
+  "project_title": "Parkinson's disease pipeline — NIH R01 research proposal",
+  "central_hypothesis": "We hypothesize that, in a GBA/glucocerebrosidase-stratified early or prodromal PD cohort, a lysosome-directed intervention that engages beta-glucocerebrosidase will be associated with measurable target engagement and with change in candidate progression biomarkers, and we will test whether such engagement tracks with clinical severity measured by MDS-UPDRS; we will determine whether stratification and earlier enrollment yield outcomes distinguishable from those observed in unstratified later-stage trials.",
+  "sections": [
+    {
+      "name": "significance",
+      "serves_dimension": "F1",
+      "evidence_ids": [
+        "literature:39496848",
+        "literature:37786563",
+        "literature:40587145",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40298214"
+      ],
+      "text": "We will investigate whether a lysosome-directed, target-engaging intervention can be evaluated for disease-modifying effect in a biomarker-stratified early/prodromal Parkinson's disease population. The field has explicitly named slowing disease progression through validated biomarkers and targeted therapies as an unmet priority, yet whether such an intervention alters clinical trajectory in a defined subgroup remains an open question: in PD dementia, ambroxol demonstrated target engagement by raising beta-glucocerebrosidase levels but produced no difference on primary or secondary clinical outcomes, leaving unresolved whether stratification by GBA/glucocerebrosidase status and earlier-stage enrollment changes that result. We will examine this in a population where GBA mutations, the single largest known genetic risk factor, offer an opportunity to study PD at a pre-clinical stage, and where gut-directed prodromal windows have been proposed as candidate sites for early detection and disease-modifying treatment. Resolving whether target engagement can be coupled to clinical benefit in a biomarker-anchored subgroup matters because it would inform how the PD pipeline selects and stratifies participants for future disease-modifying trials."
+    },
+    {
+      "name": "innovation",
+      "serves_dimension": "F1",
+      "evidence_ids": [
+        "literature:40587145",
+        "literature:R01NS125317",
+        "literature:R01NS125592",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:28598856"
+      ],
+      "text": "The departure from current practice is the prospective coupling of a single mechanistic target — beta-glucocerebrosidase / lysosomal chloride and function biology and its regulation in microglia — to a biomarker-defined prodromal PD subgroup rather than to late-stage unstratified cohorts, and the integration of GBA carrier status, alpha-synuclein strain/aggregation readouts, and gut-axis prodromal markers as a unified stratification framework within one design. We will determine whether evaluating lysosomal target engagement alongside alpha-synuclein strain-based diagnostic and progression measures and gut-axis early-detection windows within a GBA-anchored cohort constitutes a more tractable pipeline strategy than the isolated, single-stream approaches currently pursued."
+    }
+  ],
+  "aims": [
+    {
+      "id": "aim-1",
+      "hypothesis": "We will investigate whether GBA/glucocerebrosidase enzymatic status, candidate alpha-synuclein seed conformer (\"strain\") signatures, and gut-axis biomarkers can be jointly measured in a prospectively enrolled early/prodromal PD cohort to define discrete, prospectively trackable enrollment strata — examining whether a multi-marker classifier separates GBA-variant, seed-positive, and gut-axis-altered subgroups with reproducible (split-half/test-retest) assignment.",
+      "rationale": "GBA mutations are described as the single largest genetic risk factor for idiopathic PD and offer a window into pre-clinical disease, motivating GBA/GCase status as a stratifying axis; β-glucocerebrosidase is a tractable, measurable target. A prodromal subgroup is proposed to show rostral spread of pathological alpha-synuclein from the gut, supporting alpha-synuclein seed/strain assays and gut-axis sampling as complementary strata. Distinct alpha-synuclein strain properties have been proposed to track diagnostic and progression subtypes. Neuroimaging and metabolomic/microbiota biomarkers are being advanced for early discrepant diagnosis. Together these justify building a biomarker-anchored enrollment framework rather than enrolling on clinical phenotype alone.",
+      "approach": "Prospective observational cohort design enrolling early/prodromal participants (target n≈300; powered for ≥3 strata with ≥60/stratum after attrition) plus matched controls, with annual follow-up over the grant period. Stratifying assays: (1) GBA genotyping (targeted sequencing panel) plus peripheral β-glucocerebrosidase enzymatic activity in dried blood spots/leukocytes; (2) candidate alpha-synuclein seed amplification assay (seed conformer/RT-QuIC–type readout) on CSF and accessible peripheral tissue, with conformational/strain phenotyping; (3) gut-axis panel — stool 16S/shotgun microbiome, plasma metabolomics including caffeine-metabolism markers, and standardized GI-symptom instruments. Cross-modal integration via unsupervised clustering (consensus k-means / latent class) and a supervised multi-marker classifier; rigor controls include pre-registered analysis plan, blinded assay batching, technical replicates for test–retest reliability (target intraclass correlation thresholds), split-half internal validation, and false-discovery correction. Expertise/resources assumed (F3): a movement-disorders clinical recruitment site with prodromal-screening capacity, a CLIA-grade genetics/enzymology lab, an alpha-synuclein seed-assay core, a microbiome/metabolomics core with biobanking and standardized stool/CSF collection, and a biostatistics team for multi-omic integration.",
+      "expected_outcomes": "Framed descriptively: comparable cohort and biomarker literature suggests it would be reasonable to anticipate that a multi-marker classifier might separate candidate strata with cross-validated AUC in the modest-to-moderate range (roughly 0.65-0.80) rather than near-perfect discrimination, given the GBA-LRRK2 lysosomal-pathway overlap reported in Lewy body dementia and LRRK2-neurotoxicity programs. Subgroup co-occurrence is plausibly non-trivial — overlap between GBA-low-GCase, seed-positive, and gut-axis-altered subsets could involve on the order of 20-40% of stratified participants sharing membership, consistent with cross-pathway aggregation/trafficking findings (PPM1H/autophagy, Rab27 endocytosis). For reliability, lysosomal-enzyme and SAA platforms in comparable programs suggest test-retest ICCs in the ~0.7-0.85 band may be achievable for genotyping-anchored, well-batched enzymatic readouts, while microbiome/metabolomic features may show lower stability (ICC possibly <0.6), requiring the diet/medication covariate adjustment noted above and consistent with the diet/transit/macrophage dependence seen in gut-axis work. The deliverable would suggestively be an SOP-anchored enrollment framework with quantified per-marker reliability and prevalence/co-occurrence tables; no progression-prediction or causal claim is implied, only descriptive separability and reproducibility metrics.",
+      "pitfalls_alternatives": "Comparable multi-omic prodromal-cohort work suggests several concrete failure modes for joint GBA/seed/gut-axis stratification. (1) Slow accrual and phenotypically diffuse samples: preclinical-marker parkinsonism cohorts illustrate that prodromal screening yields heterogeneous enrollees in whom marker-defined subgroups overlap heavily, which could erode the >=60/stratum target after attrition; a contingency suggested by enteric-synucleinopathy and gut-LRRK2 epithelial work is to add GI-symptom / enteric-macrophage at-risk referral streams as a recruitment multiplier with adaptive per-stratum quotas. (2) Cross-pathway contamination of strata: the GBA-LRRK2 intersection documented in Lewy body dementia, and the LRRK2-counteracting RAB-phosphatase (PPM1H) effects on axonal autophagy and alpha-synuclein aggregation, imply a nominal 'GBA-variant' stratum may carry mixed lysosomal/autophagic biology that blurs cluster boundaries; a reasonable fallback is to collect LRRK2 status and autophagic-flux covariates and model strata as overlapping rather than disjoint. (3) Seed-conformer 'strain' separation may not reproduce in vivo: alpha-synuclein endocytosis/clearance (Rab27) and vesicular-trafficking work suggest conformer behavior is sensitive to trafficking context, so discrete strain assignment could be unstable across replicates — the proposal's own fallback to binary seed status plus continuous seeding-kinetics metrics is consistent with this risk. (4) Gut-axis confounding: microbiome and metabolomic signals are diet-, transit-, and macrophage-state dependent (echoing enteric-macrophage and gut-epithelial LRRK2 work), risking spurious clusters; diet logging, caffeine-metabolite orthogonal readouts, and sensitivity analyses excluding transit-altering medications are appropriate. (5) Assay reliability / batch drift in GCase and SAA: lysosomal-biochemistry and lysosomal pH/ion-homeostasis programs document that GCase activity is sensitive to assay conditions, which could depress test-retest ICC below threshold; blinded batching, spiked controls, replicate ICC reporting, and a CSF-only seed fallback if peripheral sensitivity is insufficient are sensible mitigations.",
+      "citation_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:37786563",
+        "literature:35750883",
+        "literature:40273394",
+        "literature:40587145",
+        "grant:R01NS125592",
+        "literature:39496848"
+      ]
+    },
+    {
+      "id": "aim-2",
+      "hypothesis": "We will examine whether a lysosome-directed intervention that engages beta-glucocerebrosidase (GCase) produces measurable, dose-related target engagement (increased peripheral and CNS GCase activity) and whether such engagement is accompanied by detectable changes in candidate progression biomarkers within the GBA-stratified versus non-GBA cohort; we make no claim of clinical efficacy or causal disease modification at this exploratory stage.",
+      "rationale": "GBA variants are the single largest genetic risk factor for PD and offer a window to study early/pre-clinical disease and rational lysosomal therapeutics. A prior randomized trial of the GCase-engaging chaperone ambroxol demonstrated pharmacodynamic target engagement (increased GCase levels) even though it did not show group differences on clinical outcomes, underscoring that target engagement and biomarker movement should be assessed as distinct, intermediate endpoints before efficacy can be inferred. Convergent mechanistic work links LRRK2, lysosomal/chloride homeostasis, sphingolipid biology, and cAbl signaling to GCase/lysosomal function in PD and Gaucher-PD, motivating a target-engagement-first design. The broader field prioritizes biomarker-anchored, target-engagement-gated disease-modification studies.",
+      "approach": "Within the Aim 1 stratified cohort (GBA-variant carriers vs. non-carriers), we will run a randomized, double-blind, placebo-controlled pharmacodynamic study of a lysosome-directed, GCase-engaging agent (e.g., a small-molecule chaperone) at two dose levels, mirroring the engagement-confirmation design used previously. Primary pharmacodynamic readout: GCase enzymatic activity assayed in peripheral blood mononuclear cells/dried blood spots and, where consented, in CSF, at baseline and across treatment, with a pre-specified engagement threshold (e.g., >=1.5-fold increase over placebo). Candidate progression biomarkers (exploratory, not efficacy): CSF/plasma alpha-synuclein seed-amplification and aggregation measures, lysosomal substrate/sphingolipid panels (glucosylceramide species), and neurodegeneration markers (e.g., NfL), supported by mechanistic rationale from lysosomal and sphingolipid programs. Imaging substudy: synaptic/dopamine-transporter PET to anchor progression context. In parallel, SH-SY5Y and patient-derived cellular models will quantify GCase activity, substrate clearance, and autophagic flux to confirm mechanism-of-engagement and establish assay reproducibility. Statistics: mixed-effects models with stratum (GBA vs. non-GBA) × treatment interaction; a priori power calculation targeting the engagement effect size from prior data; multiplicity control across exploratory biomarkers (FDR). Expertise/resources assumed (F3): a stratified/genotyped recruitment pipeline with CLIA genotyping, validated GCase enzymatic and SAA assay platforms with documented intra/inter-assay CVs, CSF collection and PET imaging capacity, a biorepository, statistical/biostatistics support, and lysosomal-biochemistry laboratory capability—competencies represented across the lysosomal/sphingolipid and imaging grant programs cited.",
+      "expected_outcomes": "Exploratory expectations grounded in the comparison literature: it is reasonable to anticipate that a chaperone-type agent could meet a dose-related GCase increase, plausibly in the ~1.3-2.0-fold range over placebo in peripheral compartments, with the >=1.5-fold threshold more readily met peripherally than in CSF — consistent with the engagement-translation gaps highlighted in the Gaucher pharmacotherapy review and lysosomal-trafficking work (BORCS5, Lamp1). Downstream candidate biomarkers would suggestively show small and uncertain direction-of-effect changes: glucosylceramide species might decrease modestly while alpha-synuclein seeding and NfL may show little detectable movement within the trial window, reported as effect-size estimates with wide confidence intervals rather than confirmatory shifts. Assay performance could plausibly target intra-assay CVs in the ~5-15% range and inter-assay CVs that may exceed 15-20% absent strict SOP control, per the lysosomal-enzyme and pH-homeostasis variability seen across comparable programs. The structurally anticipated outcome — robust engagement with null or ambiguous biomarker movement — would itself be informative for gating a future powered trial; no efficacy or causal disease-modification claim is asserted.",
+      "pitfalls_alternatives": "The 'road not taken' literature flags concrete risks for a GCase-engagement pharmacodynamic study. (1) Engagement without downstream biomarker movement: a recent Gaucher pharmacotherapy horizon review underscores that even substrate-reduction/chaperone strategies that robustly raise GCase or lower glucosylceramide have historically shown dissociation between enzymatic engagement and downstream neurodegenerative markers — so a >=1.5-fold GCase rise may not be accompanied by SAA, sphingolipid, or NfL shifts within the window; pre-specifying engagement as primary and extending the observation window mitigates this. (2) Assay variability undermining the engagement threshold: lysosomal-biochemistry programs and lysosomal ion/pH-homeostasis work show GCase activity is sensitive to lysosomal pH and assay conditions, which could inflate inter-assay CVs and destabilize the threshold; locked SOPs, blinded duplicates, cellular orthogonal confirmation, and explicit CV reporting are appropriate. (3) Insufficient CNS penetration / peripheral-only engagement: chaperone and lysosomal-trafficking biology (BORCS5 in neuronal lysosomal function; Lamp1/lipid transport in vesicle identity) suggests peripheral PBMC engagement may not predict CNS engagement; CSF sampling, a CSF sphingolipid surrogate, or a pivot to a documented-CNS-exposure agent/dose are reasonable contingencies. (4) Cross-pathway confounding: LRRK2-mediated neurotoxicity and autophagy-counteracting mechanisms (PPM1H/axonal autophagy; neuron-specific autophagy enhancement rescuing alpha-synuclein toxicity) imply LRRK2/autophagy heterogeneity could mask or mimic GCase-driven biomarker change; collecting LRRK2 status and autophagic-flux covariates and modeling them is warranted. (5) Stratum recruitment shortfall and cellular-model translation gap: SH-SY5Y and patient-derived models may over- or under-state engagement relative to humans (vesicular dopamine-toxicity and clearance systems); pooled genotype-as-covariate analysis if carrier numbers are limited, and using the cellular arm to de-risk assay readiness, are sensible fallbacks.",
+      "citation_ids": [
+        "literature:40587145",
+        "literature:28598856",
+        "grant:K08NS138592",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "grant:ZIATR000432",
+        "grant:ZIADK056014",
+        "literature:39496848",
+        "grant:R01NS124819",
+        "literature:36722247",
+        "literature:40639630"
+      ]
+    },
+    {
+      "id": "aim-3",
+      "hypothesis": "The degree of target engagement (e.g., the pharmacodynamic biomarker shift demonstrated for the candidate agent, analogous to ambroxol's increase in β-glucocerebrosidase) is associated with change in clinical severity measured by MDS-UPDRS, and prospectively stratifying participants by a baseline biomarker (e.g., GBA mutation status / lysosomal marker) and enrolling at an earlier disease stage correlates with outcome distributions distinguishable from those reported in prior unstratified, later-stage PD trials.",
+      "rationale": "Prior disease-modification trials have demonstrated target engagement without detecting differences on primary or secondary clinical outcomes, raising the exploratory question of whether engagement and clinical severity move together and whether the failure to distinguish outcomes reflected late-stage, unstratified enrollment. GBA/lysosomal mutation carriers can be identified at a pre-clinical or early stage, offering a population in which to examine early, stratified enrollment, and current research priorities explicitly emphasize biomarker-guided, targeted, progression-slowing strategies. Neuroimaging-based diagnostic biomarkers provide candidate stratification and engagement readouts, and contemporaneous MDS-UPDRS-anchored progression trials provide the comparison framework for clinical severity.",
+      "approach": "We will enroll early-stage PD participants (Hoehn & Yahr ≤2, within a defined time-from-diagnosis window) and prospectively stratify into biomarker-positive and biomarker-negative strata using a pre-specified baseline assay (genotyping for GBA variants plus a peripheral/CSF β-glucocerebrosidase or lysosomal readout). The primary engagement readout is the pharmacodynamic shift in the target biomarker (modeled on the β-glucocerebrosidase increase reported in); the clinical readout is change in MDS-UPDRS total and Part III over the trial, harmonized with the MDS-UPDRS framework used by ongoing progression trials. We will additionally capture a neuroimaging stratification/engagement covariate. Analysis: a pre-specified mixed-effects model of MDS-UPDRS change over time with biomarker-engagement and stratum × time interaction terms; sample size powered on the expected effect from contemporaneous MDS-UPDRS trials, with the stratified early-enrollment cohort compared descriptively and via covariate-adjusted models against published outcome distributions from prior unstratified later-stage trials. Required expertise/resources (F3): movement-disorders clinicians MDS-UPDRS-certified for rating reliability, a GCLP-grade lysosomal/genotyping biomarker laboratory, neuroimaging core capacity, and a biostatistics team for longitudinal/interaction modeling.",
+      "expected_outcomes": "Hedged, comparison-grounded projections: contemporaneous MDS-UPDRS progression trials suggest early-stage annualized total-score worsening is often modest (on the order of ~3-6 points/year, with Part III a fraction of that), so any engagement x time slope gradient that might emerge would plausibly be small (a difference of perhaps ~1-3 MDS-UPDRS points/year between high- and low-engagement participants) and statistically fragile within trial duration. The biomarker-positive early-enrollment stratum might show an outcome distribution descriptively distinguishable from historical unstratified later-stage benchmarks, but given the engagement-clinical dissociation repeatedly seen in lysosomal-targeted therapeutics (Gaucher horizon review), a plausible and explicitly anticipated null is robust target engagement with no detectable MDS-UPDRS separation. Imaging-anchored progression measures (PET/phMR mGlu/dopamine context) may provide more sensitive between-stratum contrasts than clinical scales alone. Either outcome — a detectable slope gradient or a clean null — would be reported descriptively with confidence intervals and treated as informative for prioritizing biomarker-guided, early-enrollment trial design; no causal or associative claim about engagement driving clinical change is asserted.",
+      "pitfalls_alternatives": "Comparable clinical/biomarker-progression efforts suggest the following hazards. (1) Engagement-clinical dissociation: as with the Gaucher therapeutic record summarized in the recent horizon review, robust target engagement may not separate MDS-UPDRS trajectories within trial duration, so concordance must remain an exploratory objective; enriching for early/biomarker-positive participants where progression signal may be more tractable is the appropriate hedge. (2) Confounded historical comparison: benchmarking a stratified early-enrollment cohort against prior unstratified later-stage trials risks cohort-, era-, and rating-drift confounds — preclinical-marker and PET/phMR progression-imaging programs show such cross-study comparisons are fragile; MDS-UPDRS rater certification, covariate adjustment, and harmonized scoring mitigate, with imaging anchors as internal calibration. (3) Slow early-stage progression underpowering change detection: H&Y<=2 cohorts progress slowly, so the engagement x time slope gradient may be small; adding sensitive motor/imaging progression endpoints (DAT or mGlu/dopamine PET context, motor-cortical dopamine-release dynamics) or a biomarker-defined co-primary is a reasonable contingency. (4) Stratum misclassification: GBA/lysosomal stratification can be blurred by overlapping LRRK2/autophagy biology (GBA-LRRK2 intersection in Lewy body dementia; LRRK2-neurotoxicity; PPM1H/autophagy) and by enzymatic assay variability (lysosomal-biochemistry and pH-homeostasis programs); duplicate GCLP assays, orthogonal genotyping, and an imaging covariate reduce this. (5) Biomarker-positive early-stage carrier recruitment shortfall: multi-site enrollment and pre-screening registries are warranted, given the heterogeneity documented in preclinical-marker cohorts.",
+      "citation_ids": [
+        "literature:40587145",
+        "literature:39496848",
+        "trial:NCT07312110",
+        "literature:37786563",
+        "literature:28598856"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "literature:39496848",
+      "authors": [],
+      "year": 2024,
+      "title": "Parkinson disease therapy: current strategies and future research priorities.",
+      "venue": "Nature reviews. Neurology",
+      "resolvable_id": "39496848",
+      "key_finding": "Research priorities are slowing disease progression through biomarkers and targeted therapies, and enhancing symptomatic treatments for PD.",
+      "real": true
+    },
+    {
+      "id": "literature:37786563",
+      "authors": [],
+      "year": 2021,
+      "title": "Advances in clinical basic research: Performance, treatments, and mechanisms of Parkinson disease.",
+      "venue": "Ibrain",
+      "resolvable_id": "37786563",
+      "key_finding": "Investigations in the last few years for diagnostic biomarkers using neuroimaging techniques have been presented to facilitate discrepant diagnosis.",
+      "real": true
+    },
+    {
+      "id": "literature:40587145",
+      "authors": [],
+      "year": 2025,
+      "title": "Ambroxol as a Treatment for Parkinson Disease Dementia: A Randomized Clinical Trial.",
+      "venue": "JAMA neurology",
+      "resolvable_id": "40587145",
+      "key_finding": "No evidence to suggest differences between groups on primary or secondary outcomes. Ambroxol demonstrated target engagement by increasing β-glucocerebrosidase levels.",
+      "real": true
+    },
+    {
+      "id": "literature:28598856",
+      "authors": [],
+      "year": 2017,
+      "title": "Glucocerebrosidase Mutations in Parkinson Disease.",
+      "venue": "Journal of Parkinson's disease",
+      "resolvable_id": "28598856",
+      "key_finding": "GBA mutations are the single largest risk factor for development of idiopathic PD. The clinical similarity with idiopathic PD and the chance to identify PD at a pre-clinical stage provides a unique opportunity to research therapeutic options for early PD.",
+      "real": true
+    },
+    {
+      "id": "literature:40079755",
+      "authors": [],
+      "year": 2025,
+      "title": "The Gut-Brain Axis in Parkinson disease: Emerging Concepts and Therapeutic Implications.",
+      "venue": "Movement disorders clinical practice",
+      "resolvable_id": "40079755",
+      "key_finding": "Mounting evidence suggests a subgroup of PD patients present with prodromal symptoms reflecting initial accumulation and later spread of pathological alpha-synuclein rostrally from the gastrointestinal tract. Treatments targeting the gut-brain axis could potentially slow disease progression or even prevent disease onset.",
+      "real": true
+    },
+    {
+      "id": "literature:40298214",
+      "authors": [],
+      "year": 2025,
+      "title": "Parkinson Disease and the Gut: A Primer for Gastroenterologists.",
+      "venue": "The American journal of gastroenterology",
+      "resolvable_id": "40298214",
+      "key_finding": "Gastrointestinal symptoms and dysfunction are common in PD, may promote neuroinflammation and alpha-synuclein aggregation, and could potentially serve as a site for early diagnosis and disease-modifying treatment.",
+      "real": true
+    },
+    {
+      "id": "literature:35750883",
+      "authors": [],
+      "year": 2022,
+      "title": "The microbiome-gut-brain axis in Parkinson disease - from basic research to the clinic.",
+      "venue": "Nature reviews. Neurology",
+      "resolvable_id": "35750883",
+      "key_finding": "Numerous high-quality preclinical and clinical publications have shed light on the complex relationship between the gut and the brain in PD, providing potential for the development of new biomarkers and therapeutics.",
+      "real": true
+    },
+    {
+      "id": "literature:40273394",
+      "authors": [],
+      "year": 2025,
+      "title": "Investigating Plasma Metabolomics and Gut Microbiota Changes Associated With Parkinson Disease: A Focus on Caffeine Metabolism.",
+      "venue": "Neurology",
+      "resolvable_id": "40273394",
+      "key_finding": "Significantly lower caffeine metabolism in PD patients, with serum levels of caffeine and its metabolites negatively correlating with motor severity.",
+      "real": true
+    },
+    {
+      "id": "grant:R01NS125592",
+      "authors": [],
+      "year": 2025,
+      "title": "α-Synuclein strain properties are associated with diagnosis of and progression to Parkinson's disease with dementia",
+      "venue": "NIH",
+      "resolvable_id": "R01NS125592",
+      "key_finding": "NIH grant awarded $673,092",
+      "real": true
+    },
+    {
+      "id": "grant:K08NS138592",
+      "authors": [],
+      "year": 2025,
+      "title": "Effects of the Parkinsons Disease associated protein LRRK2 on lysosomal function and inflammatory activity in microglia",
+      "venue": "NIH",
+      "resolvable_id": "K08NS138592",
+      "key_finding": "NIH grant awarded $227,205",
+      "real": true
+    },
+    {
+      "id": "grant:R01NS125317",
+      "authors": [],
+      "year": 2025,
+      "title": "Chloride Homeostasis in Lysosomal Function and Parkinson's Disease",
+      "venue": "NIH",
+      "resolvable_id": "R01NS125317",
+      "key_finding": "NIH grant awarded $604,578",
+      "real": true
+    },
+    {
+      "id": "grant:ZIAHG200336",
+      "authors": [],
+      "year": 2025,
+      "title": "Genetic and clinical studies of Gaucher disease and other lysosomal disorders",
+      "venue": "NIH",
+      "resolvable_id": "ZIAHG200336",
+      "key_finding": "NIH grant awarded $3,290,257",
+      "real": true
+    },
+    {
+      "id": "grant:ZIATR000432",
+      "authors": [],
+      "year": 2025,
+      "title": "Evaluation of cAbl allosteric inhibitors in Gaucher-Parkinson",
+      "venue": "NIH",
+      "resolvable_id": "ZIATR000432",
+      "key_finding": "NIH grant awarded $418,442",
+      "real": true
+    },
+    {
+      "id": "grant:ZIADK056014",
+      "authors": [],
+      "year": 2025,
+      "title": "Mouse Models of Novel Sphingolipid Biology and Disease Mechanisms",
+      "venue": "NIH",
+      "resolvable_id": "ZIADK056014",
+      "key_finding": "NIH grant awarded $619,195",
+      "real": true
+    },
+    {
+      "id": "grant:R01NS124819",
+      "authors": [],
+      "year": 2025,
+      "title": "In vivo synaptic and dopamine transporter imaging in Parkinson's disease",
+      "venue": "NIH",
+      "resolvable_id": "R01NS124819",
+      "key_finding": "NIH grant awarded $660,955",
+      "real": true
+    },
+    {
+      "id": "literature:36722247",
+      "authors": [],
+      "year": 2023,
+      "title": "SH-SY5Y Cell Line In Vitro Models for Parkinson Disease Research-Old Practice for New Trends.",
+      "venue": "Journal of integrative neuroscience",
+      "resolvable_id": "36722247",
+      "key_finding": "The SH-SY5Y cell line can be used to reproduce PD pathological changes, test new pharmacological therapies, and investigate PD pathophysiological mechanisms",
+      "real": true
+    },
+    {
+      "id": "literature:40639630",
+      "authors": [],
+      "year": 2025,
+      "title": "Cordycepin promotes autophagic degradation of α-synuclein via CacyBP/SIP activation for ameliorating olfactory dysfunction against Parkinson's disease.",
+      "venue": "Free radical biology & medicine",
+      "resolvable_id": "40639630",
+      "key_finding": "Cordycepin administration attenuated olfactory dysfunction and delayed the onset of motor impairments in rotenone-treated mice, concomitant with pathological alpha-synuclein aggregates degradation.",
+      "real": true
+    },
+    {
+      "id": "trial:NCT07312110",
+      "authors": [],
+      "year": 2026,
+      "title": "D-SPARK: A Clinical Trial of D-Serine for Modifying Parkinson's Disease Progression",
+      "venue": "ClinicalTrials.gov",
+      "resolvable_id": "NCT07312110",
+      "key_finding": "Preclinical and clinical studies have shown that D-serine significantly reduces extrapyramidal and abnormal involuntary movements in PD patients, with improvements observed in both motor and non-motor symptoms. The study aims to determine the efficacy of D-serine supplementation on clinical severity of PD as measured by the Movement Disorder Society Unified Parkinson's Disease Rating Scale (MDS-UPDRS).",
+      "real": true
+    }
+  ],
+  "obligations": [
+    {
+      "id": "F1-1",
+      "dimension": "F1",
+      "requirement": "Significance names the specific barrier to progress in Parkinson's disease drug discovery, biomarker validation, or therapeutic development pipeline and states why resolving it matters to the field, with >=1 corpus citation.",
+      "satisfied_by": [
+        "significance"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:40587145"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic+code(>=1 evidence_id)"
+    },
+    {
+      "id": "F1-2",
+      "dimension": "F1",
+      "requirement": "A single central hypothesis for the Parkinson's disease pipeline intervention is stated explicitly and follows from the named gap.",
+      "satisfied_by": [
+        "central-hypothesis"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:39496848",
+        "literature:40587145"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F1-3",
+      "dimension": "F1",
+      "requirement": "Innovation names the specific departure from current concepts/methods/practice in Parkinson's disease research (e.g., novel target, assay, animal model, biomarker, or therapeutic mechanism—not a generic 'novel').",
+      "satisfied_by": [
+        "innovation"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:R01NS125317",
+        "literature:R01NS125592"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-1/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'validate target X in model Y', 'demonstrate biomarker Z predicts outcome W').",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01NS125592",
+        "literature:28598856",
+        "literature:35750883",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-1/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'validate target X in model Y', 'demonstrate biomarker Z predicts outcome W').",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "grant:K08NS138592",
+        "grant:R01NS124819",
+        "grant:R01NS125317",
+        "grant:ZIADK056014",
+        "grant:ZIAHG200336",
+        "grant:ZIATR000432",
+        "literature:28598856",
+        "literature:36722247",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40639630"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-1/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 states one explicit, testable hypothesis or objective for the Parkinson's disease pipeline (e.g., 'validate target X in model Y', 'demonstrate biomarker Z predicts outcome W').",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40587145",
+        "trial:NCT07312110"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-2/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1's approach names the key methods/design at enough specificity to judge rigor (e.g., cell type, transgenic line, assay platform, sample size, statistical test—not goals alone).",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01NS125592",
+        "literature:28598856",
+        "literature:35750883",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-2/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2's approach names the key methods/design at enough specificity to judge rigor (e.g., cell type, transgenic line, assay platform, sample size, statistical test—not goals alone).",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "grant:K08NS138592",
+        "grant:R01NS124819",
+        "grant:R01NS125317",
+        "grant:ZIADK056014",
+        "grant:ZIAHG200336",
+        "grant:ZIATR000432",
+        "literature:28598856",
+        "literature:36722247",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40639630"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-2/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3's approach names the key methods/design at enough specificity to judge rigor (e.g., cell type, transgenic line, assay platform, sample size, statistical test—not goals alone).",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40587145",
+        "trial:NCT07312110"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "critic"
+    },
+    {
+      "id": "F2-3/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 includes a pitfalls / alternative-strategies paragraph addressing potential failure modes (e.g., target engagement failure, assay variability, model limitations).",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01NS125592",
+        "literature:28598856",
+        "literature:35750883",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-3/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 includes a pitfalls / alternative-strategies paragraph addressing potential failure modes (e.g., target engagement failure, assay variability, model limitations).",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "grant:K08NS138592",
+        "grant:R01NS124819",
+        "grant:R01NS125317",
+        "grant:ZIADK056014",
+        "grant:ZIAHG200336",
+        "grant:ZIATR000432",
+        "literature:28598856",
+        "literature:36722247",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40639630"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-3/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 includes a pitfalls / alternative-strategies paragraph addressing potential failure modes (e.g., target engagement failure, assay variability, model limitations).",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40587145",
+        "trial:NCT07312110"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code"
+    },
+    {
+      "id": "F2-4/aim-1",
+      "dimension": "F2",
+      "requirement": "Aim 1 states expected outcomes tied to its hypothesis (e.g., 'target X will show >=50% knockdown in model Y', 'biomarker Z will correlate with motor decline with r>=0.7').",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [
+        "grant:R01NS125592",
+        "literature:28598856",
+        "literature:35750883",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-4/aim-2",
+      "dimension": "F2",
+      "requirement": "Aim 2 states expected outcomes tied to its hypothesis (e.g., 'target X will show >=50% knockdown in model Y', 'biomarker Z will correlate with motor decline with r>=0.7').",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [
+        "grant:K08NS138592",
+        "grant:R01NS124819",
+        "grant:R01NS125317",
+        "grant:ZIADK056014",
+        "grant:ZIAHG200336",
+        "grant:ZIATR000432",
+        "literature:28598856",
+        "literature:36722247",
+        "literature:39496848",
+        "literature:40587145",
+        "literature:40639630"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F2-4/aim-3",
+      "dimension": "F2",
+      "requirement": "Aim 3 states expected outcomes tied to its hypothesis (e.g., 'target X will show >=50% knockdown in model Y', 'biomarker Z will correlate with motor decline with r>=0.7').",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [
+        "literature:28598856",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40587145",
+        "trial:NCT07312110"
+      ],
+      "self_score": 6,
+      "status": "satisfied",
+      "notes": "code+critic"
+    },
+    {
+      "id": "F3-1/aim-1",
+      "dimension": "F3",
+      "requirement": "Aim 1 surfaces the expertise and resources its approach assumes (e.g., transgenic colony access, biomarker assay platform, computational infrastructure), for investigator/environment confirmation.",
+      "satisfied_by": [
+        "aim-1"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-1/aim-2",
+      "dimension": "F3",
+      "requirement": "Aim 2 surfaces the expertise and resources its approach assumes (e.g., transgenic colony access, biomarker assay platform, computational infrastructure), for investigator/environment confirmation.",
+      "satisfied_by": [
+        "aim-2"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-1/aim-3",
+      "dimension": "F3",
+      "requirement": "Aim 3 surfaces the expertise and resources its approach assumes (e.g., transgenic colony access, biomarker assay platform, computational infrastructure), for investigator/environment confirmation.",
+      "satisfied_by": [
+        "aim-3"
+      ],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "F3-2",
+      "dimension": "F3",
+      "requirement": "The agent does not assert F3 sufficiency for the Parkinson's disease pipeline proposal; self_score defaults to insufficient pending external confirmation.",
+      "satisfied_by": [],
+      "evidence_ids": [],
+      "self_score": "insufficient",
+      "status": "at_risk",
+      "notes": "F3 not asserted; insufficient pending investigator/environment confirmation"
+    },
+    {
+      "id": "X-1",
+      "dimension": "X",
+      "requirement": "Every empirical claim in the Parkinson's disease pipeline proposal carries an evidence_id and every citation is in corpus (inv-1).",
+      "satisfied_by": [
+        "references"
+      ],
+      "evidence_ids": [
+        "literature:39496848",
+        "literature:37786563",
+        "literature:40587145",
+        "literature:28598856",
+        "literature:40079755",
+        "literature:40298214",
+        "literature:35750883",
+        "literature:40273394",
+        "grant:R01NS125592",
+        "grant:K08NS138592",
+        "grant:R01NS125317",
+        "grant:ZIAHG200336",
+        "grant:ZIATR000432",
+        "grant:ZIADK056014",
+        "grant:R01NS124819",
+        "literature:36722247",
+        "literature:40639630",
+        "trial:NCT07312110"
+      ],
+      "self_score": null,
+      "status": "satisfied",
+      "notes": "decided by inv-1 (citation integrity, code)"
+    },
+    {
+      "id": "X-2",
+      "dimension": "X",
+      "requirement": "No claim's assertiveness exceeds the rung its evidence grade permits (inv-3).",
+      "satisfied_by": [
+        "all claims"
+      ],
+      "evidence_ids": [
+        "grant:K08NS138592",
+        "grant:R01NS124819",
+        "grant:R01NS125317",
+        "grant:R01NS125592",
+        "grant:ZIADK056014",
+        "grant:ZIAHG200336",
+        "grant:ZIATR000432",
+        "literature:28598856",
+        "literature:35750883",
+        "literature:36722247",
+        "literature:37786563",
+        "literature:39496848",
+        "literature:40079755",
+        "literature:40273394",
+        "literature:40298214",
+        "literature:40587145",
+        "literature:40639630",
+        "literature:R01NS125317",
+        "literature:R01NS125592",
+        "trial:NCT07312110"
+      ],
+      "self_score": null,
+      "status": "satisfied",
+      "notes": "decided by inv-3 (overclaim ladder, code)"
+    }
+  ],
+  "revision_round": 2
+}

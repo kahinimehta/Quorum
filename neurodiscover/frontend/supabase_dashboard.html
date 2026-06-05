@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NeuroDiscover Supabase Dashboard</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 24px;
+      background: #f7f9fb;
+      color: #222;
+    }
+
+    h1 {
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: #555;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .number {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-bottom: 20px;
+      background: #111827;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-bottom: 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #eef2f7;
+    }
+
+    pre {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      max-height: 350px;
+      overflow: auto;
+    }
+
+    .status {
+      margin-bottom: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>NeuroDiscover AI Dashboard</h1>
+
+  <div class="subtitle">
+    Supabase-connected visualization for Parkinson's evidence, subgroups, treatment connections, and recommendations.
+  </div>
+
+  <button onclick="loadDashboard()">Load Supabase Data</button>
+
+  <div class="status" id="statusBox">
+    Status: waiting for data.
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div>Evidence Rows</div>
+      <div class="number" id="evidenceCount">-</div>
+    </div>
+
+    <div class="card">
+      <div>Subgroups</div>
+      <div class="number" id="subgroupCount">-</div>
+    </div>
+
+    <div class="card">
+      <div>Treatment Connections</div>
+      <div class="number" id="connectionCount">-</div>
+    </div>
+  </div>
+
+  <h2>Patient Subgroups</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Subgroup / Name</th>
+        <th>Mechanism</th>
+        <th>Rationale</th>
+      </tr>
+    </thead>
+    <tbody id="subgroupsTable"></tbody>
+  </table>
+
+  <h2>Treatment Connections</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Subgroup</th>
+        <th>Treatment</th>
+        <th>Mechanism</th>
+        <th>Evidence Strength</th>
+        <th>Commercial Potential</th>
+      </tr>
+    </thead>
+    <tbody id="connectionsTable"></tbody>
+  </table>
+
+  <h2>Recommendations</h2>
+  <pre id="recommendationsOutput">Click "Load Supabase Data" to begin.</pre>
+
+  <h2>Raw Evidence Preview</h2>
+  <pre id="evidenceOutput">Waiting...</pre>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+    const SUPABASE_URL = "https://brfjrctbzuwcpkdnaagf.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_fekuhIxl39MjY0MaPNcSXQ_66tfpSf9";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    function safeText(value) {
+      if (value === null || value === undefined) return "";
+      if (typeof value === "object") return JSON.stringify(value);
+      return String(value);
+    }
+
+    function firstAvailable(row, names) {
+      for (const name of names) {
+        if (row[name] !== undefined && row[name] !== null) {
+          return row[name];
+        }
+      }
+      return "";
+    }
+
+    function setStatus(message) {
+      document.getElementById("statusBox").textContent = "Status: " + message;
+    }
+
+    function renderSubgroups(rows) {
+      const table = document.getElementById("subgroupsTable");
+      table.innerHTML = "";
+
+      if (!rows || rows.length === 0) {
+        table.innerHTML = `<tr><td colspan="3">No subgroup rows returned.</td></tr>`;
+        return;
+      }
+
+      rows.forEach(row => {
+        const tr = document.createElement("tr");
+
+        const subgroup = firstAvailable(row, [
+          "name",
+          "subgroup",
+          "subgroup_name",
+          "patient_subgroup"
+        ]);
+
+        const mechanism = firstAvailable(row, [
+          "mechanism",
+          "mechanisms",
+          "dominant_mechanism"
+        ]);
+
+        const rationale = firstAvailable(row, [
+          "rationale",
+          "summary",
+          "description"
+        ]);
+
+        [subgroup, mechanism, rationale].forEach(value => {
+          const td = document.createElement("td");
+          td.textContent = safeText(value);
+          tr.appendChild(td);
+        });
+
+        table.appendChild(tr);
+      });
+    }
+
+    function renderConnections(rows) {
+      const table = document.getElementById("connectionsTable");
+      table.innerHTML = "";
+
+      if (!rows || rows.length === 0) {
+        table.innerHTML = `<tr><td colspan="5">No treatment connection rows returned.</td></tr>`;
+        return;
+      }
+
+      rows.forEach(row => {
+        const tr = document.createElement("tr");
+
+        const subgroup = firstAvailable(row, [
+          "subgroup",
+          "subgroup_name",
+          "patient_subgroup"
+        ]);
+
+        const treatment = firstAvailable(row, [
+          "treatment",
+          "treatment_name",
+          "therapy"
+        ]);
+
+        const mechanism = firstAvailable(row, [
+          "mechanism",
+          "mechanisms"
+        ]);
+
+        const evidenceStrength = firstAvailable(row, [
+          "evidence_strength",
+          "score",
+          "confidence"
+        ]);
+
+        const commercialPotential = firstAvailable(row, [
+          "commercial_potential",
+          "market_score"
+        ]);
+
+        [
+          subgroup,
+          treatment,
+          mechanism,
+          evidenceStrength,
+          commercialPotential
+        ].forEach(value => {
+          const td = document.createElement("td");
+          td.textContent = safeText(value);
+          tr.appendChild(td);
+        });
+
+        table.appendChild(tr);
+      });
+    }
+
+    window.loadDashboard = async function () {
+      setStatus("loading data from Supabase...");
+
+      document.getElementById("recommendationsOutput").textContent = "Loading...";
+      document.getElementById("evidenceOutput").textContent = "Loading...";
+
+      const evidenceResult = await supabase
+        .from("evidence")
+        .select("*")
+        .limit(5);
+
+      const evidenceCountResult = await supabase
+        .from("evidence")
+        .select("*", { count: "exact", head: true });
+
+      const subgroupsResult = await supabase
+        .from("subgroups")
+        .select("*")
+        .limit(10);
+
+      const subgroupCountResult = await supabase
+        .from("subgroups")
+        .select("*", { count: "exact", head: true });
+
+      const connectionsResult = await supabase
+        .from("treatment_connections")
+        .select("*")
+        .limit(10);
+
+      const connectionCountResult = await supabase
+        .from("treatment_connections")
+        .select("*", { count: "exact", head: true });
+
+      const recommendationsResult = await supabase
+        .from("recommendations")
+        .select("*")
+        .limit(5);
+
+      document.getElementById("evidenceCount").textContent =
+        evidenceCountResult.count ?? "Error";
+
+      document.getElementById("subgroupCount").textContent =
+        subgroupCountResult.count ?? "Error";
+
+      document.getElementById("connectionCount").textContent =
+        connectionCountResult.count ?? "Error";
+
+      if (evidenceResult.error) {
+        document.getElementById("evidenceOutput").textContent =
+          "Evidence error:\n" + JSON.stringify(evidenceResult.error, null, 2);
+      } else {
+        document.getElementById("evidenceOutput").textContent =
+          JSON.stringify(evidenceResult.data, null, 2);
+      }
+
+      if (subgroupsResult.error) {
+        document.getElementById("subgroupsTable").innerHTML =
+          `<tr><td colspan="3">${JSON.stringify(subgroupsResult.error)}</td></tr>`;
+      } else {
+        renderSubgroups(subgroupsResult.data);
+      }
+
+      if (connectionsResult.error) {
+        document.getElementById("connectionsTable").innerHTML =
+          `<tr><td colspan="5">${JSON.stringify(connectionsResult.error)}</td></tr>`;
+      } else {
+        renderConnections(connectionsResult.data);
+      }
+
+      if (recommendationsResult.error) {
+        document.getElementById("recommendationsOutput").textContent =
+          "Recommendations error:\n" + JSON.stringify(recommendationsResult.error, null, 2);
+      } else {
+        document.getElementById("recommendationsOutput").textContent =
+          JSON.stringify(recommendationsResult.data, null, 2);
+      }
+
+      if (
+        evidenceResult.error ||
+        subgroupsResult.error ||
+        connectionsResult.error ||
+        recommendationsResult.error
+      ) {
+        setStatus("loaded with one or more Supabase errors. Check the error boxes below.");
+      } else {
+        setStatus("data loaded successfully.");
+      }
+    };
+  </script>
+</body>
+</html>
+
