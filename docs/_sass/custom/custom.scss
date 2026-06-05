@@ -97,6 +97,45 @@
   line-height: 1.45;
 }
 
+.site-logo img {
+  max-height: 3.25rem;
+  width: auto;
+}
+
+.side-bar {
+  .site-header {
+    @include mq(md) {
+      height: auto;
+      max-height: none;
+      padding-bottom: $sp-2;
+    }
+  }
+
+  .site-title {
+    @include mq(md) {
+      align-items: flex-start;
+      padding-top: $sp-2;
+      padding-bottom: $sp-2;
+    }
+  }
+
+  .site-logo {
+    min-height: 5.75rem;
+    max-height: 7.5rem;
+    background-position: left top;
+  }
+}
+
+.home-logo {
+  margin: 0.5rem 0 1rem;
+  text-align: center;
+
+  img {
+    max-width: min(100%, 32rem);
+    height: auto;
+  }
+}
+
 .team-member {
   border-left: 4px solid #2563eb;
   padding-left: 1rem;

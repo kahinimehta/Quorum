@@ -9,9 +9,12 @@ baseurl: ""
 
 permalink: pretty
 
-logo: "/assets/images/logo.svg"
+logo: "/assets/images/neurodiscover-ai-logo.png"
 
-favicon_ico: "/assets/images/logo.svg"
+favicon_ico: "/assets/images/favicon.png"
+
+twitter:
+  card: summary_large_image
 
 color_scheme: neurodiscover
 
@@ -56,3 +59,4 @@ defaults:
       path: ""
     values:
       layout: default
+      image: /assets/images/neurodiscover-ai-logo.png
