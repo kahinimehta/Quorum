@@ -19,6 +19,33 @@ DEFAULT_QUERY = (
 DEFAULT_FISCAL_YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
 
 
+def _infer_from_grant_text(text: str) -> dict[str, str | None]:
+    """Lightweight keyword map so grant rows can enter agents 2–6."""
+    t = (text or "").lower()
+    subgroup = mechanism = treatment = None
+
+    if any(k in t for k in ("gba", "gcase", "glucocerebrosidase", "ambroxol")):
+        subgroup = "GBA-mutation PD"
+        mechanism = "lysosomal dysfunction"
+        if "ambroxol" in t or "chaperone" in t or "gcase" in t:
+            treatment = "GCase activation"
+    if "lrrk2" in t:
+        subgroup = subgroup or "LRRK2 PD"
+        mechanism = mechanism or "LRRK2 kinase pathway"
+        treatment = treatment or "LRRK2 inhibition"
+    if "alpha-synuclein" in t or "synuclein" in t:
+        subgroup = subgroup or "Alpha-synuclein-high PD"
+        mechanism = mechanism or "alpha-synuclein aggregation"
+        treatment = treatment or "clearance therapy"
+    if "inflammation" in t or "inflammatory" in t:
+        subgroup = subgroup or "Inflammation-high PD"
+        mechanism = mechanism or "neuroinflammation"
+    if "progress" in t and "motor" in t:
+        subgroup = subgroup or "Rapid motor progressors"
+
+    return {"subgroup": subgroup, "mechanism": mechanism, "treatment": treatment}
+
+
 def _now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
@@ -60,15 +87,25 @@ def grant_to_finding(project: dict) -> dict | None:
         else None
     )
     amount = project.get("award_amount") or 0
+    text = " ".join(
+        filter(
+            None,
+            [
+                project.get("project_title") or "",
+                (project.get("abstract_text") or "")[:800],
+            ],
+        )
+    )
+    inferred = _infer_from_grant_text(text)
     return {
         "source_type": "grant",
         "source_id": source_id,
         "title": (project.get("project_title") or "")[:500],
         "year": project.get("fiscal_year"),
         "venue": "NIH",
-        "subgroup": None,
-        "mechanism": None,
-        "treatment": None,
+        "subgroup": inferred["subgroup"],
+        "mechanism": inferred["mechanism"],
+        "treatment": inferred["treatment"],
         "key_result": f"NIH grant awarded ${amount:,}",
         "study_type": None,
         "sample_size": None,

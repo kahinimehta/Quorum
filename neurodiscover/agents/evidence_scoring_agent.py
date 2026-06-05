@@ -25,12 +25,16 @@ class EvidenceScoringAgent:
 
         for connection in treatment_output.get("connections", []):
             subgroup = connection.get("subgroup")
+            mechanism = connection.get("mechanism")
+            treatment = connection.get("treatment_strategy") or connection.get("treatment")
             evidence_count = connection.get("evidence_count", 0)
             evidence_sources = connection.get("evidence_sources", [])
 
             matching_rows = [
                 row for row in evidence_rows
                 if row.get("subgroup") == subgroup
+                and row.get("mechanism") == mechanism
+                and row.get("treatment") == treatment
             ]
 
             evidence_strength = self._score_evidence_strength(
@@ -70,7 +74,8 @@ class EvidenceScoringAgent:
         evidence_count: int,
         matching_rows: List[Dict[str, Any]]
     ) -> float:
-        score = 5.0
+        # Scale with per-connection support count so new pulls move the score.
+        score = 4.0 + min(4.5, evidence_count * 0.22)
 
         source_types = {
             row.get("source_type")
@@ -78,20 +83,12 @@ class EvidenceScoringAgent:
             if row.get("source_type")
         }
 
-        has_literature = "literature" in source_types
-        has_trial = "trial" in source_types
-        has_grant = "grant" in source_types
-
-        if evidence_count >= 3:
-            score += 1.0
-        if evidence_count >= 8:
-            score += 1.0
-        if has_literature:
+        if "literature" in source_types:
+            score += 0.6
+        if "trial" in source_types:
             score += 0.8
-        if has_trial:
-            score += 1.0
-        if has_grant:
-            score += 0.5
+        if "grant" in source_types:
+            score += 0.4
 
         return round(min(score, 10.0), 1)
 

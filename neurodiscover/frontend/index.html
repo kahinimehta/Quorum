@@ -2231,10 +2231,12 @@
       renderSyntheticCohort(syntheticCohort);
       await loadEvidenceCache();
 
-      connections.sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
+      const displayRanked = (recommendations.length ? recommendations : connections)
+        .slice()
+        .sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
       const bars = document.getElementById('confidenceBars');
       bars.innerHTML = '';
-      connections.forEach(c => {
+      displayRanked.forEach(c => {
         const pct = Math.min(100, c.confidence || 0);
         const tier = c.tier || tierFromConfidence(pct);
         const tierCls = tier.toLowerCase();
@@ -2251,7 +2253,7 @@
 
       const top = document.getElementById('topRecs');
       top.innerHTML = '';
-      const ranked = (recommendations.length ? recommendations : connections).slice(0, 5);
+      const ranked = displayRanked.slice(0, 5);
       ranked.forEach((r, i) => {
         const conf = r.confidence ?? 0;
         const tier = r.tier || tierFromConfidence(conf);
@@ -2276,8 +2278,8 @@
         top.appendChild(card);
       });
 
-      renderHypotheses(recommendations.length ? recommendations : connections);
-      renderContinuousUpdate(recommendations.length ? recommendations : connections);
+      renderHypotheses(displayRanked);
+      renderContinuousUpdate(displayRanked);
 
       const rid = runId || latestRunId;
       updateRunMeta(rid, ranked.length, syntheticCohort.length);
