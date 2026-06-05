@@ -1,9 +1,9 @@
 # Publishes built Jekyll site to https://neurodiscover.github.io (org Pages root).
 # Requires repo neurodiscover/neurodiscover.github.io (public) and secret
-# NEURODISCOVER_PAGES_TOKEN (classic PAT scope: repo — or fine-grained Contents: read/write).
+# NEURODISCOVERY_DOCS (classic PAT scope: repo — or fine-grained Contents: read/write).
 #
 # If deploy fails with git exit 128:
-#   1. Secret NEURODISCOVER_PAGES_TOKEN must be set on kahinimehta/Quorum
+#   1. Secret NEURODISCOVERY_DOCS must be set on kahinimehta/Quorum
 #   2. Classic PAT: scope "repo" — OR fine-grained: Contents read/write on neurodiscover.github.io
 #   3. Token creator must be org owner; authorize SSO for neurodiscover org if prompted
 #   4. repository-name must be neurodiscover/neurodiscover.github.io (no typos)
@@ -45,11 +45,11 @@ jobs:
 
       - name: Push built site to neurodiscover.github.io
         env:
-          DEPLOY_TOKEN: ${{ secrets.NEURODISCOVER_PAGES_TOKEN }}
+          DEPLOY_TOKEN: ${{ secrets.NEURODISCOVERY_DOCS }}
         run: |
           set -euo pipefail
           if [ -z "${DEPLOY_TOKEN}" ]; then
-            echo "::error::NEURODISCOVER_PAGES_TOKEN is not set. Add it under Quorum → Settings → Secrets → Actions."
+            echo "::error::NEURODISCOVERY_DOCS is not set. Add it under Quorum → Settings → Secrets → Actions."
             exit 1
           fi
           cd docs/_site
