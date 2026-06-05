@@ -64,6 +64,6 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' -d '{"mode":"demo","max_papers":10}'
 ```
 
-Dashboard: [`../../neurodiscover/frontend/QUICKSTART.md`](../../neurodiscover/frontend/QUICKSTART.md). Architecture: [Dashboard API](dashboard-api).
+Dashboard: [`../../neurodiscover/frontend/quickstart.md`](../../neurodiscover/frontend/quickstart.md). Architecture: [Dashboard API](dashboard-api).
 
 See [Supabase](supabase) for project creation and schema apply.

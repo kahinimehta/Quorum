@@ -1,10 +1,22 @@
 # Quorum — NeuroDiscover AI
 
+> **Collaborators:** The **dashboard**, **demo video** (`docs/demo_draft.mp4`), and **[docs site](https://neurodiscover.github.io)** are still being edited. Expect layout and copy changes before the showcase.
+
 **Quorum** — six agents, one evidence store, ranked commercial discovery.
 
 Agentic system for **commercial development discovery**: continuously ingest literature and trials, surface hidden patient subgroups inside heterogeneous indications, map **subgroup → mechanism → treatment** connections, and rank opportunities by evidence and commercial potential.
 
 **Live docs:** [neurodiscover.github.io](https://neurodiscover.github.io) · **Track:** 02 — Autonomous Research · **Partner framing:** Pfizer Commercial Development Discovery
+
+---
+
+## Demo (draft)
+
+<video src="docs/demo_draft.mp4" controls width="100%">
+  <a href="docs/demo_draft.mp4">Download demo video</a>
+</video>
+
+*Place the file at `docs/demo_draft.mp4` in this repo (same path as your local `Quorum/docs/demo_draft.mp4`) so GitHub can serve it in the README and on the docs site.*
 
 ---
 
@@ -49,7 +61,7 @@ Press **Ctrl+C** to stop both servers.
 
 Useful flags: `--no-browser`, `--skip-pipeline` (servers only), `--fresh` (rebuild local DB).
 
-More detail: [`docs/dashboard.md`](docs/dashboard.md) · [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) · [Debugging](https://neurodiscover.github.io/debugging/)
+More detail: [`docs/dashboard.md`](docs/dashboard.md) · [`neurodiscover/frontend/quickstart.md`](neurodiscover/frontend/quickstart.md) · [Debugging](https://neurodiscover.github.io/debugging/)
 
 > **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
 
@@ -84,6 +96,7 @@ python3 cli.py pull --disease "your condition" --max 150
 Quorum/
   AGENTS.md
   docs/                  # Jekyll site (Just the Docs) → neurodiscover.github.io
+  docs/demo_draft.mp4    # demo video (draft)
   queries.sql
   neurodiscover/
     cli.py               # entry point — run all commands from here
@@ -103,6 +116,7 @@ Quorum/
     orchestrator.py          # Agents 1→6 pipeline for POST /api/run-discovery
     frontend/
       index.html             # Dashboard UI
+      quickstart.md          # Dashboard quick start
 ```
 
 Dashboard docs: [`docs/dashboard.md`](docs/dashboard.md) (UI) · [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) (API contract).

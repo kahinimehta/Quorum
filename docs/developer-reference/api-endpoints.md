@@ -36,7 +36,7 @@ The dashboard reads these routes when browser Supabase keys are unset. Full JSON
 
 ```bash
 cd neurodiscover
-make dashboard   # local demo + UI — see frontend/QUICKSTART.md
+make dashboard   # local demo + UI — see frontend/quickstart.md
 ```
 
 Or manually:

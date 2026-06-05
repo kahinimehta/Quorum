@@ -279,7 +279,7 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
 
 **Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, **do not** run `build`, then `validate`, `api_server.py`, and the same `curl` lines.
 
-See [`neurodiscover/frontend/QUICKSTART.md`](../../neurodiscover/frontend/QUICKSTART.md).
+See [`neurodiscover/frontend/quickstart.md`](../../neurodiscover/frontend/quickstart.md).
 
 ---
 

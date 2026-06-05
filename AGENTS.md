@@ -29,7 +29,7 @@ but all share the database below.
 | [`docs/developer-reference/api-endpoints.md`](docs/developer-reference/api-endpoints.md) | FastAPI route list |
 | [`docs/developer-reference/validation.md`](docs/developer-reference/validation.md) | Extraction QA after pull |
 | [neurodiscover.github.io](https://neurodiscover.github.io) | Public docs site |
-| [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Run UI in &lt; 5 min (no Supabase keys OK) |
+| [`neurodiscover/frontend/quickstart.md`](neurodiscover/frontend/quickstart.md) | Run UI in &lt; 5 min (no Supabase keys OK) |
 
 **Canonical store:** SQLite locally, or **Supabase Postgres** when `SUPABASE_DATABASE_URL` is set. Table is **`evidence`**, not `papers`.
 
@@ -69,7 +69,7 @@ Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatic
 |-----|---------|
 | [`docs/dashboard.md`](docs/dashboard.md) | Run the UI locally |
 | [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) | Architecture + API map |
-| [`neurodiscover/frontend/QUICKSTART.md`](neurodiscover/frontend/QUICKSTART.md) | Step-by-step |
+| [`neurodiscover/frontend/quickstart.md`](neurodiscover/frontend/quickstart.md) | Step-by-step |
 | [`docs/developer-reference/backend-queries.md`](docs/developer-reference/backend-queries.md) | API JSON shapes |
 
 ## Architecture: 6 agents, database is the blackboard
