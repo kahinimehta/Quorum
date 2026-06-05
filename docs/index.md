@@ -38,7 +38,7 @@ Traditional portfolio review evaluates a **small set** of opportunities over **m
 
 NeuroDiscover is an **AI-native alternative**: six agents share a SQL evidence store, update conclusions as new sources arrive, and output auditable **Prioritize / Monitor / Reject** tiers.
 
-See [Problem & significance](problem) for full framing and [For judges](for-judges) for rubric alignment.
+See [Problem & significance](problem) for full framing.
 
 ## How ranking works
 
@@ -99,6 +99,5 @@ Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Deb
 - [Workflow](workflow/) — six-agent pipeline  
 - [Inputs](input) · [Output examples](output)  
 - [Team](team) — interdisciplinary roles  
-- [For judges](for-judges) — rubric mapping  
 - [Debugging](debugging) — deploy, API, and pipeline troubleshooting  
 - [Run the dashboard](dashboard) — UI walkthrough  

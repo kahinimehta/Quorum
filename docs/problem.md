@@ -65,5 +65,4 @@ Our design follows patterns surveyed in recent work on **agentic scientific disc
 ## Related docs
 
 - [Workflow](workflow/) — per-agent detail  
-- [Output examples](output) — JSON judges can inspect  
-- [For judges](for-judges) — rubric checklist  
+- [Output examples](output) — JSON and dashboard panels  
