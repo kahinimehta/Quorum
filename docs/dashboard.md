@@ -144,9 +144,10 @@ Step 3 is **not run-scoped** — it always shows bundled `graded6`, independent 
 
 | Area | What it is |
 |------|------------|
-| **Static demo** badge + About | Fixed `graded6` sample (400-paper corpus → 60-paper writer view) |
+| **Static demo** badge + About | Fixed `graded6` sample (400-paper corpus → 60 verified papers) |
+| **Corpus vs verified papers** | Intro + expandable **What are corpus papers & verified papers?** — see [below](#corpus-vs-verified-papers) |
 | **F1 / F2 / F3 guide** | Always-visible intro + **1–9 score scale** (1–4 needs revision · 5–6 meets threshold · 7–9 strong); KPIs show `n/9`; revise loop typically stops at F1/F2 ≥ 5; expandable cards explain each dimension |
-| **Run at a glance** | KPIs: corpus, writer view, citations, **Critic F1/F2/F3** (with plain-language subtitles), expandable **What do F1, F2 & F3 mean?**, audit status chips |
+| **Run at a glance** | KPIs: **corpus** (full pull) · **verified papers** (selected for drafting) · citations · **Critic F1/F2/F3**; expandable guides for corpus and F-scores; audit status chips |
 | **Jump to** | **Proposal** scrolls to NIH text; **Supporting details** opens the collapsed block |
 | **Run a live grant proposal (CLI)** | Collapsed `python -m cua.nih.run_db` instructions (writes local files only) |
 
@@ -182,6 +183,17 @@ An NIH grant is a **structured argument** scored on a rubric. Before drafting, t
 | **X** | Honesty rules | Every cite must exist in corpus; claims cannot exceed evidence grade |
 
 Writers satisfy the contract; the **Critic** scores against it; the **Audit** reports satisfied vs at-risk obligations.
+
+##### Corpus vs verified papers
+
+Tab 3 **Run at a glance** shows two ingestion counts from `GET /api/cua/demo` → `ingestion.corpus_n` and `ingestion.top_k`:
+
+| KPI | Meaning | `graded6` demo |
+|-----|---------|----------------|
+| **Corpus papers** | Full evidence set CUA pulled from the database for this run — the citation gate (inv-1) checks every cited ID against this full set | **400** |
+| **Verified papers** | Ingestion’s **`top_k`** — clustered by similar `key_finding`, ranked for topic relevance, diversified (`per_cluster_cap`) so one finding doesn’t dominate. The **Synthesizer and revisers draft from this verified slice only** | **60** |
+
+**ID-preserving:** clustering narrows what drafters *read*; it does **not** delete sources from the corpus. Papers outside the verified set can still feed the **F2 Rigor Booster**. Expand **Ingestion** inside **Pipeline trace & audit** for the full funnel audit.
 
 ##### Critic score scale (F1 / F2 / F3)
 

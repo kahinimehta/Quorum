@@ -329,12 +329,19 @@
       padding: 0.1rem 0.35rem;
       border-radius: 4px;
     }
-    .cua-score-intro {
+    .cua-score-intro,
+    .cua-corpus-intro {
       font-size: 0.82rem;
       color: var(--muted);
       margin: -0.35rem 0 0.85rem;
       line-height: 1.45;
       max-width: 52rem;
+    }
+    .cua-corpus-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin: 0.55rem 0 0.85rem;
+      line-height: 1.4;
     }
     .cua-kpi-row {
       display: grid;
@@ -1655,18 +1662,22 @@
           <span class="cua-static-badge">Static demo</span>
           <details class="cua-about-wrap">
             <summary>About this static demo</summary>
-            <p class="cua-hero-desc">Pre-rendered <code>graded6</code> sample — 400-paper corpus, 60-paper writer view. Fixed NIH showcase; not tied to Steps 1–2.</p>
+            <p class="cua-hero-desc">Pre-rendered <code>graded6</code> sample — 400-paper corpus, 60 verified papers. Fixed NIH showcase; not tied to Steps 1–2.</p>
           </details>
         </div>
         <h2>Run at a glance</h2>
-        <p class="cua-score-intro">
-          <strong>Critic F1 / F2 / F3</strong> grade the proposal on a <strong>1–9 scale</strong> (1 = weak, 9 = exceptional).
-          The Critic scores the writer’s draft; the Audit checks citations and obligation coverage separately below.
+        <p class="cua-corpus-intro">
+          <strong>Corpus papers</strong> = full evidence pulled for the CUA run.
+          <strong>Verified papers</strong> = the smaller, diversified <strong>top-K</strong> slice ingestion ranked and selected for drafting — the full corpus still backs citation checks.
         </p>
         <div class="cua-kpi-row">
-          <div class="cua-kpi"><div class="val" id="cuaKpiCorpus">—</div><div class="lbl">Corpus papers</div></div>
-          <div class="cua-kpi"><div class="val" id="cuaKpiView">—</div><div class="lbl">Writer view</div></div>
-          <div class="cua-kpi"><div class="val" id="cuaKpiCites">—</div><div class="lbl">Citations</div></div>
+          <div class="cua-kpi" title="All papers available for citation integrity (inv-1)">
+            <div class="val" id="cuaKpiCorpus">—</div><div class="lbl">Corpus papers</div><div class="cua-kpi-sub">Full evidence pull</div>
+          </div>
+          <div class="cua-kpi" title="Top-K after ingestion clustering + relevance rank">
+            <div class="val" id="cuaKpiView">—</div><div class="lbl">Verified papers</div><div class="cua-kpi-sub">Selected for drafting</div>
+          </div>
+          <div class="cua-kpi"><div class="val" id="cuaKpiCites">—</div><div class="lbl">Citations</div><div class="cua-kpi-sub">In proposal</div></div>
           <div class="cua-kpi" title="Significance, gap, hypothesis, innovation">
             <div class="val" id="cuaKpiF1">—</div><div class="lbl">Critic F1</div><div class="cua-kpi-sub">Why this project?</div>
           </div>
@@ -1677,6 +1688,28 @@
             <div class="val" id="cuaKpiF3">—</div><div class="lbl">Critic F3</div><div class="cua-kpi-sub">Can the team deliver?</div>
           </div>
         </div>
+        <p class="cua-corpus-note" id="cuaCorpusNote">Ingestion clusters similar findings, ranks by topic relevance, then selects verified papers for drafting — without removing papers from the citation gate.</p>
+        <details class="cua-score-guide">
+          <summary>What are corpus papers &amp; verified papers?</summary>
+          <div class="cua-score-grid">
+            <div class="cua-score-item">
+              <strong>Corpus papers</strong>
+              <span>The full set of literature/grant rows CUA ingested from the database for this run (e.g. 400 in <code>graded6</code>). Every cited ID must exist here — the citation gate (inv-1) checks against the full corpus, not just the verified papers.</span>
+            </div>
+            <div class="cua-score-item">
+              <strong>Verified papers</strong>
+              <span>Ingestion’s <code>top_k</code> representatives — clustered by similar <code>key_finding</code>, ranked for relevance, diversified so one finding doesn’t dominate. The Synthesizer and revisers draft from this verified slice (e.g. 60 papers) instead of all 400 undifferentiated rows.</span>
+            </div>
+            <div class="cua-score-item">
+              <strong>Why two numbers?</strong>
+              <span>ID-preserving design: narrowing what drafters <em>read</em> keeps prompts tractable; keeping the full corpus for grounding keeps citations honest. Papers outside the verified set can still feed the F2 Rigor Booster.</span>
+            </div>
+          </div>
+        </details>
+        <p class="cua-score-intro">
+          <strong>Critic F1 / F2 / F3</strong> grade the proposal on a <strong>1–9 scale</strong> (1 = weak, 9 = exceptional).
+          The Critic scores the writer’s draft; the Audit checks citations and obligation coverage separately below.
+        </p>
         <div class="cua-score-scale" aria-label="Critic score scale 1 to 9">
           <span class="cua-scale-label">Score scale (1–9)</span>
           <span class="cua-scale-chip risk">1–4 · needs revision</span>
@@ -4841,9 +4874,18 @@ python -m cua.nih.run_db \
         unavail.classList.add('hidden');
         main.classList.remove('hidden');
         kpis.classList.remove('hidden');
-        document.getElementById('cuaKpiCorpus').textContent = d.ingestion?.corpus_n ?? '—';
-        document.getElementById('cuaKpiView').textContent = d.ingestion?.top_k ?? '—';
+        const corpusN = d.ingestion?.corpus_n;
+        const topK = d.ingestion?.top_k;
+        document.getElementById('cuaKpiCorpus').textContent = corpusN ?? '—';
+        document.getElementById('cuaKpiView').textContent = topK ?? '—';
         document.getElementById('cuaKpiCites').textContent = d.audit?.citations ?? '—';
+        const corpusNote = document.getElementById('cuaCorpusNote');
+        if (corpusNote && corpusN != null && topK != null) {
+          corpusNote.innerHTML =
+            'Ingestion clusters similar findings, ranks by topic relevance, then selects verified papers — '
+            + `this demo: <strong>${corpusN} corpus → ${topK} verified</strong>. `
+            + 'The full corpus still backs citation checks (inv-1).';
+        }
         const criticScores = d.audit?.scores || {};
         setCuaCriticScore('cuaKpiF1', criticScores.F1);
         setCuaCriticScore('cuaKpiF2', criticScores.F2);

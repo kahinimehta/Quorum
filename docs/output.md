@@ -36,7 +36,9 @@ Layout top-to-bottom:
 ![Step 3 — Grant proposal tab](/assets/images/dashboard/step3-grant-proposal.png)
 {: .doc-screenshot }
 
-*Step 3 — hero KPIs, audit status chips, Jump to (Proposal + supporting details), NIH proposal expanded at top, one collapsed supporting-details group below, and collapsible live-CLI instructions.*
+*Step 3 — hero KPIs (**corpus papers** = full pull, **verified papers** = top-K slice selected for drafting), audit status chips, Jump to (Proposal + supporting details), NIH proposal expanded at top, one collapsed supporting-details group below, and collapsible live-CLI instructions.*
+
+**Verified papers** is not the full database — it is ingestion’s `top_k` (60 in `graded6`) after clustering and relevance ranking. The full **corpus** (400) still backs citation integrity. See [Dashboard — Corpus vs verified papers](dashboard#corpus-vs-verified-papers).
 
 | Jump to | Layout | Content |
 |---------|--------|---------|

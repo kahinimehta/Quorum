@@ -105,7 +105,7 @@ CUA (Conclusion Update Agent) reads the NeuroDiscover blackboard and produces a 
 ### What it does (step by step)
 
 1. **Reads** the shared DB read-only — `evidence`, `subgroups`, `treatment_connections`, `connection_evidence`
-2. **Ingestion** — clusters and ranks papers (e.g. ~400 → top 60 for the writer); full corpus stays available for citation checks
+2. **Ingestion** — clusters by similar `key_finding`, ranks by topic relevance, and selects **verified papers** (`top_k`, e.g. 60) for drafters; the **full corpus** (e.g. 400) stays available for citation checks (inv-1). See [Dashboard — Corpus vs verified papers](../dashboard#corpus-vs-verified-papers).
 3. **Plans** — Blueprint Planner sets NIH rubric obligations (F1/F2/F3)
 4. **Writes** — Synthesizer drafts the argument (best-of-N), Aim Architect structures specific aims
 5. **Grounds** — hard gate: every citation must exist in the corpus

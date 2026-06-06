@@ -130,6 +130,17 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 | Monitor | 65–79 |
 | Reject | < 65 |
 
+## Ingestion KPIs (Step 3 — grant proposal)
+
+`GET /api/cua/demo` includes `ingestion` from the bundled audit artifacts:
+
+| Field | Meaning |
+|-------|---------|
+| `corpus_n` | Full evidence rows ingested for the run (citation gate referent) |
+| `top_k` | **Verified papers** count — diversified top-K representatives the Synthesizer/revisers read |
+
+Example (`graded6`): `corpus_n: 400`, `top_k: 60`. See [Dashboard — Corpus vs verified papers](../dashboard#corpus-vs-verified-papers).
+
 ## Critic scores (Step 3 — grant proposal)
 
 Static CUA demo KPIs expose **F1**, **F2**, and **F3** from `audit.calibration.internal_scores` (`GET /api/cua/demo`). Each dimension is an integer **1–9** (minimum 1, maximum 9):
