@@ -285,7 +285,7 @@
     .tab-btn-results.active .tab-step { background: #16a34a; }
     .tab-btn-cua.active { border-color: #7c3aed; background: linear-gradient(135deg, #f5f3ff 0%, #fff 100%); box-shadow: 0 4px 16px rgba(124, 58, 237, 0.18); }
     .tab-btn-cua.active .tab-step { background: #7c3aed; color: #fff; }
-    .cua-wide { max-width: 1400px; margin: 0 auto; padding: 0.75rem 1.5rem 2rem; }
+    .cua-wide { max-width: 1400px; margin: 0 auto; padding: 0.75rem 1.5rem 2rem; overflow-x: hidden; }
     .cua-shell-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -321,18 +321,36 @@
       box-shadow: var(--shadow);
     }
     .cua-kpi .val { font-size: 1.5rem; font-weight: 700; color: #5b21b6; }
-    .cua-kpi .lbl { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .cua-kpi .lbl {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
     .cua-report-toolbar {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 0.75rem;
+      gap: 1rem;
       flex-wrap: wrap;
-      margin: 0 0 0.85rem;
+      margin: 0 0 1rem;
       font-size: 0.92rem;
       color: var(--text);
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
     }
-    .cua-report-toolbar strong { font-size: 1rem; color: var(--navy); }
+    .cua-report-toolbar-text { flex: 1; min-width: 0; }
+    .cua-report-toolbar strong {
+      display: block;
+      font-size: 1.05rem;
+      color: var(--navy);
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .cua-report-meta { font-size: 0.9rem; color: var(--muted); font-weight: 400; line-height: 1.45; overflow-wrap: anywhere; }
     .cua-report-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -1400,12 +1418,12 @@
   </div>
 
   <div id="viewCua" class="hidden">
-    <p class="view-page-title">Step 3 — Grant Proposal (CUA) <span id="cuaSubtitle">Static bundled demo · not tied to Step 1 or Step 2 runs</span></p>
+    <p class="view-page-title">Step 3 — Grant Proposal (CUA) <span id="cuaSubtitle">Static NIH demo · independent of Steps 1–2</span></p>
     <div class="cua-wide">
       <div class="cua-shell-card">
         <div class="cua-static-bar" role="note">
           <span class="cua-static-badge">Static demo</span>
-          <span class="cua-static-text">Pre-rendered <code>graded6</code> sample (400-paper corpus → 60 writer view). Fixed showcase — not run-scoped.</span>
+          <span class="cua-static-text">Pre-rendered <code>graded6</code> sample: 400-paper corpus, 60-paper writer view. Fixed showcase (not run-scoped).</span>
         </div>
       </div>
       <div class="cua-shell-card" id="cuaKpis">
@@ -1423,9 +1441,11 @@
       </div>
       <div id="cuaMain">
         <div class="cua-report-card">
-          <h2 style="margin:0 0 0.75rem;font-size:1rem;color:var(--navy);">Full grant proposal report</h2>
           <div class="cua-report-toolbar">
-            <span><strong id="cuaReportTitle" style="font-size:1.05rem;">Grant proposal report</strong><br><span id="cuaReportMeta" style="font-size:0.92rem;color:var(--muted);font-weight:400;">graded6 static demo</span></span>
+            <div class="cua-report-toolbar-text">
+              <strong id="cuaReportTitle">Grant proposal report</strong>
+              <div class="cua-report-meta" id="cuaReportMeta">graded6 static demo</div>
+            </div>
             <a class="btn btn-secondary" id="cuaReportOpen" href="#" target="_blank" rel="noopener">Open full page</a>
           </div>
           <div id="cuaReportHost" class="cua-report-inline" aria-live="polite">Loading grant proposal…</div>
@@ -3475,19 +3495,27 @@ python -m cua.nih.run_db \
       .d-node {
         box-sizing: border-box !important;
         align-items: center !important;
+        overflow: hidden !important;
       }
+      .dnl { overflow-wrap: anywhere !important; word-break: break-word !important; }
       .d-panel {
         box-sizing: border-box !important;
         overflow-y: auto !important;
         overflow-x: hidden !important;
         scrollbar-width: thin;
+        scrollbar-color: #cbd2de transparent;
         padding: 8px 12px !important;
+        -webkit-overflow-scrolling: touch;
       }
+      .d-panel:hover { z-index: 35 !important; }
+      .d-panel.out { min-height: 78px !important; }
       .d-edge { z-index: 4 !important; }
+      .d-el { white-space: normal !important; max-width: 9.5rem !important; line-height: 1.25 !important; text-align: center !important; }
       .dp-h { font-size: 0.78rem !important; }
-      .dp-c { font-size: 0.92rem !important; line-height: 1.5 !important; font-weight: 400 !important; }
+      .dp-c { font-size: 0.92rem !important; line-height: 1.5 !important; font-weight: 400 !important; overflow-wrap: anywhere !important; word-break: break-word !important; }
+      .dp-c b { display: block; line-height: 1.35 !important; }
       .dm { font-size: 0.82rem !important; }
-      .dnl b { font-size: 0.95rem !important; }
+      .dnl b { font-size: 0.95rem !important; line-height: 1.25 !important; }
       .round {
         display: grid !important;
         grid-template-columns: 5.25rem 1fr !important;
@@ -3530,12 +3558,19 @@ python -m cua.nih.run_db \
         justify-content: center;
       }
       section {
-        margin: 2rem 0 !important;
-        padding: 1.1rem 1.15rem !important;
+        margin: 1.5rem 0 !important;
+        padding: 1.15rem 1.25rem !important;
         background: #fafbff !important;
         border: 1px solid #e4e7ee !important;
         border-radius: 12px !important;
+        overflow: hidden !important;
       }
+      .obl li, .cand p, .card p, .callout, .prov, .provp, .ev-dec, table td, table th {
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+      }
+      .ablabel { overflow-wrap: anywhere !important; min-width: 0 !important; flex: 1 1 8rem !important; }
+      .funnel { flex-wrap: wrap !important; gap: 10px !important; }
       section > h2:first-child { margin-top: 0 !important; }
       .grid2 { gap: 1rem !important; }
       .cand p { font-size: 0.94rem !important; line-height: 1.6 !important; }
@@ -3555,7 +3590,21 @@ python -m cua.nih.run_db \
         const nodeH = parseFloat(node.style.height) || 50;
         const panelH = parseFloat(panel.style.height) || 81;
         panel.style.top = `${nodeTop}px`;
-        panel.style.height = `${Math.max(panelH, nodeH + 24)}px`;
+        const targetH = panel.classList.contains('out')
+          ? Math.max(panelH, 78, panel.scrollHeight + 4)
+          : Math.max(panelH, nodeH + 24);
+        panel.style.height = `${targetH}px`;
+      });
+    }
+
+    function polishCuaInlineContent(root, meta) {
+      const outTitle = root.querySelector('.d-panel.out .dp-c b');
+      if (outTitle && meta?.projectTitle && /research p$/i.test(outTitle.textContent.trim())) {
+        outTitle.textContent = meta.projectTitle;
+      }
+      root.querySelectorAll('.d-panel .dp-c b').forEach((el) => {
+        el.style.whiteSpace = 'normal';
+        el.style.lineHeight = '1.35';
       });
     }
 
@@ -3603,6 +3652,7 @@ python -m cua.nih.run_db \
       wrapCuaDiagram(shadow);
       syncCuaDiagramLayout(shadow);
       host.textContent = '';
+      return shadow;
     }
 
     async function loadCuaTab() {
@@ -3626,11 +3676,13 @@ python -m cua.nih.run_db \
         document.getElementById('cuaKpiCites').textContent = d.audit?.citations ?? '—';
         document.getElementById('cuaKpiF1').textContent = d.audit?.scores?.F1 ?? '—';
         document.getElementById('cuaKpiF2').textContent = d.audit?.scores?.F2 ?? '—';
-        document.getElementById('cuaReportTitle').textContent = d.project_title || 'Grant proposal report';
+        const title = d.project_title || 'Grant proposal report';
+        document.getElementById('cuaReportTitle').textContent = title;
         document.getElementById('cuaReportMeta').textContent =
-          `static demo ${CUA_STATIC_DEMO_ID} · ${d.audit?.obligations_satisfied ?? '—'} obligations satisfied · not run-scoped`;
+          `Static demo ${CUA_STATIC_DEMO_ID} · ${d.audit?.obligations_satisfied ?? '—'} obligations satisfied · not run-scoped`;
         document.getElementById('cuaReportOpen').href = CUA_STATIC_REPORT_URL;
-        await loadCuaReportInline();
+        const shadow = await loadCuaReportInline();
+        if (shadow) polishCuaInlineContent(shadow, { projectTitle: title });
         cuaLoaded = true;
       } catch (e) {
         unavail.textContent = 'Could not load CUA demo: ' + (e.message || e);

@@ -67,12 +67,14 @@ def main() -> int:
         shot(page, ".output-panel.panel-syn", os.path.join(OUT, "step2-synthetic-cohort.png"))
         shot(page, ".audit-section", os.path.join(OUT, "step2-audit-evidence.png"))
 
-        # Step 3 — CUA grant proposal tab
+        # Step 3 — CUA grant proposal tab (viewport; full #viewCua is very tall)
         page.locator('[data-view="cua"]').click()
         page.wait_for_selector("#viewCua:not(.hidden)", timeout=30_000)
         page.wait_for_selector("#cuaReportHost", timeout=30_000)
         time.sleep(2.5)
-        shot(page, "#viewCua", os.path.join(OUT, "step3-cua-grant-proposal.png"))
+        path3 = os.path.join(OUT, "step3-cua-grant-proposal.png")
+        page.screenshot(path=path3, full_page=False)
+        print(f"Wrote {path3}")
 
         browser.close()
     return 0
