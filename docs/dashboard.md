@@ -115,7 +115,7 @@ flowchart LR
 
 Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant Proposal**. Step 3 is **not run-scoped** — same `graded6` demo regardless of Step 2.
 
-**Collapsed by default (demo-friendly):** Step 2 **Audit & provenance** · Step 3 **Grant pipeline** and **Pipeline trace & audit** (Jump to opens each). Ideal candidate profiles and ranked outputs match the research hypotheses column height and scroll when their content is longer; the NIH proposal body stays visible without extra clicks.
+**Collapsed by default (demo-friendly):** Step 2 **Audit & provenance** · Step 3 **Grant pipeline** and **Pipeline trace & audit** (Jump to opens each). Ideal candidate profiles and ranked outputs cap at the research hypotheses body height (panel borders wrap content — no empty box below); scroll when their list is longer. The NIH proposal body stays visible without extra clicks.
 
 {: .important }
 **Stage safety:** Pre-run `make dashboard` before presenting. Use **demo** mode — no live PubMed pull on stage. See [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage).
@@ -128,7 +128,7 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 | KPI strip | Per-type counts (papers, trials, grants, subgroups, connections) |
 | Run status | Ready / Running / Complete / Partial / Failed |
 | **Step 1** | Full-width **Discovery run configuration** only (no sidebar, local-mode banner, or demo-mode hint clutter) — pipeline mode, disease, max papers, extraction; short rescore banner; **Recent runs** table |
-| **Step 2** | Subtitle *Cohort, ranked outputs, & hypotheses*; **Pipeline complete** badge beside title; three output panels — **research hypotheses** sets column height; **ideal candidate profiles** and **ranked outputs** match it and scroll when longer; discovery pipeline diagram; **Audit & provenance** collapsed by default |
+| **Step 2** | Subtitle *Cohort, ranked outputs, & hypotheses*; **Pipeline complete** badge beside title; three output panels — **research hypotheses** sets the scroll cap; **ideal candidate profiles** and **ranked outputs** borders fit their content (up to that cap) and scroll when longer; discovery pipeline diagram; **Audit & provenance** collapsed by default |
 | **Step 3** | **Grant Proposal** — static `graded6` demo. Hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3); **The proposal** expanded (aims + **PubMed ID** citations); **Grant pipeline** in its own collapsed block; toolbar **`x/y obligations satisfied`**; pipeline/audit prose behind collapsed **Pipeline trace & audit**. **Jump to** → Proposal · Grant pipeline · Supporting details. |
 
 ### Step 3 — report structure

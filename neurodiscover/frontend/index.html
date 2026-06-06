@@ -869,9 +869,9 @@
       padding: 0;
       overflow: hidden;
       box-shadow: var(--shadow);
-      min-height: 320px;
       display: flex;
       flex-direction: column;
+      align-self: start;
     }
     .output-panel-head {
       padding: 0.65rem 0.85rem;
@@ -886,7 +886,7 @@
     .output-panel-body { padding: 0.75rem 0.85rem 1rem; }
     .panel-syn .output-panel-body,
     .panel-rank .output-panel-body {
-      flex: 1;
+      flex: 0 1 auto;
       min-height: 0;
       overflow-y: auto;
       overflow-x: hidden;
@@ -3046,25 +3046,25 @@ python -m cua.nih.run_db \
     let matchedPanelResizeObs = null;
 
     function syncMatchedOutputPanelHeights() {
-      const hyp = document.querySelector('.outputs-three .panel-hyp.output-panel');
-      const syn = document.querySelector('.outputs-three .panel-syn.output-panel');
-      const rank = document.querySelector('.outputs-three .panel-rank.output-panel');
-      if (!hyp) return;
+      const hypBody = document.querySelector('.outputs-three .panel-hyp .output-panel-body');
+      const synBody = document.querySelector('.outputs-three .panel-syn .output-panel-body');
+      const rankBody = document.querySelector('.outputs-three .panel-rank .output-panel-body');
+      if (!hypBody) return;
       if (window.matchMedia('(max-width: 1100px)').matches) {
-        if (syn) syn.style.height = '';
-        if (rank) rank.style.height = '';
+        if (synBody) synBody.style.maxHeight = '';
+        if (rankBody) rankBody.style.maxHeight = '';
         return;
       }
-      const h = `${hyp.offsetHeight}px`;
-      if (syn) syn.style.height = h;
-      if (rank) rank.style.height = h;
+      const bodyH = `${hypBody.offsetHeight}px`;
+      if (synBody) synBody.style.maxHeight = bodyH;
+      if (rankBody) rankBody.style.maxHeight = bodyH;
     }
 
     function initMatchedOutputPanelHeights() {
-      const hyp = document.querySelector('.outputs-three .panel-hyp.output-panel');
-      if (!hyp || matchedPanelResizeObs) return;
+      const hypBody = document.querySelector('.outputs-three .panel-hyp .output-panel-body');
+      if (!hypBody || matchedPanelResizeObs) return;
       matchedPanelResizeObs = new ResizeObserver(() => syncMatchedOutputPanelHeights());
-      matchedPanelResizeObs.observe(hyp);
+      matchedPanelResizeObs.observe(hypBody);
       window.addEventListener('resize', syncMatchedOutputPanelHeights);
     }
 
