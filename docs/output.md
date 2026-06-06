@@ -42,7 +42,7 @@ At the top, **This run** shows:
 | Jump to | Group | Sub-sections (collapsed by default) |
 |---------|-------|--------------------------------------|
 | **Proposal** | *(leading section)* | NIH R01 proposal — significance, innovation, three aims |
-| **Supporting details** | Pipeline trace & audit | Pipeline & self-correction · Writer contract & selection · Booster & rigor lift · Audit & corpus |
+| **Supporting details** | Pipeline trace & audit (one collapsed group) | Nested categories (each collapsed): **Pipeline & self-correction** · **Writer contract & selection** · **Booster & rigor lift** · **Audit & corpus** |
 
 To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)).
 

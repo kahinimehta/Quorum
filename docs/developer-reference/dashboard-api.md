@@ -65,7 +65,7 @@ flowchart LR
 | Jump to | Group | Sub-sections |
 |---------|-------|--------------|
 | **Proposal** | *(leading section)* | NIH R01 proposal |
-| **Supporting details** | Pipeline trace & audit | Pipeline & self-correction · Writer contract & selection · Booster & rigor lift · Audit & corpus |
+| **Supporting details** | Pipeline trace & audit (one collapsed group) | Nested categories (each collapsed): **Pipeline & self-correction** · **Writer contract & selection** · **Booster & rigor lift** · **Audit & corpus** |
 
 Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 

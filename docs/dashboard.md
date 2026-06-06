@@ -105,6 +105,19 @@ flowchart LR
   Agents --> DB
 ```
 
+## Demo tour (≈3 min)
+
+| Step | Tab | What to show |
+|------|-----|--------------|
+| 1 | **Configure & Run** | Demo mode, max papers 10, run button — agent stepper advances one agent at a time |
+| 2 | **Discovery Results** | Synthetic cohort, ranked treatments, agent trace, evidence table (this run’s `run_id`) |
+| 3 | **Grant Proposal** (last tab, static) | Hero KPIs → **Jump to: Proposal** (NIH text open by default) → collapsed **Pipeline trace & audit** for pipeline/audit depth |
+
+Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant Proposal**. Step 3 is **not run-scoped** — same `graded6` demo regardless of Step 2.
+
+{: .important }
+**Stage safety:** Pre-run `make dashboard` before presenting. Use **demo** mode — no live PubMed pull on stage. See [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage).
+
 ## UI layout
 
 | Area | Content |
@@ -122,7 +135,7 @@ flowchart LR
 | Jump to | Group | Sub-sections (collapsed by default) |
 |---------|-------|--------------------------------------|
 | **Proposal** | *(leading section)* | NIH R01 proposal — significance, innovation, three aims |
-| **Supporting details** | Pipeline trace & audit | **Pipeline & self-correction** (data loop · revise rounds · trace) · **Writer contract & selection** · **Booster & rigor lift** · **Audit & corpus** |
+| **Supporting details** | Pipeline trace & audit (one collapsed group) | Nested categories (each collapsed): **Pipeline & self-correction** · **Writer contract & selection** · **Booster & rigor lift** · **Audit & corpus** |
 
 Timestamps display in **US Eastern** (`America/New_York`).
 

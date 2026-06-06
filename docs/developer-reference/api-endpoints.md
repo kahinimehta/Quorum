@@ -31,8 +31,8 @@ The dashboard reads these routes when browser Supabase keys are unset. Full JSON
 | GET | `/api/run-stats` | Per-run processed vs DB totals; requires `run_id` |
 | GET | `/api/run-discovery/status` | Poll async pipeline job; requires `run_id` |
 | GET | `/api/synthetic-cohort` | Ephemeral profiles; requires `run_id` |
-| GET | `/api/cua/demo` | Static bundled CUA summary (`graded6`; not run-scoped) |
-| GET | `/cua-demo/graded6.html` | Pre-rendered CUA HTML report (served by API static mount) |
+| GET | `/api/cua/demo` | Static bundled grant-proposal summary (`graded6`; Step 3 tab; not run-scoped) |
+| GET | `/cua-demo/graded6.html` | Pre-rendered grant-proposal HTML report (served by API static mount) |
 | POST | `/api/run-discovery` | Pipeline run. Default (`wait: false`): `{ "run_id", "status": "running", "accepted": true }`. With `wait: true`: full payload (`recommendations`, `agent_outputs`, `runStats`, `synthetic_cohort`) |
 
 ## Quick verify

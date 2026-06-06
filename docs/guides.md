@@ -98,8 +98,8 @@ See [Developer reference](developer-reference/) for schema, agent I/O, and API d
 
 | Audience | Start here |
 |----------|------------|
-| Judges / quick tour | [Home](index) → [Output examples](output) (screenshots) → run `make dashboard` locally |
-| Live demo | [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage) |
+| Judges / quick tour | [Home](index) → [Output examples](output) (Steps 1–3 screenshots) → [Dashboard demo tour](dashboard#demo-tour-3-min) → run `make dashboard` locally |
+| Live demo | [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage) — finish on **Grant Proposal** (tab 3) |
 | Architecture | [Workflow](workflow/) · [Design & engineering](design) |
 | Team | [Team](team) |
 
