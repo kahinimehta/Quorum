@@ -93,6 +93,7 @@ def load_demo_summary(run_id: str = DEFAULT_RUN_ID) -> dict[str, Any]:
             "all_in_corpus": grounding.get("all_in_source_set"),
             "obligations_satisfied": satisfied,
             "obligations_at_risk": at_risk,
+            "obligations_total": len(ledger),
             "scores": internal,
         },
         "report_path": f"/cua-demo/{run_id}.html",

@@ -1492,15 +1492,10 @@
 
   <div id="viewResults" class="hidden">
     <div class="results-title-row">
-      <p class="view-page-title">Step 2 — Discovery Results</p>
+      <p class="view-page-title">Step 2 — Discovery Results <span>Cohort, ranked outputs, &amp; hypotheses</span></p>
       <span class="badge ok" id="pillPipeline">Pipeline —</span>
     </div>
     <div class="results-wide">
-      <div class="results-pills" id="resultsPills">
-        <span class="badge syn" id="pillSynthetic">— Ideal Profiles</span>
-        <span class="badge" id="pillSubTreat">— Subgroups · — Treatments</span>
-      </div>
-
       <div class="outputs-three">
         <div class="output-panel panel-syn">
           <div class="output-panel-head">Ideal candidate profiles</div>
@@ -1600,7 +1595,7 @@
   </div>
 
   <div id="viewCua" class="hidden">
-    <p class="view-page-title">Step 3 — Grant Proposal <span id="cuaSubtitle">Static NIH demo · independent of Steps 1–2</span></p>
+    <p class="view-page-title">Step 3 — Grant Proposal</p>
     <div class="cua-wide">
       <div class="cua-shell-card cua-hero" id="cuaKpis">
         <div class="cua-hero-top" role="note">
@@ -1682,7 +1677,6 @@
             </div>
           </div>
         </details>
-        <div class="cua-status-row hidden" id="cuaStatusRow" aria-label="Audit status"></div>
       </div>
       <div id="cuaUnavailable" class="cua-unavail hidden">
         CUA demo artifacts not found. Ensure <code>cua/outputs/graded6.*</code> exists in the repo.
@@ -2419,14 +2413,8 @@ python -m cua.nih.run_db \
       const trace = document.getElementById('traceRunId');
       if (trace) trace.textContent = runId ? `run_id: ${runId}` : '';
       const nRec = recCount ?? 5;
-      const nSyn = synCount ?? (nRec > 0 ? 5 : 0);
-      const sg = statsCache.subgroups || 5;
       const pillP = document.getElementById('pillPipeline');
-      const pillS = document.getElementById('pillSynthetic');
-      const pillST = document.getElementById('pillSubTreat');
-      if (pillP) pillP.textContent = nRec > 0 ? '• Pipeline Complete' : '• Pipeline Partial';
-      if (pillS) pillS.textContent = `${nSyn} Ideal Profiles`;
-      if (pillST) pillST.textContent = `${sg} Subgroups · ${nRec || 5} Treatments`;
+      if (pillP) pillP.textContent = nRec > 0 ? 'Pipeline Complete' : 'Pipeline Partial';
     }
 
     function updateHeaderFromStats(s) {
@@ -4145,6 +4133,31 @@ python -m cua.nih.run_db \
       .abtag.base { background: #f1f5f9 !important; color: #64748b !important; }
       .abfill.boost { background: #38bdf8 !important; }
       .abfill.base { background: #94a3b8 !important; }
+      .cua-pipeline-block {
+        margin-top: 1.25rem !important;
+        padding-top: 1rem !important;
+        border-top: 1px dashed #e2e8f0 !important;
+      }
+      .cua-pipeline-block-head {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 0.5rem 1rem !important;
+        margin-bottom: 0.65rem !important;
+      }
+      .cua-pipeline-block-title {
+        font-size: 0.92rem !important;
+        font-weight: 700 !important;
+        color: var(--navy) !important;
+      }
+      .cua-pipeline-full-link {
+        font-size: 0.78rem !important;
+        font-weight: 600 !important;
+        color: var(--c-primary) !important;
+        text-decoration: none !important;
+      }
+      .cua-pipeline-full-link:hover { text-decoration: underline !important; }
       .diagram-wrap {
         width: 100%;
         overflow-x: auto;
@@ -4572,6 +4585,36 @@ python -m cua.nih.run_db \
       }
     }
 
+    function moveCuaPipelineDiagramAfterProposal(root, proposalSec) {
+      const loopSec = root.querySelector('section.cua-sec-loop');
+      if (!loopSec || !proposalSec) return;
+      const diagramWrap = loopSec.querySelector('.diagram-wrap');
+      if (!diagramWrap) return;
+
+      const block = document.createElement('div');
+      block.className = 'cua-pipeline-block';
+      const head = document.createElement('div');
+      head.className = 'cua-pipeline-block-head';
+      const title = document.createElement('span');
+      title.className = 'cua-pipeline-block-title';
+      title.textContent = 'Grant pipeline';
+      const fullLink = document.createElement('a');
+      fullLink.className = 'cua-pipeline-full-link';
+      fullLink.href = CUA_STATIC_REPORT_URL;
+      fullLink.target = '_blank';
+      fullLink.rel = 'noopener';
+      fullLink.textContent = 'Open full report →';
+      head.append(title, fullLink);
+      block.append(head, diagramWrap);
+      proposalSec.appendChild(block);
+
+      const loopLead = loopSec.querySelector(':scope > p.lead');
+      if (loopLead) {
+        loopLead.textContent =
+          'Round-by-round revise loop, citation gate, and booster detail live in Pipeline trace & audit below.';
+      }
+    }
+
     function reorganizeCuaSections(root) {
       const wrap = cuaContentWrap(root);
       if (!wrap) return;
@@ -4607,6 +4650,7 @@ python -m cua.nih.run_db \
       if (proposal) {
         unwrapCuaSectionDetails(proposal);
         proposal.classList.add('cua-sec-first');
+        moveCuaPipelineDiagramAfterProposal(root, proposal);
         layout.appendChild(proposal);
         byCls.delete('cua-sec-proposal');
       }
@@ -4704,6 +4748,7 @@ python -m cua.nih.run_db \
     }
 
     function polishCuaInlineContent(root, meta) {
+      root.querySelector('footer')?.remove();
       const outTitle = root.querySelector('.d-panel.out .dp-c b');
       if (outTitle && meta?.projectTitle && /research p$/i.test(outTitle.textContent.trim())) {
         outTitle.textContent = meta.projectTitle;
@@ -4793,24 +4838,6 @@ python -m cua.nih.run_db \
       else if (tone === 'risk') card.classList.add('cua-kpi-risk');
     }
 
-    function renderCuaStatusRow(d) {
-      const row = document.getElementById('cuaStatusRow');
-      if (!row) return;
-      const audit = d.audit || {};
-      const scores = audit.scores || {};
-      const chips = [];
-      chips.push({
-        cls: audit.all_in_corpus ? 'ok' : 'risk',
-        label: audit.all_in_corpus ? 'inv-1 citation integrity PASS' : 'inv-1 orphans flagged',
-      });
-      chips.push({ cls: 'ok', label: `inv-2 · ${audit.obligations_satisfied ?? '—'} obligations met` });
-      if (audit.obligations_at_risk > 0) {
-        chips.push({ cls: 'warn', label: `${audit.obligations_at_risk} at risk` });
-      }
-      row.innerHTML = chips.map((c) => `<span class="cua-status ${c.cls}">${c.label}</span>`).join('');
-      row.classList.remove('hidden');
-    }
-
     async function loadCuaTab() {
       const unavail = document.getElementById('cuaUnavailable');
       const main = document.getElementById('cuaMain');
@@ -4854,11 +4881,12 @@ python -m cua.nih.run_db \
         paintCuaKpiCard('cuaKpiF2', cuaScoreTone(Number(criticScores.F2)));
         paintCuaKpiCard('cuaKpiF3', cuaScoreTone(Number(criticScores.F3)));
         paintCuaKpiCard('cuaKpiCites', (d.audit?.citations ?? 0) >= 10 ? 'ok' : 'warn');
-        renderCuaStatusRow(d);
         const title = d.project_title || 'Grant proposal report';
         document.getElementById('cuaReportTitle').textContent = title;
+        const sat = d.audit?.obligations_satisfied;
+        const total = d.audit?.obligations_total;
         document.getElementById('cuaReportMeta').textContent =
-          `Static demo ${CUA_STATIC_DEMO_ID} · ${d.audit?.obligations_satisfied ?? '—'} obligations satisfied · not run-scoped`;
+          (sat != null && total != null) ? `${sat}/${total} obligations satisfied` : '— obligations satisfied';
         document.getElementById('cuaReportOpen').href = CUA_STATIC_REPORT_URL;
         const shadow = await loadCuaReportInline();
         if (shadow) finalizeCuaReportLayout(shadow, { projectTitle: title });

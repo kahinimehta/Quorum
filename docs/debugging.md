@@ -134,6 +134,6 @@ bundle exec jekyll serve
 - [ ] Browser at the launcher **`Open:` URL** (includes `?api=`; not a stale GitHub Pages tab for live UI)  
 - [ ] **Step 1** — pipeline mode + run button; global run status shows progress  
 - [ ] **Step 2** — **Pipeline complete** badge, three output panels (ideal candidate profiles · rankings · hypotheses); **Audit & provenance** collapsed until you expand it for agent trace  
-- [ ] **Step 3 — Grant Proposal** (last tab, static) — **The proposal** fully visible at top; **Pipeline trace & audit** is the only collapse on this tab (one click reveals all supporting sections)  
+- [ ] **Step 3 — Grant Proposal** (last tab, static) — hero KPIs; **The proposal** with aims + pipeline diagram; toolbar shows **x/y obligations satisfied**; **Pipeline trace & audit** is the only collapse  
 - [ ] Fallback docs: [neurodiscover.github.io](https://neurodiscover.github.io) · screenshots on [Output examples](output) and [Inputs](input)  
 - [ ] Mode questions: [Inputs — pipeline modes FAQ](input#recommended-workflow) (Demo vs Rescore, incremental vs full, full does not clear DB)  

@@ -111,7 +111,7 @@ flowchart LR
 |------|-----|--------------|
 | 1 | **Configure & Run** | Demo mode, max papers 10, run button — global run status strip shows progress |
 | 2 | **Discovery Results** | **Ideal candidate profiles** · ranked outputs · research hypotheses first; then pipeline diagram; expand **Audit & provenance** for agent trace + evidence table |
-| 3 | **Grant Proposal** (last tab, static) | Hero KPIs → **The proposal** fully expanded at top (above data loop) → one click on **Pipeline trace & audit** reveals all pipeline/audit sections |
+| 3 | **Grant Proposal** (last tab, static) | Hero KPIs → **The proposal** (aims + **Grant pipeline** diagram + Open full report) → one click on **Pipeline trace & audit** reveals audit sections |
 
 Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant Proposal**. Step 3 is **not run-scoped** — same `graded6` demo regardless of Step 2.
 
@@ -127,16 +127,16 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 | Header | DB status badge and optional run id chip |
 | KPI strip | Per-type counts (papers, trials, grants, subgroups, connections) |
 | Run status | Ready / Running / Complete / Partial / Failed |
-| **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
-| **Step 2** | **Pipeline complete** badge beside title; **ideal candidate profiles**, ranked outputs, and research hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed by default (agent trace + evidence preview inside) |
-| **Step 3** | **Grant Proposal** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **The proposal** fully expanded at the top (above the data loop); all pipeline/audit sections behind **one** collapsed **Pipeline trace & audit** block (single click — no nested collapses). **Jump to** scrolls to Proposal or opens supporting details. **Run a live grant proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package--nih-grant-proposal)) |
+| **Step 1** | Full-width **Discovery run configuration** only (no sidebar, local-mode banner, or demo-mode hint clutter) — pipeline mode, disease, max papers, extraction; short rescore banner; **Recent runs** table |
+| **Step 2** | Subtitle *Cohort, ranked outputs, & hypotheses*; **Pipeline complete** badge beside title; **ideal candidate profiles**, ranked outputs, and research hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed by default |
+| **Step 3** | **Grant Proposal** — static `graded6` demo. Hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3); **The proposal** with aims, citations as **PubMed ID** links, and **Grant pipeline** diagram below aims; toolbar shows **`x/y obligations satisfied`**. Pipeline/audit prose behind **one** collapsed **Pipeline trace & audit** block. **Jump to** → Proposal or Supporting details. |
 
 ### Step 3 — report structure
 
 | Jump to | Layout | Content |
 |---------|--------|---------|
-| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims |
-| **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion (all expanded inside the group) |
+| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims, **Grant pipeline** diagram, **Open full report** link |
+| **Supporting details** | One collapsed group | Contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion (diagram moved into Proposal; no build-script footer) |
 
 Step 3 is **not run-scoped** — it always shows bundled `graded6`, independent of Step 1/2 `run_id`. See [Conclusion Update — CUA package](workflow/conclusion-update#cua-package--nih-grant-proposal) for live CLI runs.
 
@@ -147,7 +147,7 @@ Step 3 is **not run-scoped** — it always shows bundled `graded6`, independent 
 | **Static demo** badge + About | Fixed `graded6` sample (400-paper corpus → 60 verified papers) |
 | **Corpus vs verified papers** | Intro + expandable **What are corpus papers & verified papers?** — see [below](#corpus-vs-verified-papers) |
 | **F1 / F2 / F3 guide** | Always-visible intro + **1–9 score scale** (1–4 needs revision · 5–6 meets threshold · 7–9 strong); KPIs show `n/9`; revise loop typically stops at F1/F2 ≥ 5; expandable cards explain each dimension |
-| **Run at a glance** | KPIs: **corpus** (full pull) · **verified papers** (selected for drafting) · citations · **Critic F1/F2/F3**; expandable guides for corpus and F-scores; audit status chips |
+| **Run at a glance** | KPIs: **corpus** (full pull) · **verified papers** (selected for drafting) · citations · **Critic F1/F2/F3**; expandable guides for corpus and F-scores (no inv-1/inv-2 chip row) |
 | **Jump to** | **Proposal** scrolls to NIH text; **Supporting details** opens the collapsed block |
 | **Run a live grant proposal (CLI)** | Collapsed `python -m cua.nih.run_db` instructions (writes local files only) |
 
@@ -163,7 +163,7 @@ Expand **Pipeline trace & audit** (or Jump to → **Supporting details**) for ni
 
 | Section | What it shows |
 |---------|----------------|
-| **The data loop** | Interactive diagram: roles (Ingestion → Planner → Synthesizer → … → Proposal), arrows, hover tooltips, captured content per step |
+| **The data loop** | Short pointer — the interactive diagram lives **below the aims** inside **The proposal**; this section has round-by-round narrative only |
 | **The contract** | Blueprint Planner’s **obligations** — the grading checklist writers and the Critic use (see below) |
 | **Explored & dropped** | **Best-of-N** at the opening: multiple F1 pitches, one chosen, losers kept for audit |
 | **The loop, round by round** | Revise rounds: citation gate (orphans dropped), F1/F2/F3 scores, revise vs pass |

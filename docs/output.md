@@ -18,9 +18,10 @@ After a run completes, **Step 2** shows pipeline outputs: ideal candidate profil
 Layout top-to-bottom:
 
 1. **Pipeline complete** badge beside the Step 2 title when a run finishes successfully.
-2. **Three panels** — **Ideal candidate profiles** · **Ranked outputs** · **Research hypotheses** (with confidence-by-treatment strip).
-3. **Discovery pipeline** — flow diagram (inputs → six agents → outputs).
-4. **Audit & provenance** — collapsed by default; expand for agent run trace + paginated evidence preview.
+2. Subtitle: *Cohort, ranked outputs, & hypotheses*.
+3. **Three panels** — **Ideal candidate profiles** · **Ranked outputs** · **Research hypotheses** (with confidence-by-treatment strip).
+4. **Discovery pipeline** — flow diagram (inputs → six agents → outputs).
+5. **Audit & provenance** — collapsed by default; expand for agent run trace + paginated evidence preview.
 
 ![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }
@@ -31,19 +32,19 @@ Layout top-to-bottom:
 
 ## Dashboard — Step 3 (Grant Proposal)
 
-**Step 3** is separate from pipeline rankings and **not run-scoped**. It always loads the static bundled demo (`graded6`) via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html` with **The proposal** fully expanded at the top (above the data loop), then **one** collapsed **Pipeline trace & audit** group — a single click reveals data loop, writer contract, booster, audit, and ingestion sections (no nested collapses). Hero KPIs, audit chips, and **Jump to** (Proposal + supporting details) — unchanged no matter which pipeline run you view in Step 2.
+**Step 3** is separate from pipeline rankings and **not run-scoped**. It loads bundled `graded6` via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html`. **The proposal** stays expanded (aims + **Grant pipeline** diagram + Open full report); **Pipeline trace & audit** is one collapsed group for contract, booster, audit, and ingestion prose. Hero KPIs and **Jump to** are unchanged across Step 2 runs.
 
 ![Step 3 — Grant proposal tab](/assets/images/dashboard/step3-grant-proposal.png)
 {: .doc-screenshot }
 
-*Step 3 — hero KPIs (**corpus papers** = full pull, **verified papers** = top-K slice selected for drafting), audit status chips, Jump to (Proposal + supporting details), NIH proposal expanded at top, one collapsed supporting-details group below, and collapsible live-CLI instructions.*
+*Step 3 — hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3), report toolbar **17/21 obligations satisfied**, proposal with PubMed ID citations and pipeline diagram below aims, one collapsed supporting-details group.*
 
 **Verified papers** is not the full database — it is ingestion’s `top_k` (60 in `graded6`) after clustering and relevance ranking. The full **corpus** (400) still backs citation integrity. See [Dashboard — Corpus vs verified papers](dashboard#corpus-vs-verified-papers).
 
 | Jump to | Layout | Content |
 |---------|--------|---------|
-| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims; citations under each aim show as **PubMed ID**, **NCT**, or **Grant** links (not raw `literature:` ids) |
-| **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion |
+| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims; **PubMed ID** / NCT / Grant citation links; **Grant pipeline** diagram below aims |
+| **Supporting details** | One collapsed group | Contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion |
 
 To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package--nih-grant-proposal)).
 

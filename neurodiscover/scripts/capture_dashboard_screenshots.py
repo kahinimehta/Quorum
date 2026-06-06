@@ -74,7 +74,7 @@ def main() -> int:
         page.wait_for_selector("#viewCua:not(.hidden)", timeout=30_000)
         page.wait_for_selector("#cuaReportHost", timeout=30_000)
         page.wait_for_selector("#cuaToc:not(.hidden)", timeout=60_000)
-        page.wait_for_selector("#cuaStatusRow:not(.hidden)", timeout=60_000)
+        page.wait_for_selector("#cuaKpiCorpus", timeout=30_000)
         page.wait_for_function(
             """() => {
               const host = document.getElementById('cuaReportHost');

@@ -139,7 +139,7 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 | `corpus_n` | Full evidence rows ingested for the run (citation gate referent) |
 | `top_k` | **Verified papers** count — diversified top-K representatives the Synthesizer/revisers read |
 
-Example (`graded6`): `corpus_n: 400`, `top_k: 60`. See [Dashboard — Corpus vs verified papers](../dashboard#corpus-vs-verified-papers).
+`audit.obligations_satisfied` / `audit.obligations_total` drive the report toolbar (`17/21 obligations satisfied` in `graded6`). See [Dashboard — Corpus vs verified papers](../dashboard#corpus-vs-verified-papers).
 
 ## Critic scores (Step 3 — grant proposal)
 
