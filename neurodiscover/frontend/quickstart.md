@@ -107,7 +107,7 @@ This will:
    - **Local SQLite:** offline **demo** with `max_papers=10`
    - **Team Supabase:** **agents-only** on all existing evidence (no literature pull)
 4. Start API (default **5000**, auto-fallback if busy) and UI on **8080**
-5. Open **http://127.0.0.1:8080** in your default browser (unless `--no-browser`); alternate API ports add `?api=` to the URL automatically
+5. Open the URL printed by the launcher (default `http://127.0.0.1:8080/?api=http://127.0.0.1:5000`; always includes `?api=`)
 
 Press **Ctrl+C** to stop.
 
@@ -119,7 +119,7 @@ Press **Ctrl+C** to stop.
 |----------|-----|
 | **Windows** | `make` is often not installed — use `python cli.py dashboard` |
 | **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
-| **Linux / WSL / SSH / headless VM** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
+| **Linux / WSL / SSH / headless VM** | Use `--no-browser` and open the **`Open:` URL** from launcher output |
 | **macOS** | Port **5000** may conflict with **AirPlay Receiver** (System Settings → General → AirDrop & Handoff) — use alternate ports below or disable AirPlay |
 | **Any OS** | Wrong Python version? Use 3.10–3.12. Missing packages? Re-run `pip install -r requirements.txt` or `conda env update -f environment.yml --prune` |
 | **Conda** | Always `conda activate neurodiscover` before `make dashboard` |
@@ -140,7 +140,7 @@ Minimal path (deps already installed, no browser):
 
 ```bash
 python3 cli.py dashboard --skip-install --no-browser
-# → open http://127.0.0.1:8080 manually
+# → copy the Open: URL from launcher output (includes ?api=)
 ```
 
 ---

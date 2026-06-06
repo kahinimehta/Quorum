@@ -95,6 +95,7 @@ The form in **Step 1 — Configure & Run** (above) posts the same body the API a
 | `with_fulltext` | boolean | OA full-text sections; **full** / `pull` paths |
 | `extract_backend` | `nebius` \| `ollama` \| `none` or null | Override `EXTRACT_BACKEND` in `.env` |
 | `pull_grants` | boolean | **Full** mode only: run NIH RePORTER pull (≤30 grants, default PD-focused query if unset) |
+| `wait` | boolean | default `false`; if `true`, block until pipeline completes and return full payload (recommendations, agent_outputs, runStats, synthetic_cohort) |
 
 ---
 

@@ -38,11 +38,11 @@ cp .env.example .env
 make dashboard
 ```
 
-Opens **http://127.0.0.1:8080** (API default port 5000; auto-fallback if busy). Press **Ctrl+C** to stop.
+Opens the URL printed by the launcher (UI on **8080**, API default **5000** with auto-fallback; URL always includes `?api=` so the static server reaches FastAPI). Press **Ctrl+C** to stop.
 
 **Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (bundled `graded6` demo).
 
-**Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the URL manually.
+**Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the **`Open:` URL** from launcher output.
 
 Full setup, platform notes, and flags → [`docs/dashboard.md`](docs/dashboard.md) · [Debugging](https://neurodiscover.github.io/debugging/)
 

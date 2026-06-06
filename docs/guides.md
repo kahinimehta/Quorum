@@ -13,11 +13,25 @@ Run, verify, and extend NeuroDiscover.
 
 ## Dashboard
 
+**pip:**
+
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
+python3 --version          # must be 3.10.x – 3.12.x
 pip install -r requirements.txt
-cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
+cp .env.example .env
+make dashboard    # same as: python3 cli.py dashboard
+```
+
+**conda (empty environment):**
+
+```bash
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum/neurodiscover
+conda env create -f environment.yml
+conda activate neurodiscover
+cp .env.example .env
 make dashboard
 ```
 
@@ -40,12 +54,14 @@ On the **team Supabase** database, do **not** run `build`. Set `SUPABASE_DATABAS
 
 ## API verify
 
+Use the API port from launcher output (default 5000).
+
 ```bash
 curl -s http://127.0.0.1:5000/api/stats
 curl -s http://127.0.0.1:5000/api/recommendations
 curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -H 'Content-Type: application/json' \
-  -d '{"mode":"demo","max_papers":10}'
+  -d '{"mode":"demo","max_papers":10,"wait":true}'
 ```
 
 ## Environment

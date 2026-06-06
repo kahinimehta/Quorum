@@ -37,7 +37,7 @@ cp .env.example .env
 make dashboard # use `python3 cli.py dashboard` for Windows
 ```
 
-Opens **http://127.0.0.1:8080** in your default browser. Use `--no-browser` to skip auto-open. Press **Ctrl+C** to stop API + UI.
+Opens the URL printed by the launcher (default UI **http://127.0.0.1:8080** with `?api=http://127.0.0.1:5000`). Use `--no-browser` to skip auto-open and copy the **`Open:`** line. Press **Ctrl+C** to stop API + UI.
 
 The launcher will:
 
@@ -46,7 +46,7 @@ The launcher will:
 3. Run one pipeline pass before serving (unless `--skip-pipeline`):
    - **Local SQLite:** **Demo sample** with `max_papers=10`
    - **Team Supabase:** **Rescore DB** (`agents-only`) on all existing evidence
-4. Start FastAPI (default **5000**, auto-fallback if busy) and static UI on **8080** — browser URL includes `?api=` when alternate API port is used
+4. Start FastAPI (default **5000**, auto-fallback if busy) and static UI on **8080** — launcher **always** opens UI with `?api=http://127.0.0.1:{resolved_api_port}`
 
 ### Platform notes
 
@@ -54,7 +54,7 @@ The launcher will:
 |----------|-----|
 | **Windows** | `make` often unavailable — use `python cli.py dashboard` |
 | **Windows** | `./dashboard` requires Git Bash or WSL |
-| **Linux / WSL / SSH / headless** | `--no-browser` then open `http://127.0.0.1:8080` manually |
+| **Linux / WSL / SSH / headless** | `--no-browser` then open the **`Open:` URL** from launcher output (includes `?api=`) |
 | **macOS** | Port 5000 sometimes taken by **AirPlay Receiver** — `--port-api 5001 --port-ui 8081` or disable AirPlay |
 | **Any OS** | Python must be **3.10–3.12**. Re-run `pip install -r requirements.txt` or `conda env update -f environment.yml --prune` if imports fail |
 | **Conda** | `conda activate neurodiscover` before starting the dashboard |
@@ -63,6 +63,7 @@ The launcher will:
 
 ```bash
 python3 cli.py dashboard --no-browser      # do not auto-open browser
+python3 cli.py dashboard --skip-install    # skip pip install (deps already installed)
 python3 cli.py dashboard --skip-pipeline   # start servers only
 python3 cli.py dashboard --fresh           # rebuild local SQLite DB
 python3 cli.py dashboard --port-api 5001 --port-ui 8081
@@ -127,6 +128,8 @@ Timestamps display in **US Eastern** (`America/New_York`).
 | Recommendations | `GET /api/recommendations?run_id=` |
 | Recent runs | `GET /api/runs` |
 | Agent trace | `GET /api/agents?run_id=` |
+| Run completion | `GET /api/run-discovery/status?run_id=` |
+| Per-run KPIs | `GET /api/run-stats?run_id=` |
 | Evidence table | `GET /api/evidence?offset=&limit=` |
 | Synthetic patients | `GET /api/synthetic-cohort?run_id=` |
 | CUA demo tab | `GET /api/cua/demo` · report inlined from `GET /cua-demo/graded6.html` |
@@ -139,7 +142,7 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -d '{"mode":"demo","max_papers":10}'
 ```
 
-See [Output examples](output) for the response shape.
+Default response: `{ "run_id", "status": "running", "accepted": true }`. Poll `GET /api/run-discovery/status?run_id=` or add `"wait": true` for the full payload. See [Backend queries — POST /api/run-discovery](developer-reference/backend-queries#post-apirun-discovery) and [Output examples](output).
 
 ### Recent runs — mode labels
 

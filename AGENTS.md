@@ -40,7 +40,7 @@ pip install -r requirements.txt
 cp .env.example .env          # SUPABASE_DATABASE_URL and/or NEBIUS_*
 # Team shared DB (optional):
 # python3 cli.py init-supabase && python3 cli.py build
-python3 cli.py build           # local SQLite, or Supabase if URL is set
+python3 cli.py build           # local SQLite only — never when SUPABASE_DATABASE_URL is set
 python3 cli.py validate        # FK / schema sanity checks
 python3 cli.py demo            # offline literature-agent run (safe demo path)
 python3 cli.py pull            # two-stage: PubMed (+ optional bioRxiv) + trials
@@ -60,7 +60,7 @@ python3 cli.py query "SQL"     # run a read query
 ```bash
 cd neurodiscover
 make dashboard
-# → http://127.0.0.1:8080  (Ctrl+C to stop)
+# → launcher prints Open: URL (UI :8080/?api=... ; Ctrl+C to stop)
 ```
 
 Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip). UI has three tabs: Steps 1–2 pipeline; **Step 3** static CUA grant proposal (`graded6`, not run-scoped).

@@ -159,7 +159,8 @@ Trigger the agent pipeline (`orchestrator.py`).
   "query": "GBA GCase",
   "max_papers": 150,
   "disease": "Parkinson's",
-  "pull_grants": true
+  "pull_grants": true,
+  "wait": false
 }
 ```
 
@@ -169,7 +170,21 @@ Optional `run_id` — UI generates an 8-char id before POST so the pipeline step
 
 **agents-only** — skip literature pull; run agents 2–6 on existing evidence. Used automatically by `make dashboard` when `SUPABASE_DATABASE_URL` is set. Optional `max_papers` cap (API minimum 10; orchestrator accepts `0` = all rows).
 
-**Response:**
+`wait` — default `false`. When `false`, the API starts the pipeline in a background thread and returns immediately. When `true`, blocks until completion and returns the full payload below.
+
+**Async response** (`wait: false`, default):
+
+```json
+{
+  "run_id": "a1b2c3d4",
+  "status": "running",
+  "accepted": true
+}
+```
+
+Poll `GET /api/run-discovery/status?run_id=` until `status` is `complete`, `partial`, or `failed`. Then fetch recommendations, agents, and run-stats separately.
+
+**Synchronous response** (`wait: true`):
 
 ```json
 {
@@ -189,6 +204,22 @@ Optional `run_id` — UI generates an 8-char id before POST so the pipeline step
 ```
 
 `steps` is an alias of `agent_outputs`.
+
+### GET /api/run-discovery/status
+
+Poll background pipeline state. Requires `run_id`.
+
+```json
+{
+  "run_id": "a1b2c3d4",
+  "status": "running",
+  "statusDetail": "Pipeline in progress · 3/6 agents complete",
+  "agentsDone": 3,
+  "recommendations": 2
+}
+```
+
+`status`: `running` | `complete` | `partial` | `failed`. On failure, response includes `error`.
 
 ---
 

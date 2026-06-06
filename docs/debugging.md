@@ -37,18 +37,20 @@ python3 cli.py dashboard --no-browser
 ```
 
 {: .highlight }
-**Not Mac-only:** `make dashboard` works on macOS, Linux, and Windows. On Windows use `python cli.py dashboard` if `make` is missing. On headless/SSH use `--no-browser` and open `http://127.0.0.1:8080` manually. On macOS, port 5000 may conflict with AirPlay — use `--port-api 5001 --port-ui 8081`.
+**Not Mac-only:** `make dashboard` works on macOS, Linux, and Windows. On Windows use `python cli.py dashboard` if `make` is missing. On headless/SSH use `--no-browser` and open the **`Open:` URL** printed by the launcher (includes `?api=`). On macOS, port 5000 may conflict with AirPlay — launcher auto-fallbacks or use `--port-api 5001 --port-ui 8081`.
 
 | Error | Fix |
 |-------|-----|
 | Port 5000 or 8080 in use | Launcher auto-tries the next free port (e.g. 5001). Or stop other processes: `lsof -i :8080`. Manual override: `python3 cli.py dashboard --port-api 5001 --port-ui 8081` |
 | `make: command not found` | Use `python3 cli.py dashboard` instead |
-| Browser does not open | Expected on SSH/WSL — use `--no-browser` and open the URL manually |
+| Browser does not open | Expected on SSH/WSL — use `--no-browser` and copy the **`Open:` URL** from launcher output |
 | Module not found | Run from `neurodiscover/`; Python **3.10–3.12**; `pip install -r requirements.txt` or `conda env update -f environment.yml --prune` |
 | `biomcp` not found | Re-install deps; `which biomcp` should point inside your venv/conda env |
 | DB errors | Local: `python3 cli.py build` (local only). Team Supabase: set `SUPABASE_DATABASE_URL`, **never** `build`. |
 
 ### API smoke test
+
+Use the **API port** from launcher output (default 5000; may be 5001+ after auto-fallback).
 
 ```bash
 curl -s http://127.0.0.1:5000/api/stats
@@ -58,7 +60,7 @@ curl -s -X POST http://127.0.0.1:5000/api/run-discovery \
   -d '{"mode":"demo","max_papers":10}'
 ```
 
-Expected: JSON with `run_id`, `recommendations`, `agent_outputs`, `runStats`.
+Default POST returns `{ "run_id", "status": "running", "accepted": true }`. Poll `GET /api/run-discovery/status?run_id=YOUR_RUN_ID` until complete, or add `"wait": true` to the POST for the full payload (`recommendations`, `agent_outputs`, `runStats`).
 
 ---
 
