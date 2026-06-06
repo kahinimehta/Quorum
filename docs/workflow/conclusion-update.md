@@ -58,7 +58,11 @@ Plus final `agent_outputs` row.
 confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 ```
 
-Displayed as 0–100 in the API (internal 0–10 scores × 10).
+| Field | Minimum | Maximum |
+|-------|---------|---------|
+| Agent 4/5 heuristics (pre-scale) | 0 | 10 |
+| `evidence_strength` / `commercial_potential` (stored) | 0 | 100 |
+| `confidence` (API + dashboard) | 0 | 100 |
 
 ### Tier rules
 
@@ -107,6 +111,18 @@ CUA (Conclusion Update Agent) reads the NeuroDiscover blackboard and produces a 
 5. **Grounds** — hard gate: every citation must exist in the corpus
 6. **Critiques** — blind Critic scores against NIH criteria; flags overclaims vs evidence grades
 7. **Revises** — Reviser fixes problems; optional **F2 Rigor Booster** injects papers the writer did not see
+
+### Critic score scale (F1 / F2 / F3)
+
+The Internal Critic scores **F1**, **F2**, and **F3** on an integer **1–9** scale (minimum **1**, maximum **9**) — shown in Tab 3 as `n/9`:
+
+| Range | Meaning |
+|-------|---------|
+| 1–4 | Needs revision |
+| 5–6 | Meets typical revise-loop threshold |
+| 7–9 | Strong |
+
+The revise loop typically stops when **F1 ≥ 5** and **F2 ≥ 5**. Bundled `graded6` final scores: **F1 = 7**, **F2 = 5**, **F3 = 6**. See [Dashboard — Critic score scale](../dashboard#critic-score-scale-f1--f2--f3).
 8. **Outputs local files** (not DB rows):
    - `<run>.proposal.json` — grant text
    - `<run>.trace.jsonl` — per-subagent calls

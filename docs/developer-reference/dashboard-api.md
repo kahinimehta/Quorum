@@ -106,13 +106,19 @@ Orchestrator modes (all run literature **in-process** with the client `run_id` f
 
 ## Scoring (agents 4–5)
 
-Evidence and commercial scores **scale with per-connection evidence count** (see [Evidence Scoring](../workflow/evidence-scoring) and [Commercial Discovery](../workflow/commercial-discovery)). Stored columns are 0–100; `recommendations.confidence` uses the same formula as the dashboard.
+Evidence and commercial scores **scale with per-connection evidence count** (see [Evidence Scoring](../workflow/evidence-scoring) and [Commercial Discovery](../workflow/commercial-discovery)).
+
+| Field | Min | Max | Notes |
+|-------|-----|-----|-------|
+| `evidence_strength` | 0 | 100 | Agent 4 heuristic capped at 10, then ×10 |
+| `commercial_potential` | 0 | 100 | Agent 5 heuristic capped at 10, then ×10 |
+| `recommendations.confidence` | 0 | 100 | Weighted blend below |
 
 ## Ideal candidate profiles
 
 `generate_synthetic_cohort(run_id)` builds **Patient Cluster A–E** from `recommendations` + `subgroups`. Not stored in the DB. Every profile is labeled synthetic / no PHI.
 
-## Confidence
+## Confidence (discovery pipeline)
 
 ```
 confidence = evidence_strength × 0.55 + commercial_potential × 0.45
@@ -123,6 +129,18 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 | Prioritize | ≥ 80 |
 | Monitor | 65–79 |
 | Reject | < 65 |
+
+## Critic scores (Step 3 — grant proposal)
+
+Static CUA demo KPIs expose **F1**, **F2**, and **F3** from `audit.calibration.internal_scores` (`GET /api/cua/demo`). Each dimension is an integer **1–9** (minimum 1, maximum 9):
+
+| Range | Meaning |
+|-------|---------|
+| 1–4 | Needs revision |
+| 5–6 | Meets typical revise-loop threshold |
+| 7–9 | Strong |
+
+Revise loop typically requires **F1 ≥ 5** and **F2 ≥ 5**. See [Dashboard — Critic score scale](../dashboard#critic-score-scale-f1--f2--f3).
 
 ## Related docs
 

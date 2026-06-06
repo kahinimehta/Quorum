@@ -33,6 +33,11 @@ UPDATE treatment_connections SET commercial_potential = ? WHERE connection_id = 
 
 The orchestrator calls `_scale_score()` (×10) before UPDATE, so the DB column holds **0–100**.
 
+| Stage | Minimum | Maximum |
+|-------|---------|---------|
+| Agent output (`commercial_potential` heuristic) | 0 | 10 |
+| Stored on `treatment_connections` | 0 | 100 |
+
 ## Heuristic signals (code)
 
 | Signal | Effect |

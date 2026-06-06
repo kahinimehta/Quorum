@@ -183,6 +183,38 @@ An NIH grant is a **structured argument** scored on a rubric. Before drafting, t
 
 Writers satisfy the contract; the **Critic** scores against it; the **Audit** reports satisfied vs at-risk obligations.
 
+##### Critic score scale (F1 / F2 / F3)
+
+Tab 3 **Run at a glance** shows **Critic F1**, **F2**, and **F3** as `n/9`. Each dimension uses the same integer scale:
+
+| | Value |
+|---|--------|
+| **Minimum** | **1** (weak — major revision needed) |
+| **Maximum** | **9** (exceptional) |
+
+| Range | Meaning | Dashboard color |
+|-------|---------|-----------------|
+| **1–4** | Needs revision | Red |
+| **5–6** | Meets revise-loop threshold | Amber |
+| **7–9** | Strong | Green |
+
+The revise loop typically stops when **F1 ≥ 5** and **F2 ≥ 5** (or max rounds). In the bundled `graded6` demo, final scores are **F1 = 7**, **F2 = 5**, **F3 = 6**.
+
+##### Discovery confidence scale (Steps 1–2)
+
+Ranked outputs use a separate **0–100** confidence score (not the 1–9 Critic scale):
+
+| | Value |
+|---|--------|
+| **Minimum** | **0** |
+| **Maximum** | **100** |
+
+```
+confidence = evidence_strength × 0.55 + commercial_potential × 0.45
+```
+
+Both inputs are stored **0–100** on `treatment_connections`. Tiers: **Prioritize** ≥ 80 · **Monitor** 65–79 · **Reject** &lt; 65. See [Output examples — scoring](output#recommendations-agent-6).
+
 ##### Best-of-N (plain language)
 
 At the start, the **Synthesizer** writes **N independent opening arguments** (four in `graded6`). The **Selection Scorer** ranks them on F1 and picks **one winner**. Rejected pitches never enter the proposal but appear under **Explored & dropped** with the scorer’s rationale — like keeping losing bids in the file for transparency.

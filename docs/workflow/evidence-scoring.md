@@ -33,6 +33,11 @@ UPDATE treatment_connections SET evidence_strength = ? WHERE connection_id = ?;
 
 The orchestrator calls `_scale_score()` (×10) before UPDATE, so the DB column holds **0–100**.
 
+| Stage | Minimum | Maximum |
+|-------|---------|---------|
+| Agent output (`evidence_strength` heuristic) | 0 | 10 |
+| Stored on `treatment_connections` | 0 | 100 |
+
 ## Scoring heuristics (code)
 
 Scores **scale with support count** so new pulls that add rows to a connection move the number (not flat buckets only).

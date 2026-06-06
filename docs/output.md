@@ -154,17 +154,28 @@ Canonical `treatment` slugs in `evidence` and `recommendations` map to dashboard
 }
 ```
 
-Scoring:
+### Scoring (Steps 1–2)
 
 ```
 confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 ```
+
+| Field | Minimum | Maximum |
+|-------|---------|---------|
+| `evidence_strength` (Agent 4, stored) | 0 | 100 |
+| `commercial_potential` (Agent 5, stored) | 0 | 100 |
+| `confidence` (Agent 6, displayed) | 0 | 100 |
+
+Agents 4–5 compute **0–10** heuristics in code; the orchestrator scales ×10 before writing the DB columns above.
 
 | Tier | Condition |
 |------|-----------|
 | Prioritize | confidence ≥ 80 |
 | Monitor | 65 ≤ confidence < 80 |
 | Reject | confidence < 65 |
+
+{: .note }
+**Not the same as Tab 3 Critic scores.** Grant Proposal **F1 / F2 / F3** use a **1–9** NIH Critic scale (minimum 1, maximum 9). See [Dashboard — Critic score scale](dashboard#critic-score-scale-f1--f2--f3).
 
 ### When confidence changes
 
