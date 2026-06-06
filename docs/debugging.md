@@ -132,4 +132,7 @@ bundle exec jekyll serve
 - [ ] Mode **demo**, max papers **10** (launcher default; API allows 10–500)  
 - [ ] No `cli.py build` against team Supabase  
 - [ ] Browser at the launcher **`Open:` URL** (includes `?api=`; not a stale GitHub Pages tab for live UI)  
-- [ ] Fallback: [neurodiscover.github.io](https://neurodiscover.github.io) for docs if local fails  
+- [ ] **Step 1** — pipeline mode + run button; stepper shows one agent **Running…** at a time  
+- [ ] **Step 2** — synthetic cohort, ranked outputs, agent trace after run completes  
+- [ ] **Step 3** — NIH **Proposal** section open first; expand **Pipeline** / **Writer contract** / **Booster** / **Audit** categories as needed (or use **Jump to**)  
+- [ ] Fallback docs: [neurodiscover.github.io](https://neurodiscover.github.io) · screenshots on [Output examples](output) and [Inputs](input)  

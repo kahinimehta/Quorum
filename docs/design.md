@@ -16,7 +16,7 @@ How NeuroDiscover is structured for **modularity**, **team parallel work**, and 
 | Principle | What it means in this repo |
 |-----------|----------------------------|
 | **Modularity** | Each agent is a separate module with a single responsibility; ingestion, orchestration, API, and UI are independent packages. |
-| **Contract-first** | SQL schema + docs (`DATABASE.md`, `AGENT_IO.md`) define what agents may read/write — not ad hoc JSON between teammates. |
+| **Contract-first** | SQL schema + docs ([Database schema](developer-reference/database), [Agent I/O](developer-reference/agent-io)) define what agents may read/write — not ad hoc JSON between teammates. |
 | **Blackboard, not message passing** | Agents communicate through tables (`evidence`, `subgroups`, `treatment_connections`, …), not direct Python calls. |
 | **Auditability** | Every pipeline run appends to `agent_outputs` with a shared `run_id`; recommendations cite real `source_id` values. |
 | **Safe iteration** | Incremental scan, demo mode, and agents-only rescoring let you develop without repeated full PubMed pulls. |
@@ -192,9 +192,9 @@ Schema changes require updating `schema.sql`, `schema.pg.sql`, and docs together
 ## UI engineering choices
 
 - **Vanilla HTML/CSS/JS** — no bundler; demo-ready on any laptop after `pip install`
-- **Step 1 / Step 2 navigation** — configure & live progress vs discovery results
+- **Three-tab navigation** — Step 1 configure & run · Step 2 discovery results · Step 3 static CUA grant proposal (`graded6`, proposal-first layout)
 - **FastAPI + optional Supabase anon keys** — API-first; browser secrets optional
-- **Eastern timezone timestamps** — consistent judge-facing run history
+- **US Eastern timestamps** — consistent judge-facing run history
 
 See [Run the dashboard](dashboard) for the full UI tour.
 

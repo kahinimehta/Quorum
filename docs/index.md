@@ -98,7 +98,7 @@ make dashboard
 
 Opens the URL printed by the launcher (UI on **8080**, API default **5000** with auto-fallback; URL always includes `?api=` so the static server reaches FastAPI). Press **Ctrl+C** to stop.
 
-**Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (bundled `graded6` demo — proposal first, grouped pipeline/writer/booster/audit sections, jump-to nav).
+**Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (`graded6` — proposal first, Pipeline / Writer contract / Booster / Audit categories, **Jump to** nav).
 
 {: .highlight }
 **Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the **`Open:` URL** from launcher output.
@@ -124,7 +124,8 @@ Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Deb
 - [Problem & significance](problem) — unmet need and track alignment  
 - [Workflow](workflow/) — six-agent pipeline  
 - [Design & engineering](design) — modularity, blackboard pattern, technical proficiency  
-- [Inputs](input) · [Output examples](output)  
+- [Inputs](input) · [Output examples](output) — dashboard screenshots (Steps 1–3)  
 - [Team](team) — interdisciplinary roles  
+- [Guides — showcase](guides#showcase-june-6-2026) — judge tour + safe demo checklist  
 - [Debugging](debugging) — deploy, API, and pipeline troubleshooting  
 - [Run the dashboard](dashboard) — UI walkthrough  

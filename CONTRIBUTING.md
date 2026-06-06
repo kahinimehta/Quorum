@@ -44,7 +44,7 @@ python3 cli.py validate
 | Database / schema | [`docs/developer-reference/database.md`](docs/developer-reference/database.md) |
 | Agent authors (Person 4) | [`docs/developer-reference/agent-io.md`](docs/developer-reference/agent-io.md) — new agents under `neurodiscover/agents/` |
 | Backend (Person 2) | [`docs/developer-reference/backend-queries.md`](docs/developer-reference/backend-queries.md), [`docs/developer-reference/person2-backend.md`](docs/developer-reference/person2-backend.md), [`queries.sql`](queries.sql) |
-| Dashboard | [`docs/dashboard.md`](docs/dashboard.md), [neurodiscover.github.io](https://neurodiscover.github.io) |
+| Dashboard | [`docs/dashboard.md`](docs/dashboard.md), [`docs/output.md`](docs/output.md) (screenshots), [neurodiscover.github.io](https://neurodiscover.github.io) |
 | Shared Supabase | [`docs/developer-reference/supabase.md`](docs/developer-reference/supabase.md) |
 
 ## Database rules

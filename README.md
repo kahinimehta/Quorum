@@ -40,7 +40,7 @@ make dashboard
 
 Opens the URL printed by the launcher (UI on **8080**, API default **5000** with auto-fallback; URL always includes `?api=` so the static server reaches FastAPI). Press **Ctrl+C** to stop.
 
-**Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (bundled `graded6` demo — proposal first, grouped sections).
+**Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (`graded6` — proposal first, Pipeline / Writer contract / Booster / Audit categories).
 
 **Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the **`Open:` URL** from launcher output.
 

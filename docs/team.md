@@ -103,4 +103,4 @@ flowchart TB
 - **Schema-first:** `schema.sql` + `developer-reference/agent-io.md` before agent code diverged  
 - **Shared `run_id`:** every agent appends to `agent_outputs` for audit  
 - **Safe demo path:** offline seed + synthetic cohort agreed early for showcase reliability  
-- **Dual Agent 6:** orchestrator formula rankings in the pipeline; optional **`cua/`** NIH proposal on dashboard Step 3 (static `graded6` demo)  
+- **Dual Agent 6:** orchestrator formula rankings in the pipeline; optional **`cua/`** NIH proposal on dashboard Step 3 (static `graded6` demo — proposal first, grouped categories)  

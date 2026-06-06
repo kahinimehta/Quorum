@@ -94,6 +94,26 @@ See [Supabase setup](developer-reference/supabase) and [Team env sharing](develo
 
 See [Developer reference](developer-reference/) for schema, agent I/O, and API docs.
 
+## Showcase (June 6, 2026)
+
+| Audience | Start here |
+|----------|------------|
+| Judges / quick tour | [Home](index) → [Output examples](output) (screenshots) → run `make dashboard` locally |
+| Live demo | [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage) |
+| Architecture | [Workflow](workflow/) · [Design & engineering](design) |
+| Team | [Team](team) |
+
+**Live UI:** `cd neurodiscover && make dashboard` — three tabs; use **demo** mode on stage.  
+**Docs site:** [neurodiscover.github.io](https://neurodiscover.github.io) (canonical; auto-deploys from `docs/` on push to `main`).
+
+Refresh dashboard screenshots after UI changes:
+
+```bash
+cd neurodiscover
+make dashboard --no-browser   # or running API :5000 + UI :8080
+python3 scripts/capture_dashboard_screenshots.py
+```
+
 ## Site publishing
 
 How to publish this docs site to **https://neurodiscover.github.io** — see [Site publishing](pages-setup).

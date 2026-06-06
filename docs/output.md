@@ -39,6 +39,14 @@ At the top, **This run** shows:
 
 *Step 3 — hero KPIs, audit status chips, Jump to (Proposal + four categories), NIH proposal first with pipeline/writer/booster/audit grouped below, and collapsible live-CLI instructions.*
 
+| Jump to | Category | Sub-sections (collapsed by default) |
+|---------|----------|--------------------------------------|
+| **Proposal** | *(leading section)* | NIH R01 proposal — significance, innovation, three aims |
+| **Pipeline** | Pipeline & self-correction | Data loop · Revise rounds · Raw trace |
+| **Writer contract** | Writer contract & selection | Blueprint contract · Explored & dropped |
+| **Booster** | Booster & rigor lift | Road not taken · A/B outcomes |
+| **Audit** | Audit & corpus | Citation audit · Ingestion funnel |
+
 To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)).
 
 ---
@@ -356,5 +364,6 @@ Database overview for dashboard KPI tiles:
 | Ranked treatments | `GET /api/recommendations?run_id=` |
 | Evidence table | `GET /api/evidence?offset=&limit=` |
 | Recent runs | `GET /api/runs?limit=5` |
+| Step 3 — CUA report | `GET /api/cua/demo` · inlined `GET /cua-demo/graded6.html` |
 
 See [Dashboard](dashboard) for how to run the UI locally.

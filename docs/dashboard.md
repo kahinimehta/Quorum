@@ -115,7 +115,17 @@ flowchart LR
 | **Agent pipeline stepper** | On **Step 1** sidebar during a run: weighted progress bar, per-agent **Running…** / **Done**, literature sub-progress from live commits (polled every ~500ms). Step 2 shows results only — no duplicate stepper. |
 | **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
 | **Step 2** | **This run** report (settings + signature + support table), pipeline diagram, synthetic cohort, ranked outputs, audit trace |
-| **Step 3** | **Grant Proposal (CUA)** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **Proposal section first** (open by default); remaining content in four collapsed categories (**Pipeline**, **Writer**, **Booster**, **Audit**). **Jump to** opens Proposal or a category. **Run a live CUA proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
+| **Step 3** | **Grant Proposal (CUA)** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **Proposal section first** (open by default); remaining content in four collapsed categories (see table below). **Jump to** opens Proposal or a category. **Run a live CUA proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
+
+### Step 3 — report structure
+
+| Jump to | Category | Sub-sections (collapsed by default) |
+|---------|----------|--------------------------------------|
+| **Proposal** | *(leading section)* | NIH R01 proposal — significance, innovation, three aims |
+| **Pipeline** | Pipeline & self-correction | Data loop · Revise rounds · Raw trace |
+| **Writer contract** | Writer contract & selection | Blueprint contract · Explored & dropped |
+| **Booster** | Booster & rigor lift | Road not taken · A/B outcomes |
+| **Audit** | Audit & corpus | Citation audit · Ingestion funnel |
 
 Timestamps display in **US Eastern** (`America/New_York`).
 
