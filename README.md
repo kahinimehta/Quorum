@@ -40,7 +40,7 @@ make dashboard
 
 Opens the URL printed by the launcher (UI on **8080**, API default **5000** with auto-fallback; URL always includes `?api=` so the static server reaches FastAPI). Press **Ctrl+C** to stop.
 
-**Three tabs:** Step 1 configure & run (full-width config + run status strip) · Step 2 discovery results (KPI strip · cohort, rankings, hypotheses; **Audit & provenance** collapsed) · Step 3 static grant proposal (`graded6` — expanded proposal · collapsed **Grant pipeline** + **Pipeline trace & audit**; **Jump to** nav).
+**Three tabs:** centered column (max 1400px) — Step 1 configure & run · Step 2 discovery results (KPI strip · cohort, rankings, hypotheses; **Audit & provenance** collapsed) · Step 3 static grant proposal (`graded6` — expanded proposal · collapsed **Grant pipeline** + **Pipeline trace & audit**; **Jump to** nav).
 
 **Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the **`Open:` URL** from launcher output.
 

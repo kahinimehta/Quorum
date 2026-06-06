@@ -18,7 +18,7 @@ The UI maps directly to pipeline inputs: **one pipeline mode** (segmented contro
 ![Step 1 — Configure & run pipeline](/assets/images/dashboard/step1-configure-run.png)
 {: .doc-screenshot }
 
-*Step 1 — pick a pipeline mode, optional keyword filter, then click the run button (label matches the selected mode).*
+*Step 1 — centered column (max 1400px); pick a pipeline mode, optional keyword filter, then click the run button (label matches the selected mode).*
 
 ### Pipeline modes (Step 1)
 

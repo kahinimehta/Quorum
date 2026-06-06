@@ -38,7 +38,7 @@ Layout top-to-bottom:
 ![Step 3 — Grant proposal tab](/assets/images/dashboard/step3-grant-proposal.png)
 {: .doc-screenshot }
 
-*Step 3 — hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3), report toolbar **17/21 obligations satisfied**, expanded proposal, collapsed Grant pipeline + Pipeline trace & audit.*
+*Step 3 — centered column (max 1400px); hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3), report toolbar **17/21 obligations satisfied**, expanded proposal, collapsed Grant pipeline + Pipeline trace & audit.*
 
 **Verified papers** is not the full database — it is ingestion’s `top_k` (60 in `graded6`) after clustering and relevance ranking. The full **corpus** (400) still backs citation integrity. See [Dashboard — Corpus vs verified papers](dashboard#corpus-vs-verified-papers).
 
