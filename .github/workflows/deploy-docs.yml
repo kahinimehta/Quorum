@@ -2,7 +2,7 @@ name: Deploy documentation to GitHub Pages
 
 on:
   push:
-    branches: [main, kahini/dashboard, cursor/just-the-docs-site-a333]
+    branches: [main]
     paths:
       - "docs/**"
       - ".github/workflows/deploy-docs.yml"

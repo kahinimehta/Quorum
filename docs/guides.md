@@ -59,6 +59,20 @@ cp .env.example .env
 | `SUPABASE_DATABASE_URL` | Team Postgres (Session pooler) |
 | `EXTRACT_BACKEND` | `nebius` \| `ollama` \| `none` |
 | `NEBIUS_*` / `OLLAMA_*` | LLM extraction credentials |
+| `ANTHROPIC_API_KEY` | Optional — live CUA runs only (`cua/`) |
+| `CUA_LIVE=1` | Optional — enable live LLM roles in CUA |
+
+## CUA (optional grant proposal)
+
+Dashboard **Step 3** shows a **static** bundled demo (`graded6`). To generate a new proposal from your DB:
+
+```bash
+cd cua && pip install -e .
+export ANTHROPIC_API_KEY=... CUA_LIVE=1
+python -m cua.nih.run_db --db "$SUPABASE_DATABASE_URL" --run-id my-run --capture-content
+```
+
+See [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal) and `cua/README.md`.
 
 See [Supabase setup](developer-reference/supabase) and [Team env sharing](developer-reference/team-env-sharing).
 

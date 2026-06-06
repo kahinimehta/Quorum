@@ -58,6 +58,7 @@ flowchart LR
 | **Agent pipeline stepper** | One agent **Running…** at a time during a run; **Done** / **Waiting…** for others; polls `GET /api/agents?run_id=` while POST is in flight |
 | **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button |
 | **Step 2** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses, audit trace, evidence table |
+| **Step 3** | Static CUA grant proposal — bundled `graded6` demo inlined (not run-scoped) |
 
 Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 
@@ -73,6 +74,7 @@ Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 | Agent trace | `GET /api/agents?run_id=` |
 | Evidence table | `GET /api/evidence?offset=&limit=` |
 | Synthetic patients | `GET /api/synthetic-cohort?run_id=` or included in run response |
+| CUA demo (Step 3) | `GET /api/cua/demo` · report `GET /cua-demo/graded6.html` |
 
 ## Pipeline run
 

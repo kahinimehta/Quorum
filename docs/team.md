@@ -7,7 +7,7 @@ description: "Quorum — interdisciplinary team for NeuroDiscover AI"
 
 # Team
 
-**Quorum** · NeuroDiscover AI · NextGen BioAgents Hackathon · Final Showcase June 6, 2025
+**Quorum** · NeuroDiscover AI · NextGen BioAgents Hackathon · Final Showcase June 6, 2026
 
 ---
 

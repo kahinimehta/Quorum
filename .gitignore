@@ -13,3 +13,7 @@ personal/
 docs/_site/
 docs/vendor/
 docs/.bundle/
+*.db-shm
+*.db-wal
+cua/src/*.egg-info/
+cua/outputs/my-run.*

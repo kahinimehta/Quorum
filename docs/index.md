@@ -96,12 +96,22 @@ cp .env.example .env
 make dashboard
 ```
 
-Opens **http://127.0.0.1:8080** (API on port 5000). Press **Ctrl+C** to stop.
+Opens **http://127.0.0.1:8080** (API default port 5000; auto-fallback if busy). Press **Ctrl+C** to stop.
+
+**Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (bundled `graded6` demo).
 
 {: .highlight }
 **Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the URL manually.
 
 Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Debugging](debugging)
+
+## For judges (2-minute path)
+
+1. **Watch** the demo video above (or run locally with `make dashboard`).
+2. **Step 1** — run **Demo** (offline, safe on stage) or use pre-seeded Supabase data.
+3. **Step 2** — ranked treatments, synthetic cohort A–E, agent trace, evidence table.
+4. **Step 3** — static NIH grant proposal (CUA `graded6`); optional live regeneration via `cua/` CLI (see [Guides — CUA](guides#cua-optional-grant-proposal)).
+5. **Docs** — [Workflow](workflow/) · [Output examples](output) · [Team](team).
 
 {: .important }
 **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
@@ -113,7 +123,8 @@ Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Deb
 | `neurodiscover/agents/` | Six pipeline agents |
 | `neurodiscover/orchestrator.py` | Wires agents 1→6 for API runs |
 | `neurodiscover/api_server.py` | FastAPI backend (:5000) |
-| `neurodiscover/frontend/index.html` | Dashboard UI (:8080) |
+| `neurodiscover/frontend/index.html` | Dashboard UI (:8080) — Steps 1–3 |
+| `cua/` | Optional grant-proposal Agent 6 (CLI; dashboard Step 3 = static demo) |
 | `docs/` | This documentation site |
 
 ## Next steps

@@ -4,9 +4,7 @@
   <img src="docs/assets/images/neurodiscover-ai-logo.png" alt="NeuroDiscover AI — an autonomous research agent for clinical research in neuroscience" width="420" />
 </p>
 
-> **Collaborators:** The **dashboard**, **demo video** ([docs home](https://neurodiscover.github.io)), and **[docs site](https://neurodiscover.github.io)** are still being edited. Expect layout and copy changes before the showcase.
-
-**Quorum** — six agents, one evidence store, ranked commercial discovery.
+**Quorum** — six agents, one evidence store, ranked commercial discovery. Optional **CUA** (Conclusion Update Agent) grant-proposal demo on dashboard **Step 3**.
 
 Agentic system for **commercial development discovery**: continuously ingest literature and trials, surface hidden patient subgroups inside heterogeneous indications, map **subgroup → mechanism → treatment** connections, and rank opportunities by evidence and commercial potential.
 
@@ -47,8 +45,10 @@ This will:
 1. Install dependencies if needed (unless `--skip-install`)
 2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
 3. Run one pipeline pass — **demo** locally (`max_papers=10`) or **agents-only** on team Supabase (all existing evidence)
-4. Start the API on **port 5000** and UI on **port 8080**
+4. Start the API (default **5000**, auto-fallback if busy) and UI on **port 8080**
 5. Open **http://127.0.0.1:8080** in your default browser (skip with `--no-browser`)
+
+**Dashboard tabs:** Step 1 — configure & run · Step 2 — discovery results · Step 3 — static CUA grant proposal (`graded6` demo, not run-scoped)
 
 Press **Ctrl+C** to stop both servers.
 
@@ -59,8 +59,8 @@ Press **Ctrl+C** to stop both servers.
 | **Windows** | `make` is often missing — use `python cli.py dashboard` (or `python3` if available) |
 | **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
 | **Linux / WSL / SSH** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
-| **macOS** | Port **5000** may be used by **AirPlay Receiver** — use `--port-api 5001 --port-ui 8081` or disable AirPlay |
-| **Any OS** | Port in use? `python3 cli.py dashboard --port-api 5001 --port-ui 8081 --no-browser` |
+| **macOS** | Port **5000** may be used by **AirPlay Receiver** — launcher auto-fallbacks to **5001**; or disable AirPlay |
+| **Any OS** | Port in use? Launcher tries the next free port; manual: `--port-api 5001 --port-ui 8081 --no-browser` |
 
 Useful flags: `--no-browser`, `--skip-pipeline` (servers only), `--fresh` (rebuild local DB).
 
@@ -100,6 +100,7 @@ Naming: docs and guides use **lowercase kebab-case** (e.g. `docs/developer-refer
 ```
 Quorum/
   AGENTS.md
+  cua/                   # Optional Agent 6 — NIH grant proposal engine (CLI; Step 3 shows static demo)
   docs/                  # Jekyll site (Just the Docs) → neurodiscover.github.io
   queries.sql
   neurodiscover/
