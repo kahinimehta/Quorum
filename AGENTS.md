@@ -71,6 +71,8 @@ Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatic
 | Doc | Purpose |
 |-----|---------|
 | [`docs/dashboard.md`](docs/dashboard.md) | Run the UI locally |
+| [`docs/input.md`](docs/input.md) (pipeline modes FAQ) | Demo vs Rescore, incremental vs full, max papers, timing |
+| [`docs/dashboard.md`](docs/dashboard.md#step-3--report-structure) | Step 3 grant tab — contract, best-of-N, all sections |
 | [`docs/developer-reference/dashboard-api.md`](docs/developer-reference/dashboard-api.md) | Architecture + API map |
 | [`neurodiscover/frontend/quickstart.md`](neurodiscover/frontend/quickstart.md) | Step-by-step |
 | [`docs/developer-reference/backend-queries.md`](docs/developer-reference/backend-queries.md) | API JSON shapes |

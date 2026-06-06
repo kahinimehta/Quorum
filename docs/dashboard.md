@@ -139,6 +139,54 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 | **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims |
 | **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion (all expanded inside the group) |
 
+Step 3 is **not run-scoped** — it always shows bundled `graded6`, independent of Step 1/2 `run_id`. See [Conclusion Update — CUA package](workflow/conclusion-update#cua-package-optional--nih-grant-proposal) for live CLI runs.
+
+#### Tab shell (outside the report)
+
+| Area | What it is |
+|------|------------|
+| **Static demo** badge + About | Fixed `graded6` sample (400-paper corpus → 60-paper writer view) |
+| **Run at a glance** | KPIs: corpus, writer view, citations, Critic F1/F2, audit status chips |
+| **Jump to** | **Proposal** scrolls to NIH text; **Supporting details** opens the collapsed block |
+| **Run a live grant proposal (CLI)** | Collapsed `python -m cua.nih.run_db` instructions (writes local files only) |
+
+#### The proposal (always visible)
+
+The deliverable NIH R01 text: **central hypothesis**, **significance**, **innovation**, and **three aims** (each with hypothesis, approach, expected outcomes, pitfalls, and corpus citations). This is what the CUA pipeline was building; everything below is provenance.
+
+#### Pipeline trace & audit (one collapsed group)
+
+Expand **Pipeline trace & audit** (or Jump to → **Supporting details**) for nine sections:
+
+| Section | What it shows |
+|---------|----------------|
+| **The data loop** | Interactive diagram: roles (Ingestion → Planner → Synthesizer → … → Proposal), arrows, hover tooltips, captured content per step |
+| **The contract** | Blueprint Planner’s **obligations** — the grading checklist writers and the Critic use (see below) |
+| **Explored & dropped** | **Best-of-N** at the opening: multiple F1 pitches, one chosen, losers kept for audit |
+| **The loop, round by round** | Revise rounds: citation gate (orphans dropped), F1/F2/F3 scores, revise vs pass |
+| **The road not taken** | **Booster**: mines papers the writer never saw to harden pitfalls and outcomes |
+| **Outcomes (A/B)** | Blinded judge: did the booster lift F2 rigor? (modest, honest effect sizes) |
+| **Raw trace** | Chronological event log — every LLM and code step per round |
+| **Audit** | Trust record: citation integrity, obligation coverage, overclaim check vs evidence grades |
+| **Ingestion** | Corpus funnel (e.g. 400 → 60 shown); what was held back feeds the booster |
+
+##### The contract (plain language)
+
+An NIH grant is a **structured argument** scored on a rubric. Before drafting, the **Blueprint Planner** turns that rubric into a **checklist** (~21 obligations in `graded6`) — that checklist is **the contract**, not the proposal text.
+
+| Group | Meaning | Example obligation |
+|-------|---------|-------------------|
+| **F1** | Why this project? (gap, hypothesis, innovation) | Significance names a **specific** barrier and cites the corpus |
+| **F2** (per aim) | How you will do the work | Each aim needs testable hypothesis, concrete methods, pitfalls, expected outcomes |
+| **F3** (per aim) | Can the team do it? | Surface assumed expertise, equipment, access |
+| **X** | Honesty rules | Every cite must exist in corpus; claims cannot exceed evidence grade |
+
+Writers satisfy the contract; the **Critic** scores against it; the **Audit** reports satisfied vs at-risk obligations.
+
+##### Best-of-N (plain language)
+
+At the start, the **Synthesizer** writes **N independent opening arguments** (four in `graded6`). The **Selection Scorer** ranks them on F1 and picks **one winner**. Rejected pitches never enter the proposal but appear under **Explored & dropped** with the scorer’s rationale — like keeping losing bids in the file for transparency.
+
 Timestamps display in **US Eastern** (`America/New_York`).
 
 ## API routes used by the UI

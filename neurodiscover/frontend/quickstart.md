@@ -159,6 +159,8 @@ python3 cli.py dashboard --skip-install --no-browser
 
 **Confidence** updates when new evidence rows with `subgroup` + `mechanism` + `treatment` land in the DB and agents 2–6 rerun. Rescore on the same corpus without new rows may show similar numbers; check the literature step for `Stored N new evidence`.
 
+**Pipeline modes explained** (Demo vs Rescore, max papers, incremental vs full, timing): [docs/input.md — pipeline modes FAQ](../../docs/input.md#recommended-workflow) · [Step 3 grant tab sections](../../docs/dashboard.md#step-3--report-structure) on [neurodiscover.github.io](https://neurodiscover.github.io).
+
 **Local demo:** leave `SUPABASE_DATABASE_URL` unset. **Never** run `cli.py build` on the team Supabase DB.
 
 **Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, then run `make dashboard` — same command. The launcher runs **agents-only** (agents 2–6 on the full corpus) so connections and recommendations appear on first load.

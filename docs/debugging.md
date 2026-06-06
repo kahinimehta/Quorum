@@ -136,3 +136,4 @@ bundle exec jekyll serve
 - [ ] **Step 2** — **This run** card, three output panels (cohort · rankings · hypotheses); **Audit & provenance** collapsed until you expand it for agent trace  
 - [ ] **Step 3 — Grant Proposal** (last tab, static) — **The proposal** fully visible at top; **Pipeline trace & audit** is the only collapse on this tab (one click reveals all supporting sections)  
 - [ ] Fallback docs: [neurodiscover.github.io](https://neurodiscover.github.io) · screenshots on [Output examples](output) and [Inputs](input)  
+- [ ] Mode questions: [Inputs — pipeline modes FAQ](input#recommended-workflow) (Demo vs Rescore, incremental vs full, full does not clear DB)  

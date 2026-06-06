@@ -44,7 +44,7 @@ Opens the URL printed by the launcher (UI on **8080**, API default **5000** with
 
 **Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the **`Open:` URL** from launcher output.
 
-Full setup, platform notes, and flags → [`docs/dashboard.md`](docs/dashboard.md) · [Debugging](https://neurodiscover.github.io/debugging/)
+Full setup, platform notes, and flags → [`docs/dashboard.md`](docs/dashboard.md) · [Pipeline modes FAQ](https://neurodiscover.github.io/input/#recommended-workflow) · [Debugging](https://neurodiscover.github.io/debugging/)
 
 > **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
 

@@ -38,6 +38,8 @@ Grant rows infer `subgroup`, `mechanism`, and `treatment` from project title key
 5. **LINK** — `subgroup_evidence` when `evidence.subgroup` matches `subgroups.name`
 6. **TRACE** — log to `agent_outputs`; update `scan_state` on incremental scans
 
+Dashboard **Full live pull** stocks the corpus; **Incremental scan** adds new rows cheaply (skips LLM for known `source_id`s). Neither mode clears existing evidence — only `cli.py build` truncates. See [Inputs — pipeline modes FAQ](../input#recommended-workflow).
+
 ## Writes
 
 | Table | Content |

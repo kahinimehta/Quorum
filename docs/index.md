@@ -125,6 +125,8 @@ Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Deb
 - [Workflow](workflow/) — six-agent pipeline  
 - [Design & engineering](design) — modularity, blackboard pattern, technical proficiency  
 - [Inputs](input) · [Output examples](output) — dashboard screenshots (Steps 1–3)  
+- [Inputs — pipeline modes FAQ](input#recommended-workflow) — Demo vs Rescore, incremental vs full, timing, max papers  
+- [Dashboard — Step 3 explained](dashboard#step-3--report-structure) — grant tab sections, contract, best-of-N  
 - [Team](team) — interdisciplinary roles  
 - [Dashboard — demo tour](dashboard#demo-tour-3-min) — 3-minute judge walkthrough (Steps 1–3)  
 - [Guides — showcase](guides#showcase-june-6-2026) — judge tour + safe demo checklist  

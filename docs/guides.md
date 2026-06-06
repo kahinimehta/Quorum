@@ -38,6 +38,8 @@ make dashboard
 **Local SQLite:** builds seed DB if needed, runs demo pipeline (`max_papers=10`).  
 **Team Supabase:** skips build, runs **agents-only** on existing evidence (connections + recommendations written automatically).
 
+**Pipeline modes (when to use which):** [Inputs — recommended workflow](input#recommended-workflow) · [Demo vs Rescore](input#demo-vs-rescore-no-live-pubmed) · [Incremental vs full](input#incremental-scan-vs-full-live-pull) · [Does full clear the DB?](input#does-full-clear-the-database) · [Run times](input#how-long-do-runs-take-ballpark)
+
 ## CLI (data & agents)
 
 ```bash
@@ -98,7 +100,7 @@ See [Developer reference](developer-reference/) for schema, agent I/O, and API d
 
 | Audience | Start here |
 |----------|------------|
-| Judges / quick tour | [Home](index) → [Output examples](output) (Steps 1–3 screenshots) → [Dashboard demo tour](dashboard#demo-tour-3-min) → run `make dashboard` locally |
+| Judges / quick tour | [Home](index) → [Output examples](output) (Steps 1–3 screenshots) → [Dashboard demo tour](dashboard#demo-tour-3-min) → [Pipeline modes FAQ](input#recommended-workflow) → run `make dashboard` locally |
 | Live demo | [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage) — Step 2 for rankings; expand **Audit & provenance** for trace; finish on **Grant Proposal** (tab 3) |
 | Architecture | [Workflow](workflow/) · [Design & engineering](design) |
 | Team | [Team](team) |

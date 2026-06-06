@@ -31,6 +31,117 @@ The UI maps directly to pipeline inputs: **one pipeline mode** (segmented contro
 
 Preprint, full-text, and grant toggles apply only to **Full live pull**.
 
+### Recommended workflow
+
+```text
+Full live pull   →  stock the library (first time or big refresh)
+Incremental scan →  add new papers cheaply (ongoing)
+Rescore DB       →  rerun rankings on same evidence (no PubMed)
+Demo sample      →  stage / laptop demo only (small cap, no pull)
+```
+
+| Situation | Use |
+|-----------|-----|
+| Empty or thin DB | **Full live pull** (optionally preprints + grants) |
+| Team DB already has 300+ rows | **Incremental scan** for updates; **Rescore** to refresh rankings |
+| On stage / first laptop open | **Demo sample** (pre-run `make dashboard`) |
+| Never on team Supabase | `cli.py build` — it **truncates** all tables |
+
+`make dashboard` picks defaults for you: **local SQLite** → demo `max_papers=10`; **Supabase** → rescore with **no cap** (`max_papers=0` = full corpus).
+
+---
+
+### Demo vs Rescore (no live PubMed)
+
+Both modes **skip live literature pull**. Agent 1 only logs a trace row; agents 2–6 compute subgroups, connections, scores, and recommendations.
+
+| | **Demo sample** | **Rescore DB** |
+|---|-----------------|----------------|
+| API `mode` | `demo` | `agents-only` |
+| Adds new papers? | No | No |
+| Default `max_papers` | **10** (launcher + UI) | **0** (= all rows on Supabase) |
+| Typical DB | Local seed (~43 rows) | Team Supabase (~300+) |
+| Agent 1 trace | “Demo mode: using X of Y rows…” | “Agents-only: using X of Y rows…” |
+
+**Mental models:** Demo = *quick tour with a small sample*. Rescore = *re-sort the full catalog without buying new books*.
+
+---
+
+### What `max_papers` does
+
+**Max papers** caps **literature** rows passed to agents 2–6. **Trials and grants** are not capped — all tagged trial/grant rows still count.
+
+Only rows with **subgroup tags** affect scoring; untagged papers sit in the DB but do not move confidence.
+
+| Mode | How the cap applies |
+|------|---------------------|
+| **Demo** | Always uses your `max_papers` (minimum **10** in the API) |
+| **Rescore** | `max_papers > 0` caps literature; **`0`** or UI **≥ 500** → **no cap** (full DB) |
+| **Incremental / Full** | Caps the **pull** size; agents 2–6 then run on the **full** DB after ingest |
+
+**Why Demo feels “stuck” when you raise max:** On the local seed DB there are only ~11 tagged literature rows. Changing 10 → 50 → 150 often changes nothing — you already hit the ceiling. **Rescore on Supabase** has hundreds of papers, so the same knob clearly changes rankings.
+
+**Demo (10) ≈ Rescore (10)** only on the **same database**. Demo on a laptop vs Rescore (10) on Supabase is *not* the same — different pools of papers.
+
+---
+
+### Incremental scan vs full live pull
+
+Both hit **live APIs** (PubMed, trials via BioMCP), then run all six agents. Neither is offline like Demo/Rescore.
+
+| | **Incremental scan** | **Full live pull** |
+|---|----------------------|---------------------|
+| API `mode` | `scan` | `full` |
+| Intent | Add **what’s new** cheaply | **Backfill / refresh** the corpus |
+| Known `source_id` in DB? | Skip LLM re-extraction | Same — skip duplicates |
+| Date bias | Uses `scan_state.last_scan_at` to narrow pulls | Broader since-year pull |
+| Preprints / grants UI | Off (scan path) | Optional toggles |
+| Trace label | **Incremental scan complete** | **Full live pull complete** |
+
+**Incremental:** For each search hit, already stored → touch `last_scanned_at` and skip; new → one LLM extraction → insert.  
+**Full:** Same merge behavior, plus optional preprints, full-text sections, and NIH grants — more network and extraction work, so **full usually takes longer** at the same `max_papers`.
+
+{: .important }
+**Stage safety:** Incremental and full call live PubMed and may run LLM extraction. Pre-run before presenting; use **Demo** or **Rescore** on stage. See [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage).
+
+---
+
+### Does full clear the database?
+
+**No.** Full live pull (and incremental scan) **merge** into existing data:
+
+- Duplicate `source_type` + `source_id` → skip insert, no second copy
+- New ids → `INSERT OR IGNORE` / `ON CONFLICT DO NOTHING`
+
+Agents 2–6 may **update** scores, connections, and recommendations for the new `run_id`, but they do **not** bulk-delete evidence.
+
+| Command | Clears DB? |
+|---------|------------|
+| `cli.py build` | **Yes** — truncates all tables, reloads seed |
+| `make dashboard --fresh` (local) | **Yes** — deletes and rebuilds local `neurodiscover.db` |
+| Full / incremental / demo / rescore | **No** |
+
+---
+
+### How long do runs take? (ballpark)
+
+Runtime depends on **how many papers are new** (not just `max_papers`) and **`EXTRACT_BACKEND`** (`nebius` vs `none`).
+
+**Incremental scan, max 150, mature Supabase** (typical: `150 searched · +3 new · 147 skipped`):
+
+| Phase | Rough time |
+|-------|------------|
+| Search + fetch ~150 sources | ~1–3 min |
+| LLM on ~3 new papers | ~30 s–2 min |
+| Agents 2–6 | ~30 s–2 min |
+| **Total** | **~2–7 min** |
+
+**Same settings, empty DB** (~150 all new): literature LLM dominates — often **~12–35 min**.
+
+**Full live pull @ 150** with preprints + grants + full text: often **~1.5×–3×** longer than incremental on a mature DB; **30–60+ min** if many items are new.
+
+Watch Step 1 literature progress: `Processing 45/150 sources (2 new, 43 skipped)…` — high **skipped** means a fast finish.
+
 ---
 
 ## External evidence sources
@@ -88,7 +199,7 @@ The form in **Step 1 — Configure & Run** (above) posts the same body the API a
 |-------|--------|---------|
 | `mode` | `demo` \| `scan` \| `full` \| `agents-only` | Offline seed / incremental scan / live pull / downstream-only on existing evidence |
 | `run_id` | string (optional) | Client-generated id (8 chars); UI sends this so the stepper tracks the run immediately. **Full** mode passes it to literature pull. |
-| `max_papers` | **10–500** (API validated) | In **demo**: caps literature rows for agents 2–6. In **agents-only**: optional cap (0 or omit = all rows). Ignored for scan/full downstream agents. |
+| `max_papers` | **10–500** (API validated; **agents-only** may use **0** = all rows) | **Demo**: caps literature for agents 2–6. **Rescore**: cap if &gt; 0; **0** or UI ≥ 500 = full DB. **Scan/full**: caps pull size; agents 2–6 use full DB after ingest. See [What max papers does](#what-max_papers-does). |
 | `query` | string or null | Optional keyword filter passed to BioMCP |
 | `disease` | string | Literature anchor; dashboard default **Parkinson's** (API default `"Parkinson disease"` if omitted) |
 | `include_preprints` | integer | bioRxiv cap; used in **full** mode |
