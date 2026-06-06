@@ -411,6 +411,9 @@
       transition: background 0.12s, color 0.12s, border-color 0.12s;
     }
     .cua-toc a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .cua-toc a.cua-toc-proposal { background: #f0fdf4; border-color: #86efac; color: #166534; }
+    .cua-toc a.cua-toc-proposal:hover { background: #16a34a; color: #fff; border-color: #16a34a; }
+    .cua-toc a.cua-toc-cat { font-size: 0.76rem; }
     .cua-report-toolbar {
       display: flex;
       align-items: flex-start;
@@ -3649,6 +3652,72 @@ python -m cua.nih.run_db \
       }
       .cua-sec-body { padding: 1rem 1.15rem 1.2rem; }
       .cua-sec-body > h2 { display: none !important; }
+      .cua-report-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      section.cua-sec-first > details.cua-sec-details {
+        border-left: 4px solid #16a34a !important;
+        background: #f0fdf4 !important;
+      }
+      section.cua-sec-first > details.cua-sec-details[open] > summary.cua-sec-summary {
+        background: #f0fdf4 !important;
+      }
+      details.cua-cat-details {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        background: #f8fafc;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+      }
+      details.cua-cat-details[open] {
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      }
+      summary.cua-cat-summary {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15rem;
+        cursor: pointer;
+        list-style: none;
+        padding: 0.8rem 1.1rem;
+        background: #f1f5f9;
+        border-bottom: 1px solid transparent;
+        user-select: none;
+      }
+      details.cua-cat-details[open] > summary.cua-cat-summary {
+        border-bottom-color: #e2e8f0;
+        background: #fff;
+      }
+      summary.cua-cat-summary::-webkit-details-marker { display: none; }
+      summary.cua-cat-summary::before {
+        content: '▸ ';
+        color: var(--c-primary);
+        font-weight: 700;
+        font-size: 0.82rem;
+      }
+      details.cua-cat-details[open] > summary.cua-cat-summary::before { content: '▾ '; }
+      .cua-cat-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--c-navy);
+        line-height: 1.35;
+      }
+      .cua-cat-hint {
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: #64748b;
+        line-height: 1.4;
+        padding-left: 1.1rem;
+      }
+      .cua-cat-body {
+        padding: 0.55rem 0.75rem 0.85rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .cua-cat-body > section.cua-sec { margin: 0 !important; }
       details.cua-card-details,
       details.cua-field-details {
         margin: 0.55rem 0;
@@ -4148,6 +4217,32 @@ python -m cua.nih.run_db \
       { match: /ingestion/i, cls: 'cua-sec-ingest', short: 'Ingestion' },
     ];
     const CUA_SECTION_DEFAULT_OPEN = new Set(['cua-sec-proposal']);
+    const CUA_CATEGORIES = [
+      {
+        id: 'cua-cat-pipeline',
+        title: 'Pipeline & self-correction',
+        hint: 'Data loop · revise rounds · raw execution trace',
+        sections: ['cua-sec-loop', 'cua-sec-rounds', 'cua-sec-trace'],
+      },
+      {
+        id: 'cua-cat-writer',
+        title: 'Writer contract & selection',
+        hint: 'Blueprint obligations · explored & dropped best-of-N args',
+        sections: ['cua-sec-contract', 'cua-sec-dropped'],
+      },
+      {
+        id: 'cua-cat-booster',
+        title: 'Booster & rigor lift',
+        hint: 'Road-not-taken corpus mining · blinded A/B F2 outcomes',
+        sections: ['cua-sec-booster', 'cua-sec-ab'],
+      },
+      {
+        id: 'cua-cat-trust',
+        title: 'Audit & corpus',
+        hint: 'Citation audit · rank-and-bound ingestion funnel',
+        sections: ['cua-sec-audit', 'cua-sec-ingest'],
+      },
+    ];
 
     function slugifyCuaHeading(text) {
       return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
@@ -4177,37 +4272,115 @@ python -m cua.nih.run_db \
       });
     }
 
+    function cuaSpecForSection(sec) {
+      return CUA_SECTION_SLUGS.find((s) => sec.classList.contains(s.cls));
+    }
+
+    function cuaSectionTitle(sec) {
+      return (
+        sec.querySelector('.cua-sec-title')?.textContent
+        || sec.querySelector(':scope > h2')?.textContent
+        || ''
+      ).trim();
+    }
+
+    function wrapCuaSectionCollapsible(sec, { open = false } = {}) {
+      if (sec.querySelector(':scope > details.cua-sec-details')) return;
+      const h2 = sec.querySelector(':scope > h2');
+      if (!h2) return;
+      const title = h2.textContent.trim();
+      const spec = CUA_SECTION_SLUGS.find((s) => s.match.test(title));
+      const details = document.createElement('details');
+      details.className = 'cua-sec-details';
+      if (open || (spec && CUA_SECTION_DEFAULT_OPEN.has(spec.cls))) details.open = true;
+
+      const summary = document.createElement('summary');
+      summary.className = 'cua-sec-summary';
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'cua-sec-title';
+      titleSpan.textContent = title;
+      summary.appendChild(titleSpan);
+      if (spec?.short) {
+        const badge = document.createElement('span');
+        badge.className = 'cua-sec-badge';
+        badge.textContent = spec.short;
+        summary.appendChild(badge);
+      }
+
+      const body = document.createElement('div');
+      body.className = 'cua-sec-body';
+      h2.remove();
+      while (sec.firstChild) body.appendChild(sec.firstChild);
+      details.append(summary, body);
+      sec.appendChild(details);
+    }
+
     function wrapCuaSectionsCollapsible(root) {
-      root.querySelectorAll('.wrap > section.cua-sec').forEach((sec) => {
-        if (sec.querySelector(':scope > details.cua-sec-details')) return;
-        const h2 = sec.querySelector(':scope > h2');
-        if (!h2) return;
-        const title = h2.textContent.trim();
-        const spec = CUA_SECTION_SLUGS.find((s) => s.match.test(title));
-        const details = document.createElement('details');
-        details.className = 'cua-sec-details';
-        if (spec && CUA_SECTION_DEFAULT_OPEN.has(spec.cls)) details.open = true;
+      root.querySelectorAll('.wrap > section.cua-sec').forEach((sec) => wrapCuaSectionCollapsible(sec));
+    }
+
+    function reorganizeCuaSections(root) {
+      const wrap = root.querySelector('.wrap');
+      if (!wrap || wrap.querySelector('.cua-report-layout')) return;
+
+      const sections = [...wrap.querySelectorAll(':scope > section.cua-sec')];
+      const byCls = new Map();
+      sections.forEach((sec) => {
+        const spec = cuaSpecForSection(sec);
+        if (spec) byCls.set(spec.cls, sec);
+      });
+
+      const layout = document.createElement('div');
+      layout.className = 'cua-report-layout';
+
+      const proposal = byCls.get('cua-sec-proposal');
+      if (proposal) {
+        proposal.classList.add('cua-sec-first');
+        layout.appendChild(proposal);
+        byCls.delete('cua-sec-proposal');
+      }
+
+      CUA_CATEGORIES.forEach((cat) => {
+        const catSections = cat.sections.map((cls) => byCls.get(cls)).filter(Boolean);
+        if (!catSections.length) return;
+        cat.sections.forEach((cls) => byCls.delete(cls));
+
+        const catDetails = document.createElement('details');
+        catDetails.className = 'cua-cat-details';
+        catDetails.id = cat.id;
 
         const summary = document.createElement('summary');
-        summary.className = 'cua-sec-summary';
+        summary.className = 'cua-cat-summary';
         const titleSpan = document.createElement('span');
-        titleSpan.className = 'cua-sec-title';
-        titleSpan.textContent = title;
-        summary.appendChild(titleSpan);
-        if (spec?.short) {
-          const badge = document.createElement('span');
-          badge.className = 'cua-sec-badge';
-          badge.textContent = spec.short;
-          summary.appendChild(badge);
-        }
+        titleSpan.className = 'cua-cat-title';
+        titleSpan.textContent = cat.title;
+        const hintSpan = document.createElement('span');
+        hintSpan.className = 'cua-cat-hint';
+        hintSpan.textContent = cat.hint;
+        summary.append(titleSpan, hintSpan);
 
         const body = document.createElement('div');
-        body.className = 'cua-sec-body';
-        h2.remove();
-        while (sec.firstChild) body.appendChild(sec.firstChild);
-        details.append(summary, body);
-        sec.appendChild(details);
+        body.className = 'cua-cat-body';
+        catSections.forEach((sec) => body.appendChild(sec));
+        catDetails.append(summary, body);
+        layout.appendChild(catDetails);
       });
+
+      byCls.forEach((sec) => layout.appendChild(sec));
+
+      const footer = wrap.querySelector(':scope > footer');
+      wrap.textContent = '';
+      wrap.appendChild(layout);
+      if (footer) wrap.appendChild(footer);
+    }
+
+    function openCuaSectionTarget(sec) {
+      if (!sec) return;
+      const cat = sec.closest('details.cua-cat-details');
+      if (cat) cat.open = true;
+      const details = sec.querySelector(':scope > details.cua-sec-details');
+      if (details) details.open = true;
+      sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function wrapCuaNestedCollapsibles(root) {
@@ -4286,31 +4459,43 @@ python -m cua.nih.run_db \
     function buildCuaToc(root) {
       const toc = document.getElementById('cuaToc');
       if (!toc) return;
-      const sections = [...root.querySelectorAll('.wrap > section.cua-sec')];
+      const sections = [...root.querySelectorAll('.wrap .cua-report-layout section.cua-sec, .wrap > section.cua-sec')];
       if (!sections.length) {
         toc.classList.add('hidden');
         return;
       }
       toc.innerHTML = '<span class="cua-toc-label">Jump to</span>';
-      sections.forEach((sec) => {
-        const h2 = sec.querySelector(':scope > h2');
-        if (!h2) return;
-        const title = h2.textContent.trim();
-        const spec = CUA_SECTION_SLUGS.find((s) => s.match.test(title));
-        const label = spec?.short || title.split('—')[0].trim().slice(0, 28);
+
+      const addLink = (label, onClick, extraClass = '') => {
         const a = document.createElement('a');
-        a.href = `#${sec.id}`;
+        a.href = '#';
         a.textContent = label;
+        if (extraClass) a.classList.add(extraClass);
         a.addEventListener('click', (e) => {
           e.preventDefault();
-          const host = document.getElementById('cuaReportHost');
-          const target = host.shadowRoot?.getElementById(sec.id);
-          if (!target) return;
-          const details = target.querySelector(':scope > details.cua-sec-details');
-          if (details) details.open = true;
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          onClick();
         });
         toc.appendChild(a);
+      };
+
+      const proposal = sections.find((sec) => sec.classList.contains('cua-sec-proposal'));
+      if (proposal) {
+        addLink('Proposal', () => {
+          const host = document.getElementById('cuaReportHost');
+          openCuaSectionTarget(host.shadowRoot?.getElementById(proposal.id));
+        }, 'cua-toc-proposal');
+      }
+
+      CUA_CATEGORIES.forEach((cat) => {
+        const short = cat.title.split(' & ')[0];
+        addLink(short, () => {
+          const host = document.getElementById('cuaReportHost');
+          const target = host.shadowRoot?.getElementById(cat.id);
+          if (target) {
+            target.open = true;
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 'cua-toc-cat');
       });
       toc.classList.remove('hidden');
     }
@@ -4323,6 +4508,7 @@ python -m cua.nih.run_db \
       formatCuaPanelRows(root);
       formatCuaSections(root);
       wrapCuaSectionsCollapsible(root);
+      reorganizeCuaSections(root);
       wrapCuaNestedCollapsibles(root);
       wrapCuaFooter(root);
       buildCuaToc(root);

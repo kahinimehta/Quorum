@@ -80,7 +80,14 @@ def main() -> int:
             }""",
             timeout=60_000,
         )
-        page.evaluate("window.scrollTo(0, 0)")
+        page.evaluate(
+            """() => {
+              const view = document.getElementById('viewCua');
+              const main = document.getElementById('cuaMain');
+              const top = (main || view)?.offsetTop ?? 0;
+              window.scrollTo(0, Math.max(0, top - 12));
+            }"""
+        )
         time.sleep(1.5)
         path3 = os.path.join(OUT, "step3-cua-grant-proposal.png")
         page.screenshot(path=path3, full_page=False)
