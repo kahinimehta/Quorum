@@ -1237,31 +1237,31 @@
   <div class="run-status-strip idle" id="globalRunStatus">
     <div class="run-status-inner">
       <span class="run-status-pill" id="globalRunStatusPill">Ready</span>
-      <span class="run-status-detail" id="globalRunStatusDetail">Configure a run on Step 1, or open Step 2 to view the latest results.</span>
+      <span class="run-status-detail" id="globalRunStatusDetail">Open Grant Proposal for the static NIH demo, configure a run on Step 2, or view results on Step 3.</span>
       <span class="run-status-meta" id="globalRunStatusMeta"></span>
     </div>
   </div>
   <nav class="tab-nav" aria-label="Dashboard navigation">
     <div class="tab-nav-inner">
-      <button type="button" class="tab-btn tab-btn-run active" data-view="input">
+      <button type="button" class="tab-btn tab-btn-cua" data-view="cua">
         <span class="tab-step">1</span>
+        <span class="tab-text">
+          <span class="tab-title">Grant Proposal<span class="tab-static-tag">Static</span></span>
+          <span class="tab-desc">Static NIH grant proposal demo</span>
+        </span>
+      </button>
+      <button type="button" class="tab-btn tab-btn-run active" data-view="input">
+        <span class="tab-step">2</span>
         <span class="tab-text">
           <span class="tab-title">Configure &amp; Run Pipeline</span>
           <span class="tab-desc">Choose sources, mode, keywords — then start discovery</span>
         </span>
       </button>
       <button type="button" class="tab-btn tab-btn-results" data-view="results">
-        <span class="tab-step">2</span>
+        <span class="tab-step">3</span>
         <span class="tab-text">
           <span class="tab-title">Discovery Results</span>
           <span class="tab-desc">Synthetic cohort, ranked outputs, hypotheses &amp; evidence</span>
-        </span>
-      </button>
-      <button type="button" class="tab-btn tab-btn-cua" data-view="cua">
-        <span class="tab-step">3</span>
-        <span class="tab-text">
-          <span class="tab-title">Grant Proposal (CUA)<span class="tab-static-tag">Static</span></span>
-          <span class="tab-desc">Static NIH grant proposal demo</span>
         </span>
       </button>
     </div>
@@ -1270,7 +1270,7 @@
   <div id="configHint" class="config-hint hidden" style="margin:1rem auto 0; max-width:1400px; padding:0 1.5rem;"></div>
 
   <div id="viewInput" class="hidden">
-    <p class="view-page-title">Step 1 — Configure &amp; Run <span>Launch the multi-agent pipeline with your chosen settings</span></p>
+    <p class="view-page-title">Step 2 — Configure &amp; Run <span>Launch the multi-agent pipeline with your chosen settings</span></p>
     <div class="layout">
     <aside>
       <div class="card">
@@ -1305,7 +1305,7 @@
           <li class="idle" data-agent="Conclusion Update Agent">Conclusion Update <span class="step-state">Idle</span></li>
         </ol>
         <p class="runs-hint" id="pipelineProgressHint" style="margin-top:0.65rem;margin-bottom:0;">
-          Progress stays here on Step 1 while a run is in flight. Open Step 2 for ranked outputs when finished.
+          Progress stays here on Step 2 while a run is in flight. Open Step 3 for ranked outputs when finished.
         </p>
       </div>
     </aside>
@@ -1402,7 +1402,7 @@
   </div>
 
   <div id="viewResults" class="hidden">
-    <p class="view-page-title">Step 2 — Discovery Results <span id="resultsSubtitle">Synthetic cohort · ranked treatments · research hypotheses</span></p>
+    <p class="view-page-title">Step 3 — Discovery Results <span id="resultsSubtitle">Synthetic cohort · ranked treatments · research hypotheses</span></p>
     <div class="results-wide">
       <div class="results-pills" id="resultsPills">
         <span class="badge ok" id="pillPipeline">Pipeline —</span>
@@ -1516,7 +1516,7 @@
   </div>
 
   <div id="viewCua" class="hidden">
-    <p class="view-page-title">Step 3 — Grant Proposal (CUA) <span id="cuaSubtitle">Static NIH demo · independent of Steps 1–2</span></p>
+    <p class="view-page-title">Step 1 — Grant Proposal <span id="cuaSubtitle">Static NIH demo · independent of Steps 2–3</span></p>
     <div class="cua-wide">
       <div class="cua-shell-card cua-hero" id="cuaKpis">
         <div class="cua-hero-top" role="note">
@@ -1552,7 +1552,7 @@
           <div id="cuaReportHost" class="cua-report-inline" aria-live="polite">Loading grant proposal…</div>
         </div>
         <details class="cua-cli-wrap card">
-          <summary>Run a live CUA proposal (CLI)</summary>
+          <summary>Run a live grant proposal (CLI)</summary>
           <p class="cua-cli-hint">
             Read-only against Supabase or local SQLite — writes local JSON only (not <code>recommendations</code>).
             <code>--run-id</code> labels the CUA output folder, not a dashboard pipeline run.
@@ -2300,7 +2300,7 @@ python -m cua.nih.run_db \
         setRunStatus(
           'idle',
           'Ready',
-          'Database loaded. Run the pipeline on Step 1 to process a subset (e.g. max papers).',
+          'Database loaded. Run the pipeline on Step 2 to process a subset (e.g. max papers).',
           s.lastScanAt ? `Last scan ${formatScanTime(s.lastScanAt)}` : '',
         );
       }
@@ -3513,7 +3513,7 @@ python -m cua.nih.run_db \
             'complete',
             'Complete',
             `Run ${latestRunId} finished with ${syntheticCohort.length} synthetic profiles.`,
-            'Open Step 2 for discovery results.',
+            'Open Step 3 for discovery results.',
           );
         }
         syncPipelineUi(latestRunId, steps, 'complete');
@@ -3718,6 +3718,81 @@ python -m cua.nih.run_db \
         gap: 0.5rem;
       }
       .cua-cat-body > section.cua-sec { margin: 0 !important; }
+      details.cua-group-details {
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        background: #f1f5f9;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+      }
+      details.cua-group-details[open] {
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.07);
+      }
+      summary.cua-group-summary {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.12rem;
+        cursor: pointer;
+        list-style: none;
+        padding: 0.72rem 1rem;
+        background: #e2e8f0;
+        border-bottom: 1px solid transparent;
+        user-select: none;
+      }
+      details.cua-group-details[open] > summary.cua-group-summary {
+        border-bottom-color: #cbd5e1;
+        background: #f8fafc;
+      }
+      summary.cua-group-summary::-webkit-details-marker { display: none; }
+      summary.cua-group-summary::before {
+        content: '▸ ';
+        color: var(--c-primary);
+        font-weight: 700;
+        font-size: 0.82rem;
+      }
+      details.cua-group-details[open] > summary.cua-group-summary::before { content: '▾ '; }
+      .cua-group-title {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: var(--c-navy);
+        line-height: 1.35;
+      }
+      .cua-group-hint {
+        font-size: 0.74rem;
+        font-weight: 500;
+        color: #64748b;
+        line-height: 1.35;
+        padding-left: 1.05rem;
+      }
+      .cua-group-body {
+        padding: 0.45rem 0.55rem 0.65rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .cua-group-body > details.cua-cat-details {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: none;
+      }
+      .cua-group-body summary.cua-cat-summary {
+        padding: 0.62rem 0.85rem;
+        background: #f8fafc;
+      }
+      .cua-group-body .cua-cat-hint {
+        font-size: 0.72rem;
+        padding-left: 0.95rem;
+      }
+      .cua-group-body .cua-cat-body {
+        padding: 0.4rem 0.55rem 0.65rem;
+        gap: 0.4rem;
+      }
+      .cua-group-body details.cua-sec-details > summary.cua-sec-summary {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
+      }
       details.cua-card-details,
       details.cua-field-details {
         margin: 0.55rem 0;
@@ -4217,6 +4292,11 @@ python -m cua.nih.run_db \
       { match: /ingestion/i, cls: 'cua-sec-ingest', short: 'Ingestion' },
     ];
     const CUA_SECTION_DEFAULT_OPEN = new Set(['cua-sec-proposal']);
+    const CUA_SUPPORT_GROUP = {
+      id: 'cua-group-support',
+      title: 'Pipeline trace & audit',
+      hint: 'Self-correction · writer contract · booster · citation audit · ingestion',
+    };
     const CUA_CATEGORIES = [
       {
         id: 'cua-cat-pipeline',
@@ -4340,6 +4420,7 @@ python -m cua.nih.run_db \
         byCls.delete('cua-sec-proposal');
       }
 
+      const groupSections = [];
       CUA_CATEGORIES.forEach((cat) => {
         const catSections = cat.sections.map((cls) => byCls.get(cls)).filter(Boolean);
         if (!catSections.length) return;
@@ -4363,8 +4444,30 @@ python -m cua.nih.run_db \
         body.className = 'cua-cat-body';
         catSections.forEach((sec) => body.appendChild(sec));
         catDetails.append(summary, body);
-        layout.appendChild(catDetails);
+        groupSections.push(catDetails);
       });
+
+      if (groupSections.length) {
+        const groupDetails = document.createElement('details');
+        groupDetails.className = 'cua-group-details';
+        groupDetails.id = CUA_SUPPORT_GROUP.id;
+
+        const groupSummary = document.createElement('summary');
+        groupSummary.className = 'cua-group-summary';
+        const groupTitle = document.createElement('span');
+        groupTitle.className = 'cua-group-title';
+        groupTitle.textContent = CUA_SUPPORT_GROUP.title;
+        const groupHint = document.createElement('span');
+        groupHint.className = 'cua-group-hint';
+        groupHint.textContent = CUA_SUPPORT_GROUP.hint;
+        groupSummary.append(groupTitle, groupHint);
+
+        const groupBody = document.createElement('div');
+        groupBody.className = 'cua-group-body';
+        groupSections.forEach((catDetails) => groupBody.appendChild(catDetails));
+        groupDetails.append(groupSummary, groupBody);
+        layout.appendChild(groupDetails);
+      }
 
       byCls.forEach((sec) => layout.appendChild(sec));
 
@@ -4376,6 +4479,8 @@ python -m cua.nih.run_db \
 
     function openCuaSectionTarget(sec) {
       if (!sec) return;
+      const group = sec.closest('details.cua-group-details');
+      if (group) group.open = true;
       const cat = sec.closest('details.cua-cat-details');
       if (cat) cat.open = true;
       const details = sec.querySelector(':scope > details.cua-sec-details');
@@ -4486,17 +4591,14 @@ python -m cua.nih.run_db \
         }, 'cua-toc-proposal');
       }
 
-      CUA_CATEGORIES.forEach((cat) => {
-        const short = cat.title.split(' & ')[0];
-        addLink(short, () => {
-          const host = document.getElementById('cuaReportHost');
-          const target = host.shadowRoot?.getElementById(cat.id);
-          if (target) {
-            target.open = true;
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 'cua-toc-cat');
-      });
+      addLink('Supporting details', () => {
+        const host = document.getElementById('cuaReportHost');
+        const target = host.shadowRoot?.getElementById(CUA_SUPPORT_GROUP.id);
+        if (target) {
+          target.open = true;
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 'cua-toc-cat');
       toc.classList.remove('hidden');
     }
 

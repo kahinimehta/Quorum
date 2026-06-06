@@ -98,7 +98,7 @@ make dashboard
 
 Opens the URL printed by the launcher (UI on **8080**, API default **5000** with auto-fallback; URL always includes `?api=` so the static server reaches FastAPI). Press **Ctrl+C** to stop.
 
-**Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (`graded6` — proposal first, Pipeline / Writer contract / Booster / Audit categories, **Jump to** nav).
+**Three tabs:** Step 1 static grant proposal (`graded6` — proposal first, supporting details grouped, **Jump to** nav) · Step 2 configure & run · Step 3 ranked results.
 
 {: .highlight }
 **Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the **`Open:` URL** from launcher output.
@@ -116,7 +116,7 @@ Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Deb
 | `neurodiscover/orchestrator.py` | Wires agents 1→6 for API runs |
 | `neurodiscover/api_server.py` | FastAPI backend (:5000) |
 | `neurodiscover/frontend/index.html` | Dashboard UI (:8080) — Steps 1–3 |
-| `cua/` | Optional grant-proposal Agent 6 (CLI; dashboard Step 3 = static demo) |
+| `cua/` | Optional grant-proposal Agent 6 (CLI; dashboard Step 1 = static demo) |
 | `docs/` | This documentation site |
 
 ## Next steps

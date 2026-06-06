@@ -4,7 +4,7 @@
   <img src="docs/assets/images/neurodiscover-ai-logo.png" alt="NeuroDiscover AI — an autonomous research agent for clinical research in neuroscience" width="420" />
 </p>
 
-**Quorum** — six agents, one evidence store, ranked commercial discovery. Optional **CUA** (Conclusion Update Agent) grant-proposal demo on dashboard **Step 3**.
+**Quorum** — six agents, one evidence store, ranked commercial discovery. Optional **CUA** (Conclusion Update Agent) grant-proposal engine with a static NIH demo on dashboard **Step 1**.
 
 Agentic system for **commercial development discovery**: continuously ingest literature and trials, surface hidden patient subgroups inside heterogeneous indications, map **subgroup → mechanism → treatment** connections, and rank opportunities by evidence and commercial potential.
 
@@ -40,7 +40,7 @@ make dashboard
 
 Opens the URL printed by the launcher (UI on **8080**, API default **5000** with auto-fallback; URL always includes `?api=` so the static server reaches FastAPI). Press **Ctrl+C** to stop.
 
-**Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (`graded6` — proposal first, Pipeline / Writer contract / Booster / Audit categories).
+**Three tabs:** Step 1 static grant proposal (`graded6` — proposal first, supporting details grouped) · Step 2 configure & run · Step 3 ranked results.
 
 **Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the **`Open:` URL** from launcher output.
 
@@ -80,7 +80,7 @@ Naming: docs and guides use **lowercase kebab-case** (e.g. `docs/developer-refer
 ```
 Quorum/
   AGENTS.md
-  cua/                   # Optional Agent 6 — NIH grant proposal engine (CLI; Step 3 shows static demo)
+  cua/                   # Optional Agent 6 — NIH grant proposal engine (CLI; Step 1 shows static demo)
   docs/                  # Jekyll site (Just the Docs) → neurodiscover.github.io
   queries.sql
   neurodiscover/

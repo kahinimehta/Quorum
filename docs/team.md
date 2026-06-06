@@ -62,7 +62,7 @@ Postdoc at Yale School of Medicine in computational immunology, immunogenomics, 
 
 Third-year PhD student in Columbia's Neurobiology and Behavior program working with human single-neuron and MRI data. Focus on analysis pipelines and computational modeling using Bayesian and machine learning methods. Passionate about open science and reproducibility.
 
-**On this project:** Database schema, orchestrator, FastAPI backend, dashboard UI (including Step 3 static CUA tab), launcher, synthetic cohort layer, docs site, and integration testing.
+**On this project:** Database schema, orchestrator, FastAPI backend, dashboard UI (including Step 1 static grant proposal tab), launcher, synthetic cohort layer, docs site, and integration testing.
 
 ---
 
@@ -103,4 +103,4 @@ flowchart TB
 - **Schema-first:** `schema.sql` + `developer-reference/agent-io.md` before agent code diverged  
 - **Shared `run_id`:** every agent appends to `agent_outputs` for audit  
 - **Safe demo path:** offline seed + synthetic cohort agreed early for showcase reliability  
-- **Dual Agent 6:** orchestrator formula rankings in the pipeline; optional **`cua/`** NIH proposal on dashboard Step 3 (static `graded6` demo — proposal first, grouped categories)  
+- **Dual Agent 6:** orchestrator formula rankings in the pipeline; optional **`cua/`** NIH proposal on dashboard Step 1 (static `graded6` demo — proposal first, nested supporting-details group)  

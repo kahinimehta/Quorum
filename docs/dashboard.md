@@ -112,20 +112,17 @@ flowchart LR
 | Header | DB status, evidence totals, synthetic cohort badge, run id |
 | KPI strip | Per-type counts; **this run** vs **in database** |
 | Run status | Ready / Running / Complete / Partial / Failed |
-| **Agent pipeline stepper** | On **Step 1** sidebar during a run: weighted progress bar, per-agent **Running…** / **Done**, literature sub-progress from live commits (polled every ~500ms). Step 2 shows results only — no duplicate stepper. |
-| **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
-| **Step 2** | **This run** report (settings + signature + support table), pipeline diagram, synthetic cohort, ranked outputs, audit trace |
-| **Step 3** | **Grant Proposal (CUA)** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **Proposal section first** (open by default); remaining content in four collapsed categories (see table below). **Jump to** opens Proposal or a category. **Run a live CUA proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
+| **Agent pipeline stepper** | On **Step 2** sidebar during a run: weighted progress bar, per-agent **Running…** / **Done**, literature sub-progress from live commits (polled every ~500ms). Step 3 shows results only — no duplicate stepper. |
+| **Step 1** | **Grant Proposal** — **static** bundled `graded6` NIH R01 demo (never changes with Step 2/3 `run_id`). Hero KPIs + audit status chips; **Proposal section first** (open by default); pipeline trace, writer contract, booster, and audit grouped in one collapsed **Pipeline trace & audit** block (see table below). **Jump to** opens Proposal or supporting details. **Run a live grant proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
+| **Step 2** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
+| **Step 3** | **This run** report (settings + signature + support table), pipeline diagram, synthetic cohort, ranked outputs, audit trace |
 
-### Step 3 — report structure
+### Step 1 — report structure
 
-| Jump to | Category | Sub-sections (collapsed by default) |
-|---------|----------|--------------------------------------|
+| Jump to | Group | Sub-sections (collapsed by default) |
+|---------|-------|--------------------------------------|
 | **Proposal** | *(leading section)* | NIH R01 proposal — significance, innovation, three aims |
-| **Pipeline** | Pipeline & self-correction | Data loop · Revise rounds · Raw trace |
-| **Writer contract** | Writer contract & selection | Blueprint contract · Explored & dropped |
-| **Booster** | Booster & rigor lift | Road not taken · A/B outcomes |
-| **Audit** | Audit & corpus | Citation audit · Ingestion funnel |
+| **Supporting details** | Pipeline trace & audit | **Pipeline & self-correction** (data loop · revise rounds · trace) · **Writer contract & selection** · **Booster & rigor lift** · **Audit & corpus** |
 
 Timestamps display in **US Eastern** (`America/New_York`).
 
@@ -142,7 +139,7 @@ Timestamps display in **US Eastern** (`America/New_York`).
 | Per-run KPIs | `GET /api/run-stats?run_id=` |
 | Evidence table | `GET /api/evidence?offset=&limit=` |
 | Synthetic patients | `GET /api/synthetic-cohort?run_id=` |
-| CUA demo tab | `GET /api/cua/demo` · report inlined from `GET /cua-demo/graded6.html` |
+| Grant proposal tab | `GET /api/cua/demo` · report inlined from `GET /cua-demo/graded6.html` |
 
 ## Run discovery
 
