@@ -155,6 +155,8 @@ Step 3 is **not run-scoped** — it always shows bundled `graded6`, independent 
 
 The deliverable NIH R01 text: **central hypothesis**, **significance**, **innovation**, and **three aims** (each with hypothesis, approach, expected outcomes, pitfalls, and corpus citations). This is what the CUA pipeline was building; everything below is provenance.
 
+Under each aim, the dashboard rewrites internal corpus ids into readable, linked labels — e.g. `literature:28598856` → **PubMed ID 28598856** (pubmed.ncbi.nlm.nih.gov), `trial:NCT…` → ClinicalTrials.gov, `grant:R01…` → NIH RePORTER search. Non-numeric literature rows show as **DOI** links.
+
 #### Pipeline trace & audit (one collapsed group)
 
 Expand **Pipeline trace & audit** (or Jump to → **Supporting details**) for nine sections:

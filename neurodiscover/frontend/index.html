@@ -4152,6 +4152,18 @@ python -m cua.nih.run_db \
       }
       .aim .field p { margin: 0 !important; font-size: 0.91rem !important; }
       .cites { margin-top: 0.65rem !important; padding-top: 0.5rem !important; border-top: 1px dashed #e2e8f0; }
+      .cites a.cua-cite {
+        display: inline-block;
+        font-size: 0.78rem !important;
+        background: #eff6ff !important;
+        color: #1d4ed8 !important;
+        padding: 0.12rem 0.4rem !important;
+        border-radius: 4px !important;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+        text-decoration: none !important;
+        margin: 0 0.35rem 0.35rem 0 !important;
+      }
+      .cites a.cua-cite:hover { background: #dbeafe !important; text-decoration: underline !important; }
       code {
         font-size: 0.78rem !important;
         background: #eff6ff !important;
@@ -4563,6 +4575,48 @@ python -m cua.nih.run_db \
       return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
     }
 
+    function parseCuaCorpusRef(raw) {
+      const text = String(raw || '').trim();
+      const m = text.match(/^(literature|grant|trial):(.+)$/i);
+      if (!m) return { label: text, href: null };
+      const kind = m[1].toLowerCase();
+      const id = m[2].trim();
+      if (kind === 'literature') {
+        if (/^\d+$/.test(id)) {
+          return { label: `PubMed ID ${id}`, href: `https://pubmed.ncbi.nlm.nih.gov/${id}/` };
+        }
+        return { label: `DOI ${id}`, href: `https://doi.org/${id}` };
+      }
+      if (kind === 'trial') {
+        const nct = /^NCT/i.test(id) ? id.toUpperCase() : `NCT${id}`;
+        return { label: nct, href: `https://clinicaltrials.gov/study/${nct}` };
+      }
+      if (kind === 'grant') {
+        return {
+          label: `Grant ${id}`,
+          href: `https://reporter.nih.gov/search/${encodeURIComponent(id)}`,
+        };
+      }
+      return { label: text, href: null };
+    }
+
+    function formatCuaCitations(root) {
+      root.querySelectorAll('.cites code').forEach((code) => {
+        const ref = parseCuaCorpusRef(code.textContent);
+        if (ref.href) {
+          const a = document.createElement('a');
+          a.className = 'cua-cite';
+          a.href = ref.href;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.textContent = ref.label;
+          code.replaceWith(a);
+        } else {
+          code.textContent = ref.label;
+        }
+      });
+    }
+
     function formatCuaPanelRows(root) {
       root.querySelectorAll('.d-panel .dp-c').forEach((dp) => {
         if (dp.querySelector('.dp-row')) return;
@@ -4758,6 +4812,7 @@ python -m cua.nih.run_db \
       }
       formatCuaPanelRows(root);
       formatCuaSections(root);
+      formatCuaCitations(root);
       reorganizeCuaSections(root);
       buildCuaToc(root);
     }

@@ -42,7 +42,7 @@ Layout top-to-bottom:
 
 | Jump to | Layout | Content |
 |---------|--------|---------|
-| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims |
+| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims; citations under each aim show as **PubMed ID**, **NCT**, or **Grant** links (not raw `literature:` ids) |
 | **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion |
 
 To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package--nih-grant-proposal)).
