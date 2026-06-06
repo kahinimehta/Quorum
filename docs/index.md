@@ -9,7 +9,7 @@ description: "Agentic commercial development discovery — quick start and overv
 
 {: .fs-5 .fw-300 }
 
-Six agents · one evidence store · ranked commercial discovery · optional CUA grant proposal (Step 3)
+Six agents · one evidence store · ranked commercial discovery · grant proposal
 
 <div class="video-embed-wrap">
   <div class="video-embed">
