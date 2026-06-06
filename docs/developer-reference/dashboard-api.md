@@ -55,7 +55,7 @@ flowchart LR
 | Header | DB status, evidence totals, synthetic cohort badge, run id |
 | KPI strip + summary bar | Per-type counts; **this run** vs **in database** after a pipeline run |
 | Run status strip | Ready / Running / Complete / Partial / Failed |
-| **Agent pipeline stepper** | One agent **Running…** at a time during a run; **Done** / **Waiting…** for others; polls `GET /api/agents?run_id=` (~500ms) for stepper UI and `GET /api/run-discovery/status?run_id=` for completion |
+| **Agent pipeline stepper** | **Step 1** sidebar only — one agent **Running…** at a time; **Done** / **Waiting…** for others; weighted progress bar; polls `GET /api/agents?run_id=` (~500ms) and `GET /api/run-discovery/status?run_id=` for completion. Step 2 has no duplicate stepper. |
 | **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button |
 | **Step 2** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses; **Audit & provenance** collapsed (agent trace + evidence table inside) |
 | **Step 3** | Static grant proposal — bundled `graded6` demo inlined (not run-scoped); **The proposal** expanded first (above data loop); all other sections in one collapsed **Pipeline trace & audit** group (single click, no nested collapses); **Jump to** scrolls to Proposal or opens supporting details |

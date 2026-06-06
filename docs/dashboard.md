@@ -110,10 +110,12 @@ flowchart LR
 | Step | Tab | What to show |
 |------|-----|--------------|
 | 1 | **Configure & Run** | Demo mode, max papers 10, run button — agent stepper advances one agent at a time |
-| 2 | **Discovery Results** | Synthetic cohort, ranked treatments; expand **Audit & provenance** for agent trace + evidence table (this run’s `run_id`) |
+| 2 | **Discovery Results** | **This run** card → pipeline diagram → three panels (cohort · rankings · hypotheses); expand **Audit & provenance** for agent trace + evidence table (this run’s `run_id`) |
 | 3 | **Grant Proposal** (last tab, static) | Hero KPIs → **The proposal** fully expanded at top (above data loop) → one click on **Pipeline trace & audit** reveals all pipeline/audit sections |
 
 Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant Proposal**. Step 3 is **not run-scoped** — same `graded6` demo regardless of Step 2.
+
+**Collapsed by default (demo-friendly):** Step 2 **Audit & provenance** · Step 3 **Pipeline trace & audit** (Jump to → **Supporting details** opens it). Rankings and the NIH proposal body stay visible without extra clicks.
 
 {: .important }
 **Stage safety:** Pre-run `make dashboard` before presenting. Use **demo** mode — no live PubMed pull on stage. See [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage).

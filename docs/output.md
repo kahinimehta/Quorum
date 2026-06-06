@@ -15,13 +15,12 @@ What NeuroDiscover produces — ranked recommendations, agent trace, synthetic p
 
 After a run completes, **Step 2** shows pipeline outputs: synthetic cohort, ranked treatments, and hypotheses. **Audit & provenance** (agent trace + evidence preview) is collapsed by default — expand it to inspect this run’s `run_id` and source links.
 
-At the top, **This run** shows:
+Layout top-to-bottom:
 
-- A **progress bar** and compact **agent stepper** (Running → Done) visible while the pipeline executes and after complete
-- **Run settings** used (mode, disease, max papers, keyword, extraction) — changes when you change Step 1
-- **Evidence scored** and **DB delta** for this run — changes when pulls add rows or demo caps differ
-- **Run signature** — a one-line fingerprint (`run_id · mode · max · keyword · scored · +new`)
-- **Support rows** table — per-connection evidence counts and confidence (changes when corpus or caps differ)
+1. **This run** — status (in progress / finished), run settings (mode, disease, max papers, keyword, extraction, pull options), evidence scored + DB delta, **run signature** (`run_id · mode · max · keyword · scored · +new`), and **support rows** (per-connection evidence counts and confidence). Live pipeline progress (weighted bar + agent stepper) stays on **Step 1** only.
+2. **Discovery pipeline** — flow diagram (inputs → six agents → outputs).
+3. **Three panels** — **Synthetic cohort** · **Ranked outputs** · **Research hypotheses** (with confidence-by-treatment strip).
+4. **Audit & provenance** — collapsed by default; expand for agent run trace + paginated evidence preview.
 
 ![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }

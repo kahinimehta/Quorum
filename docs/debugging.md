@@ -133,6 +133,6 @@ bundle exec jekyll serve
 - [ ] No `cli.py build` against team Supabase  
 - [ ] Browser at the launcher **`Open:` URL** (includes `?api=`; not a stale GitHub Pages tab for live UI)  
 - [ ] **Step 1** — pipeline mode + run button; stepper shows one agent **Running…** at a time  
-- [ ] **Step 2** — synthetic cohort, ranked outputs; expand **Audit & provenance** to show agent trace after run completes  
-- [ ] **Step 3 — Grant Proposal** (last tab, static) — **The proposal** fully visible at top; **Pipeline trace & audit** is the only collapse (one click reveals all supporting sections)  
+- [ ] **Step 2** — **This run** card, three output panels (cohort · rankings · hypotheses); **Audit & provenance** collapsed until you expand it for agent trace  
+- [ ] **Step 3 — Grant Proposal** (last tab, static) — **The proposal** fully visible at top; **Pipeline trace & audit** is the only collapse on this tab (one click reveals all supporting sections)  
 - [ ] Fallback docs: [neurodiscover.github.io](https://neurodiscover.github.io) · screenshots on [Output examples](output) and [Inputs](input)  

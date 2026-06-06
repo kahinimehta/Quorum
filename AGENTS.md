@@ -63,7 +63,7 @@ make dashboard
 # → launcher prints Open: URL (UI :8080/?api=... ; Ctrl+C to stop)
 ```
 
-Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip). UI has three tabs: Steps 1–2 pipeline configure and results; **Step 3** static grant proposal (`graded6`, proposal expanded at top + single supporting-details collapse, not run-scoped).
+Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip). UI has three tabs: **Step 1** configure & run (live stepper on sidebar); **Step 2** discovery results (three output panels + collapsed **Audit & provenance**); **Step 3** static grant proposal (`graded6`, proposal expanded at top + single **Pipeline trace & audit** collapse, not run-scoped).
 
 - **Local:** leave `SUPABASE_DATABASE_URL` unset — builds seed DB, runs demo (`max_papers=10`).
 - **Team Supabase:** set `SUPABASE_DATABASE_URL` — skips `build`, runs **agents-only** (agents 2–6 on all existing evidence).
@@ -89,7 +89,7 @@ its own table. The backend serves the final tables to the dashboard.
 | 6 | Conclusion Update | scored `treatment_connections` | `recommendations` (orchestrator) · optional `cua/` NIH proposal (read-only, local files) |
 
 Every agent appends one row to `agent_outputs` (run_id, step_order, summary) as it
-runs. The dashboard reads `agent_outputs` to show the "agent trace".
+runs. The dashboard reads `agent_outputs` for the agent run trace (Step 2 **Audit & provenance**, collapsed by default) and for live Step 1 stepper progress during a run.
 
 ## Database (SQLite or Supabase)
 Schema is in `neurodiscover/schema.sql` (SQLite) and `neurodiscover/schema.pg.sql` (Postgres). See [`docs/developer-reference/database.md`](docs/developer-reference/database.md).
