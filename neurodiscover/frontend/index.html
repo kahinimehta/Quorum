@@ -470,6 +470,24 @@
     .cua-cli-wrap summary::-webkit-details-marker { display: none; }
     .cua-cli-wrap summary::before { content: '▸ '; color: #16a34a; }
     .cua-cli-wrap[open] summary::before { content: '▾ '; }
+    .cua-about-wrap {
+      flex: 1;
+      min-width: 14rem;
+      margin: 0;
+      font-size: 0.88rem;
+    }
+    .cua-about-wrap summary {
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      list-style: none;
+      padding: 0.15rem 0;
+    }
+    .cua-about-wrap summary::-webkit-details-marker { display: none; }
+    .cua-about-wrap summary::before { content: '▸ '; color: var(--primary); }
+    .cua-about-wrap[open] summary::before { content: '▾ '; }
+    .cua-about-wrap .cua-hero-desc { margin-top: 0.45rem; }
     .cua-cli-hint {
       font-size: 0.88rem;
       color: var(--muted);
@@ -1500,7 +1518,10 @@
       <div class="cua-shell-card cua-hero" id="cuaKpis">
         <div class="cua-hero-top" role="note">
           <span class="cua-static-badge">Static demo</span>
-          <p class="cua-hero-desc">Pre-rendered <code>graded6</code> sample — 400-paper corpus, 60-paper writer view. Fixed NIH showcase; not tied to Steps 1–2.</p>
+          <details class="cua-about-wrap">
+            <summary>About this static demo</summary>
+            <p class="cua-hero-desc">Pre-rendered <code>graded6</code> sample — 400-paper corpus, 60-paper writer view. Fixed NIH showcase; not tied to Steps 1–2.</p>
+          </details>
         </div>
         <h2>Run at a glance</h2>
         <div class="cua-kpi-row">
@@ -1527,7 +1548,7 @@
           </div>
           <div id="cuaReportHost" class="cua-report-inline" aria-live="polite">Loading grant proposal…</div>
         </div>
-        <details class="cua-cli-wrap card" open>
+        <details class="cua-cli-wrap card">
           <summary>Run a live CUA proposal (CLI)</summary>
           <p class="cua-cli-hint">
             Read-only against Supabase or local SQLite — writes local JSON only (not <code>recommendations</code>).
@@ -3533,13 +3554,7 @@ python -m cua.nih.run_db \
         --c-muted: #64748b;
         --c-bg: #eef2f7;
       }
-      header {
-        margin: 0 0 1.25rem;
-        border-radius: 12px;
-        overflow: hidden;
-        background: linear-gradient(135deg, #0f2044 0%, #1a3270 100%) !important;
-        box-shadow: 0 4px 16px rgba(15, 32, 68, 0.15);
-      }
+      header { display: none !important; }
       header .wrap { padding: 1.35rem 1.75rem 1.2rem !important; max-width: none !important; }
       .wrap { max-width: none; padding: 0 1.35rem 2rem !important; }
       body { font-size: 16px; line-height: 1.62; font-weight: 400; color: #1e293b; }
@@ -3575,13 +3590,123 @@ python -m cua.nih.run_db \
       .chip .k { font-size: 0.7rem !important; color: #c7d2fe !important; letter-spacing: 0.06em !important; }
       .chip .v { font-size: 1.15rem !important; font-weight: 800 !important; }
       section.cua-sec {
-        margin: 1.35rem 0 !important;
-        padding: 1.25rem 1.35rem 1.35rem !important;
-        background: #fff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 12px !important;
+        margin: 0.65rem 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
         overflow: visible !important;
+        box-shadow: none !important;
+      }
+      details.cua-sec-details {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        background: #fff;
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+        overflow: hidden;
+      }
+      details.cua-sec-details[open] {
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      }
+      summary.cua-sec-summary {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        flex-wrap: wrap;
+        cursor: pointer;
+        list-style: none;
+        padding: 0.85rem 1.1rem;
+        font-weight: 700;
+        font-size: 0.98rem;
+        color: var(--c-navy);
+        background: #f8fafc;
+        border-bottom: 1px solid transparent;
+        user-select: none;
+      }
+      details.cua-sec-details[open] > summary.cua-sec-summary {
+        border-bottom-color: #e2e8f0;
+        background: #fff;
+      }
+      summary.cua-sec-summary::-webkit-details-marker { display: none; }
+      summary.cua-sec-summary::before {
+        content: '▸';
+        color: var(--c-primary);
+        font-size: 0.82rem;
+        flex: 0 0 auto;
+      }
+      details.cua-sec-details[open] > summary.cua-sec-summary::before { content: '▾'; }
+      .cua-sec-title { flex: 1; min-width: 0; line-height: 1.35; }
+      .cua-sec-badge {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #64748b;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 999px;
+        padding: 0.15rem 0.5rem;
+      }
+      .cua-sec-body { padding: 1rem 1.15rem 1.2rem; }
+      .cua-sec-body > h2 { display: none !important; }
+      details.cua-card-details,
+      details.cua-field-details {
+        margin: 0.55rem 0;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        background: #fafbfc;
+        overflow: hidden;
+      }
+      details.cua-card-details > summary,
+      details.cua-field-details > summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.86rem;
+        font-weight: 700;
+        color: #334155;
+        background: #f8fafc;
+      }
+      details.cua-card-details > summary::-webkit-details-marker,
+      details.cua-field-details > summary::-webkit-details-marker { display: none; }
+      details.cua-card-details > summary::before,
+      details.cua-field-details > summary::before {
+        content: '▸ ';
+        color: var(--c-primary);
+        font-weight: 700;
+      }
+      details.cua-card-details[open] > summary::before,
+      details.cua-field-details[open] > summary::before { content: '▾ '; }
+      details.cua-card-details > p,
+      details.cua-field-details > .field {
+        margin: 0;
+        padding: 0.65rem 0.75rem 0.75rem;
+        background: #fff;
+        border-top: 1px solid #e2e8f0;
+      }
+      details.cua-footer-details {
+        margin-top: 1rem;
+        border: 1px dashed #e2e8f0;
+        border-radius: 8px;
+        background: #f8fafc;
+      }
+      details.cua-footer-details > summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #94a3b8;
+      }
+      details.cua-footer-details > summary::-webkit-details-marker { display: none; }
+      details.cua-footer-details > summary::before { content: '▸ '; }
+      details.cua-footer-details[open] > summary::before { content: '▾ '; }
+      details.cua-footer-details > .cua-footer-body {
+        padding: 0.65rem 0.75rem 0.75rem;
+        font-size: 0.82rem;
+        color: #94a3b8;
+        line-height: 1.55;
+        border-top: 1px solid #e2e8f0;
       }
       section.cua-sec-loop { border-left: 4px solid var(--c-primary) !important; }
       section.cua-sec-contract { border-left: 4px solid var(--c-navy) !important; }
@@ -3880,9 +4005,9 @@ python -m cua.nih.run_db \
       footer {
         font-size: 0.82rem !important;
         color: #94a3b8 !important;
-        padding: 1rem 0 0.5rem !important;
-        margin-top: 1.5rem !important;
-        border-top: 1px solid #e2e8f0 !important;
+        padding: 0 !important;
+        margin-top: 0.75rem !important;
+        border-top: none !important;
         line-height: 1.55 !important;
       }
     `;
@@ -4022,6 +4147,7 @@ python -m cua.nih.run_db \
       { match: /^audit/i, cls: 'cua-sec-audit', short: 'Audit' },
       { match: /ingestion/i, cls: 'cua-sec-ingest', short: 'Ingestion' },
     ];
+    const CUA_SECTION_DEFAULT_OPEN = new Set(['cua-sec-proposal']);
 
     function slugifyCuaHeading(text) {
       return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
@@ -4051,6 +4177,112 @@ python -m cua.nih.run_db \
       });
     }
 
+    function wrapCuaSectionsCollapsible(root) {
+      root.querySelectorAll('.wrap > section.cua-sec').forEach((sec) => {
+        if (sec.querySelector(':scope > details.cua-sec-details')) return;
+        const h2 = sec.querySelector(':scope > h2');
+        if (!h2) return;
+        const title = h2.textContent.trim();
+        const spec = CUA_SECTION_SLUGS.find((s) => s.match.test(title));
+        const details = document.createElement('details');
+        details.className = 'cua-sec-details';
+        if (spec && CUA_SECTION_DEFAULT_OPEN.has(spec.cls)) details.open = true;
+
+        const summary = document.createElement('summary');
+        summary.className = 'cua-sec-summary';
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'cua-sec-title';
+        titleSpan.textContent = title;
+        summary.appendChild(titleSpan);
+        if (spec?.short) {
+          const badge = document.createElement('span');
+          badge.className = 'cua-sec-badge';
+          badge.textContent = spec.short;
+          summary.appendChild(badge);
+        }
+
+        const body = document.createElement('div');
+        body.className = 'cua-sec-body';
+        h2.remove();
+        while (sec.firstChild) body.appendChild(sec.firstChild);
+        details.append(summary, body);
+        sec.appendChild(details);
+      });
+    }
+
+    function wrapCuaNestedCollapsibles(root) {
+      root.querySelectorAll('.cua-sec-contract .card, .cua-sec-dropped .card').forEach((card) => {
+        if (card.querySelector('details.cua-card-details')) return;
+        const cardH = card.querySelector(':scope > .card-h');
+        if (!cardH) return;
+        const label = cardH.textContent.trim();
+        const rest = [...card.children].filter((el) => el !== cardH);
+        if (!rest.length) return;
+        const details = document.createElement('details');
+        details.className = 'cua-card-details';
+        const summary = document.createElement('summary');
+        summary.textContent = label;
+        cardH.remove();
+        rest.forEach((el) => details.appendChild(el));
+        details.prepend(summary);
+        card.appendChild(details);
+      });
+
+      root.querySelectorAll('.cua-sec-proposal .card:not(.aim)').forEach((card) => {
+        if (card.querySelector('details.cua-card-details')) return;
+        const cardH = card.querySelector(':scope > .card-h');
+        const paragraph = card.querySelector(':scope > p');
+        if (!cardH || !paragraph) return;
+        const details = document.createElement('details');
+        details.className = 'cua-card-details';
+        const summary = document.createElement('summary');
+        summary.textContent = cardH.textContent.trim();
+        cardH.remove();
+        details.append(summary, paragraph);
+        card.appendChild(details);
+      });
+
+      root.querySelectorAll('.cua-sec-proposal .card.aim').forEach((card) => {
+        const fields = [...card.querySelectorAll(':scope > .field')];
+        fields.slice(1).forEach((field) => {
+          if (field.closest('details.cua-field-details')) return;
+          const label = field.querySelector(':scope > span')?.textContent?.trim() || 'Details';
+          const details = document.createElement('details');
+          details.className = 'cua-field-details';
+          const summary = document.createElement('summary');
+          summary.textContent = label;
+          field.remove();
+          details.append(summary, field);
+          card.appendChild(details);
+        });
+      });
+
+      root.querySelectorAll('.cua-sec-dropped .cand.drop').forEach((cand) => {
+        if (cand.closest('details.cua-card-details')) return;
+        const details = document.createElement('details');
+        details.className = 'cua-card-details';
+        const summary = document.createElement('summary');
+        const heading = cand.querySelector('.cand-h')?.textContent?.trim() || 'Dropped candidate';
+        summary.textContent = heading;
+        cand.parentNode.insertBefore(details, cand);
+        details.append(summary, cand);
+      });
+    }
+
+    function wrapCuaFooter(root) {
+      const footer = root.querySelector('footer');
+      if (!footer || footer.querySelector('details.cua-footer-details')) return;
+      const details = document.createElement('details');
+      details.className = 'cua-footer-details';
+      const summary = document.createElement('summary');
+      summary.textContent = 'Report provenance & build notes';
+      const body = document.createElement('div');
+      body.className = 'cua-footer-body';
+      while (footer.firstChild) body.appendChild(footer.firstChild);
+      details.append(summary, body);
+      footer.appendChild(details);
+    }
+
     function buildCuaToc(root) {
       const toc = document.getElementById('cuaToc');
       if (!toc) return;
@@ -4073,7 +4305,10 @@ python -m cua.nih.run_db \
           e.preventDefault();
           const host = document.getElementById('cuaReportHost');
           const target = host.shadowRoot?.getElementById(sec.id);
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (!target) return;
+          const details = target.querySelector(':scope > details.cua-sec-details');
+          if (details) details.open = true;
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
         toc.appendChild(a);
       });
@@ -4087,6 +4322,9 @@ python -m cua.nih.run_db \
       }
       formatCuaPanelRows(root);
       formatCuaSections(root);
+      wrapCuaSectionsCollapsible(root);
+      wrapCuaNestedCollapsibles(root);
+      wrapCuaFooter(root);
       buildCuaToc(root);
     }
 

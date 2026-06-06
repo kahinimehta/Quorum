@@ -58,7 +58,7 @@ flowchart LR
 | **Agent pipeline stepper** | One agent **Running…** at a time during a run; **Done** / **Waiting…** for others; polls `GET /api/agents?run_id=` (~500ms) for stepper UI and `GET /api/run-discovery/status?run_id=` for completion |
 | **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button |
 | **Step 2** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses, audit trace, evidence table |
-| **Step 3** | Static CUA grant proposal — bundled `graded6` demo inlined (not run-scoped); KPIs, audit status chips, jump-to nav, numbered pipeline diagram |
+| **Step 3** | Static CUA grant proposal — bundled `graded6` demo inlined in collapsible sections (not run-scoped); KPIs, audit status chips, jump-to nav (opens section), Proposal open by default |
 
 Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 

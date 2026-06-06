@@ -73,7 +73,13 @@ def main() -> int:
         page.wait_for_selector("#cuaReportHost", timeout=30_000)
         page.wait_for_selector("#cuaToc:not(.hidden)", timeout=60_000)
         page.wait_for_selector("#cuaStatusRow:not(.hidden)", timeout=60_000)
-        page.wait_for_selector("details.cua-cli-wrap[open]", timeout=30_000)
+        page.wait_for_function(
+            """() => {
+              const host = document.getElementById('cuaReportHost');
+              return !!host?.shadowRoot?.querySelector('.cua-sec-proposal details[open]');
+            }""",
+            timeout=60_000,
+        )
         page.evaluate("window.scrollTo(0, 0)")
         time.sleep(1.5)
         path3 = os.path.join(OUT, "step3-cua-grant-proposal.png")
