@@ -32,6 +32,8 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
+      overflow-x: hidden;
+      max-width: 100%;
     }
     header {
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
@@ -84,19 +86,44 @@
       padding: 0.65rem 1.5rem;
       box-shadow: var(--shadow);
     }
-    #viewResults > .kpi-strip {
-      border-bottom: none;
+    #viewResults {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+    .results-shell {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+      width: 100%;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+    #viewResults .results-shell > .kpi-strip {
+      background: transparent;
+      border: none;
       box-shadow: none;
-      padding: 1rem 1.5rem 0;
+      padding: 1rem 0 0.75rem;
+      margin: 0;
     }
     #viewResults .results-title-row {
-      padding-top: 0.65rem;
+      padding: 0.75rem 0 0;
+      max-width: none;
+      margin: 0;
+    }
+    #viewResults .results-wide {
+      max-width: none;
+      margin: 0;
+      padding: 1rem 0 0;
+    }
+    #viewResults .kpi-inner {
+      max-width: none;
     }
     .kpi-inner {
       max-width: 1400px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 0.75rem;
     }
     @media (max-width: 800px) { .kpi-inner { grid-template-columns: repeat(2, 1fr); } }
@@ -109,7 +136,14 @@
     }
     .kpi-item .val { font-size: 1.35rem; font-weight: 700; color: var(--navy); }
     .kpi-item .lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
-    .kpi-item .kpi-sub { font-size: 0.6rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.2; }
+    .kpi-item .kpi-sub {
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
     .kpi-item.run-context { border-color: #93c5fd; background: #eff6ff; }
     .kpi-item.run-context .val { color: var(--primary); }
     .run-status-strip {
@@ -744,7 +778,25 @@
     .access-abstract { color: var(--amber); }
     .access-restricted { color: #dc2626; }
     .bar-row { margin-bottom: 0.65rem; }
-    .bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.2rem; }
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      margin-bottom: 0.2rem;
+    }
+    .bar-label > span:first-child {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bar-label > span:last-child {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
     .bar-track { height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 5px; transition: width 0.4s ease; }
     .bar-fill.prioritize { background: var(--primary); }
@@ -812,6 +864,9 @@
       margin-bottom: 1.25rem;
       box-shadow: var(--shadow);
       border-top: 4px solid var(--navy);
+      max-width: 100%;
+      overflow-x: hidden;
+      box-sizing: border-box;
     }
     .pipeline-v2 h2 { margin: 0 0 1.25rem; font-size: 1.2rem; color: var(--navy); font-weight: 700; }
     .pipe-stage { margin-bottom: 1rem; }
@@ -865,7 +920,7 @@
     .flow-out-hyp { background: #f0f9ff; color: #0369a1; border-color: #7dd3fc; }
     .outputs-three {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
       align-items: start;
     }
@@ -880,6 +935,7 @@
       display: flex;
       flex-direction: column;
       align-self: start;
+      min-width: 0;
     }
     .output-panel-head {
       padding: 0.65rem 0.85rem;
@@ -927,7 +983,7 @@
       display: flex; align-items: center; justify-content: center;
     }
     .conf-big { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
-    .audit-section { margin-top: 1.25rem; }
+    .audit-section { margin-top: 1.25rem; overflow-x: auto; max-width: 100%; }
     .audit-collapse {
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -1442,6 +1498,7 @@
   </div>
 
   <div id="viewResults" class="hidden">
+    <div class="results-shell">
     <div class="kpi-strip">
       <div class="kpi-inner" id="kpiStrip">
         <div class="kpi-item" id="kpiBoxLit"><div class="val" id="kpiLit">—</div><div class="lbl">Papers</div><div class="kpi-sub" id="kpiLitSub">in database</div></div>
@@ -1551,6 +1608,7 @@
           </div>
         </details>
       </section>
+    </div>
     </div>
   </div>
 

@@ -62,7 +62,7 @@ def main() -> int:
         page.wait_for_selector("#viewResults:not(.hidden)", timeout=30_000)
         page.wait_for_selector("#syntheticCohort .syn-card, #topRecs .rec-card", timeout=30_000)
         time.sleep(1)
-        shot(page, "#viewResults", os.path.join(OUT, "step2-discovery-results.png"))
+        shot(page, "#viewResults .results-shell", os.path.join(OUT, "step2-discovery-results.png"))
         shot(page, ".output-panel.panel-rank", os.path.join(OUT, "step2-ranked-treatments.png"))
         shot(page, ".output-panel.panel-syn", os.path.join(OUT, "step2-synthetic-cohort.png"))
         page.locator(".audit-collapse").evaluate("el => { el.open = true; }")
