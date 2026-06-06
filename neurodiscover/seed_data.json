@@ -21,7 +21,7 @@
 
     { "source_type": "literature", "source_id": "DEMO-PMID-004", "title": "Microglial activation drives neurodegeneration in a PD subset", "year": 2022, "venue": "Demo Journal of Neuroinflammation", "subgroup": "Inflammation-high PD", "mechanism": "neuroinflammation", "treatment": "microglial modulation", "key_result": "Microglial modulation reduces inflammatory markers and slows neuronal loss in inflammation-high models.", "study_type": "mouse", "sample_size": 36, "evidence_snippet": "Modulation slowed neuronal loss.", "url": null },
 
-    { "source_type": "literature", "source_id": "DEMO-PMID-005", "title": "Predictors of rapid motor progression in PD", "year": 2023, "venue": "Demo Journal of Neurology", "subgroup": "Rapid motor progressors", "mechanism": "neuroprotection", "treatment": "combination strategy", "key_result": "Rapid progressors show distinct trajectories; combination neuroprotective strategies proposed but unproven.", "study_type": "cohort", "sample_size": 200, "evidence_snippet": "Distinct rapid-progression trajectories identified.", "url": null }
+    { "source_type": "literature", "source_id": "DEMO-PMID-005", "title": "Predictors of rapid motor progression in PD", "year": 2023, "venue": "Demo Journal of Neurology", "subgroup": "Rapid motor progressors", "mechanism": "neuroprotection", "treatment": "combination strategy", "key_result": "Fast UPDRS decliners may need a multi-agent neuroprotection stack (symptomatic + disease-modifying) rather than one monotherapy; combo regimens remain unproven.", "study_type": "cohort", "sample_size": 200, "evidence_snippet": "Distinct rapid-progression trajectories identified.", "url": null }
   ],
 
   "treatment_connections": [

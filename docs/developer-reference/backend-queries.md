@@ -192,7 +192,7 @@ Poll `GET /api/run-discovery/status?run_id=` until `status` is `complete`, `part
   "recommendations": [{ "subgroup": "...", "treatment": "...", "mechanism": "...", "confidence": 67.5, "tier": "Monitor", "rationale": "..." }],
   "agent_outputs": [{ "agentName": "Literature Synthesis Agent", "stepOrder": 1, "summary": "...", "createdAt": "..." }],
   "steps": [],
-  "synthetic_cohort": [{ "patient_id": "Patient A", "subgroup": "...", "confidence": 82.5, "is_synthetic": true }],
+  "synthetic_cohort": [{ "patient_id": "Patient Cluster A", "subgroup": "...", "confidence": 82.5, "is_synthetic": true }],
   "runStats": {
     "mode": "demo",
     "maxPapersRequested": 10,
@@ -284,7 +284,7 @@ Ephemeral Synthea-style demo profiles (not stored in DB).
   "run_id": "abc123",
   "synthetic_cohort": [
     {
-      "patient_id": "Patient A",
+      "patient_id": "Patient Cluster A",
       "patient_letter": "A",
       "subgroup": "GBA-mutation PD",
       "subgroup_color": "#2563eb",

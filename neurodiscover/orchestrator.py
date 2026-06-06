@@ -19,6 +19,7 @@ from typing import Any
 from db import connect, insert_ignore_sql, is_postgres
 from run_status import analyze_run_trace
 from timestamps import format_ts_for_api
+from treatment_labels import recommendation_rationale
 
 AGENT_LITERATURE = "Literature Synthesis Agent"
 AGENT_SUBGROUP = "Patient Subgroup Agent"
@@ -542,9 +543,12 @@ def _persist_recommendations(conn, run_id: str) -> list[dict[str, Any]]:
         if conf is None:
             continue
         tier = _tier(conf)
-        rationale = (
-            f"{row['subgroup']} → {row['treatment']} via {row['mechanism'] or 'mechanism TBD'}. "
-            f"Confidence {conf} ({tier})."
+        rationale = recommendation_rationale(
+            subgroup=row["subgroup"],
+            treatment=row["treatment"],
+            mechanism=row["mechanism"],
+            confidence=conf,
+            tier=tier,
         )
         conn.execute(
             "INSERT INTO recommendations "

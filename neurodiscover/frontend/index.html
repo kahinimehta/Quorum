@@ -329,13 +329,21 @@
       padding: 0.1rem 0.35rem;
       border-radius: 4px;
     }
+    .cua-score-intro {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: -0.35rem 0 0.85rem;
+      line-height: 1.45;
+      max-width: 52rem;
+    }
     .cua-kpi-row {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 0.75rem;
       margin-bottom: 0;
     }
-    @media (max-width: 900px) { .cua-kpi-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 1100px) { .cua-kpi-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 600px) { .cua-kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     .cua-kpi {
       text-align: center;
       padding: 0.75rem 0.55rem;
@@ -352,6 +360,87 @@
       line-height: 1.3;
       margin-top: 0.15rem;
       overflow-wrap: anywhere;
+    }
+    .cua-kpi-sub {
+      font-size: 0.68rem;
+      color: var(--navy);
+      font-weight: 500;
+      margin-top: 0.2rem;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+    .cua-score-guide {
+      margin-top: 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f8fafc;
+      padding: 0.55rem 0.85rem;
+    }
+    .cua-score-guide summary {
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      list-style: none;
+    }
+    .cua-score-guide summary::-webkit-details-marker { display: none; }
+    .cua-score-guide summary::before { content: '▸ '; color: var(--primary); }
+    .cua-score-guide[open] summary::before { content: '▾ '; }
+    .cua-score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin-top: 0.65rem;
+    }
+    @media (max-width: 900px) { .cua-score-grid { grid-template-columns: 1fr; } }
+    .cua-score-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.75rem;
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+    .cua-score-item strong {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+    .cua-score-item span { color: var(--muted); }
+    .cua-score-scale {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem 0.65rem;
+      margin-top: 0.85rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      font-size: 0.76rem;
+    }
+    .cua-scale-label {
+      font-weight: 700;
+      color: var(--navy);
+      margin-right: 0.15rem;
+    }
+    .cua-scale-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+    .cua-scale-chip.ok { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .cua-scale-chip.warn { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
+    .cua-scale-chip.risk { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+    .cua-score-scale-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin: 0.4rem 0 0;
+      line-height: 1.4;
     }
     .cua-kpi-good { border-color: #86efac !important; background: #f0fdf4 !important; }
     .cua-kpi-good .val { color: #166534 !important; }
@@ -543,13 +632,33 @@
       color: var(--navy);
     }
     .view-page-title span { font-weight: 400; color: var(--muted); font-size: 0.85rem; display: block; margin-top: 0.2rem; }
+    .results-title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem 0;
+    }
+    .results-title-row .view-page-title { margin: 0; padding: 0; flex: 1 1 auto; }
+    .results-title-row .badge.ok {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
     .run-hero {
       border-left: 4px solid var(--primary);
       background: linear-gradient(90deg, #eff6ff 0%, #fff 12%);
     }
     .layout {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 1fr;
       gap: 1rem;
       padding: 1rem 1.5rem 2rem;
       max-width: 1400px;
@@ -731,51 +840,61 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 1.35rem 1.5rem;
+      padding: 1.75rem 2rem;
       margin-bottom: 1.25rem;
       box-shadow: var(--shadow);
       border-top: 4px solid var(--navy);
     }
-    .pipeline-v2 h2 { margin: 0 0 1rem; font-size: 1.05rem; color: var(--navy); font-weight: 700; }
-    .pipe-stage { margin-bottom: 0.75rem; }
+    .pipeline-v2 h2 { margin: 0 0 1.25rem; font-size: 1.2rem; color: var(--navy); font-weight: 700; }
+    .pipe-stage { margin-bottom: 1rem; }
     .pipe-stage-title {
-      font-size: 0.62rem;
+      font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
       text-align: center;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.65rem;
     }
     .flow-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
+      display: grid;
+      gap: 0.85rem 1rem;
       justify-content: center;
-      align-items: center;
+      align-items: stretch;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .flow-row-inputs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .flow-row-agents { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .flow-row-outputs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (max-width: 900px) {
+      .flow-row-inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-row-agents,
+      .flow-row-outputs { grid-template-columns: 1fr; }
     }
     .flow-arrow {
       text-align: center;
       color: #94a3b8;
-      font-size: 1.1rem;
+      font-size: 1.35rem;
       line-height: 1;
-      padding: 0.15rem 0;
+      padding: 0.35rem 0;
     }
     .flow-box {
-      padding: 0.5rem 0.75rem;
-      border-radius: 8px;
-      font-size: 0.7rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
       font-weight: 600;
       border: 1px solid var(--border);
       text-align: center;
-      min-width: 100px;
+      line-height: 1.3;
       box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      box-sizing: border-box;
     }
     .flow-input { background: #eff6ff; color: #1e40af; border-color: #93c5fd; }
     .flow-agent { background: #f5f3ff; color: #5b21b6; border-color: #c4b5fd; }
-    .flow-out-syn { background: #f0fdf4; color: #15803d; border-color: #86efac; min-width: 120px; }
-    .flow-out-rank { background: #fffbeb; color: #b45309; border-color: #fcd34d; min-width: 120px; }
-    .flow-out-hyp { background: #f0f9ff; color: #0369a1; border-color: #7dd3fc; min-width: 120px; }
+    .flow-out-syn { background: #f0fdf4; color: #15803d; border-color: #86efac; }
+    .flow-out-rank { background: #fffbeb; color: #b45309; border-color: #fcd34d; }
+    .flow-out-hyp { background: #f0f9ff; color: #0369a1; border-color: #7dd3fc; }
     .flow-footer {
       font-size: 0.7rem;
       color: var(--muted);
@@ -1171,10 +1290,25 @@
     .results-pills {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
       gap: 0.5rem;
       margin-bottom: 1rem;
     }
-    .results-pills .badge { background: #fff; color: var(--navy); border: 1px solid var(--border); }
+    .results-pills .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      min-height: 2rem;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 999px;
+      box-sizing: border-box;
+      background: #fff;
+      color: var(--navy);
+      border: 1px solid var(--border);
+    }
     .results-pills .badge.ok { background: #dcfce7; color: #166534; border-color: #86efac; }
     .results-pills .badge.syn { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
     .conf-mini-track { height: 6px; background: var(--border); border-radius: 3px; margin-top: 0.35rem; overflow: hidden; }
@@ -1186,6 +1320,12 @@
       margin: 0.35rem 0;
       border-left: 2px solid var(--border);
       padding-left: 0.5rem;
+    }
+    .treatment-hint {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin: 0.15rem 0 0.35rem;
+      line-height: 1.4;
     }
     .hyp-num { font-size: 0.7rem; color: var(--muted); font-weight: 700; }
     .conf-pill {
@@ -1235,7 +1375,7 @@
       <div class="header-meta">
         <span class="badge live" id="dbBadge">Connecting…</span>
         <span class="badge badge-pill-blue" id="evidenceTotalBadge">— Evidence Rows</span>
-        <span class="badge badge-pill-amber" id="synLayerBadge">Synthetic Cohort Layer</span>
+        <span class="badge badge-pill-amber" id="synLayerBadge">Ideal Candidate Profiles</span>
         <span class="badge badge-pill-db" id="dbTypeBadge">—</span>
         <span class="badge" id="runIdChip" style="display:none;">Run —</span>
       </div>
@@ -1294,7 +1434,7 @@
         <span class="tab-step">2</span>
         <span class="tab-text">
           <span class="tab-title">Discovery Results</span>
-          <span class="tab-desc">Synthetic cohort, ranked outputs, hypotheses &amp; evidence</span>
+          <span class="tab-desc">Cohort, ranked outputs, &amp; hypotheses</span>
         </span>
       </button>
       <button type="button" class="tab-btn tab-btn-cua" data-view="cua">
@@ -1307,48 +1447,9 @@
     </div>
   </nav>
 
-  <div id="configHint" class="config-hint hidden" style="margin:1rem auto 0; max-width:1400px; padding:0 1.5rem;"></div>
-
   <div id="viewInput" class="hidden">
     <p class="view-page-title">Step 1 — Configure &amp; Run <span>Launch the multi-agent pipeline with your chosen settings</span></p>
     <div class="layout">
-    <aside>
-      <div class="card">
-        <h2>Database</h2>
-        <div class="tiles" id="dbTiles">
-          <div class="tile"><div class="n" id="cntLit">—</div><div class="l">Papers</div></div>
-          <div class="tile"><div class="n" id="cntTrial">—</div><div class="l">Trials</div></div>
-          <div class="tile"><div class="n" id="cntGrant">—</div><div class="l">Grants</div></div>
-          <div class="tile"><div class="n" id="cntSg">—</div><div class="l">Subgroups</div></div>
-        </div>
-        <p class="scan-meta" id="lastScanMeta">Last scan: —</p>
-      </div>
-      <div class="card">
-        <h2>Patient subgroups</h2>
-        <div id="subgroupChips"></div>
-      </div>
-      <div class="card" id="pipelineProgressCard">
-        <h2>Agent pipeline <span class="stepper-run-meta" id="stepperRunMeta">—</span></h2>
-        <div class="run-progress-label">
-          <span id="runProgressLabel">Pipeline idle</span>
-          <span id="runProgressPct">0%</span>
-        </div>
-        <div class="run-progress-track" aria-hidden="true">
-          <div class="run-progress-fill" id="runProgressFill"></div>
-        </div>
-        <ol class="stepper" id="pipelineStepper">
-          <li class="idle" data-agent="Literature Synthesis Agent">Literature Synthesis <span class="step-state">Idle</span></li>
-          <li class="idle" data-agent="Patient Subgroup Agent">Patient Subgroup <span class="step-state">Idle</span></li>
-          <li class="idle" data-agent="Treatment Connection Agent">Treatment Connection <span class="step-state">Idle</span></li>
-          <li class="idle" data-agent="Evidence Scoring Agent">Evidence Scoring <span class="step-state">Idle</span></li>
-          <li class="idle" data-agent="Commercial Discovery Agent">Commercial Discovery <span class="step-state">Idle</span></li>
-          <li class="idle" data-agent="Conclusion Update Agent">Conclusion Update <span class="step-state">Idle</span></li>
-        </ol>
-        <p class="runs-hint" id="pipelineProgressHint" style="margin-top:0.65rem;margin-bottom:0;">
-          Progress stays here on Step 1 while a run is in flight. Open Step 2 for ranked outputs when finished.
-        </p>
-      </div>
-    </aside>
     <main>
       <div class="card run-hero">
         <h2>Discovery run configuration</h2>
@@ -1403,12 +1504,8 @@
           <label class="seg-opt"><input type="radio" name="extract" value="none" /><span>None (abstract)</span></label>
         </div>
 
-        <div class="banner banner-green">
-          <strong>Synthetic cohort layer</strong> — generates up to 5 illustrative patient profiles per subgroup.
-          No real patient data; HIPAA-safe visualization only.
-        </div>
         <div class="banner banner-blue" id="liveDbBanner">
-          <strong>Live database</strong> — loading connection info…
+          Rescore DB reruns agents 2–6 on existing evidence; use Incremental scan or Full live pull to add new papers.
         </div>
 
         <div class="btn-run-stack actions">
@@ -1442,61 +1539,20 @@
   </div>
 
   <div id="viewResults" class="hidden">
-    <p class="view-page-title">Step 2 — Discovery Results <span id="resultsSubtitle">Synthetic cohort · ranked treatments · research hypotheses</span></p>
+    <div class="results-title-row">
+      <p class="view-page-title">Step 2 — Discovery Results</p>
+      <span class="badge ok" id="pillPipeline">Pipeline —</span>
+    </div>
     <div class="results-wide">
       <div class="results-pills" id="resultsPills">
-        <span class="badge ok" id="pillPipeline">Pipeline —</span>
-        <span class="badge syn" id="pillSynthetic">— Synthetic Profiles</span>
+        <span class="badge syn" id="pillSynthetic">— Ideal Profiles</span>
         <span class="badge" id="pillSubTreat">— Subgroups · — Treatments</span>
       </div>
 
-      <section class="card run-report-card" id="runReportCard">
-        <h2>This run <code id="runReportId" style="font-size:0.75rem;font-weight:500;">—</code></h2>
-        <div id="runReportBody"></div>
-      </section>
-
-      <section class="pipeline-v2">
-        <h2>Discovery pipeline</h2>
-        <div class="pipe-stage">
-          <div class="pipe-stage-title">Data inputs</div>
-          <div class="flow-row">
-            <span class="flow-box flow-input">Literature</span>
-            <span class="flow-box flow-input">Clinical Trials</span>
-            <span class="flow-box flow-input">Grants</span>
-            <span class="flow-box flow-input">Biomarkers &amp; Omics</span>
-          </div>
-        </div>
-        <div class="flow-arrow">▼</div>
-        <div class="pipe-stage">
-          <div class="pipe-stage-title">Multi-agent pipeline</div>
-          <div class="flow-row">
-            <span class="flow-box flow-agent">① Literature</span>
-            <span class="flow-box flow-agent">② Subgroups</span>
-            <span class="flow-box flow-agent">③ Connections</span>
-          </div>
-          <div class="flow-row" style="margin-top:0.35rem;">
-            <span class="flow-box flow-agent">④ Evidence</span>
-            <span class="flow-box flow-agent">⑤ Commercial</span>
-            <span class="flow-box flow-agent">⑥ Conclusion</span>
-          </div>
-        </div>
-        <div class="flow-arrow">▼</div>
-        <div class="pipe-stage">
-          <div class="pipe-stage-title">Discovery outputs</div>
-          <div class="flow-row">
-            <span class="flow-box flow-out-syn">Synthetic Cohort</span>
-            <span class="flow-box flow-out-rank">Ranked Outputs</span>
-            <span class="flow-box flow-out-hyp">Research Hypotheses</span>
-          </div>
-        </div>
-        <p class="flow-footer">Discovery logic = public evidence only · Synthetic data = safe visualization only · no HIPAA, no PHI, no real records</p>
-      </section>
-
       <div class="outputs-three">
         <div class="output-panel panel-syn">
-          <div class="output-panel-head">⚗ Synthetic Cohort</div>
+          <div class="output-panel-head">Ideal candidate profiles</div>
           <div class="output-panel-body">
-            <div class="syn-banner">Synthea-style profiles · no real patient data · no PHI · no HIPAA</div>
             <div id="syntheticCohort" class="cohort-grid"></div>
           </div>
         </div>
@@ -1520,6 +1576,42 @@
           </div>
         </div>
       </div>
+
+      <section class="pipeline-v2">
+        <h2>Discovery pipeline</h2>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Data inputs</div>
+          <div class="flow-row flow-row-inputs">
+            <span class="flow-box flow-input">Literature</span>
+            <span class="flow-box flow-input">Clinical Trials</span>
+            <span class="flow-box flow-input">Grants</span>
+            <span class="flow-box flow-input">Biomarkers &amp; Omics</span>
+          </div>
+        </div>
+        <div class="flow-arrow">▼</div>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Multi-agent pipeline</div>
+          <div class="flow-row flow-row-agents">
+            <span class="flow-box flow-agent">① Literature</span>
+            <span class="flow-box flow-agent">② Subgroups</span>
+            <span class="flow-box flow-agent">③ Connections</span>
+          </div>
+          <div class="flow-row flow-row-agents" style="margin-top:0.85rem;">
+            <span class="flow-box flow-agent">④ Evidence</span>
+            <span class="flow-box flow-agent">⑤ Commercial</span>
+            <span class="flow-box flow-agent">⑥ Conclusion</span>
+          </div>
+        </div>
+        <div class="flow-arrow">▼</div>
+        <div class="pipe-stage">
+          <div class="pipe-stage-title">Discovery outputs</div>
+          <div class="flow-row flow-row-outputs">
+            <span class="flow-box flow-out-syn">Ideal Candidate Profiles</span>
+            <span class="flow-box flow-out-rank">Ranked Outputs</span>
+            <span class="flow-box flow-out-hyp">Research Hypotheses</span>
+          </div>
+        </div>
+      </section>
 
       <section class="audit-section">
         <details class="audit-collapse">
@@ -1552,11 +1644,6 @@
           </div>
         </details>
       </section>
-      <div class="demo-notice">
-        <strong>Demo data notice.</strong> Rows with <code>DEMO-*</code> source IDs are seed placeholders.
-        Run <code>python3 cli.py pull</code> (not <code>build</code> on team Supabase) to backfill real PMIDs and NCT ids.
-        Synthetic patient profiles contain zero real patient data.
-      </div>
     </div>
   </div>
 
@@ -1572,13 +1659,51 @@
           </details>
         </div>
         <h2>Run at a glance</h2>
+        <p class="cua-score-intro">
+          <strong>Critic F1 / F2 / F3</strong> grade the proposal on a <strong>1–9 scale</strong> (1 = weak, 9 = exceptional).
+          The Critic scores the writer’s draft; the Audit checks citations and obligation coverage separately below.
+        </p>
         <div class="cua-kpi-row">
           <div class="cua-kpi"><div class="val" id="cuaKpiCorpus">—</div><div class="lbl">Corpus papers</div></div>
           <div class="cua-kpi"><div class="val" id="cuaKpiView">—</div><div class="lbl">Writer view</div></div>
           <div class="cua-kpi"><div class="val" id="cuaKpiCites">—</div><div class="lbl">Citations</div></div>
-          <div class="cua-kpi"><div class="val" id="cuaKpiF1">—</div><div class="lbl">Critic F1</div></div>
-          <div class="cua-kpi"><div class="val" id="cuaKpiF2">—</div><div class="lbl">Critic F2</div></div>
+          <div class="cua-kpi" title="Significance, gap, hypothesis, innovation">
+            <div class="val" id="cuaKpiF1">—</div><div class="lbl">Critic F1</div><div class="cua-kpi-sub">Why this project?</div>
+          </div>
+          <div class="cua-kpi" title="Methods, pitfalls, outcomes per aim">
+            <div class="val" id="cuaKpiF2">—</div><div class="lbl">Critic F2</div><div class="cua-kpi-sub">How you’ll do it</div>
+          </div>
+          <div class="cua-kpi" title="Team expertise, resources, access per aim">
+            <div class="val" id="cuaKpiF3">—</div><div class="lbl">Critic F3</div><div class="cua-kpi-sub">Can the team deliver?</div>
+          </div>
         </div>
+        <div class="cua-score-scale" aria-label="Critic score scale 1 to 9">
+          <span class="cua-scale-label">Score scale (1–9)</span>
+          <span class="cua-scale-chip risk">1–4 · needs revision</span>
+          <span class="cua-scale-chip warn">5–6 · meets threshold</span>
+          <span class="cua-scale-chip ok">7–9 · strong</span>
+        </div>
+        <p class="cua-score-scale-note" id="cuaScoreScaleNote">
+          Minimum 1, maximum 9. Card colors match the scale above.
+          The revise loop typically stops when <strong>F1 ≥ 5</strong> and <strong>F2 ≥ 5</strong> (or max rounds).
+        </p>
+        <details class="cua-score-guide">
+          <summary>What do F1, F2 &amp; F3 scores mean?</summary>
+          <div class="cua-score-grid">
+            <div class="cua-score-item">
+              <strong>F1 — Why this project?</strong>
+              <span>Significance, specific knowledge gap, central hypothesis, and innovation. Did the opening argument name a real barrier and cite the corpus?</span>
+            </div>
+            <div class="cua-score-item">
+              <strong>F2 — How you’ll do it</strong>
+              <span>Rigor per aim: testable hypothesis, concrete methods, pitfalls/alternatives, and expected outcomes. Scored separately for each Specific Aim.</span>
+            </div>
+            <div class="cua-score-item">
+              <strong>F3 — Can the team deliver?</strong>
+              <span>Feasibility per aim: assumed expertise, equipment, cohort access, and timelines. Surfaces whether the team can actually run the proposed work.</span>
+            </div>
+          </div>
+        </details>
         <div class="cua-status-row hidden" id="cuaStatusRow" aria-label="Audit status"></div>
       </div>
       <div id="cuaUnavailable" class="cua-unavail hidden">
@@ -1785,7 +1910,7 @@ python -m cua.nih.run_db \
         const lastTs = [...full].reverse().find(s => s.createdAt && !s.isError);
         const li = document.createElement('li');
         li.innerHTML = `<span class="ts">${formatTime(lastTs?.createdAt)}</span>`
-          + `<strong>Synthetic Cohort Generator</strong><br>Generated ${syntheticCohort.length} synthetic patient profiles.`;
+          + `<strong>Ideal Candidate Profiles</strong><br>Generated ${syntheticCohort.length} illustrative candidate profiles.`;
         tl.appendChild(li);
       }
       return full;
@@ -2174,15 +2299,8 @@ python -m cua.nih.run_db \
     ];
 
     function initSupabase() {
-      const hint = document.getElementById('configHint');
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
         useApiFallback = true;
-        hint.classList.remove('hidden');
-        hint.innerHTML =
-          '<strong>Local mode (normal for demo).</strong> You did not set browser Supabase keys, so this page loads data through the Python API at '
-          + '<code>' + API_BASE + '</code> — not directly from the cloud. '
-          + 'If you ran <code>make dashboard</code>, that API is already running; ignore any extra terminal step. '
-          + 'Team cloud option (optional): add <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> in the page or localStorage — see quickstart.md.';
         document.getElementById('dbBadge').textContent = 'DB LIVE';
         document.getElementById('dbTypeBadge').textContent = 'Local API';
         return;
@@ -2361,8 +2479,6 @@ python -m cua.nih.run_db \
           chip.style.display = 'none';
         }
       }
-      const sub = document.getElementById('resultsSubtitle');
-      if (sub && runId) sub.textContent = `Run ${runId} · synthetic cohort · ranked outputs · audit trace`;
       const trace = document.getElementById('traceRunId');
       if (trace) trace.textContent = runId ? `run_id: ${runId}` : '';
       const nRec = recCount ?? 5;
@@ -2372,7 +2488,7 @@ python -m cua.nih.run_db \
       const pillS = document.getElementById('pillSynthetic');
       const pillST = document.getElementById('pillSubTreat');
       if (pillP) pillP.textContent = nRec > 0 ? '• Pipeline Complete' : '• Pipeline Partial';
-      if (pillS) pillS.textContent = `${nSyn} Synthetic Profiles`;
+      if (pillS) pillS.textContent = `${nSyn} Ideal Profiles`;
       if (pillST) pillST.textContent = `${sg} Subgroups · ${nRec || 5} Treatments`;
     }
 
@@ -2397,10 +2513,7 @@ python -m cua.nih.run_db \
       if (gr) gr.textContent = String(s.grant ?? '—');
       const banner = document.getElementById('liveDbBanner');
       if (banner) {
-        const dbLabel = s.database || (s.supabaseConfigured ? 'Supabase Postgres' : 'Local SQLite');
-        banner.innerHTML = '<strong>Live DB active</strong> — connected via <code>' + escapeHtml(dbLabel) + '</code>. '
-          + '<strong>Rescore DB</strong> reruns agents 2–6 on existing evidence; use <strong>Incremental scan</strong> or <strong>Full live pull</strong> to add new papers. '
-          + (s.supabaseConfigured ? '' : 'Browser reads through the Python API at ' + API_BASE + '.');
+        banner.textContent = 'Rescore DB reruns agents 2–6 on existing evidence; use Incremental scan or Full live pull to add new papers.';
       }
       syncDefaultMode(s);
       if (s.supabaseConfigured && document.getElementById('dbTypeBadge')) {
@@ -2466,6 +2579,7 @@ python -m cua.nih.run_db \
 
     async function loadSubgroups() {
       const box = document.getElementById('subgroupChips');
+      if (!box) return;
       box.innerHTML = '';
       try {
         let rows = [];
@@ -2997,6 +3111,18 @@ python -m cua.nih.run_db \
       applyStepperState(steps || [], inProgress);
     }
 
+    const TREATMENT_META = {
+      'combination strategy': {
+        label: 'Combination neuroprotection',
+        hint: 'Multi-agent stack for fast motor progression — combine symptomatic and disease-modifying neuroprotective approaches while single-agent proof matures.',
+      },
+    };
+
+    function treatmentDisplay(treatment) {
+      const meta = TREATMENT_META[treatment] || { label: treatment || '—', hint: '' };
+      return meta;
+    }
+
     function tierFromConfidence(c) {
       if (c >= 80) return 'Prioritize';
       if (c >= 65) return 'Monitor';
@@ -3076,7 +3202,7 @@ python -m cua.nih.run_db \
             <div><label>Onset / course</label>${onset}</div>
           </div>
           <div class="syn-opp">
-            <strong>Top opportunity</strong> — ${escapeHtml(p.top_opportunity || '—')}
+            <strong>Top opportunity</strong> — ${escapeHtml(treatmentDisplay(p.top_opportunity).label || '—')}
             <div class="conf-mini-track"><div class="conf-mini-fill" style="width:${conf}%"></div></div>
             <small>${escapeHtml(p.mechanism || '')} · confidence ${conf}</small>
           </div>
@@ -3109,7 +3235,8 @@ python -m cua.nih.run_db \
         if (!citeHtml) citeHtml = '<span class="cite-pill">linked evidence</span>';
         const tier = rec.tier || tierFromConfidence(rec.confidence || 0);
         const warn = tier === 'Monitor' ? ' ⚠' : '';
-        const title = `${rec.treatment} — ${rec.subgroup}`;
+        const tx = treatmentDisplay(rec.treatment);
+        const title = `${tx.label} — ${rec.subgroup}`;
         const rationale = rec.rationale || `Hypothesis: ${rec.mechanism || 'mechanism'} may benefit ${rec.subgroup}.`;
         const sentences = rationale.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
         const card = document.createElement('div');
@@ -3120,6 +3247,7 @@ python -m cua.nih.run_db \
           <h4 style="margin:0.15rem 0 0.35rem;font-size:0.9rem;">${escapeHtml(title)}${warn}
             <span class="tier tier-${tier}" style="margin-left:0.35rem;">${tier}</span>
           </h4>
+          ${tx.hint ? `<p class="treatment-hint">${escapeHtml(tx.hint)}</p>` : ''}
           <p style="font-size:0.78rem;margin:0 0 0.5rem;">${escapeHtml(sentences)}</p>
           <div>${citeHtml}<span class="conf-pill">Conf: ${rec.confidence ?? '—'}</span></div>`;
         box.appendChild(card);
@@ -3131,10 +3259,11 @@ python -m cua.nih.run_db \
       box.innerHTML = '';
       (recommendations || []).slice(0, 5).forEach((r) => {
         const pct = Math.min(100, r.confidence || 0);
+        const tx = treatmentDisplay(r.treatment);
         const row = document.createElement('div');
         row.className = 'update-bar';
         row.innerHTML = `
-          <div class="bar-label"><span>${escapeHtml(r.treatment || r.subgroup)}</span><span class="delta-up">${pct}</span></div>
+          <div class="bar-label"><span>${escapeHtml(tx.label || r.subgroup)}</span><span class="delta-up">${pct}</span></div>
           <div class="bar-track"><div class="bar-fill prioritize" style="width:${pct}%"></div></div>`;
         box.appendChild(row);
       });
@@ -3230,7 +3359,7 @@ python -m cua.nih.run_db \
       }
       if (!syntheticCohort.length && recommendations.length) {
         syntheticCohort = recommendations.slice(0, 5).map((r, i) => ({
-          patient_id: `Patient ${String.fromCharCode(65 + i)}`,
+          patient_id: `Patient Cluster ${String.fromCharCode(65 + i)}`,
           patient_letter: String.fromCharCode(65 + i),
           subgroup: r.subgroup,
           subgroup_color: subgroupColor(r.subgroup),
@@ -3257,11 +3386,12 @@ python -m cua.nih.run_db \
         const pct = Math.min(100, c.confidence || 0);
         const tier = c.tier || tierFromConfidence(pct);
         const tierCls = tier.toLowerCase();
+        const tx = treatmentDisplay(c.treatment);
         const row = document.createElement('div');
         row.className = 'bar-row';
         row.innerHTML = `
           <div class="bar-label">
-            <span>${escapeHtml(c.treatment || c.subgroup)}</span>
+            <span>${escapeHtml(tx.label || c.subgroup)}</span>
             <span><span class="tier tier-${tier}">${tier}</span> ${pct}</span>
           </div>
           <div class="bar-track"><div class="bar-fill ${tierCls}" style="width:${pct}%"></div></div>`;
@@ -3277,6 +3407,7 @@ python -m cua.nih.run_db \
         const color = subgroupColor(r.subgroup);
         const patient = patientBySubgroup[r.subgroup] || '';
         const patientTag = patient ? `<span class="pill-patient">⚗ ${escapeHtml(patient)}</span>` : '';
+        const tx = treatmentDisplay(r.treatment);
         const quote = quoteFromRationale(r.rationale || '');
         const card = document.createElement('div');
         card.className = 'rec-card';
@@ -3285,7 +3416,8 @@ python -m cua.nih.run_db \
             <span>#${i + 1} · ${escapeHtml(r.subgroup)}</span>
             <span class="tier tier-${tier}">${tier}</span>
           </div>
-          <h4>${escapeHtml(r.treatment)}</h4>
+          <h4>${escapeHtml(tx.label)}</h4>
+          ${tx.hint ? `<p class="treatment-hint">${escapeHtml(tx.hint)}</p>` : ''}
           <p style="font-size:0.75rem;margin:0.25rem 0;">${escapeHtml(r.mechanism || '—')}</p>
           ${quote ? `<p class="rec-quote">"${escapeHtml(quote)}"</p>` : ''}
           <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -3389,7 +3521,7 @@ python -m cua.nih.run_db \
       },
       demo: {
         btn: '▶ Run demo sample',
-        hint: '<strong>Demo sample</strong> — offline only; uses existing DB rows with no live PubMed pull. Caps literature rows for agents 2–6.',
+        hint: '',
         maxLabel: 'Max literature rows for agents',
         pullOptions: false,
       },
@@ -3430,7 +3562,10 @@ python -m cua.nih.run_db \
       const maxLbl = document.getElementById('maxPapersLabel');
       const pullRow = document.getElementById('pullOptionsRow');
       if (btn) btn.textContent = meta.btn;
-      if (hint) hint.innerHTML = meta.hint;
+      if (hint) {
+        hint.innerHTML = meta.hint;
+        hint.style.display = meta.hint ? '' : 'none';
+      }
       if (maxLbl) {
         maxLbl.childNodes[0].textContent = meta.maxLabel + ' ';
       }
@@ -4652,6 +4787,17 @@ python -m cua.nih.run_db \
       return 'risk';
     }
 
+    function setCuaCriticScore(elId, raw) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const n = Number(raw);
+      if (raw == null || raw === '' || Number.isNaN(n)) {
+        el.textContent = '—';
+        return;
+      }
+      el.textContent = `${n}/9`;
+    }
+
     function paintCuaKpiCard(kpiId, tone) {
       const card = document.getElementById(kpiId)?.closest('.cua-kpi');
       if (!card) return;
@@ -4675,9 +4821,6 @@ python -m cua.nih.run_db \
       if (audit.obligations_at_risk > 0) {
         chips.push({ cls: 'warn', label: `${audit.obligations_at_risk} at risk` });
       }
-      if (scores.F1 != null) chips.push({ cls: cuaScoreTone(Number(scores.F1)), label: `Critic F1 = ${scores.F1}` });
-      if (scores.F2 != null) chips.push({ cls: cuaScoreTone(Number(scores.F2)), label: `Critic F2 = ${scores.F2}` });
-      if (scores.F3 != null) chips.push({ cls: cuaScoreTone(Number(scores.F3)), label: `Critic F3 = ${scores.F3}` });
       row.innerHTML = chips.map((c) => `<span class="cua-status ${c.cls}">${c.label}</span>`).join('');
       row.classList.remove('hidden');
     }
@@ -4701,10 +4844,20 @@ python -m cua.nih.run_db \
         document.getElementById('cuaKpiCorpus').textContent = d.ingestion?.corpus_n ?? '—';
         document.getElementById('cuaKpiView').textContent = d.ingestion?.top_k ?? '—';
         document.getElementById('cuaKpiCites').textContent = d.audit?.citations ?? '—';
-        document.getElementById('cuaKpiF1').textContent = d.audit?.scores?.F1 ?? '—';
-        document.getElementById('cuaKpiF2').textContent = d.audit?.scores?.F2 ?? '—';
-        paintCuaKpiCard('cuaKpiF1', cuaScoreTone(Number(d.audit?.scores?.F1)));
-        paintCuaKpiCard('cuaKpiF2', cuaScoreTone(Number(d.audit?.scores?.F2)));
+        const criticScores = d.audit?.scores || {};
+        setCuaCriticScore('cuaKpiF1', criticScores.F1);
+        setCuaCriticScore('cuaKpiF2', criticScores.F2);
+        setCuaCriticScore('cuaKpiF3', criticScores.F3);
+        const scaleNote = document.getElementById('cuaScoreScaleNote');
+        if (scaleNote && criticScores.F1 != null && criticScores.F2 != null && criticScores.F3 != null) {
+          scaleNote.innerHTML =
+            'Minimum 1, maximum 9. Card colors match the scale above. '
+            + 'The revise loop typically stops when <strong>F1 ≥ 5</strong> and <strong>F2 ≥ 5</strong> (or max rounds). '
+            + `This demo: F1&nbsp;${criticScores.F1}/9 · F2&nbsp;${criticScores.F2}/9 · F3&nbsp;${criticScores.F3}/9.`;
+        }
+        paintCuaKpiCard('cuaKpiF1', cuaScoreTone(Number(criticScores.F1)));
+        paintCuaKpiCard('cuaKpiF2', cuaScoreTone(Number(criticScores.F2)));
+        paintCuaKpiCard('cuaKpiF3', cuaScoreTone(Number(criticScores.F3)));
         paintCuaKpiCard('cuaKpiCites', (d.audit?.citations ?? 0) >= 10 ? 'ok' : 'warn');
         renderCuaStatusRow(d);
         const title = d.project_title || 'Grant proposal report';

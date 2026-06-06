@@ -109,8 +109,8 @@ flowchart LR
 
 | Step | Tab | What to show |
 |------|-----|--------------|
-| 1 | **Configure & Run** | Demo mode, max papers 10, run button — agent stepper advances one agent at a time |
-| 2 | **Discovery Results** | **This run** card → pipeline diagram → three panels (cohort · rankings · hypotheses); expand **Audit & provenance** for agent trace + evidence table (this run’s `run_id`) |
+| 1 | **Configure & Run** | Demo mode, max papers 10, run button — global run status strip shows progress |
+| 2 | **Discovery Results** | **Ideal candidate profiles** · ranked outputs · research hypotheses first; then pipeline diagram; expand **Audit & provenance** for agent trace + evidence table |
 | 3 | **Grant Proposal** (last tab, static) | Hero KPIs → **The proposal** fully expanded at top (above data loop) → one click on **Pipeline trace & audit** reveals all pipeline/audit sections |
 
 Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant Proposal**. Step 3 is **not run-scoped** — same `graded6` demo regardless of Step 2.
@@ -124,12 +124,11 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 
 | Area | Content |
 |------|---------|
-| Header | DB status, evidence totals, synthetic cohort badge, run id |
+| Header | DB status, evidence totals, ideal candidate profiles badge, run id |
 | KPI strip | Per-type counts; **this run** vs **in database** |
 | Run status | Ready / Running / Complete / Partial / Failed |
-| **Agent pipeline stepper** | On **Step 1** sidebar during a run: weighted progress bar, per-agent **Running…** / **Done**, literature sub-progress from live commits (polled every ~500ms). Step 2 shows results only — no duplicate stepper. |
 | **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
-| **Step 2** | **This run** report (settings + signature + support table), pipeline diagram, synthetic cohort, ranked outputs; **Audit & provenance** collapsed by default (agent trace + evidence preview inside) |
+| **Step 2** | **Pipeline complete** badge beside title; **ideal candidate profiles**, ranked outputs, and research hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed by default (agent trace + evidence preview inside) |
 | **Step 3** | **Grant Proposal** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **The proposal** fully expanded at the top (above the data loop); all pipeline/audit sections behind **one** collapsed **Pipeline trace & audit** block (single click — no nested collapses). **Jump to** scrolls to Proposal or opens supporting details. **Run a live grant proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
 
 ### Step 3 — report structure
@@ -146,7 +145,8 @@ Step 3 is **not run-scoped** — it always shows bundled `graded6`, independent 
 | Area | What it is |
 |------|------------|
 | **Static demo** badge + About | Fixed `graded6` sample (400-paper corpus → 60-paper writer view) |
-| **Run at a glance** | KPIs: corpus, writer view, citations, Critic F1/F2, audit status chips |
+| **F1 / F2 / F3 guide** | Always-visible intro + **1–9 score scale** (1–4 needs revision · 5–6 meets threshold · 7–9 strong); KPIs show `n/9`; revise loop typically stops at F1/F2 ≥ 5; expandable cards explain each dimension |
+| **Run at a glance** | KPIs: corpus, writer view, citations, **Critic F1/F2/F3** (with plain-language subtitles), expandable **What do F1, F2 & F3 mean?**, audit status chips |
 | **Jump to** | **Proposal** scrolls to NIH text; **Supporting details** opens the collapsed block |
 | **Run a live grant proposal (CLI)** | Collapsed `python -m cua.nih.run_db` instructions (writes local files only) |
 

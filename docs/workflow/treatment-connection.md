@@ -46,6 +46,8 @@ The orchestrator resolves `subgroup` name → `subgroup_id`, upserts connections
 | treatment | GCase activation |
 | supporting sources | DEMO-PMID-001, DEMO-NCT-001 |
 
+**Rapid motor progressors** use the slug `combination strategy`, displayed as **Combination neuroprotection** on the dashboard — a multi-agent neuroprotection stack for fast UPDRS trajectories (see [Output — treatment labels](../output#treatment-labels)).
+
 ## Output shape (in-memory)
 
 ```json

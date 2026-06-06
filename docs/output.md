@@ -13,19 +13,19 @@ What NeuroDiscover produces — ranked recommendations, agent trace, synthetic p
 
 ## Dashboard — Step 2 (Discovery Results)
 
-After a run completes, **Step 2** shows pipeline outputs: synthetic cohort, ranked treatments, and hypotheses. **Audit & provenance** (agent trace + evidence preview) is collapsed by default — expand it to inspect this run’s `run_id` and source links.
+After a run completes, **Step 2** shows pipeline outputs: ideal candidate profiles, ranked treatments, and hypotheses. **Audit & provenance** (agent trace + evidence preview) is collapsed by default — expand it to inspect this run’s `run_id` and source links.
 
 Layout top-to-bottom:
 
-1. **This run** — status (in progress / finished), run settings (mode, disease, max papers, keyword, extraction, pull options), evidence scored + DB delta, **run signature** (`run_id · mode · max · keyword · scored · +new`), and **support rows** (per-connection evidence counts and confidence). Live pipeline progress (weighted bar + agent stepper) stays on **Step 1** only.
-2. **Discovery pipeline** — flow diagram (inputs → six agents → outputs).
-3. **Three panels** — **Synthetic cohort** · **Ranked outputs** · **Research hypotheses** (with confidence-by-treatment strip).
+1. **Pipeline complete** badge beside the Step 2 title when a run finishes successfully.
+2. **Three panels** — **Ideal candidate profiles** · **Ranked outputs** · **Research hypotheses** (with confidence-by-treatment strip).
+3. **Discovery pipeline** — flow diagram (inputs → six agents → outputs).
 4. **Audit & provenance** — collapsed by default; expand for agent run trace + paginated evidence preview.
 
 ![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }
 
-*Step 2 — synthetic cohort, ranked outputs, hypotheses; audit & provenance collapsed at bottom (expand for trace + evidence).*
+*Step 2 — ideal candidate profiles, ranked outputs, hypotheses; discovery pipeline and audit & provenance below.*
 
 ---
 
@@ -76,7 +76,7 @@ Full pipeline response (demo mode, abbreviated):
   ],
   "synthetic_cohort": [
     {
-      "patient_id": "Patient A",
+      "patient_id": "Patient Cluster A",
       "patient_letter": "A",
       "subgroup": "GBA-mutation PD",
       "subgroup_color": "#2563eb",
@@ -112,6 +112,18 @@ Full pipeline response (demo mode, abbreviated):
 
 *Ranked treatments with confidence bars and Prioritize / Monitor / Reject tiers.*
 
+### Treatment labels
+
+Canonical `treatment` slugs in `evidence` and `recommendations` map to dashboard copy via `treatment_labels.py` (backend rationales) and the Step 2 UI.
+
+| DB slug | Dashboard label | Meaning |
+|---------|-----------------|--------|
+| `GCase activation` | GCase activation | Lysosomal GCase chaperone/activator for GBA-mutation PD |
+| `LRRK2 inhibition` | LRRK2 inhibition | Kinase-pathway LRRK2 inhibitor for LRRK2 PD |
+| `clearance therapy` | clearance therapy | Alpha-synuclein clearance/immunotherapy for high-seeding PD |
+| `microglial modulation` | microglial modulation | Anti-inflammatory microglial target for inflammation-high PD |
+| **`combination strategy`** | **Combination neuroprotection** | **Rapid motor progressors** (fast UPDRS decline): literature proposes stacking multiple neuroprotective agents—symptomatic plus disease-modifying—because no single therapy is established for this trajectory. Evidence is cohort-level and early; typically **Monitor** tier. |
+
 ```json
 {
   "recommendations": [
@@ -129,6 +141,14 @@ Full pipeline response (demo mode, abbreviated):
       "confidence": 71.2,
       "tier": "Monitor",
       "rationale": "Phase 2 ongoing; evidence strength moderate."
+    },
+    {
+      "subgroup": "Rapid motor progressors",
+      "treatment": "combination strategy",
+      "mechanism": "neuroprotection",
+      "confidence": 77.8,
+      "tier": "Monitor",
+      "rationale": "Rapid motor progressors → Combination neuroprotection via neuroprotection. Rapid motor progressors show faster UPDRS decline than typical PD. Literature proposes combining neuroprotective agents rather than betting on one monotherapy, but combo regimens remain unproven in this subgroup. Confidence 77.8 (Monitor)."
     }
   ]
 }
@@ -241,12 +261,12 @@ Full live pull uses **Full live pull complete: stored N new…** and `"pipeline_
 
 ---
 
-## Synthetic cohort (Patients A–E)
+## Ideal candidate profiles (Patient Cluster A–E)
 
-![Synthetic cohort panel](/assets/images/dashboard/step2-synthetic-cohort.png)
+![Ideal candidate profiles panel](/assets/images/dashboard/step2-synthetic-cohort.png)
 {: .doc-screenshot }
 
-*Illustrative patient profiles (A–E) — synthetic only, no PHI.*
+*Illustrative candidate profiles (Patient Cluster A–E) — synthetic only, no PHI.*
 
 Generated per `run_id` from recommendations + subgroups. **Not stored in the database.** Every profile is labeled synthetic / no PHI.
 
@@ -255,7 +275,7 @@ Generated per `run_id` from recommendations + subgroups. **Not stored in the dat
   "run_id": "abc123",
   "synthetic_cohort": [
     {
-      "patient_id": "Patient A",
+      "patient_id": "Patient Cluster A",
       "subgroup": "GBA-mutation PD",
       "top_opportunity": "GCase activation",
       "mechanism": "lysosomal dysfunction",
@@ -358,7 +378,7 @@ Database overview for dashboard KPI tiles:
 | Run status strip | Complete / Partial / Running / Failed |
 | Step 1 — Configure & run | `POST /api/run-discovery` |
 | Step 2 — Pipeline diagram | Agent trace from `GET /api/agents?run_id=` |
-| Synthetic cohort cards | `synthetic_cohort` in run response |
+| Ideal candidate profile cards | `synthetic_cohort` in run response |
 | Ranked treatments | `GET /api/recommendations?run_id=` |
 | Evidence table | `GET /api/evidence?offset=&limit=` |
 | Recent runs | `GET /api/runs?limit=5` |

@@ -35,7 +35,7 @@ def _stable_rng(run_id: str, subgroup: str) -> random.Random:
 
 
 def _patient_letter(index: int) -> str:
-    return f"Patient {string.ascii_uppercase[index]}"
+    return f"Patient Cluster {string.ascii_uppercase[index]}"
 
 
 def _fetch_ranked_for_run(conn, run_id: str) -> list[dict[str, Any]]:

@@ -53,6 +53,6 @@ Adding a few supporting papers or trials to an existing connection typically cha
 | Connection | evidence_strength |
 |------------|-------------------|
 | GBA → GCase activation | 8.5 |
-| Rapid progressors → combination strategy | 5.2 |
+| Rapid progressors → combination neuroprotection (`combination strategy`) | 5.2 |
 
 Agent 5 adds `commercial_potential`; Agent 6 combines scaled DB values into `confidence`.

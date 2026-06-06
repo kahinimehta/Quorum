@@ -52,12 +52,11 @@ flowchart LR
 
 | Area | Content |
 |------|---------|
-| Header | DB status, evidence totals, synthetic cohort badge, run id |
+| Header | DB status, evidence totals, ideal candidate profiles badge, run id |
 | KPI strip + summary bar | Per-type counts; **this run** vs **in database** after a pipeline run |
 | Run status strip | Ready / Running / Complete / Partial / Failed |
-| **Agent pipeline stepper** | **Step 1** sidebar only — one agent **Running…** at a time; **Done** / **Waiting…** for others; weighted progress bar; polls `GET /api/agents?run_id=` (~500ms) and `GET /api/run-discovery/status?run_id=` for completion. Step 2 has no duplicate stepper. |
 | **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button. Mode FAQ: [Inputs — pipeline modes](../input#recommended-workflow) |
-| **Step 2** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses; **Audit & provenance** collapsed (agent trace + evidence table inside) |
+| **Step 2** | **Pipeline complete** badge beside title; ideal candidate profiles, ranked outputs, and hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed (agent trace + evidence table inside) |
 | **Step 3** | Static grant proposal — bundled `graded6` demo inlined (not run-scoped); **The proposal** expanded first (above data loop); all other sections in one collapsed **Pipeline trace & audit** group (single click, no nested collapses); **Jump to** scrolls to Proposal or opens supporting details |
 
 ### Step 3 — report structure
@@ -109,9 +108,9 @@ Orchestrator modes (all run literature **in-process** with the client `run_id` f
 
 Evidence and commercial scores **scale with per-connection evidence count** (see [Evidence Scoring](../workflow/evidence-scoring) and [Commercial Discovery](../workflow/commercial-discovery)). Stored columns are 0–100; `recommendations.confidence` uses the same formula as the dashboard.
 
-## Synthetic cohort
+## Ideal candidate profiles
 
-`generate_synthetic_cohort(run_id)` builds **Patients A–E** from `recommendations` + `subgroups`. Not stored in the DB. Every profile is labeled synthetic / no PHI.
+`generate_synthetic_cohort(run_id)` builds **Patient Cluster A–E** from `recommendations` + `subgroups`. Not stored in the DB. Every profile is labeled synthetic / no PHI.
 
 ## Confidence
 
