@@ -134,5 +134,5 @@ bundle exec jekyll serve
 - [ ] Browser at the launcher **`Open:` URL** (includes `?api=`; not a stale GitHub Pages tab for live UI)  
 - [ ] **Step 1** — pipeline mode + run button; stepper shows one agent **Running…** at a time  
 - [ ] **Step 2** — synthetic cohort, ranked outputs, agent trace after run completes  
-- [ ] **Step 3 — Grant Proposal** (last tab, static) — NIH **Proposal** open first; **Pipeline trace & audit** collapsed below (expand or use **Jump to → Supporting details**)  
+- [ ] **Step 3 — Grant Proposal** (last tab, static) — **The proposal** fully visible at top; **Pipeline trace & audit** is the only collapse (one click reveals all supporting sections)  
 - [ ] Fallback docs: [neurodiscover.github.io](https://neurodiscover.github.io) · screenshots on [Output examples](output) and [Inputs](input)  

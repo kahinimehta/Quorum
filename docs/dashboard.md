@@ -111,7 +111,7 @@ flowchart LR
 |------|-----|--------------|
 | 1 | **Configure & Run** | Demo mode, max papers 10, run button — agent stepper advances one agent at a time |
 | 2 | **Discovery Results** | Synthetic cohort, ranked treatments, agent trace, evidence table (this run’s `run_id`) |
-| 3 | **Grant Proposal** (last tab, static) | Hero KPIs → **Jump to: Proposal** (NIH text open by default) → collapsed **Pipeline trace & audit** for pipeline/audit depth |
+| 3 | **Grant Proposal** (last tab, static) | Hero KPIs → **The proposal** fully expanded at top (above data loop) → one click on **Pipeline trace & audit** reveals all pipeline/audit sections |
 
 Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant Proposal**. Step 3 is **not run-scoped** — same `graded6` demo regardless of Step 2.
 
@@ -128,14 +128,14 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 | **Agent pipeline stepper** | On **Step 1** sidebar during a run: weighted progress bar, per-agent **Running…** / **Done**, literature sub-progress from live commits (polled every ~500ms). Step 2 shows results only — no duplicate stepper. |
 | **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
 | **Step 2** | **This run** report (settings + signature + support table), pipeline diagram, synthetic cohort, ranked outputs, audit trace |
-| **Step 3** | **Grant Proposal** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **Proposal section first** (open by default); pipeline trace, writer contract, booster, and audit grouped in one collapsed **Pipeline trace & audit** block (see table below). **Jump to** opens Proposal or supporting details. **Run a live grant proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
+| **Step 3** | **Grant Proposal** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **The proposal** fully expanded at the top (above the data loop); all pipeline/audit sections behind **one** collapsed **Pipeline trace & audit** block (single click — no nested collapses). **Jump to** scrolls to Proposal or opens supporting details. **Run a live grant proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
 
 ### Step 3 — report structure
 
-| Jump to | Group | Sub-sections (collapsed by default) |
-|---------|-------|--------------------------------------|
-| **Proposal** | *(leading section)* | NIH R01 proposal — significance, innovation, three aims |
-| **Supporting details** | Pipeline trace & audit (one collapsed group) | Nested categories (each collapsed): **Pipeline & self-correction** · **Writer contract & selection** · **Booster & rigor lift** · **Audit & corpus** |
+| Jump to | Layout | Content |
+|---------|--------|---------|
+| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims |
+| **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion (all expanded inside the group) |
 
 Timestamps display in **US Eastern** (`America/New_York`).
 

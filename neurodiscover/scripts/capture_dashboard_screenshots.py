@@ -9,7 +9,7 @@ import urllib.request
 
 from playwright.sync_api import sync_playwright
 
-UI = os.environ.get("DASHBOARD_UI", "http://127.0.0.1:8080")
+UI = os.environ.get("DASHBOARD_UI", "http://127.0.0.1:8080?api=http://127.0.0.1:5000")
 API = os.environ.get("DASHBOARD_API", "http://127.0.0.1:5000")
 OUT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "docs", "assets", "images", "dashboard")
@@ -76,10 +76,13 @@ def main() -> int:
         page.wait_for_function(
             """() => {
               const host = document.getElementById('cuaReportHost');
-              return !!host?.shadowRoot?.querySelector('.cua-sec-proposal details[open]');
+              const layout = host?.shadowRoot?.querySelector('.cua-report-layout');
+              const proposal = layout?.querySelector('section.cua-sec-proposal');
+              return !!proposal && layout?.firstElementChild?.classList?.contains('cua-sec-proposal');
             }""",
-            timeout=60_000,
+            timeout=90_000,
         )
+        time.sleep(1.5)
         page.evaluate(
             """() => {
               const view = document.getElementById('viewCua');

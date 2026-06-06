@@ -32,17 +32,17 @@ At the top, **This run** shows:
 
 ## Dashboard — Step 3 (Grant Proposal)
 
-**Step 3** is separate from pipeline rankings and **not run-scoped**. It always loads the static bundled demo (`graded6`) via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html` with the **NIH proposal first** (open by default), then a single collapsed **Pipeline trace & audit** group containing four nested categories: **Pipeline & self-correction**, **Writer contract & selection**, **Booster & rigor lift**, and **Audit & corpus**. Hero KPIs, audit chips, and **Jump to** (Proposal + supporting details) — unchanged no matter which pipeline run you view in Step 2.
+**Step 3** is separate from pipeline rankings and **not run-scoped**. It always loads the static bundled demo (`graded6`) via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html` with **The proposal** fully expanded at the top (above the data loop), then **one** collapsed **Pipeline trace & audit** group — a single click reveals data loop, writer contract, booster, audit, and ingestion sections (no nested collapses). Hero KPIs, audit chips, and **Jump to** (Proposal + supporting details) — unchanged no matter which pipeline run you view in Step 2.
 
 ![Step 3 — Grant proposal tab](/assets/images/dashboard/step3-grant-proposal.png)
 {: .doc-screenshot }
 
-*Step 3 — hero KPIs, audit status chips, Jump to (Proposal + supporting details), NIH proposal first with pipeline/writer/booster/audit nested below, and collapsible live-CLI instructions.*
+*Step 3 — hero KPIs, audit status chips, Jump to (Proposal + supporting details), NIH proposal expanded at top, one collapsed supporting-details group below, and collapsible live-CLI instructions.*
 
-| Jump to | Group | Sub-sections (collapsed by default) |
-|---------|-------|--------------------------------------|
-| **Proposal** | *(leading section)* | NIH R01 proposal — significance, innovation, three aims |
-| **Supporting details** | Pipeline trace & audit (one collapsed group) | Nested categories (each collapsed): **Pipeline & self-correction** · **Writer contract & selection** · **Booster & rigor lift** · **Audit & corpus** |
+| Jump to | Layout | Content |
+|---------|--------|---------|
+| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims |
+| **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion |
 
 To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)).
 

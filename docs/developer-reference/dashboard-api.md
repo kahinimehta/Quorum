@@ -58,14 +58,14 @@ flowchart LR
 | **Agent pipeline stepper** | One agent **Running…** at a time during a run; **Done** / **Waiting…** for others; polls `GET /api/agents?run_id=` (~500ms) for stepper UI and `GET /api/run-discovery/status?run_id=` for completion |
 | **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button |
 | **Step 2** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses, audit trace, evidence table |
-| **Step 3** | Static grant proposal — bundled `graded6` demo inlined (not run-scoped); Proposal section first; pipeline trace, writer, booster, and audit nested in one collapsed group (table below); **Jump to** opens Proposal or supporting details |
+| **Step 3** | Static grant proposal — bundled `graded6` demo inlined (not run-scoped); **The proposal** expanded first (above data loop); all other sections in one collapsed **Pipeline trace & audit** group (single click, no nested collapses); **Jump to** scrolls to Proposal or opens supporting details |
 
 ### Step 3 — report structure
 
-| Jump to | Group | Sub-sections |
-|---------|-------|--------------|
-| **Proposal** | *(leading section)* | NIH R01 proposal |
-| **Supporting details** | Pipeline trace & audit (one collapsed group) | Nested categories (each collapsed): **Pipeline & self-correction** · **Writer contract & selection** · **Booster & rigor lift** · **Audit & corpus** |
+| Jump to | Layout | Content |
+|---------|--------|---------|
+| **Proposal** | Always visible (first in report) | NIH R01 proposal |
+| **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion |
 
 Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 

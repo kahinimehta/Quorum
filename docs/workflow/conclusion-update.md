@@ -138,4 +138,4 @@ Set `SUPABASE_DATABASE_URL` from [Supabase setup](../developer-reference/supabas
 - CUA is a **read-only downstream consumer** of the same data the dashboard pipeline writes
 - PR #12 added `neurodiscover/frontend/supabase_dashboard.html` for viewing Supabase evidence/connections/recommendations — that page does not invoke CUA
 - Full CUA architecture, contracts, and honest limits: `cua/README.md`
-- **Dashboard:** Step 3 **Grant Proposal** tab inlines the static bundled `graded6` report — **Proposal first**, then a collapsed **Pipeline trace & audit** group with four nested categories; **Jump to** opens Proposal or supporting details — not tied to Step 1/2 `run_id` (see [Dashboard — Step 3 report structure](../dashboard#step-3--report-structure))
+- **Dashboard:** Step 3 **Grant Proposal** tab inlines the static bundled `graded6` report — **The proposal** expanded at top (above data loop), then one collapsed **Pipeline trace & audit** group (single click, no nested collapses); **Jump to** scrolls to Proposal or opens supporting details — not tied to Step 1/2 `run_id` (see [Dashboard — Step 3 report structure](../dashboard#step-3--report-structure))

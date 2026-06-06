@@ -3657,12 +3657,30 @@ python -m cua.nih.run_db \
         flex-direction: column;
         gap: 0.6rem;
       }
-      section.cua-sec-first > details.cua-sec-details {
+      section.cua-sec-first {
+        border: 1px solid #86efac !important;
         border-left: 4px solid #16a34a !important;
         background: #f0fdf4 !important;
+        border-radius: 12px;
+        padding: 1rem 1.15rem 1.2rem !important;
+        box-shadow: 0 1px 3px rgba(22, 163, 74, 0.08);
       }
-      section.cua-sec-first > details.cua-sec-details[open] > summary.cua-sec-summary {
-        background: #f0fdf4 !important;
+      section.cua-sec-first > h2 {
+        display: block !important;
+        border-bottom-color: #bbf7d0 !important;
+      }
+      .cua-group-body > section.cua-sec {
+        margin: 0.85rem 0 0 !important;
+        padding: 1rem 1.1rem !important;
+        background: #fff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+      }
+      .cua-group-body > section.cua-sec > h2 {
+        display: block !important;
+      }
+      .cua-group-body > section.cua-sec:first-child {
+        margin-top: 0 !important;
       }
       details.cua-cat-details {
         border: 1px solid #e2e8f0;
@@ -4287,11 +4305,10 @@ python -m cua.nih.run_db \
       { match: /road not taken/i, cls: 'cua-sec-booster', short: 'Booster' },
       { match: /outcomes/i, cls: 'cua-sec-ab', short: 'A/B outcomes' },
       { match: /raw trace/i, cls: 'cua-sec-trace', short: 'Trace' },
-      { match: /^the proposal$/i, cls: 'cua-sec-proposal', short: 'Proposal' },
+      { match: /\bthe proposal\b/i, cls: 'cua-sec-proposal', short: 'Proposal' },
       { match: /^audit/i, cls: 'cua-sec-audit', short: 'Audit' },
       { match: /ingestion/i, cls: 'cua-sec-ingest', short: 'Ingestion' },
     ];
-    const CUA_SECTION_DEFAULT_OPEN = new Set(['cua-sec-proposal']);
     const CUA_SUPPORT_GROUP = {
       id: 'cua-group-support',
       title: 'Pipeline trace & audit',
@@ -4324,6 +4341,11 @@ python -m cua.nih.run_db \
       },
     ];
 
+    function cuaContentWrap(root) {
+      const wraps = [...root.querySelectorAll('.wrap')];
+      return wraps.find((w) => w.querySelector('section')) || wraps[wraps.length - 1] || null;
+    }
+
     function slugifyCuaHeading(text) {
       return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
     }
@@ -4340,7 +4362,9 @@ python -m cua.nih.run_db \
     }
 
     function formatCuaSections(root) {
-      root.querySelectorAll('.wrap > section').forEach((sec) => {
+      const wrap = cuaContentWrap(root);
+      if (!wrap) return;
+      [...wrap.children].filter((el) => el.tagName === 'SECTION').forEach((sec) => {
         const h2 = sec.querySelector(':scope > h2');
         if (!h2) return;
         const title = h2.textContent.trim();
@@ -4364,48 +4388,49 @@ python -m cua.nih.run_db \
       ).trim();
     }
 
-    function wrapCuaSectionCollapsible(sec, { open = false } = {}) {
-      if (sec.querySelector(':scope > details.cua-sec-details')) return;
-      const h2 = sec.querySelector(':scope > h2');
-      if (!h2) return;
-      const title = h2.textContent.trim();
-      const spec = CUA_SECTION_SLUGS.find((s) => s.match.test(title));
-      const details = document.createElement('details');
-      details.className = 'cua-sec-details';
-      if (open || (spec && CUA_SECTION_DEFAULT_OPEN.has(spec.cls))) details.open = true;
-
-      const summary = document.createElement('summary');
-      summary.className = 'cua-sec-summary';
-      const titleSpan = document.createElement('span');
-      titleSpan.className = 'cua-sec-title';
-      titleSpan.textContent = title;
-      summary.appendChild(titleSpan);
-      if (spec?.short) {
-        const badge = document.createElement('span');
-        badge.className = 'cua-sec-badge';
-        badge.textContent = spec.short;
-        summary.appendChild(badge);
+    function unwrapCuaSectionDetails(sec) {
+      const details = sec.querySelector(':scope > details.cua-sec-details');
+      if (!details) return;
+      const title = details.querySelector('.cua-sec-title')?.textContent?.trim()
+        || sec.querySelector(':scope > h2')?.textContent?.trim()
+        || '';
+      const body = details.querySelector('.cua-sec-body');
+      details.remove();
+      if (title && !sec.querySelector(':scope > h2')) {
+        const h2 = document.createElement('h2');
+        h2.textContent = title;
+        sec.prepend(h2);
       }
-
-      const body = document.createElement('div');
-      body.className = 'cua-sec-body';
-      h2.remove();
-      while (sec.firstChild) body.appendChild(sec.firstChild);
-      details.append(summary, body);
-      sec.appendChild(details);
-    }
-
-    function wrapCuaSectionsCollapsible(root) {
-      root.querySelectorAll('.wrap > section.cua-sec').forEach((sec) => wrapCuaSectionCollapsible(sec));
+      if (body) {
+        while (body.firstChild) sec.appendChild(body.firstChild);
+        body.remove();
+      }
     }
 
     function reorganizeCuaSections(root) {
-      const wrap = root.querySelector('.wrap');
-      if (!wrap || wrap.querySelector('.cua-report-layout')) return;
+      const wrap = cuaContentWrap(root);
+      if (!wrap) return;
 
-      const sections = [...wrap.querySelectorAll(':scope > section.cua-sec')];
+      const wrapChildren = [...wrap.children];
+      const existingLayout = wrapChildren.find((el) => el.classList?.contains('cua-report-layout'));
+      if (existingLayout?.children.length) return;
+      if (existingLayout) existingLayout.remove();
+
+      formatCuaSections(root);
+
+      const sections = [...wrap.children].filter((el) => el.tagName === 'SECTION');
       const byCls = new Map();
       sections.forEach((sec) => {
+        const h2 = sec.querySelector(':scope > h2');
+        if (!h2) return;
+        if (!sec.classList.contains('cua-sec')) {
+          const title = h2.textContent.trim();
+          const slug = slugifyCuaHeading(title);
+          sec.id = `cua-sec-${slug}`;
+          sec.classList.add('cua-sec');
+          const spec = CUA_SECTION_SLUGS.find((s) => s.match.test(title));
+          if (spec) sec.classList.add(spec.cls);
+        }
         const spec = cuaSpecForSection(sec);
         if (spec) byCls.set(spec.cls, sec);
       });
@@ -4415,39 +4440,24 @@ python -m cua.nih.run_db \
 
       const proposal = byCls.get('cua-sec-proposal');
       if (proposal) {
+        unwrapCuaSectionDetails(proposal);
         proposal.classList.add('cua-sec-first');
         layout.appendChild(proposal);
         byCls.delete('cua-sec-proposal');
       }
 
-      const groupSections = [];
+      const supportSections = [];
       CUA_CATEGORIES.forEach((cat) => {
-        const catSections = cat.sections.map((cls) => byCls.get(cls)).filter(Boolean);
-        if (!catSections.length) return;
-        cat.sections.forEach((cls) => byCls.delete(cls));
-
-        const catDetails = document.createElement('details');
-        catDetails.className = 'cua-cat-details';
-        catDetails.id = cat.id;
-
-        const summary = document.createElement('summary');
-        summary.className = 'cua-cat-summary';
-        const titleSpan = document.createElement('span');
-        titleSpan.className = 'cua-cat-title';
-        titleSpan.textContent = cat.title;
-        const hintSpan = document.createElement('span');
-        hintSpan.className = 'cua-cat-hint';
-        hintSpan.textContent = cat.hint;
-        summary.append(titleSpan, hintSpan);
-
-        const body = document.createElement('div');
-        body.className = 'cua-cat-body';
-        catSections.forEach((sec) => body.appendChild(sec));
-        catDetails.append(summary, body);
-        groupSections.push(catDetails);
+        cat.sections.forEach((cls) => {
+          const sec = byCls.get(cls);
+          if (!sec) return;
+          unwrapCuaSectionDetails(sec);
+          supportSections.push(sec);
+          byCls.delete(cls);
+        });
       });
 
-      if (groupSections.length) {
+      if (supportSections.length) {
         const groupDetails = document.createElement('details');
         groupDetails.className = 'cua-group-details';
         groupDetails.id = CUA_SUPPORT_GROUP.id;
@@ -4464,14 +4474,14 @@ python -m cua.nih.run_db \
 
         const groupBody = document.createElement('div');
         groupBody.className = 'cua-group-body';
-        groupSections.forEach((catDetails) => groupBody.appendChild(catDetails));
+        supportSections.forEach((sec) => groupBody.appendChild(sec));
         groupDetails.append(groupSummary, groupBody);
         layout.appendChild(groupDetails);
       }
 
       byCls.forEach((sec) => layout.appendChild(sec));
 
-      const footer = wrap.querySelector(':scope > footer');
+      const footer = [...wrap.children].find((el) => el.tagName === 'FOOTER');
       wrap.textContent = '';
       wrap.appendChild(layout);
       if (footer) wrap.appendChild(footer);
@@ -4481,90 +4491,16 @@ python -m cua.nih.run_db \
       if (!sec) return;
       const group = sec.closest('details.cua-group-details');
       if (group) group.open = true;
-      const cat = sec.closest('details.cua-cat-details');
-      if (cat) cat.open = true;
-      const details = sec.querySelector(':scope > details.cua-sec-details');
-      if (details) details.open = true;
       sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function wrapCuaNestedCollapsibles(root) {
-      root.querySelectorAll('.cua-sec-contract .card, .cua-sec-dropped .card').forEach((card) => {
-        if (card.querySelector('details.cua-card-details')) return;
-        const cardH = card.querySelector(':scope > .card-h');
-        if (!cardH) return;
-        const label = cardH.textContent.trim();
-        const rest = [...card.children].filter((el) => el !== cardH);
-        if (!rest.length) return;
-        const details = document.createElement('details');
-        details.className = 'cua-card-details';
-        const summary = document.createElement('summary');
-        summary.textContent = label;
-        cardH.remove();
-        rest.forEach((el) => details.appendChild(el));
-        details.prepend(summary);
-        card.appendChild(details);
-      });
-
-      root.querySelectorAll('.cua-sec-proposal .card:not(.aim)').forEach((card) => {
-        if (card.querySelector('details.cua-card-details')) return;
-        const cardH = card.querySelector(':scope > .card-h');
-        const paragraph = card.querySelector(':scope > p');
-        if (!cardH || !paragraph) return;
-        const details = document.createElement('details');
-        details.className = 'cua-card-details';
-        const summary = document.createElement('summary');
-        summary.textContent = cardH.textContent.trim();
-        cardH.remove();
-        details.append(summary, paragraph);
-        card.appendChild(details);
-      });
-
-      root.querySelectorAll('.cua-sec-proposal .card.aim').forEach((card) => {
-        const fields = [...card.querySelectorAll(':scope > .field')];
-        fields.slice(1).forEach((field) => {
-          if (field.closest('details.cua-field-details')) return;
-          const label = field.querySelector(':scope > span')?.textContent?.trim() || 'Details';
-          const details = document.createElement('details');
-          details.className = 'cua-field-details';
-          const summary = document.createElement('summary');
-          summary.textContent = label;
-          field.remove();
-          details.append(summary, field);
-          card.appendChild(details);
-        });
-      });
-
-      root.querySelectorAll('.cua-sec-dropped .cand.drop').forEach((cand) => {
-        if (cand.closest('details.cua-card-details')) return;
-        const details = document.createElement('details');
-        details.className = 'cua-card-details';
-        const summary = document.createElement('summary');
-        const heading = cand.querySelector('.cand-h')?.textContent?.trim() || 'Dropped candidate';
-        summary.textContent = heading;
-        cand.parentNode.insertBefore(details, cand);
-        details.append(summary, cand);
-      });
-    }
-
-    function wrapCuaFooter(root) {
-      const footer = root.querySelector('footer');
-      if (!footer || footer.querySelector('details.cua-footer-details')) return;
-      const details = document.createElement('details');
-      details.className = 'cua-footer-details';
-      const summary = document.createElement('summary');
-      summary.textContent = 'Report provenance & build notes';
-      const body = document.createElement('div');
-      body.className = 'cua-footer-body';
-      while (footer.firstChild) body.appendChild(footer.firstChild);
-      details.append(summary, body);
-      footer.appendChild(details);
     }
 
     function buildCuaToc(root) {
       const toc = document.getElementById('cuaToc');
       if (!toc) return;
-      const sections = [...root.querySelectorAll('.wrap .cua-report-layout section.cua-sec, .wrap > section.cua-sec')];
+      const wrap = cuaContentWrap(root);
+      const sections = wrap
+        ? [...wrap.querySelectorAll('.cua-report-layout section.cua-sec')]
+        : [];
       if (!sections.length) {
         toc.classList.add('hidden');
         return;
@@ -4609,10 +4545,7 @@ python -m cua.nih.run_db \
       }
       formatCuaPanelRows(root);
       formatCuaSections(root);
-      wrapCuaSectionsCollapsible(root);
       reorganizeCuaSections(root);
-      wrapCuaNestedCollapsibles(root);
-      wrapCuaFooter(root);
       buildCuaToc(root);
     }
 
