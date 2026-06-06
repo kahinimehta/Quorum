@@ -839,6 +839,46 @@
     }
     .conf-big { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
     .audit-section { margin-top: 1.25rem; }
+    .audit-collapse {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.55);
+      box-shadow: var(--shadow);
+    }
+    .audit-collapse-summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.75rem;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .audit-collapse-summary::-webkit-details-marker { display: none; }
+    .audit-collapse-summary::before {
+      content: '▸ ';
+      font-size: 0.75rem;
+      color: var(--navy);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .audit-collapse[open] > .audit-collapse-summary::before { content: '▾ '; }
+    .audit-collapse-hint {
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      color: var(--muted);
+      opacity: 0.85;
+    }
+    .audit-collapse .audit-grid {
+      padding: 0 0.85rem 0.85rem;
+      margin-top: 0;
+    }
     .audit-grid {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -1482,30 +1522,35 @@
       </div>
 
       <section class="audit-section">
-        <div class="section-label">Audit &amp; provenance</div>
-        <div class="audit-grid">
-          <div class="card">
-            <h2>Agent run trace <code id="traceRunId" style="font-size:0.7rem;font-weight:400;"></code></h2>
-            <ul class="timeline" id="agentTimeline"></ul>
-          </div>
-          <div class="card">
-            <h2>Evidence preview <span class="evidence-meta" id="evidenceMeta">—</span></h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
-                  <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th><th>Synthetic link</th>
-                </tr>
-              </thead>
-              <tbody id="evidenceTable"></tbody>
-            </table>
-            <div class="pager">
-              <button type="button" class="btn btn-secondary" id="evPrev">Prev</button>
-              <span id="evPageLabel">Page 1</span>
-              <button type="button" class="btn btn-secondary" id="evNext">Next</button>
+        <details class="audit-collapse">
+          <summary class="audit-collapse-summary">
+            <span>Audit &amp; provenance</span>
+            <span class="audit-collapse-hint">Agent run trace · evidence preview</span>
+          </summary>
+          <div class="audit-grid">
+            <div class="card">
+              <h2>Agent run trace <code id="traceRunId" style="font-size:0.7rem;font-weight:400;"></code></h2>
+              <ul class="timeline" id="agentTimeline"></ul>
+            </div>
+            <div class="card">
+              <h2>Evidence preview <span class="evidence-meta" id="evidenceMeta">—</span></h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Type</th><th>Title</th><th>Year</th><th>Subgroup</th>
+                    <th>Mechanism</th><th>Treatment</th><th>Study</th><th>N</th><th>Access</th><th>Synthetic link</th>
+                  </tr>
+                </thead>
+                <tbody id="evidenceTable"></tbody>
+              </table>
+              <div class="pager">
+                <button type="button" class="btn btn-secondary" id="evPrev">Prev</button>
+                <span id="evPageLabel">Page 1</span>
+                <button type="button" class="btn btn-secondary" id="evNext">Next</button>
+              </div>
             </div>
           </div>
-        </div>
+        </details>
       </section>
       <div class="demo-notice">
         <strong>Demo data notice.</strong> Rows with <code>DEMO-*</code> source IDs are seed placeholders.

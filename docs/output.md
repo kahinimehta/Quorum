@@ -13,7 +13,7 @@ What NeuroDiscover produces — ranked recommendations, agent trace, synthetic p
 
 ## Dashboard — Step 2 (Discovery Results)
 
-After a run completes, **Step 2** shows pipeline outputs: synthetic cohort, ranked treatments, hypotheses, agent trace, and evidence audit.
+After a run completes, **Step 2** shows pipeline outputs: synthetic cohort, ranked treatments, and hypotheses. **Audit & provenance** (agent trace + evidence preview) is collapsed by default — expand it to inspect this run’s `run_id` and source links.
 
 At the top, **This run** shows:
 
@@ -26,7 +26,7 @@ At the top, **This run** shows:
 ![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }
 
-*Step 2 — synthetic cohort, ranked outputs, hypotheses, agent trace, and evidence table.*
+*Step 2 — synthetic cohort, ranked outputs, hypotheses; audit & provenance collapsed at bottom (expand for trace + evidence).*
 
 ---
 
@@ -173,7 +173,7 @@ Only scored rows (with subgroup tags) affect confidence — see [Inputs](input).
 ![Agent trace and evidence audit](/assets/images/dashboard/step2-audit-evidence.png)
 {: .doc-screenshot }
 
-*Agent run trace (shared `run_id`) and paginated evidence preview with source links.*
+*Expand **Audit & provenance** on Step 2 — agent run trace (shared `run_id`) and paginated evidence preview with source links.*
 
 Every run logs rows in `agent_outputs`. Literature logs **mode-specific** summaries and live progress commits during scan/pull:
 

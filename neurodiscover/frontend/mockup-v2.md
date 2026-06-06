@@ -8,4 +8,4 @@ The dashboard UI is implemented in `index.html` on `main`.
 
 Design reference: `neurodiscover_dashboard_mockup_v2.pdf` (add to `frontend/` if you want pixel-perfect comparison in-repo).
 
-Implemented highlights: **three tabs** (Configure & Run · Discovery Results · Grant Proposal), KPI + run-vs-DB summary, run status strip, agent pipeline stepper, three-column Step 2 results, ET timestamps, recent runs table, Step 3 static grant proposal report (**proposal expanded at top**, single **Pipeline trace & audit** collapse for supporting sections, Jump to nav).
+Implemented highlights: **three tabs** (Configure & Run · Discovery Results · Grant Proposal), KPI + run-vs-DB summary, run status strip, agent pipeline stepper, three-column Step 2 results (audit & provenance collapsed), ET timestamps, recent runs table, Step 3 static grant proposal report (**proposal expanded at top**, single **Pipeline trace & audit** collapse for supporting sections, Jump to nav).

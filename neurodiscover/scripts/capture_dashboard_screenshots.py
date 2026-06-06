@@ -65,6 +65,8 @@ def main() -> int:
         shot(page, "#viewResults", os.path.join(OUT, "step2-discovery-results.png"))
         shot(page, ".output-panel.panel-rank", os.path.join(OUT, "step2-ranked-treatments.png"))
         shot(page, ".output-panel.panel-syn", os.path.join(OUT, "step2-synthetic-cohort.png"))
+        page.locator(".audit-collapse").evaluate("el => { el.open = true; }")
+        time.sleep(0.5)
         shot(page, ".audit-section", os.path.join(OUT, "step2-audit-evidence.png"))
 
         # Step 3 — grant proposal tab (viewport; full #viewCua is very tall)
