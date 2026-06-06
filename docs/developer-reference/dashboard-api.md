@@ -56,11 +56,11 @@ flowchart LR
 | KPI strip + summary bar | Per-type counts; **this run** vs **in database** after a pipeline run |
 | Run status strip | Ready / Running / Complete / Partial / Failed |
 | **Agent pipeline stepper** | One agent **Running…** at a time during a run; **Done** / **Waiting…** for others; polls `GET /api/agents?run_id=` (~500ms) for stepper UI and `GET /api/run-discovery/status?run_id=` for completion |
-| **Step 1** | Static grant proposal — bundled `graded6` demo inlined (not run-scoped); Proposal section first; pipeline trace, writer, booster, and audit nested in one collapsed group (table below); **Jump to** opens Proposal or supporting details |
-| **Step 2** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button |
-| **Step 3** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses, audit trace, evidence table |
+| **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button |
+| **Step 2** | Results — pipeline diagram, synthetic cohort, ranked outputs, hypotheses, audit trace, evidence table |
+| **Step 3** | Static grant proposal — bundled `graded6` demo inlined (not run-scoped); Proposal section first; pipeline trace, writer, booster, and audit nested in one collapsed group (table below); **Jump to** opens Proposal or supporting details |
 
-### Step 1 — report structure
+### Step 3 — report structure
 
 | Jump to | Group | Sub-sections |
 |---------|-------|--------------|
@@ -82,7 +82,7 @@ Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 | Run completion | `GET /api/run-discovery/status?run_id=` |
 | Evidence table | `GET /api/evidence?offset=&limit=` |
 | Synthetic patients | `GET /api/synthetic-cohort?run_id=` or included in run response |
-| Grant proposal (Step 1) | `GET /api/cua/demo` · report `GET /cua-demo/graded6.html` |
+| Grant proposal (Step 3) | `GET /api/cua/demo` · report `GET /cua-demo/graded6.html` |
 
 ## Pipeline run
 

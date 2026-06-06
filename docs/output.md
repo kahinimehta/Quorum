@@ -11,33 +11,33 @@ What NeuroDiscover produces — ranked recommendations, agent trace, synthetic p
 
 ---
 
-## Dashboard — Step 3 (Discovery Results)
+## Dashboard — Step 2 (Discovery Results)
 
-After a run completes, **Step 3** shows pipeline outputs: synthetic cohort, ranked treatments, hypotheses, agent trace, and evidence audit.
+After a run completes, **Step 2** shows pipeline outputs: synthetic cohort, ranked treatments, hypotheses, agent trace, and evidence audit.
 
 At the top, **This run** shows:
 
 - A **progress bar** and compact **agent stepper** (Running → Done) visible while the pipeline executes and after complete
-- **Run settings** used (mode, disease, max papers, keyword, extraction) — changes when you change Step 2
+- **Run settings** used (mode, disease, max papers, keyword, extraction) — changes when you change Step 1
 - **Evidence scored** and **DB delta** for this run — changes when pulls add rows or demo caps differ
 - **Run signature** — a one-line fingerprint (`run_id · mode · max · keyword · scored · +new`)
 - **Support rows** table — per-connection evidence counts and confidence (changes when corpus or caps differ)
 
-![Step 3 — Discovery results overview](/assets/images/dashboard/step3-discovery-results.png)
+![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }
 
-*Step 3 — synthetic cohort, ranked outputs, hypotheses, agent trace, and evidence table.*
+*Step 2 — synthetic cohort, ranked outputs, hypotheses, agent trace, and evidence table.*
 
 ---
 
-## Dashboard — Step 1 (Grant Proposal)
+## Dashboard — Step 3 (Grant Proposal)
 
-**Step 1** is separate from pipeline rankings and **not run-scoped**. It always loads the static bundled demo (`graded6`) via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html` with the **NIH proposal first** (open by default), then a single collapsed **Pipeline trace & audit** group containing four nested categories: **Pipeline & self-correction**, **Writer contract & selection**, **Booster & rigor lift**, and **Audit & corpus**. Hero KPIs, audit chips, and **Jump to** (Proposal + supporting details) — unchanged no matter which pipeline run you view in Step 3.
+**Step 3** is separate from pipeline rankings and **not run-scoped**. It always loads the static bundled demo (`graded6`) via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html` with the **NIH proposal first** (open by default), then a single collapsed **Pipeline trace & audit** group containing four nested categories: **Pipeline & self-correction**, **Writer contract & selection**, **Booster & rigor lift**, and **Audit & corpus**. Hero KPIs, audit chips, and **Jump to** (Proposal + supporting details) — unchanged no matter which pipeline run you view in Step 2.
 
-![Step 1 — Grant proposal tab](/assets/images/dashboard/step1-grant-proposal.png)
+![Step 3 — Grant proposal tab](/assets/images/dashboard/step3-grant-proposal.png)
 {: .doc-screenshot }
 
-*Step 1 — hero KPIs, audit status chips, Jump to (Proposal + supporting details), NIH proposal first with pipeline/writer/booster/audit nested below, and collapsible live-CLI instructions.*
+*Step 3 — hero KPIs, audit status chips, Jump to (Proposal + supporting details), NIH proposal first with pipeline/writer/booster/audit nested below, and collapsible live-CLI instructions.*
 
 | Jump to | Group | Sub-sections (collapsed by default) |
 |---------|-------|--------------------------------------|
@@ -106,7 +106,7 @@ Full pipeline response (demo mode, abbreviated):
 
 ## Recommendations (Agent 6)
 
-![Ranked outputs panel](/assets/images/dashboard/step3-ranked-treatments.png)
+![Ranked outputs panel](/assets/images/dashboard/step2-ranked-treatments.png)
 {: .doc-screenshot }
 
 *Ranked treatments with confidence bars and Prioritize / Monitor / Reject tiers.*
@@ -170,7 +170,7 @@ Only scored rows (with subgroup tags) affect confidence — see [Inputs](input).
 
 ## Agent trace
 
-![Agent trace and evidence audit](/assets/images/dashboard/step3-audit-evidence.png)
+![Agent trace and evidence audit](/assets/images/dashboard/step2-audit-evidence.png)
 {: .doc-screenshot }
 
 *Agent run trace (shared `run_id`) and paginated evidence preview with source links.*
@@ -242,7 +242,7 @@ Full live pull uses **Full live pull complete: stored N new…** and `"pipeline_
 
 ## Synthetic cohort (Patients A–E)
 
-![Synthetic cohort panel](/assets/images/dashboard/step3-synthetic-cohort.png)
+![Synthetic cohort panel](/assets/images/dashboard/step2-synthetic-cohort.png)
 {: .doc-screenshot }
 
 *Illustrative patient profiles (A–E) — synthetic only, no PHI.*
@@ -355,12 +355,12 @@ Database overview for dashboard KPI tiles:
 |-------|--------|
 | KPI strip | `GET /api/stats` + `runStats` from last run |
 | Run status strip | Complete / Partial / Running / Failed |
-| Step 2 — Configure & run | `POST /api/run-discovery` |
-| Step 3 — Pipeline diagram | Agent trace from `GET /api/agents?run_id=` |
+| Step 1 — Configure & run | `POST /api/run-discovery` |
+| Step 2 — Pipeline diagram | Agent trace from `GET /api/agents?run_id=` |
 | Synthetic cohort cards | `synthetic_cohort` in run response |
 | Ranked treatments | `GET /api/recommendations?run_id=` |
 | Evidence table | `GET /api/evidence?offset=&limit=` |
 | Recent runs | `GET /api/runs?limit=5` |
-| Step 1 — Grant proposal | `GET /api/cua/demo` · inlined `GET /cua-demo/graded6.html` |
+| Step 3 — Grant proposal | `GET /api/cua/demo` · inlined `GET /cua-demo/graded6.html` |
 
 See [Dashboard](dashboard) for how to run the UI locally.

@@ -48,14 +48,14 @@ shot() {
   echo "Wrote $file"
 }
 
-shot "$OUT/step2-configure-run.png" "http://127.0.0.1:8080/index.html" 4
+shot "$OUT/step1-configure-run.png" "http://127.0.0.1:8080/index.html" 4
 
-# Step 3 — append hash or click via JS not available; page boots to results if recs exist
-shot "$OUT/step3-discovery-results.png" "http://127.0.0.1:8080/index.html" 3
+# Step 2 — append hash or click via JS not available; page boots to results if recs exist
+shot "$OUT/step2-discovery-results.png" "http://127.0.0.1:8080/index.html" 3
 
 # Scroll regions approximated via tall window; optional element crops omitted
-shot "$OUT/step3-ranked-treatments.png" "http://127.0.0.1:8080/index.html" 2
-shot "$OUT/step3-synthetic-cohort.png" "http://127.0.0.1:8080/index.html" 2
-shot "$OUT/step3-audit-evidence.png" "http://127.0.0.1:8080/index.html" 2
+shot "$OUT/step2-ranked-treatments.png" "http://127.0.0.1:8080/index.html" 2
+shot "$OUT/step2-synthetic-cohort.png" "http://127.0.0.1:8080/index.html" 2
+shot "$OUT/step2-audit-evidence.png" "http://127.0.0.1:8080/index.html" 2
 
-echo "Done. For Step 1 (grant proposal tab) + element crops, use: cd neurodiscover && python3 scripts/capture_dashboard_screenshots.py"
+echo "Done. For Step 3 (grant proposal tab) + element crops, use: cd neurodiscover && python3 scripts/capture_dashboard_screenshots.py"

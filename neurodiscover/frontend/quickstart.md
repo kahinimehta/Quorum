@@ -150,12 +150,12 @@ python3 cli.py dashboard --skip-install --no-browser
 
 ## Using the UI
 
-1. **Step 1 — Grant Proposal** — static bundled `graded6` demo (not tied to your `run_id`). Hero KPIs, audit status chips, **Jump to** (Proposal + supporting details). The **NIH proposal appears first**; pipeline trace, writer contract, booster outcomes, and audit/ingestion are nested in one collapsed **Pipeline trace & audit** group below. **Run a live grant proposal (CLI)** is collapsible at the bottom. For a live run: `cd cua && pip install -e .` then `python -m cua.nih.run_db` with `ANTHROPIC_API_KEY` + `CUA_LIVE=1` (see `cua/README.md`).
-2. **Step 2 — Configure & Run** — pick **pipeline mode** (Rescore DB / Demo sample / Incremental scan / Full live pull), disease (default **Parkinson's**), max papers, keywords, extraction backend.
-3. Click the **run button** (label matches the selected mode). The **agent pipeline stepper** shows one agent **Running…** at a time; others **Waiting…** until **Done**.
-4. **Step 3 — Discovery Results** — synthetic cohort, ranked treatments, hypotheses, agent trace, evidence table (scores from **this run’s** recommendations).
+1. **Step 1 — Configure & Run** — pick **pipeline mode** (Rescore DB / Demo sample / Incremental scan / Full live pull), disease (default **Parkinson's**), max papers, keywords, extraction backend.
+2. Click the **run button** (label matches the selected mode). The **agent pipeline stepper** shows one agent **Running…** at a time; others **Waiting…** until **Done**.
+3. **Step 2 — Discovery Results** — synthetic cohort, ranked treatments, hypotheses, agent trace, evidence table (scores from **this run’s** recommendations).
+4. **Step 3 — Grant Proposal** — static bundled `graded6` demo (not tied to your `run_id`). Hero KPIs, audit status chips, **Jump to** (Proposal + supporting details). The **NIH proposal appears first**; pipeline trace, writer contract, booster outcomes, and audit/ingestion are nested in one collapsed **Pipeline trace & audit** group below. **Run a live grant proposal (CLI)** is collapsible at the bottom. For a live run: `cd cua && pip install -e .` then `python -m cua.nih.run_db` with `ANTHROPIC_API_KEY` + `CUA_LIVE=1` (see `cua/README.md`).
 
-`make dashboard` only runs demo once at startup. Change settings and rerun from Step 2 while the servers stay up.
+`make dashboard` only runs demo once at startup. Change settings and rerun from Step 1 while the servers stay up.
 
 **Confidence** updates when new evidence rows with `subgroup` + `mechanism` + `treatment` land in the DB and agents 2–6 rerun. Rescore on the same corpus without new rows may show similar numbers; check the literature step for `Stored N new evidence`.
 

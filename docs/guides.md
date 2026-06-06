@@ -80,7 +80,7 @@ cp .env.example .env
 
 ## CUA (optional grant proposal)
 
-Dashboard **Step 1** shows a **static** bundled demo (`graded6`) with hero KPIs, audit status chips, jump-to nav (Proposal + supporting details), and an inlined report with the **NIH proposal first** and pipeline/writer/booster/audit nested in one collapsed group below. To generate a new proposal from your DB:
+Dashboard **Step 3** shows a **static** bundled demo (`graded6`) with hero KPIs, audit status chips, jump-to nav (Proposal + supporting details), and an inlined report with the **NIH proposal first** and pipeline/writer/booster/audit nested in one collapsed group below. To generate a new proposal from your DB:
 
 ```bash
 cd cua && pip install -e .

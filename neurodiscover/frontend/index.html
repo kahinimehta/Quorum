@@ -1237,31 +1237,31 @@
   <div class="run-status-strip idle" id="globalRunStatus">
     <div class="run-status-inner">
       <span class="run-status-pill" id="globalRunStatusPill">Ready</span>
-      <span class="run-status-detail" id="globalRunStatusDetail">Open Grant Proposal for the static NIH demo, configure a run on Step 2, or view results on Step 3.</span>
+      <span class="run-status-detail" id="globalRunStatusDetail">Configure a run on Step 1, or open Step 2 to view the latest results.</span>
       <span class="run-status-meta" id="globalRunStatusMeta"></span>
     </div>
   </div>
   <nav class="tab-nav" aria-label="Dashboard navigation">
     <div class="tab-nav-inner">
-      <button type="button" class="tab-btn tab-btn-cua" data-view="cua">
-        <span class="tab-step">1</span>
-        <span class="tab-text">
-          <span class="tab-title">Grant Proposal<span class="tab-static-tag">Static</span></span>
-          <span class="tab-desc">Static NIH grant proposal demo</span>
-        </span>
-      </button>
       <button type="button" class="tab-btn tab-btn-run active" data-view="input">
-        <span class="tab-step">2</span>
+        <span class="tab-step">1</span>
         <span class="tab-text">
           <span class="tab-title">Configure &amp; Run Pipeline</span>
           <span class="tab-desc">Choose sources, mode, keywords — then start discovery</span>
         </span>
       </button>
       <button type="button" class="tab-btn tab-btn-results" data-view="results">
-        <span class="tab-step">3</span>
+        <span class="tab-step">2</span>
         <span class="tab-text">
           <span class="tab-title">Discovery Results</span>
           <span class="tab-desc">Synthetic cohort, ranked outputs, hypotheses &amp; evidence</span>
+        </span>
+      </button>
+      <button type="button" class="tab-btn tab-btn-cua" data-view="cua">
+        <span class="tab-step">3</span>
+        <span class="tab-text">
+          <span class="tab-title">Grant Proposal<span class="tab-static-tag">Static</span></span>
+          <span class="tab-desc">Static NIH grant proposal demo</span>
         </span>
       </button>
     </div>
@@ -1270,7 +1270,7 @@
   <div id="configHint" class="config-hint hidden" style="margin:1rem auto 0; max-width:1400px; padding:0 1.5rem;"></div>
 
   <div id="viewInput" class="hidden">
-    <p class="view-page-title">Step 2 — Configure &amp; Run <span>Launch the multi-agent pipeline with your chosen settings</span></p>
+    <p class="view-page-title">Step 1 — Configure &amp; Run <span>Launch the multi-agent pipeline with your chosen settings</span></p>
     <div class="layout">
     <aside>
       <div class="card">
@@ -1305,7 +1305,7 @@
           <li class="idle" data-agent="Conclusion Update Agent">Conclusion Update <span class="step-state">Idle</span></li>
         </ol>
         <p class="runs-hint" id="pipelineProgressHint" style="margin-top:0.65rem;margin-bottom:0;">
-          Progress stays here on Step 2 while a run is in flight. Open Step 3 for ranked outputs when finished.
+          Progress stays here on Step 1 while a run is in flight. Open Step 2 for ranked outputs when finished.
         </p>
       </div>
     </aside>
@@ -1402,7 +1402,7 @@
   </div>
 
   <div id="viewResults" class="hidden">
-    <p class="view-page-title">Step 3 — Discovery Results <span id="resultsSubtitle">Synthetic cohort · ranked treatments · research hypotheses</span></p>
+    <p class="view-page-title">Step 2 — Discovery Results <span id="resultsSubtitle">Synthetic cohort · ranked treatments · research hypotheses</span></p>
     <div class="results-wide">
       <div class="results-pills" id="resultsPills">
         <span class="badge ok" id="pillPipeline">Pipeline —</span>
@@ -1516,7 +1516,7 @@
   </div>
 
   <div id="viewCua" class="hidden">
-    <p class="view-page-title">Step 1 — Grant Proposal <span id="cuaSubtitle">Static NIH demo · independent of Steps 2–3</span></p>
+    <p class="view-page-title">Step 3 — Grant Proposal <span id="cuaSubtitle">Static NIH demo · independent of Steps 1–2</span></p>
     <div class="cua-wide">
       <div class="cua-shell-card cua-hero" id="cuaKpis">
         <div class="cua-hero-top" role="note">
@@ -2300,7 +2300,7 @@ python -m cua.nih.run_db \
         setRunStatus(
           'idle',
           'Ready',
-          'Database loaded. Run the pipeline on Step 2 to process a subset (e.g. max papers).',
+          'Database loaded. Run the pipeline on Step 1 to process a subset (e.g. max papers).',
           s.lastScanAt ? `Last scan ${formatScanTime(s.lastScanAt)}` : '',
         );
       }
@@ -3513,7 +3513,7 @@ python -m cua.nih.run_db \
             'complete',
             'Complete',
             `Run ${latestRunId} finished with ${syntheticCohort.length} synthetic profiles.`,
-            'Open Step 3 for discovery results.',
+            'Open Step 2 for discovery results.',
           );
         }
         syncPipelineUi(latestRunId, steps, 'complete');

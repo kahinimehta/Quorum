@@ -51,7 +51,23 @@ def main() -> int:
         page = browser.new_page(viewport={"width": 1440, "height": 900})
         wait_ready(page)
 
-        # Step 1 — grant proposal tab (viewport; full #viewCua is very tall)
+        # Step 1 — configure & run (input page)
+        page.locator('[data-view="input"]').click()
+        page.wait_for_selector("#viewInput:not(.hidden)", timeout=30_000)
+        time.sleep(0.75)
+        shot(page, "#viewInput", os.path.join(OUT, "step1-configure-run.png"))
+
+        # Step 2 — discovery results (output page; boot may already land here)
+        page.locator('[data-view="results"]').click()
+        page.wait_for_selector("#viewResults:not(.hidden)", timeout=30_000)
+        page.wait_for_selector("#syntheticCohort .syn-card, #topRecs .rec-card", timeout=30_000)
+        time.sleep(1)
+        shot(page, "#viewResults", os.path.join(OUT, "step2-discovery-results.png"))
+        shot(page, ".output-panel.panel-rank", os.path.join(OUT, "step2-ranked-treatments.png"))
+        shot(page, ".output-panel.panel-syn", os.path.join(OUT, "step2-synthetic-cohort.png"))
+        shot(page, ".audit-section", os.path.join(OUT, "step2-audit-evidence.png"))
+
+        # Step 3 — grant proposal tab (viewport; full #viewCua is very tall)
         page.locator('[data-view="cua"]').click()
         page.wait_for_selector("#viewCua:not(.hidden)", timeout=30_000)
         page.wait_for_selector("#cuaReportHost", timeout=30_000)
@@ -73,25 +89,9 @@ def main() -> int:
             }"""
         )
         time.sleep(1.5)
-        path1 = os.path.join(OUT, "step1-grant-proposal.png")
-        page.screenshot(path=path1, full_page=False)
-        print(f"Wrote {path1}")
-
-        # Step 2 — configure & run (input page)
-        page.locator('[data-view="input"]').click()
-        page.wait_for_selector("#viewInput:not(.hidden)", timeout=30_000)
-        time.sleep(0.75)
-        shot(page, "#viewInput", os.path.join(OUT, "step2-configure-run.png"))
-
-        # Step 3 — discovery results (output page; boot may already land here)
-        page.locator('[data-view="results"]').click()
-        page.wait_for_selector("#viewResults:not(.hidden)", timeout=30_000)
-        page.wait_for_selector("#syntheticCohort .syn-card, #topRecs .rec-card", timeout=30_000)
-        time.sleep(1)
-        shot(page, "#viewResults", os.path.join(OUT, "step3-discovery-results.png"))
-        shot(page, ".output-panel.panel-rank", os.path.join(OUT, "step3-ranked-treatments.png"))
-        shot(page, ".output-panel.panel-syn", os.path.join(OUT, "step3-synthetic-cohort.png"))
-        shot(page, ".audit-section", os.path.join(OUT, "step3-audit-evidence.png"))
+        path3 = os.path.join(OUT, "step3-grant-proposal.png")
+        page.screenshot(path=path3, full_page=False)
+        print(f"Wrote {path3}")
 
         browser.close()
     return 0

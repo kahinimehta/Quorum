@@ -11,16 +11,16 @@ What NeuroDiscover consumes — external evidence sources, API request bodies, a
 
 ---
 
-## Dashboard — Step 2 (Configure & Run)
+## Dashboard — Step 1 (Configure & Run)
 
 The UI maps directly to pipeline inputs: **one pipeline mode** (segmented control), keyword filter, max papers, pull options (full mode only), and extraction backend. A **single Run button** uses whichever mode is selected — there is no separate incremental-scan button.
 
-![Step 2 — Configure & run pipeline](/assets/images/dashboard/step2-configure-run.png)
+![Step 1 — Configure & run pipeline](/assets/images/dashboard/step1-configure-run.png)
 {: .doc-screenshot }
 
-*Step 2 — pick a pipeline mode, optional keyword filter, then click the run button (label matches the selected mode).*
+*Step 1 — pick a pipeline mode, optional keyword filter, then click the run button (label matches the selected mode).*
 
-### Pipeline modes (Step 2)
+### Pipeline modes (Step 1)
 
 | UI mode | API `mode` | What it does |
 |---------|------------|--------------|
@@ -68,7 +68,7 @@ Set `EXTRACT_BACKEND=nebius|ollama|none` in `.env` for structured LLM extraction
 
 ## POST /api/run-discovery (pipeline trigger)
 
-The form in **Step 2 — Configure & Run** (above) posts the same body the API accepts:
+The form in **Step 1 — Configure & Run** (above) posts the same body the API accepts:
 
 ```json
 {

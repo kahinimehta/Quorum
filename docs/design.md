@@ -84,7 +84,7 @@ flowchart TB
 | **Agents** | `neurodiscover/agents/` | Pure(ish) functions: read rows → return structured dict → orchestrator persists |
 | **Orchestrator** | `orchestrator.py` | Mode routing (demo / scan / full / agents-only), run_id, commits after each agent, run stats |
 | **API** | `api_server.py` | HTTP contract for dashboard; no business logic duplicated from agents |
-| **Dashboard** | `frontend/index.html` | Vanilla JS UI; polls `agent_outputs` for live pipeline progress on Step 2 |
+| **Dashboard** | `frontend/index.html` | Vanilla JS UI; polls `agent_outputs` for live pipeline progress on Step 1 |
 | **Contracts** | `schema.sql`, `schema.pg.sql`, `docs/developer-reference/` | Team source of truth for columns and I/O |
 
 Agents **do not import each other**. Agent 3 never calls Agent 2 — both read `evidence` through orchestrator-supplied rows. That lets Person 4 teammates implement agents in parallel without merge conflicts in shared classes.
@@ -192,7 +192,7 @@ Schema changes require updating `schema.sql`, `schema.pg.sql`, and docs together
 ## UI engineering choices
 
 - **Vanilla HTML/CSS/JS** — no bundler; demo-ready on any laptop after `pip install`
-- **Three-tab navigation** — Step 1 static grant proposal (`graded6`, proposal-first layout) · Step 2 configure & run · Step 3 discovery results
+- **Three-tab navigation** — Step 1 configure & run · Step 2 discovery results · Step 3 static grant proposal (`graded6`, proposal-first layout)
 - **FastAPI + optional Supabase anon keys** — API-first; browser secrets optional
 - **US Eastern timestamps** — consistent judge-facing run history
 

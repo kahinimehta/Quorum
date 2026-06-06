@@ -117,7 +117,7 @@ bundle exec jekyll serve
 
 | What | Where |
 |------|--------|
-| Agent trace | Dashboard Step 3, or `GET /api/agents?run_id=` |
+| Agent trace | Dashboard Step 2, or `GET /api/agents?run_id=` |
 | Stepper stuck on all Running | Hard-refresh after updating dashboard; stepper should show one **Running…** and rest **Waiting…** |
 | Confidence unchanged after pull | Check literature trace for `Stored 0 new`; new rows need `subgroup`/`mechanism`/`treatment`. Rescore alone does not add rows. See [Output — when confidence changes](output#when-confidence-changes) |
 | API server logs | Terminal running `api_server.py` / `make dashboard` |
@@ -132,7 +132,7 @@ bundle exec jekyll serve
 - [ ] Mode **demo**, max papers **10** (launcher default; API allows 10–500)  
 - [ ] No `cli.py build` against team Supabase  
 - [ ] Browser at the launcher **`Open:` URL** (includes `?api=`; not a stale GitHub Pages tab for live UI)  
-- [ ] **Step 2** — pipeline mode + run button; stepper shows one agent **Running…** at a time  
-- [ ] **Step 3** — synthetic cohort, ranked outputs, agent trace after run completes  
-- [ ] **Step 1** — NIH **Proposal** section open first; expand **Pipeline trace & audit** (nested categories) as needed (or use **Jump to**)  
+- [ ] **Step 1** — pipeline mode + run button; stepper shows one agent **Running…** at a time  
+- [ ] **Step 2** — synthetic cohort, ranked outputs, agent trace after run completes  
+- [ ] **Step 3** — NIH **Proposal** section open first; expand **Pipeline trace & audit** (nested categories) as needed (or use **Jump to**)  
 - [ ] Fallback docs: [neurodiscover.github.io](https://neurodiscover.github.io) · screenshots on [Output examples](output) and [Inputs](input)  
