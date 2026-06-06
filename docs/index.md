@@ -103,7 +103,7 @@ Opens the URL printed by the launcher (UI on **8080**, API default **5000** with
 {: .highlight }
 **Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the **`Open:` URL** from launcher output.
 
-Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Debugging](debugging)
+Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Debugging](debugging) · [Showcase pre-flight](debugging#pre-flight-local-before-showcase)
 
 {: .important }
 **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.

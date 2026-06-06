@@ -108,6 +108,8 @@ See [Developer reference](developer-reference/) for schema, agent I/O, and API d
 **Live UI:** `cd neurodiscover && make dashboard` — three tabs; use **demo** mode on stage.  
 **Docs site:** [neurodiscover.github.io](https://neurodiscover.github.io) (canonical; auto-deploys from `docs/` on push to `main`).
 
+**Showcase pre-flight:** [Debugging — pre-flight](debugging#pre-flight-local-before-showcase) · [Safe demo checklist](debugging#safe-demo-checklist-stage) · dashboard screenshots on [Output examples](output) and [Inputs](input) (full-width layout, KPI strip, collapsed audit/grant sections).
+
 Refresh dashboard screenshots after UI changes:
 
 ```bash

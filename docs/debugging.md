@@ -126,6 +126,30 @@ bundle exec jekyll serve
 
 ---
 
+## Pre-flight (local, before showcase)
+
+Run once on the laptop you will present from:
+
+```bash
+cd neurodiscover
+python3 cli.py validate
+python3 -c "
+import uuid
+from orchestrator import run
+r = run(mode='demo', max_papers=10, run_id=uuid.uuid4().hex[:8])
+assert len(r.get('recommendations', [])) >= 1
+assert len(r.get('agent_outputs', [])) >= 6
+print('demo pipeline OK — run_id', r.get('run_id'))
+"
+make dashboard --no-browser   # pre-run; open the Open: URL (includes ?api=)
+```
+
+**Step 3 smoke test** (with API running): `curl -s http://127.0.0.1:5000/api/cua/demo` should report `ingestion.corpus_n` **400** and `ingestion.top_k` **60**; `/cua-demo/graded6.html` should return NIH proposal HTML.
+
+**Docs site:** pushes to `docs/**` on `main` trigger **Deploy docs to neurodiscover.github.io** (Quorum → Actions). Confirm the latest run succeeded; live site at [neurodiscover.github.io](https://neurodiscover.github.io).
+
+---
+
 ## Safe demo checklist (stage)
 
 - [ ] Run `make dashboard` **before** presenting (not live pull on stage)  
