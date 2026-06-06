@@ -166,7 +166,7 @@ Trigger the agent pipeline (`orchestrator.py`).
 
 `mode`: `demo` | `scan` | `full` | `agents-only`
 
-Optional `run_id` — UI generates an 8-char id before POST so the pipeline stepper and `agent_outputs` share one trace from the start. **Full** mode passes it to `literature_agent.run()`.
+Optional `run_id` — UI generates an 8-char id before POST so the run status strip and `agent_outputs` share one trace from the start. **Full** mode passes it to `literature_agent.run()`.
 
 **agents-only** — skip literature pull; run agents 2–6 on existing evidence. Used automatically by `make dashboard` when `SUPABASE_DATABASE_URL` is set. Optional `max_papers` cap (API minimum 10; orchestrator accepts `0` = all rows).
 

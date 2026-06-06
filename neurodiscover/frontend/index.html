@@ -1244,6 +1244,7 @@
     }
     .mode-hint strong { color: var(--navy); font-weight: 600; }
     .field-muted { opacity: 0.55; pointer-events: none; }
+    .banner {
       border-radius: 8px;
       padding: 0.65rem 0.85rem;
       font-size: 0.8rem;
@@ -3292,9 +3293,12 @@ python -m cua.nih.run_db \
         const tx = treatmentDisplay(c.treatment);
         const row = document.createElement('div');
         row.className = 'bar-row';
+        const barLabel = tx.label && c.subgroup && tx.label !== c.subgroup
+          ? `${tx.label} · ${c.subgroup}`
+          : (tx.label || c.subgroup);
         row.innerHTML = `
           <div class="bar-label">
-            <span>${escapeHtml(tx.label || c.subgroup)}</span>
+            <span>${escapeHtml(barLabel)}</span>
             <span><span class="tier tier-${tier}">${tier}</span> ${pct}</span>
           </div>
           <div class="bar-track"><div class="bar-fill ${tierCls}" style="width:${pct}%"></div></div>`;

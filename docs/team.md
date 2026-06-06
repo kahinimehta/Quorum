@@ -103,4 +103,4 @@ flowchart TB
 - **Schema-first:** `schema.sql` + `developer-reference/agent-io.md` before agent code diverged  
 - **Shared `run_id`:** every agent appends to `agent_outputs` for audit  
 - **Safe demo path:** offline seed + synthetic cohort agreed early for showcase reliability  
-- **Dual Agent 6:** orchestrator formula rankings in the pipeline; **`cua/`** NIH proposal on dashboard Step 3 — Grant Proposal (static `graded6` demo — proposal at top, single **Pipeline trace & audit** collapse). Step 2 keeps agent trace under collapsed **Audit & provenance**.  
+- **Dual Agent 6:** orchestrator formula rankings in the pipeline; **`cua/`** NIH proposal on dashboard Step 3 — Grant Proposal (static `graded6` demo — expanded proposal · collapsed **Grant pipeline** + **Pipeline trace & audit**). Step 2 KPI strip + agent trace under collapsed **Audit & provenance**.  

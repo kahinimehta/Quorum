@@ -64,6 +64,7 @@ flowchart LR
 | Jump to | Layout | Content |
 |---------|--------|---------|
 | **Proposal** | Always visible (first in report) | NIH R01 proposal |
+| **Grant pipeline** | Collapsed block | Interactive agent-flow diagram |
 | **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion |
 
 Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
@@ -72,7 +73,7 @@ Timestamps display in **US Eastern** (`America/New_York`, labeled EST or EDT).
 
 | Panel | Route |
 |-------|--------|
-| DB / KPI tiles | `GET /api/stats` |
+| Step 2 KPI strip (database view) | `GET /api/stats` |
 | Subgroups / connections | `GET /api/discover/parkinsons` (legacy path; indication-agnostic) |
 | Recommendations | `GET /api/recommendations?run_id=` |
 | Recent runs | `GET /api/runs` |
@@ -93,7 +94,7 @@ Body (example): `{ "mode": "demo", "run_id": "abc12345", "max_papers": 10, "dise
 
 Response includes: `run_id`, `recommendations`, `agent_outputs` (alias `steps`), `synthetic_cohort`, `runStats` (processed vs database totals).
 
-Orchestrator modes (all run literature **in-process** with the client `run_id` for live stepper commits):
+Orchestrator modes (all run literature **in-process** with the client `run_id` for live run-status updates):
 
 - **demo** — offline seeded evidence; trace: `Demo mode: using N of M…`
 - **scan** — incremental pull; trace: `Starting incremental scan…` → `Incremental scan complete: stored N new…`

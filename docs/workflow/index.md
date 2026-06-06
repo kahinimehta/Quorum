@@ -54,7 +54,7 @@ flowchart LR
 
 Step 6 in the dashboard pipeline is formula-based ranking in the orchestrator (no LLM). The **`cua/`** package is the grant-proposal Agent 6 path — it writes an NIH R01 to local files and powers **Step 3 — Grant Proposal** in the dashboard — see [Conclusion Update → CUA package](conclusion-update#cua-package--nih-grant-proposal).
 
-**Agent 1** appends its own `agent_outputs` rows. **Agents 2–6** run in-process; the **orchestrator** persists SQL writes, logs `agent_outputs` (step_order 2–6), and **commits after each agent** so the dashboard stepper can poll live progress during `POST /api/run-discovery`.
+**Agent 1** appends its own `agent_outputs` rows. **Agents 2–6** run in-process; the **orchestrator** persists SQL writes, logs `agent_outputs` (step_order 2–6), and **commits after each agent** so the dashboard run status strip can poll live progress during `POST /api/run-discovery`.
 
 ---
 

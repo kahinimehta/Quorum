@@ -198,7 +198,7 @@ The form in **Step 1 — Configure & Run** (above) posts the same body the API a
 | Field | Values | Meaning |
 |-------|--------|---------|
 | `mode` | `demo` \| `scan` \| `full` \| `agents-only` | Offline seed / incremental scan / live pull / downstream-only on existing evidence |
-| `run_id` | string (optional) | Client-generated id (8 chars); UI sends this so the stepper tracks the run immediately. **Full** mode passes it to literature pull. |
+| `run_id` | string (optional) | Client-generated id (8 chars); UI sends this so the run status strip and `agent_outputs` share one trace from the start. **Full** mode passes it to literature pull. |
 | `max_papers` | **10–500** (API validated; **agents-only** may use **0** = all rows) | **Demo**: caps literature for agents 2–6. **Rescore**: cap if &gt; 0; **0** or UI ≥ 500 = full DB. **Scan/full**: caps pull size; agents 2–6 use full DB after ingest. See [What max papers does](#what-max_papers-does). |
 | `query` | string or null | Optional keyword filter passed to BioMCP |
 | `disease` | string | Literature anchor; dashboard default **Parkinson's** (API default `"Parkinson disease"` if omitted) |

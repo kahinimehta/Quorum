@@ -239,7 +239,7 @@ Timestamps display in **US Eastern** (`America/New_York`).
 
 | Panel | Route |
 |-------|--------|
-| DB / KPI tiles | `GET /api/stats` |
+| Step 2 KPI strip (database view) | `GET /api/stats` |
 | Subgroups / connections | `GET /api/discover/parkinsons` (legacy path; indication-agnostic) |
 | Recommendations | `GET /api/recommendations?run_id=` |
 | Recent runs | `GET /api/runs` |

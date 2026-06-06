@@ -335,7 +335,7 @@ Route: `GET /api/synthetic-cohort?run_id=abc123`
 
 ## GET /api/stats
 
-Database overview for dashboard KPI tiles:
+Database overview for the Step 2 KPI strip (before a run switches subtitles to **this run**):
 
 ```json
 {

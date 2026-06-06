@@ -118,7 +118,7 @@ bundle exec jekyll serve
 | What | Where |
 |------|--------|
 | Agent trace | Dashboard Step 2, or `GET /api/agents?run_id=` |
-| Stepper stuck on all Running | Hard-refresh after updating dashboard; stepper should show one **Running…** and rest **Waiting…** |
+| Run status stuck on Running | Hard-refresh after updating dashboard; global run status strip should show **Running** then **Complete** when `GET /api/run-discovery/status` finishes |
 | Confidence unchanged after pull | Check literature trace for `Stored 0 new`; new rows need `subgroup`/`mechanism`/`treatment`. Rescore alone does not add rows. See [Output — when confidence changes](output#when-confidence-changes) |
 | API server logs | Terminal running `api_server.py` / `make dashboard` |
 | GitHub deploy | Quorum → Actions → **Deploy docs to neurodiscover.github.io** |

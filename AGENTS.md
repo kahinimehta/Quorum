@@ -91,7 +91,7 @@ its own table. The backend serves the final tables to the dashboard.
 | 6 | Conclusion Update | scored `treatment_connections` | `recommendations` (orchestrator) · `cua/` NIH grant proposal (read-only, local files; Step 3 tab) |
 
 Every agent appends one row to `agent_outputs` (run_id, step_order, summary) as it
-runs. The dashboard reads `agent_outputs` for the agent run trace (Step 2 **Audit & provenance**, collapsed by default) and for live Step 1 stepper progress during a run.
+runs. The dashboard reads `agent_outputs` for the agent run trace (Step 2 **Audit & provenance**, collapsed by default) and for the global **run status strip** during a run.
 
 ## Database (SQLite or Supabase)
 Schema is in `neurodiscover/schema.sql` (SQLite) and `neurodiscover/schema.pg.sql` (Postgres). See [`docs/developer-reference/database.md`](docs/developer-reference/database.md).

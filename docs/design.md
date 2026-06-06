@@ -192,7 +192,7 @@ Schema changes require updating `schema.sql`, `schema.pg.sql`, and docs together
 ## UI engineering choices
 
 - **Vanilla HTML/CSS/JS** — no bundler; demo-ready on any laptop after `pip install`
-- **Three-tab navigation** — Step 1 configure & run (live stepper) · Step 2 discovery results (three output panels; **Audit & provenance** collapsed) · Step 3 static grant proposal (`graded6`, last tab; proposal expanded at top, one **Pipeline trace & audit** collapse for supporting sections, **Jump to** nav)
+- **Three-tab navigation** — Step 1 configure & run (full-width config + run status strip) · Step 2 discovery results (KPI strip · three output panels; **Audit & provenance** collapsed) · Step 3 static grant proposal (`graded6`; expanded proposal · collapsed **Grant pipeline** + **Pipeline trace & audit**; **Jump to** nav)
 - **FastAPI + optional Supabase anon keys** — API-first; browser secrets optional
 - **US Eastern timestamps** — consistent judge-facing run history
 
