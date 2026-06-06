@@ -881,6 +881,12 @@
     .panel-rank .output-panel-head { background: #fffbeb; border-top: 3px solid var(--amber); }
     .panel-hyp .output-panel-head { background: #eff6ff; border-top: 3px solid var(--primary); }
     .output-panel-body { padding: 0.75rem 0.85rem 1rem; }
+    .panel-rank .output-panel-body {
+      max-height: min(52vh, 480px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
     .cohort-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -4072,23 +4078,61 @@ python -m cua.nih.run_db \
       .abtag.base { background: #f1f5f9 !important; color: #64748b !important; }
       .abfill.boost { background: #38bdf8 !important; }
       .abfill.base { background: #94a3b8 !important; }
-      .cua-pipeline-block {
-        margin-top: 1.25rem !important;
-        padding-top: 1rem !important;
-        border-top: 1px dashed #e2e8f0 !important;
+      details.cua-pipeline-details {
+        margin-top: 0.65rem !important;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.55);
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(15, 32, 68, 0.08), 0 4px 12px rgba(15, 32, 68, 0.04);
       }
-      .cua-pipeline-block-head {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        gap: 0.5rem 1rem !important;
-        margin-bottom: 0.65rem !important;
+      summary.cua-pipeline-summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem 0.75rem;
+        padding: 0.65rem 0.85rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #64748b;
+        user-select: none;
       }
-      .cua-pipeline-block-title {
-        font-size: 0.92rem !important;
-        font-weight: 700 !important;
-        color: var(--navy) !important;
+      summary.cua-pipeline-summary::-webkit-details-marker { display: none; }
+      summary.cua-pipeline-summary::before {
+        content: '▸ ';
+        font-size: 0.75rem;
+        color: #0f2044;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+      details.cua-pipeline-details[open] > summary.cua-pipeline-summary::before { content: '▾ '; }
+      .cua-pipeline-title {
+        font: inherit;
+        color: inherit;
+        letter-spacing: inherit;
+        text-transform: inherit;
+        line-height: inherit;
+      }
+      .cua-pipeline-hint {
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        text-transform: none;
+        color: #64748b;
+        opacity: 0.85;
+        font-size: inherit;
+        line-height: inherit;
+      }
+      .cua-pipeline-body {
+        padding: 0 0.85rem 0.85rem;
+      }
+      .cua-pipeline-link-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 0.35rem;
       }
       .cua-pipeline-full-link {
         font-size: 0.78rem !important;
@@ -4384,6 +4428,11 @@ python -m cua.nih.run_db \
       { match: /^audit/i, cls: 'cua-sec-audit', short: 'Audit' },
       { match: /ingestion/i, cls: 'cua-sec-ingest', short: 'Ingestion' },
     ];
+    const CUA_PIPELINE_GROUP = {
+      id: 'cua-grant-pipeline',
+      title: 'Grant pipeline',
+      hint: 'Interactive multi-agent flow diagram',
+    };
     const CUA_SUPPORT_GROUP = {
       id: 'cua-group-support',
       title: 'Pipeline trace & audit',
@@ -4524,34 +4573,46 @@ python -m cua.nih.run_db \
       }
     }
 
-    function moveCuaPipelineDiagramAfterProposal(root, proposalSec) {
+    function createCuaPipelineCollapse(root) {
       const loopSec = root.querySelector('section.cua-sec-loop');
-      if (!loopSec || !proposalSec) return;
+      if (!loopSec) return null;
       const diagramWrap = loopSec.querySelector('.diagram-wrap');
-      if (!diagramWrap) return;
+      if (!diagramWrap) return null;
 
-      const block = document.createElement('div');
-      block.className = 'cua-pipeline-block';
-      const head = document.createElement('div');
-      head.className = 'cua-pipeline-block-head';
+      const details = document.createElement('details');
+      details.className = 'cua-pipeline-details';
+      details.id = CUA_PIPELINE_GROUP.id;
+
+      const summary = document.createElement('summary');
+      summary.className = 'cua-pipeline-summary';
       const title = document.createElement('span');
-      title.className = 'cua-pipeline-block-title';
-      title.textContent = 'Grant pipeline';
+      title.className = 'cua-pipeline-title';
+      title.textContent = CUA_PIPELINE_GROUP.title;
+      const hint = document.createElement('span');
+      hint.className = 'cua-pipeline-hint';
+      hint.textContent = CUA_PIPELINE_GROUP.hint;
+      summary.append(title, hint);
+
+      const body = document.createElement('div');
+      body.className = 'cua-pipeline-body';
+      const linkRow = document.createElement('div');
+      linkRow.className = 'cua-pipeline-link-row';
       const fullLink = document.createElement('a');
       fullLink.className = 'cua-pipeline-full-link';
       fullLink.href = CUA_STATIC_REPORT_URL;
       fullLink.target = '_blank';
       fullLink.rel = 'noopener';
       fullLink.textContent = 'Open full report →';
-      head.append(title, fullLink);
-      block.append(head, diagramWrap);
-      proposalSec.appendChild(block);
+      linkRow.appendChild(fullLink);
+      body.append(linkRow, diagramWrap);
+      details.append(summary, body);
 
       const loopLead = loopSec.querySelector(':scope > p.lead');
       if (loopLead) {
         loopLead.textContent =
-          'Round-by-round revise loop, citation gate, and booster detail live in Pipeline trace & audit below.';
+          'Expand Grant pipeline above for the interactive diagram. Round-by-round revise loop, citation gate, and booster detail are below.';
       }
+      return details;
     }
 
     function reorganizeCuaSections(root) {
@@ -4589,9 +4650,10 @@ python -m cua.nih.run_db \
       if (proposal) {
         unwrapCuaSectionDetails(proposal);
         proposal.classList.add('cua-sec-first');
-        moveCuaPipelineDiagramAfterProposal(root, proposal);
         layout.appendChild(proposal);
         byCls.delete('cua-sec-proposal');
+        const pipelineCollapse = createCuaPipelineCollapse(root);
+        if (pipelineCollapse) layout.appendChild(pipelineCollapse);
       }
 
       const supportSections = [];
@@ -4673,6 +4735,14 @@ python -m cua.nih.run_db \
           const host = document.getElementById('cuaReportHost');
           openCuaSectionTarget(host.shadowRoot?.getElementById(proposal.id));
         }, 'cua-toc-proposal');
+      }
+
+      const pipeline = wrap?.querySelector(`#${CUA_PIPELINE_GROUP.id}`);
+      if (pipeline) {
+        addLink('Grant pipeline', () => {
+          pipeline.open = true;
+          pipeline.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 'cua-toc-pipeline');
       }
 
       addLink('Supporting details', () => {

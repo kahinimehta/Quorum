@@ -80,7 +80,9 @@ def main() -> int:
               const host = document.getElementById('cuaReportHost');
               const layout = host?.shadowRoot?.querySelector('.cua-report-layout');
               const proposal = layout?.querySelector('section.cua-sec-proposal');
-              return !!proposal && layout?.firstElementChild?.classList?.contains('cua-sec-proposal');
+              const pipeline = layout?.querySelector('#cua-grant-pipeline');
+              return !!proposal && !!pipeline
+                && layout?.firstElementChild?.classList?.contains('cua-sec-proposal');
             }""",
             timeout=90_000,
         )

@@ -26,24 +26,25 @@ Layout top-to-bottom:
 ![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }
 
-*Step 2 — ideal candidate profiles, ranked outputs, hypotheses; discovery pipeline and audit & provenance below.*
+*Step 2 — ideal candidate profiles, scrollable ranked outputs, hypotheses; discovery pipeline and audit & provenance below.*
 
 ---
 
 ## Dashboard — Step 3 (Grant Proposal)
 
-**Step 3** is separate from pipeline rankings and **not run-scoped**. It loads bundled `graded6` via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html`. **The proposal** stays expanded (aims + **Grant pipeline** diagram + Open full report); **Pipeline trace & audit** is one collapsed group for contract, booster, audit, and ingestion prose. Hero KPIs and **Jump to** are unchanged across Step 2 runs.
+**Step 3** is separate from pipeline rankings and **not run-scoped**. It loads bundled `graded6` via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html`. **The proposal** stays expanded (NIH aims + PubMed ID citations); **Grant pipeline** is a separate collapsed block with the agent-flow diagram; **Pipeline trace & audit** is one collapsed group for contract, booster, audit, and ingestion prose. Hero KPIs and **Jump to** are unchanged across Step 2 runs.
 
 ![Step 3 — Grant proposal tab](/assets/images/dashboard/step3-grant-proposal.png)
 {: .doc-screenshot }
 
-*Step 3 — hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3), report toolbar **17/21 obligations satisfied**, proposal with PubMed ID citations and pipeline diagram below aims, one collapsed supporting-details group.*
+*Step 3 — hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3), report toolbar **17/21 obligations satisfied**, expanded proposal, collapsed Grant pipeline + Pipeline trace & audit.*
 
 **Verified papers** is not the full database — it is ingestion’s `top_k` (60 in `graded6`) after clustering and relevance ranking. The full **corpus** (400) still backs citation integrity. See [Dashboard — Corpus vs verified papers](dashboard#corpus-vs-verified-papers).
 
 | Jump to | Layout | Content |
 |---------|--------|---------|
-| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims; **PubMed ID** / NCT / Grant citation links; **Grant pipeline** diagram below aims |
+| **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims; **PubMed ID** / NCT / Grant citation links |
+| **Grant pipeline** | Collapsed block | Interactive agent-flow diagram + **Open full report** link |
 | **Supporting details** | One collapsed group | Contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion |
 
 To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package--nih-grant-proposal)).

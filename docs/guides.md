@@ -82,7 +82,7 @@ cp .env.example .env
 
 ## CUA — NIH grant proposal (Step 3)
 
-Dashboard **Step 3** shows a **static** bundled demo (`graded6`) with hero KPIs (**corpus papers** = full pull, **verified papers** = top-K slice selected for drafting — see [Dashboard — Corpus vs verified papers](dashboard#corpus-vs-verified-papers)), **Jump to** nav (Proposal + supporting details), and an inlined report: **The proposal** (aims + **Grant pipeline** diagram) expanded at the top; pipeline/audit prose behind one collapsed **Pipeline trace & audit** group. Toolbar shows **`x/y obligations satisfied`**. To generate a new proposal from your DB:
+Dashboard **Step 3** shows a **static** bundled demo (`graded6`) with hero KPIs (**corpus papers** = full pull, **verified papers** = top-K slice selected for drafting — see [Dashboard — Corpus vs verified papers](dashboard#corpus-vs-verified-papers)), **Jump to** nav (Proposal · Grant pipeline · Supporting details), and an inlined report: **The proposal** expanded at the top; **Grant pipeline** and **Pipeline trace & audit** each in their own collapsed block. Toolbar shows **`x/y obligations satisfied`**. Step 2 **ranked outputs** panel scrolls when the confidence list is long. To generate a new proposal from your DB:
 
 ```bash
 cd cua && pip install -e .
