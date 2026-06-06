@@ -285,7 +285,7 @@
     .tab-btn-results.active .tab-step { background: #16a34a; }
     .tab-btn-cua.active { border-color: #7c3aed; background: linear-gradient(135deg, #f5f3ff 0%, #fff 100%); box-shadow: 0 4px 16px rgba(124, 58, 237, 0.18); }
     .tab-btn-cua.active .tab-step { background: #7c3aed; color: #fff; }
-    .cua-wide { max-width: 1400px; margin: 0 auto; padding: 1rem 1.5rem 2.5rem; }
+    .cua-wide { max-width: 1400px; margin: 0 auto; padding: 0.75rem 1.5rem 2rem; }
     .cua-banner {
       border-left: 4px solid #7c3aed;
       background: linear-gradient(90deg, #f5f3ff 0%, #fff 14%);
@@ -293,66 +293,97 @@
     }
     .cua-kpi-row {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.65rem;
-      margin-bottom: 1rem;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
     }
     @media (max-width: 900px) { .cua-kpi-row { grid-template-columns: repeat(2, 1fr); } }
     .cua-kpi {
       text-align: center;
-      padding: 0.65rem 0.5rem;
-      border-radius: 8px;
-      background: var(--bg);
+      padding: 0.85rem 0.65rem;
+      border-radius: 10px;
+      background: var(--card);
       border: 1px solid var(--border);
+      box-shadow: var(--shadow);
     }
-    .cua-kpi .val { font-size: 1.2rem; font-weight: 700; color: #5b21b6; }
-    .cua-kpi .lbl { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .cua-kpi .val { font-size: 1.4rem; font-weight: 700; color: #5b21b6; }
+    .cua-kpi .lbl { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
     .cua-report-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0.75rem;
       flex-wrap: wrap;
-      margin: 0.5rem 0 0.75rem;
-      font-size: 0.78rem;
-      color: var(--muted);
+      margin: 0 0 0.85rem;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    .cua-report-toolbar strong { font-size: 1rem; color: var(--navy); }
+    .cua-report-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 1rem 1.15rem 1.25rem;
+      overflow: visible;
     }
     .cua-report-inline {
       width: 100%;
-      margin-top: 0.25rem;
+      margin-top: 0;
+      min-height: 120px;
+    }
+    .cua-report-inline::part(host),
+    #cuaReportHost { display: block; width: 100%; }
+    .cua-cli-wrap { margin-top: 1rem; }
+    .cua-cli-wrap summary {
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--navy);
+      padding: 0.5rem 0;
+      list-style: none;
+    }
+    .cua-cli-wrap summary::-webkit-details-marker { display: none; }
+    .cua-cli-wrap summary::before { content: '▸ '; color: var(--purple); }
+    .cua-cli-wrap[open] summary::before { content: '▾ '; }
+    .cua-cli-hint {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin: 0 0 0.65rem;
+      line-height: 1.5;
     }
     .cua-cli {
-      font-size: 0.72rem;
+      font-size: 0.82rem;
       background: #1e293b;
       color: #e2e8f0;
       border-radius: 8px;
-      padding: 0.65rem 0.75rem;
+      padding: 0.75rem 0.85rem;
       overflow-x: auto;
       margin: 0;
-      line-height: 1.5;
+      line-height: 1.55;
     }
-    .cua-unavail { color: var(--muted); font-size: 0.85rem; padding: 1rem 0; }
+    .cua-unavail { color: var(--muted); font-size: 0.92rem; padding: 1rem 0; }
     .cua-static-bar {
       display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
+      align-items: center;
+      gap: 0.75rem;
       flex-wrap: wrap;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1rem;
       margin-bottom: 1rem;
       border-radius: 10px;
       border: 1px solid #c4b5fd;
       background: #f5f3ff;
-      font-size: 0.8rem;
-      line-height: 1.45;
+      font-size: 0.9rem;
+      line-height: 1.5;
       color: #4c1d95;
     }
     .cua-static-badge {
       flex-shrink: 0;
       display: inline-flex;
       align-items: center;
-      padding: 0.2rem 0.55rem;
+      padding: 0.25rem 0.6rem;
       border-radius: 999px;
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -1099,7 +1130,7 @@
         <span class="tab-step">3</span>
         <span class="tab-text">
           <span class="tab-title">Grant Proposal (CUA)<span class="tab-static-tag">Static</span></span>
-          <span class="tab-desc">Bundled <code>graded6</code> demo — never changes with your pipeline run</span>
+          <span class="tab-desc">Static NIH grant proposal demo</span>
         </span>
       </button>
     </div>
@@ -1358,11 +1389,7 @@
     <div class="cua-wide">
       <div class="cua-static-bar" role="note">
         <span class="cua-static-badge">Static demo</span>
-        <span>
-          This tab always shows the pre-rendered <code>graded6</code> sample (~400-paper team corpus → 60 writer view).
-          It does <strong>not</strong> update when you run the pipeline, pick a mode, or open a different run in Step&nbsp;2.
-          Steps 1–2 are run-scoped; Step&nbsp;3 is a fixed showcase. Generate a new proposal with the CLI below.
-        </span>
+        <span>Pre-rendered <code>graded6</code> sample (400-paper corpus → 60 writer view). Fixed showcase — not run-scoped.</span>
       </div>
       <div class="cua-kpi-row" id="cuaKpis">
         <div class="cua-kpi"><div class="val" id="cuaKpiCorpus">—</div><div class="lbl">Corpus papers</div></div>
@@ -1375,23 +1402,25 @@
         CUA demo artifacts not found. Ensure <code>cua/outputs/graded6.*</code> exists in the repo.
       </div>
       <div id="cuaMain">
-        <div class="cua-report-toolbar">
-          <span><strong id="cuaReportTitle">Grant proposal report</strong> · <span id="cuaReportMeta">graded6 static demo</span></span>
-          <a class="btn btn-secondary" id="cuaReportOpen" href="#" target="_blank" rel="noopener" style="font-size:0.72rem;padding:0.35rem 0.65rem;">Open standalone HTML</a>
+        <div class="cua-report-card">
+          <div class="cua-report-toolbar">
+            <span><strong id="cuaReportTitle">Grant proposal report</strong><br><span id="cuaReportMeta" style="font-size:0.88rem;color:var(--muted);font-weight:400;">graded6 static demo</span></span>
+            <a class="btn btn-secondary" id="cuaReportOpen" href="#" target="_blank" rel="noopener">Open full page</a>
+          </div>
+          <div id="cuaReportHost" class="cua-report-inline" aria-live="polite">Loading grant proposal…</div>
         </div>
-        <div id="cuaReportHost" class="cua-report-inline" aria-live="polite">Loading grant proposal…</div>
-        <div class="card" style="margin-top:1.25rem;">
-          <h2 style="margin-top:0;">Run live (CLI)</h2>
-          <p style="font-size:0.75rem;color:var(--muted);margin:0 0 0.5rem;">
-            To generate a new proposal, run CUA yourself. Read-only against Supabase or local SQLite —
-            writes local JSON only (not <code>recommendations</code>). <code>--run-id</code> labels the CUA output folder, not a dashboard pipeline run.
+        <details class="cua-cli-wrap card">
+          <summary>Run a live CUA proposal (CLI)</summary>
+          <p class="cua-cli-hint">
+            Read-only against Supabase or local SQLite — writes local JSON only (not <code>recommendations</code>).
+            <code>--run-id</code> labels the CUA output folder, not a dashboard pipeline run.
           </p>
           <pre class="cua-cli">cd cua &amp;&amp; pip install -e .
 export CUA_LIVE=1 ANTHROPIC_API_KEY=...
 python -m cua.nih.run_db \
   --db "$SUPABASE_DATABASE_URL" \
   --run-id my-cua-run --capture-content</pre>
-        </div>
+        </details>
       </div>
     </div>
   </div>
@@ -3375,6 +3404,53 @@ python -m cua.nih.run_db \
     const CUA_STATIC_REPORT_URL = `${API_BASE}/cua-demo/${CUA_STATIC_DEMO_ID}.html`;
     let cuaLoaded = false;
 
+    const CUA_INLINE_OVERRIDES = `
+      :host { display: block; width: 100%; color: #1a1f2e; }
+      header { margin: -0.25rem -0.5rem 1.25rem; border-radius: 10px; overflow: hidden; }
+      .wrap { max-width: none; padding: 0 0.25rem 2rem; }
+      body { font-size: 16px; line-height: 1.6; }
+      h1 { font-size: 1.35rem !important; }
+      .sub { font-size: 0.95rem !important; line-height: 1.5 !important; }
+      .badge { font-size: 0.82rem !important; padding: 6px 12px !important; }
+      .chip { min-width: 5.5rem; padding: 10px 14px !important; }
+      .chip .k { font-size: 0.72rem !important; }
+      .chip .v { font-size: 1.15rem !important; }
+      h2 { font-size: 1.15rem; }
+      .lead { font-size: 0.95rem !important; line-height: 1.55; }
+      .dim { font-size: 0.82rem !important; }
+      .d-panel { overflow: visible !important; height: auto !important; min-height: 4.5rem; padding: 8px 12px !important; }
+      .dp-h { font-size: 0.72rem !important; }
+      .dp-c { font-size: 0.86rem !important; line-height: 1.5 !important; }
+      .dm { font-size: 0.78rem !important; }
+      .dnl b { font-size: 0.9rem !important; }
+      .obl li { font-size: 0.88rem !important; line-height: 1.5 !important; }
+      .ev-role { font-size: 0.88rem !important; }
+      .ev-dec { font-size: 0.8rem !important; }
+      .pmore { font-size: 0.78rem !important; }
+      code { font-size: 0.8rem !important; }
+      table { font-size: 0.88rem !important; }
+      th { font-size: 0.8rem !important; }
+      .diagram { max-width: 100%; margin: 0 auto; overflow-x: auto; overflow-y: visible; }
+      section { margin: 1.75rem 0; }
+      .card { padding: 1rem 1.1rem; }
+      footer { font-size: 0.85rem; }
+    `;
+
+    function fixCuaHtmlEntities(root) {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(node => {
+        if (/&(?:amp;)?#x27;|&(?:amp;)?#39;/.test(node.textContent)) {
+          node.textContent = node.textContent
+            .replace(/&amp;#x27;/g, "'")
+            .replace(/&amp;#39;/g, "'")
+            .replace(/&#x27;/g, "'")
+            .replace(/&#39;/g, "'");
+        }
+      });
+    }
+
     async function loadCuaReportInline() {
       const host = document.getElementById('cuaReportHost');
       const htmlRes = await fetch(CUA_STATIC_REPORT_URL);
@@ -3385,9 +3461,13 @@ python -m cua.nih.run_db \
       shadow.innerHTML = '';
       const style = doc.querySelector('style');
       if (style) shadow.appendChild(style.cloneNode(true));
+      const override = document.createElement('style');
+      override.textContent = CUA_INLINE_OVERRIDES;
+      shadow.appendChild(override);
       Array.from(doc.body.childNodes).forEach(node => {
         shadow.appendChild(node.cloneNode(true));
       });
+      fixCuaHtmlEntities(shadow);
       host.textContent = '';
     }
 
