@@ -114,6 +114,7 @@ Refresh dashboard screenshots after UI changes:
 cd neurodiscover
 make dashboard --no-browser   # or running API :5000 + UI :8080
 python3 scripts/capture_dashboard_screenshots.py
+# → Step 2 overview captures .results-shell (centered column)
 ```
 
 ## Site publishing
