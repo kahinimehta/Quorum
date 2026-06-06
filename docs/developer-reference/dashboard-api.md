@@ -56,7 +56,7 @@ flowchart LR
 | KPI strip | Per-type counts; subtitles switch to **this run** after a pipeline completes |
 | Run status strip | Ready / Running / Complete / Partial / Failed |
 | **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button. Mode FAQ: [Inputs — pipeline modes](../input#recommended-workflow) |
-| **Step 2** | **Pipeline complete** badge beside title; ideal candidate profiles, ranked outputs (matched to profiles panel height, scrolls when longer), and hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed (agent trace + evidence table inside) |
+| **Step 2** | **Pipeline complete** badge beside title; three output panels — hypotheses sets height; ideal candidate profiles and ranked outputs match it and scroll when longer; discovery pipeline diagram; **Audit & provenance** collapsed (agent trace + evidence table inside) |
 | **Step 3** | Static grant proposal — bundled `graded6` demo inlined (not run-scoped); **The proposal** expanded first; **Grant pipeline** in separate collapsed block; audit prose in collapsed **Pipeline trace & audit**; **Jump to** → Proposal · Grant pipeline · Supporting details; toolbar **`x/y obligations satisfied`** |
 
 ### Step 3 — report structure

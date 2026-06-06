@@ -884,6 +884,7 @@
     .panel-rank .output-panel-head { background: #fffbeb; border-top: 3px solid var(--amber); }
     .panel-hyp .output-panel-head { background: #eff6ff; border-top: 3px solid var(--primary); }
     .output-panel-body { padding: 0.75rem 0.85rem 1rem; }
+    .panel-syn .output-panel-body,
     .panel-rank .output-panel-body {
       flex: 1;
       min-height: 0;
@@ -3042,25 +3043,29 @@ python -m cua.nih.run_db \
       }
     }
 
-    let rankPanelResizeObs = null;
+    let matchedPanelResizeObs = null;
 
-    function syncRankPanelHeight() {
+    function syncMatchedOutputPanelHeights() {
+      const hyp = document.querySelector('.outputs-three .panel-hyp.output-panel');
       const syn = document.querySelector('.outputs-three .panel-syn.output-panel');
       const rank = document.querySelector('.outputs-three .panel-rank.output-panel');
-      if (!syn || !rank) return;
+      if (!hyp) return;
       if (window.matchMedia('(max-width: 1100px)').matches) {
-        rank.style.height = '';
+        if (syn) syn.style.height = '';
+        if (rank) rank.style.height = '';
         return;
       }
-      rank.style.height = `${syn.offsetHeight}px`;
+      const h = `${hyp.offsetHeight}px`;
+      if (syn) syn.style.height = h;
+      if (rank) rank.style.height = h;
     }
 
-    function initRankPanelHeightSync() {
-      const syn = document.querySelector('.outputs-three .panel-syn.output-panel');
-      if (!syn || rankPanelResizeObs) return;
-      rankPanelResizeObs = new ResizeObserver(() => syncRankPanelHeight());
-      rankPanelResizeObs.observe(syn);
-      window.addEventListener('resize', syncRankPanelHeight);
+    function initMatchedOutputPanelHeights() {
+      const hyp = document.querySelector('.outputs-three .panel-hyp.output-panel');
+      if (!hyp || matchedPanelResizeObs) return;
+      matchedPanelResizeObs = new ResizeObserver(() => syncMatchedOutputPanelHeights());
+      matchedPanelResizeObs.observe(hyp);
+      window.addEventListener('resize', syncMatchedOutputPanelHeights);
     }
 
     function renderSyntheticCohort(cohort) {
@@ -3099,7 +3104,6 @@ python -m cua.nih.run_db \
           <span class="pill-phi">🔒 Synthetic · no PHI</span>`;
         box.appendChild(card);
       });
-      requestAnimationFrame(syncRankPanelHeight);
     }
 
     function renderHypotheses(recommendations) {
@@ -3320,7 +3324,7 @@ python -m cua.nih.run_db \
 
       renderHypotheses(displayRanked);
       renderContinuousUpdate(displayRanked);
-      requestAnimationFrame(syncRankPanelHeight);
+      requestAnimationFrame(syncMatchedOutputPanelHeights);
 
       const rid = runId || latestRunId;
       renderRunReport(rid, lastRunConfig, rs, recommendations, false);
@@ -4944,7 +4948,7 @@ python -m cua.nih.run_db \
         b.classList.toggle('active', b.dataset.view === name);
       });
       if (name === 'cua' && !cuaLoaded) loadCuaTab();
-      if (name === 'results') requestAnimationFrame(syncRankPanelHeight);
+      if (name === 'results') requestAnimationFrame(syncMatchedOutputPanelHeights);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -4969,7 +4973,7 @@ python -m cua.nih.run_db \
     document.getElementById('evNext').addEventListener('click', () => { evPage++; loadEvidencePage(); });
 
     async function boot() {
-      initRankPanelHeightSync();
+      initMatchedOutputPanelHeights();
       initSupabase();
       await loadCounts();
       await loadSubgroups();

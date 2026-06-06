@@ -26,7 +26,7 @@ Layout top-to-bottom:
 ![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }
 
-*Step 2 — ideal candidate profiles, ranked outputs (same height as profiles panel, scrolls when longer), hypotheses; discovery pipeline and audit & provenance below.*
+*Step 2 — ideal candidate profiles and ranked outputs match research hypotheses height (scroll when longer); discovery pipeline and audit & provenance below.*
 
 ---
 
