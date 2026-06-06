@@ -3782,47 +3782,54 @@ python -m cua.nih.run_db \
       }
       .cua-cat-body > section.cua-sec { margin: 0 !important; }
       details.cua-group-details {
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.55);
         overflow: hidden;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
-      }
-      details.cua-group-details[open] {
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.07);
+        box-shadow: 0 1px 3px rgba(15, 32, 68, 0.08), 0 4px 12px rgba(15, 32, 68, 0.04);
       }
       summary.cua-group-summary {
+        cursor: pointer;
+        list-style: none;
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
         gap: 0.35rem 0.75rem;
-        cursor: pointer;
-        list-style: none;
-        padding: 0.72rem 1rem;
-        background: #e2e8f0;
-        border-bottom: 1px solid transparent;
+        padding: 0.65rem 0.85rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #64748b;
         user-select: none;
       }
-      details.cua-group-details[open] > summary.cua-group-summary {
-        border-bottom-color: #cbd5e1;
-        background: #f8fafc;
-      }
       summary.cua-group-summary::-webkit-details-marker { display: none; }
+      summary.cua-group-summary::before {
+        content: '▸ ';
+        font-size: 0.75rem;
+        color: #0f2044;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+      details.cua-group-details[open] > summary.cua-group-summary::before { content: '▾ '; }
       .cua-group-title {
-        font-size: 0.92rem;
-        font-weight: 700;
-        color: var(--c-navy);
-        line-height: 1.35;
+        font: inherit;
+        color: inherit;
+        letter-spacing: inherit;
+        text-transform: inherit;
+        line-height: inherit;
       }
       .cua-group-hint {
-        font-size: 0.74rem;
         font-weight: 500;
+        letter-spacing: 0.02em;
+        text-transform: none;
         color: #64748b;
-        line-height: 1.35;
-        padding-left: 1.05rem;
+        opacity: 0.85;
+        font-size: inherit;
+        line-height: inherit;
       }
       .cua-group-body {
-        padding: 0.45rem 0.55rem 0.65rem;
+        padding: 0 0.85rem 0.85rem;
         display: flex;
         flex-direction: column;
         gap: 0.35rem;
