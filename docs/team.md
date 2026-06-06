@@ -15,11 +15,11 @@ description: "Quorum — interdisciplinary team for NeuroDiscover AI"
 
 | Member | Domain | Project contribution |
 |--------|--------|----------------------|
-| **Alia Merchant** | Strategy · commercialization | Product framing, downstream agents (2–5), scoring, **CUA** grant-proposal engine |
-| **Amy He** | ML · agent infrastructure | Agent design patterns, orchestrator conclusion logic, commercial signals |
+| **Alia Merchant** | Strategy · commercialization | Product framing, downstream agents (2–5), scoring, market analysis, demo preparation |
+| **Amy He** | ML · agent infrastructure | Agent design patterns, orchestrator conclusion logic, commercial signals, CUA (6) |
 | **Ayelet Peres** | Computational biology · data | Literature Agent (1), ingestion, schema, Supabase, validation |
-| **Kahini Mehta** | Neuroscience · engineering | Schema, orchestrator, API, dashboard (Steps 1–3), docs site, integration |
-| **William Yakah** | Workflow · agentic UX | Demo narrative, cross-agent usability, workflow design |
+| **Kahini Mehta** | Biology · engineering · design | Schema, orchestrator, API, dashboard (Steps 1–3), docs site, integration, demo preparation |
+| **William Yakah** | Design · biology | Demo narrative, cross-agent usability, dashboard design, grant appropriateness |
 
 {: .highlight }
 **Interdisciplinary mix:** life sciences + ML + strategy + full-stack engineering — each role maps to a distinct agent or platform layer in the shipped system.
