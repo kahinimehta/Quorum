@@ -217,7 +217,6 @@ def get_run_stats(run_id: str):
     from orchestrator import (
         _build_run_stats,
         _evidence_counts,
-        _parse_literature_step,
     )
 
     steps = _steps_for_run(run_id)

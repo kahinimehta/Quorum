@@ -25,7 +25,6 @@ class EvidenceScoringAgent:
 
         for connection in treatment_output.get("connections", []):
             subgroup = connection.get("subgroup")
-            mechanism = connection.get("mechanism")
             treatment = connection.get("treatment_strategy") or connection.get("treatment")
             evidence_count = connection.get("evidence_count", 0)
             evidence_sources = connection.get("evidence_sources", [])

@@ -143,7 +143,7 @@ def score_spot_check(csv_path: Path | None = None) -> dict:
                 correct += 0.5
 
     avg = correct / scored if scored else 0.0
-    print(f"\n=== Spot-check precision ===")
+    print("\n=== Spot-check precision ===")
     print(f"Rows scored: {scored}")
     print(f"Average precision: {avg:.2f} ({correct:.1f}/{scored})")
     return {"scored": scored, "precision": avg}

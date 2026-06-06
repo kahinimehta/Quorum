@@ -13,7 +13,7 @@ files/conclusion_update_agent_nih_obligations.md; the rows below mirror it as a 
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from ..types import (
     Budget,

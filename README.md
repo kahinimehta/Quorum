@@ -108,4 +108,6 @@ Dashboard docs: [`docs/dashboard.md`](docs/dashboard.md) (UI) · [`docs/develope
 
 ## Team
 
-See [`docs/team.md`](docs/team.md) on the docs site for roles and collaboration.
+**Quorum** — Alia Merchant · Amy He · Ayelet Peres · Kahini Mehta · William Yakah
+
+Full bios and collaboration map → [`docs/team.md`](docs/team.md) ([docs site](https://neurodiscover.github.io/team/))

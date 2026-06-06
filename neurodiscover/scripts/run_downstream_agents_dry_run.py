@@ -16,10 +16,10 @@ AGENTS_DIR = ROOT_DIR / "agents"
 
 sys.path.insert(0, str(AGENTS_DIR))
 
-from patient_subgroup_agent import PatientSubgroupAgent
-from treatment_connection_agent import TreatmentConnectionAgent
-from evidence_scoring_agent import EvidenceScoringAgent
-from commercial_discovery_agent import CommercialDiscoveryAgent
+from patient_subgroup_agent import PatientSubgroupAgent  # noqa: E402
+from treatment_connection_agent import TreatmentConnectionAgent  # noqa: E402
+from evidence_scoring_agent import EvidenceScoringAgent  # noqa: E402
+from commercial_discovery_agent import CommercialDiscoveryAgent  # noqa: E402
 
 
 def main():

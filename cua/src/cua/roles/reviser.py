@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field, model_validator
 from .. import llm
 from ..config import RoleConfig
 from ..nih.framework import SONNET_4_6
-from ..types import Claim, Draft, DraftFragment, Level
+from ..types import Draft, DraftFragment, Level
 from ._cites import strip_cites
 from ._repair import parse_directives
 from ._rigor_booster import boost_rigor

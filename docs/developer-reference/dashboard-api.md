@@ -20,7 +20,7 @@ pip install -r requirements.txt   # or: conda env create -f environment.yml && c
 make dashboard
 ```
 
-Opens **http://127.0.0.1:8080** in your default browser (`--no-browser` to skip). Press **Ctrl+C** to stop API + UI.
+Opens the URL printed by the launcher (default UI **http://127.0.0.1:8080** with `?api=http://127.0.0.1:5000`; always includes `?api=`). Use `--no-browser` to copy the **`Open:`** line. Press **Ctrl+C** to stop API + UI.
 
 With **team Supabase** (`SUPABASE_DATABASE_URL` in `.env`), the same command skips `build` and runs **agents-only** before serving so connections and recommendations are populated on first load.
 

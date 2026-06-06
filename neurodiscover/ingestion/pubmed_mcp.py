@@ -4,12 +4,10 @@ PubMed search: optional MCP command (PUBMED_MCP_COMMAND) or NCBI E-utilities fal
 from __future__ import annotations
 
 import json
-import re
 import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
-from typing import Any
 
 from ingestion.mcp_clients import try_mcp_search
 

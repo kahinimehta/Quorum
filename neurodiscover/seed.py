@@ -127,7 +127,6 @@ def init_schema() -> None:
 
 
 if __name__ == "__main__":
-    from paths import schema_path as sp
 
     p = argparse.ArgumentParser()
     p.add_argument("--db", default=default_db_path())

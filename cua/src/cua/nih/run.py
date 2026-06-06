@@ -14,7 +14,6 @@ fixture-free. Exit 0 ⇒ all five ran and emitted; non-zero ⇒ a fixture refuse
 from __future__ import annotations
 
 import json
-import sys
 from dataclasses import asdict, is_dataclass
 from enum import Enum
 from pathlib import Path

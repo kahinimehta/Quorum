@@ -15,10 +15,10 @@ description: "Quorum — interdisciplinary team for NeuroDiscover AI"
 
 | Member | Domain | Project contribution |
 |--------|--------|----------------------|
-| **Alia Merchant** | Strategy · commercialization | Product framing, stakeholder story, downstream agents, demo readiness |
-| **Amy He** | ML · agent infrastructure | Discovery agents, scoring logic, commercial signals, agent patterns |
-| **Ayelet Peres** | Computational biology · data | Literature Agent, ingestion, schema, Supabase, validation |
-| **Kahini Mehta** | Neuroscience · engineering | Schema, orchestrator, API, dashboard, integration |
+| **Alia Merchant** | Strategy · commercialization | Product framing, downstream agents (2–5), scoring, **CUA** grant-proposal engine |
+| **Amy He** | ML · agent infrastructure | Agent design patterns, orchestrator conclusion logic, commercial signals |
+| **Ayelet Peres** | Computational biology · data | Literature Agent (1), ingestion, schema, Supabase, validation |
+| **Kahini Mehta** | Neuroscience · engineering | Schema, orchestrator, API, dashboard (Steps 1–3), docs site, integration |
 | **William Yakah** | Workflow · agentic UX | Demo narrative, cross-agent usability, workflow design |
 
 {: .highlight }
@@ -32,7 +32,7 @@ description: "Quorum — interdisciplinary team for NeuroDiscover AI"
 
 Healthcare and life sciences strategist with an MBA and MSIT. Brings a business and venture lens (Harvard BioVenture, Nucleate finalist, Enventure first-place winner) and HSIL Hackathon 2026 experience. The team's commercialization and strategy voice.
 
-**On this project:** Product framing, Pfizer-track problem narrative, downstream agent ownership (subgroups, connections, scoring), API alignment with dashboard consumers, and demo readiness.
+**On this project:** Product framing, Pfizer-track problem narrative, downstream agent ownership (subgroups, connections, scoring), optional **CUA** NIH grant-proposal path (`cua/`), and demo readiness.
 
 ---
 
@@ -42,7 +42,7 @@ Healthcare and life sciences strategist with an MBA and MSIT. Brings a business 
 
 Research scientist at Topos Bio (SF) working on foundation model development and application in drug discovery, with a background in AI/ML and biochemistry. Heavy daily user of Codex and Claude Code, focused on agent infrastructure for observability and semantic layer engineering.
 
-**On this project:** Downstream discovery agents, agent design patterns, conclusion/recommendation logic, and commercial signal integration.
+**On this project:** Agent design patterns, orchestrator wiring (agents 1→6), conclusion/recommendation ranking, and commercial signal integration.
 
 ---
 
@@ -62,7 +62,7 @@ Postdoc at Yale School of Medicine in computational immunology, immunogenomics, 
 
 Third-year PhD student in Columbia's Neurobiology and Behavior program working with human single-neuron and MRI data. Focus on analysis pipelines and computational modeling using Bayesian and machine learning methods. Passionate about open science and reproducibility.
 
-**On this project:** Database schema, orchestrator, FastAPI backend, dashboard UI, synthetic cohort layer, and integration testing.
+**On this project:** Database schema, orchestrator, FastAPI backend, dashboard UI (including Step 3 static CUA tab), launcher, synthetic cohort layer, docs site, and integration testing.
 
 ---
 
@@ -103,3 +103,4 @@ flowchart TB
 - **Schema-first:** `schema.sql` + `developer-reference/agent-io.md` before agent code diverged  
 - **Shared `run_id`:** every agent appends to `agent_outputs` for audit  
 - **Safe demo path:** offline seed + synthetic cohort agreed early for showcase reliability  
+- **Dual Agent 6:** orchestrator formula rankings in the pipeline; optional **`cua/`** NIH proposal on dashboard Step 3 (static `graded6` demo)  

@@ -131,5 +131,5 @@ bundle exec jekyll serve
 - [ ] Run `make dashboard` **before** presenting (not live pull on stage)  
 - [ ] Mode **demo**, max papers **10** (launcher default; API allows 10–500)  
 - [ ] No `cli.py build` against team Supabase  
-- [ ] Browser at `http://127.0.0.1:8080` (not stale GitHub Pages tab for live UI)  
+- [ ] Browser at the launcher **`Open:` URL** (includes `?api=`; not a stale GitHub Pages tab for live UI)  
 - [ ] Fallback: [neurodiscover.github.io](https://neurodiscover.github.io) for docs if local fails  
