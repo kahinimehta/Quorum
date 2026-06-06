@@ -105,14 +105,6 @@ Opens **http://127.0.0.1:8080** (API default port 5000; auto-fallback if busy). 
 
 Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Debugging](debugging)
 
-## For judges (2-minute path)
-
-1. **Watch** the demo video above (or run locally with `make dashboard`).
-2. **Step 1** — run **Demo** (offline, safe on stage) or use pre-seeded Supabase data.
-3. **Step 2** — ranked treatments, synthetic cohort A–E, agent trace, evidence table.
-4. **Step 3** — static NIH grant proposal (CUA `graded6`); optional live regeneration via `cua/` CLI (see [Guides — CUA](guides#cua-optional-grant-proposal)).
-5. **Docs** — [Workflow](workflow/) · [Output examples](output) · [Team](team).
-
 {: .important }
 **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
 

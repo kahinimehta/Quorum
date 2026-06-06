@@ -14,59 +14,39 @@ Agentic system for **commercial development discovery**: continuously ingest lit
 
 ## Quick start
 
-Requires **Python 3.10, 3.11, or 3.12** on macOS, Linux, or Windows. `make dashboard` is shorthand for `python3 cli.py dashboard` — not Mac-only.
+Requires **Python 3.10, 3.11, or 3.12** on macOS, Linux, or Windows.
+
+**pip:**
 
 ```bash
 git clone https://github.com/kahinimehta/Quorum.git
 cd Quorum/neurodiscover
+python3 --version          # must be 3.10.x – 3.12.x
 pip install -r requirements.txt
-cp .env.example .env   # optional: SUPABASE_DATABASE_URL for team DB
-make dashboard
+cp .env.example .env
+make dashboard    # same as: python3 cli.py dashboard
 ```
 
-**Conda (empty environment):**
+**conda (empty environment):**
 
 ```bash
+git clone https://github.com/kahinimehta/Quorum.git
+cd Quorum/neurodiscover
 conda env create -f environment.yml
 conda activate neurodiscover
 cp .env.example .env
 make dashboard
 ```
 
-Same without `make`:
+Opens **http://127.0.0.1:8080** (API default port 5000; auto-fallback if busy). Press **Ctrl+C** to stop.
 
-```bash
-python3 cli.py dashboard
-# or: ./dashboard   (bash — macOS, Linux, Git Bash / WSL on Windows)
-```
+**Three tabs:** Step 1 configure & run · Step 2 ranked results · Step 3 static CUA grant proposal (bundled `graded6` demo).
 
-This will:
+**Windows:** use `python cli.py dashboard` if `make` is not installed. **SSH / headless:** add `--no-browser` and open the URL manually.
 
-1. Install dependencies if needed (unless `--skip-install`)
-2. Build local `neurodiscover.db` if missing (skipped when `SUPABASE_DATABASE_URL` is set)
-3. Run one pipeline pass — **demo** locally (`max_papers=10`) or **agents-only** on team Supabase (all existing evidence)
-4. Start the API (default **5000**, auto-fallback if busy) and UI on **port 8080**
-5. Open **http://127.0.0.1:8080** in your default browser (skip with `--no-browser`)
+Full setup, platform notes, and flags → [`docs/dashboard.md`](docs/dashboard.md) · [Debugging](https://neurodiscover.github.io/debugging/)
 
-**Dashboard tabs:** Step 1 — configure & run · Step 2 — discovery results · Step 3 — static CUA grant proposal (`graded6` demo, not run-scoped)
-
-Press **Ctrl+C** to stop both servers.
-
-### Platform notes
-
-| Platform | Tip |
-|----------|-----|
-| **Windows** | `make` is often missing — use `python cli.py dashboard` (or `python3` if available) |
-| **Windows** | `./dashboard` needs **Git Bash** or **WSL** |
-| **Linux / WSL / SSH** | Use `--no-browser` and open `http://127.0.0.1:8080` manually |
-| **macOS** | Port **5000** may be used by **AirPlay Receiver** — launcher auto-fallbacks to **5001**; or disable AirPlay |
-| **Any OS** | Port in use? Launcher tries the next free port; manual: `--port-api 5001 --port-ui 8081 --no-browser` |
-
-Useful flags: `--no-browser`, `--skip-pipeline` (servers only), `--fresh` (rebuild local DB).
-
-More detail: [`docs/dashboard.md`](docs/dashboard.md) · [`neurodiscover/frontend/quickstart.md`](neurodiscover/frontend/quickstart.md) · [Debugging](https://neurodiscover.github.io/debugging/)
-
-> **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env`, run **`make dashboard`** (same command) — agents 2–6 run automatically on the full corpus. **Do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
+> **Team live database:** Supabase holds 300+ real evidence rows. Set `SUPABASE_DATABASE_URL` in `.env` and **do not** run `cli.py build` (it truncates all tables). Use `scan` / `pull` to add evidence only.
 
 ---
 
