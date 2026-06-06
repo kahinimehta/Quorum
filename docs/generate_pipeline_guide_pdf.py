@@ -37,7 +37,9 @@ class GuidePDF(FPDF):
             0,
             7,
             "Part I: Plain-language overview (no coding background required)\n"
-            "Part II: Technical summary for developers",
+            "Part II: Technical summary for developers\n"
+            "Part III: Demo-only vs generalizable (with justifications)\n"
+            "Part IV: Hackathon judging rubric alignment",
         )
         self.ln(6)
         self.set_font("Helvetica", "I", 10)
@@ -339,6 +341,290 @@ def build_technical(pdf: GuidePDF) -> None:
     )
 
 
+def build_demo_vs_generalizable(pdf: GuidePDF) -> None:
+    pdf.part_divider(
+        3,
+        "Demo vs Generalizable",
+        "What is hackathon-demo scaffolding vs production-ready core, and what to change to run any indication.",
+    )
+
+    pdf.h1("Summary")
+    pdf.body(
+        "NeuroDiscover ships two experiences: (A) a safe offline demo for judges with seeded "
+        "DEMO-* placeholders, and (B) a live pipeline on team Supabase with 307 real evidence "
+        "rows (228 papers, 39 trials, 40 grants). The six-agent blackboard architecture, "
+        "BioMCP ingestion, and SQL schema are indication-agnostic. Parkinson's-specific "
+        "tuning exists mainly in seed data, scoring heuristics, and one static UI tab."
+    )
+
+    pdf.h2("Demo-Only (Hackathon Showcase)")
+    widths = [48, 62, 70]
+    pdf.table_row(["Item", "What it is", "Why demo-only"], widths, bold=True)
+    pdf.table_row(
+        ["demo run mode", "cli.py demo / API mode=demo", "No live PubMed calls; safe on stage"],
+        widths,
+    )
+    pdf.table_row(
+        ["DEMO-* source IDs", "seed_data.json placeholders", "Offline judging without network"],
+        widths,
+    )
+    pdf.table_row(
+        ["Five seed subgroups", "GBA-mutation PD, LRRK2 PD, etc.", "Illustrative PD taxonomy for empty DB"],
+        widths,
+    )
+    pdf.table_row(
+        ["max_papers cap", "Default 10 in dashboard demo", "Fast startup on judge laptops"],
+        widths,
+    )
+    pdf.table_row(
+        ["Synthetic cohort UI", "Generated profiles, not stored", "Visual storytelling; no PHI/HIPAA risk"],
+        widths,
+    )
+    pdf.table_row(
+        ["Step 3 CUA tab", "Static graded6.html bundle", "Heavy LLM grant run too slow for live demo"],
+        widths,
+    )
+    pdf.table_row(
+        ["Local SQLite build", "make dashboard seeds neurodiscover.db", "One-command laptop demo"],
+        widths,
+    )
+    pdf.table_row(
+        ["Default disease label", "Parkinson's in UI defaults", "Pfizer track framing; not a code lock"],
+        widths,
+    )
+
+    pdf.h2("Production-Ready Today (Already Generalizable)")
+    pdf.bullet(
+        "Literature pull: --disease and --query on any BioMCP-supported condition "
+        "(full and scan modes)."
+    )
+    pdf.bullet(
+        "Real evidence on team Supabase: 307 rows with real PMIDs, NCT ids, grant numbers."
+    )
+    pdf.bullet(
+        "Subgroup discovery from extraction: Agent 2 creates subgroups from evidence labels, "
+        "not only seed names."
+    )
+    pdf.bullet(
+        "Incremental scan: skip LLM re-extraction for known source_ids (cost control at scale)."
+    )
+    pdf.bullet(
+        "Dual database: same agents on SQLite (local) or Postgres (Supabase) via db.py."
+    )
+    pdf.bullet(
+        "Audit trail: every run logs agent_outputs with shared run_id; recommendations cite source_id."
+    )
+    pdf.bullet(
+        "CUA package (optional): python -m cua.nih.run_db reads any populated DB (read-only)."
+    )
+
+    pdf.h2("Needs Change for Full Generalizability")
+    widths2 = [52, 58, 70]
+    pdf.table_row(["Gap", "Change required", "Justification"], widths2, bold=True)
+    pdf.table_row(
+        [
+            "Agent 5 PD keywords",
+            "Config or LLM market signals per TA",
+            "Heuristics hardcode GBA/LRRK2/alpha-synuclein bonuses",
+        ],
+        widths2,
+    )
+    pdf.table_row(
+        [
+            "Grant title inference",
+            "Parameterize evidence_tags.py",
+            "Grant rows infer PD subgroups from title keywords today",
+        ],
+        widths2,
+    )
+    pdf.table_row(
+        [
+            "Extraction prompt vocab",
+            "Indication-specific subgroup ontology file",
+            "Improves consistency when seed subgroups absent",
+        ],
+        widths2,
+    )
+    pdf.table_row(
+        [
+            "Commercial external data",
+            "Integrate market/pipeline APIs (e.g. Tavily)",
+            "Agent 5 has no live web search in current code",
+        ],
+        widths2,
+    )
+    pdf.table_row(
+        [
+            "Legacy API path",
+            "Rename /api/discover/parkinsons",
+            "Route is already indication-agnostic; name is cosmetic",
+        ],
+        widths2,
+    )
+    pdf.table_row(
+        [
+            "CUA dashboard tab",
+            "Run-scoped CUA per run_id",
+            "Today static graded6; pipeline rankings are run-scoped",
+        ],
+        widths2,
+    )
+    pdf.table_row(
+        [
+            "Study quality weighting",
+            "Use study_type, sample_size in Agent 4",
+            "Columns exist; skeptic uses count + source_type only today",
+        ],
+        widths2,
+    )
+
+    pdf.h2("How to Run Another Indication (Minimal Path)")
+    pdf.code_line("POST /api/run-discovery  { mode: full, disease: ALS, query: C9orf72 }")
+    pdf.code_line("python3 cli.py pull --disease ALS --query C9orf72 --max 150")
+    pdf.body(
+        "No schema migration required. Rankings will reflect extracted subgroups and evidence. "
+        "For best commercial scores, add indication-specific keyword rules in "
+        "commercial_discovery_agent.py or replace heuristics with external market data."
+    )
+
+    pdf.h2("Honest Scope Boundaries")
+    pdf.bullet("No FHIR or EHR integration - literature/trials/grants only (appropriate for Track 02).")
+    pdf.bullet("No genomics APIs - subgroups come from publication text, not variant calls.")
+    pdf.bullet(
+        "Agent 6 dashboard ranking is formula-based (no LLM) - fast and auditable; CUA is the deep LLM path."
+    )
+
+
+def build_hackathon_rubric(pdf: GuidePDF) -> None:
+    pdf.part_divider(
+        4,
+        "Hackathon Judging Rubric Alignment",
+        "Track 02 - Autonomous Research. Team Quorum. Final Showcase June 6, 2025.",
+    )
+
+    pdf.h1("Challenge Framing")
+    pdf.body(
+        "NeuroDiscover addresses Pfizer Commercial Development Discovery: finding hidden patient "
+        "subgroups, connecting them to mechanisms and treatments, and ranking portfolio opportunities "
+        "with auditable evidence - compressing months of expert review toward hours/days."
+    )
+
+    pdf.h2("Criterion 1: Problem Identification & Significance (20%)")
+    pdf.body("Target level: Accomplished to Exceptional (4-5/5)")
+    pdf.bullet(
+        "Clearly defined unmet need: portfolio tools miss subgroups inside heterogeneous diseases, "
+        "cross-mechanism links, and post-review-cycle evidence."
+    )
+    pdf.bullet(
+        "Biomedical grounding: 307 real PubMed/trial/grant rows on Supabase; recommendations trace "
+        "to verifiable source_id values."
+    )
+    pdf.bullet(
+        "Real-world impact: discovery efficiency, portfolio ROI, continuous update as evidence grows."
+    )
+    pdf.bullet(
+        "Literature alignment: blackboard multi-agent pattern matches Nature 2026 and agentic-science surveys."
+    )
+
+    pdf.h2("Criterion 2: Technical Implementation (25%)")
+    pdf.body("Target level: Accomplished to Exceptional (4-5/5)")
+    pdf.bullet(
+        "Working six-agent pipeline: literature -> subgroups -> connections -> evidence score -> "
+        "commercial -> recommendations."
+    )
+    pdf.bullet(
+        "Real biomedical data: BioMCP (PubMed + ClinicalTrials.gov), NIH RePORTER grants, "
+        "optional bioRxiv and OA full text."
+    )
+    pdf.bullet(
+        "AI integration: Nebius/Ollama structured extraction; optional CUA multi-role LLM grant engine."
+    )
+    pdf.bullet(
+        "Architecture: contract-first SQL blackboard, dual SQLite/Postgres, FastAPI + live progress polling."
+    )
+    pdf.bullet(
+        "Extensibility: new indication via disease/query parameter; new agent = new module + orchestrator step."
+    )
+    pdf.body(
+        "Gap to note honestly: no FHIR/genomics APIs yet; Agent 5 commercial scoring is heuristic "
+        "(documented in Part III)."
+    )
+
+    pdf.h2("Criterion 3: Creativity & Innovation (20%)")
+    pdf.body("Target level: Accomplished to Exceptional (4-5/5)")
+    pdf.bullet(
+        "Novel application: skeptic + commercial dual scoring with explicit confidence formula "
+        "(55% evidence / 45% commercial)."
+    )
+    pdf.bullet(
+        "Continuous discovery: incremental scan skips known sources; rankings shift when corpus grows."
+    )
+    pdf.bullet(
+        "Two-tier Agent 6: fast auditable dashboard rankings + optional deep CUA NIH proposal path."
+    )
+    pdf.bullet(
+        "Synthetic cohort generator: communicates patient-segment story without storing PHI."
+    )
+
+    pdf.h2("Criterion 4: Team Composition & Collaboration (10%)")
+    pdf.body("Target level: Exceptional (5/5)")
+    pdf.bullet("Alia Merchant - strategy, agents 2-5, CUA grant engine.")
+    pdf.bullet("Amy He - agent infrastructure, orchestrator, commercial signals.")
+    pdf.bullet("Ayelet Peres - literature agent, ingestion, schema, Supabase, validation.")
+    pdf.bullet("Kahini Mehta - orchestrator, API, dashboard, docs site, integration.")
+    pdf.bullet("William Yakah - workflow design, demo narrative, cross-agent usability.")
+    pdf.body(
+        "Blackboard contract (agent-io.md, schema.sql) enabled parallel agent development without "
+        "merge conflicts - each member owned a distinct layer."
+    )
+
+    pdf.h2("Criterion 5: Presentation Skills (15%)")
+    pdf.body("Target level: Accomplished (4/5)")
+    pdf.bullet(
+        "One-command demo: make dashboard -> live stepper, evidence browser, ranked treatments."
+    )
+    pdf.bullet(
+        "Public docs site: neurodiscover.github.io with workflow, API, and screenshots."
+    )
+    pdf.bullet(
+        "This guide: plain-language + technical + demo/generalizable + rubric in one PDF."
+    )
+    pdf.bullet(
+        "Judge-verifiable outputs: click through to real PMIDs/NCT ids on team DB; DEMO-* clearly labeled."
+    )
+
+    pdf.h2("Criterion 6: Execution & Professionalism (10%)")
+    pdf.body("Target level: Accomplished to Exceptional (4-5/5)")
+    pdf.bullet("Safety: cli.py build blocked on live Supabase; no invented citation IDs.")
+    pdf.bullet("Validation: cli.py validate after schema changes; extraction QA hooks.")
+    pdf.bullet("Documentation: AGENTS.md, developer-reference/, GitHub Pages, CONTRIBUTING.")
+    pdf.bullet("Reproducibility: append-only agent_outputs per run_id; mode labels in run history.")
+
+    pdf.h2("Suggested Judge Talking Points")
+    pdf.bullet(
+        "Show team Supabase run (agents-only or full) for real PMIDs - then explain demo mode for offline safety."
+    )
+    pdf.bullet(
+        "Walk one recommendation: subgroup -> mechanism -> treatment -> supporting papers -> confidence tier."
+    )
+    pdf.bullet(
+        "Emphasize generalizability: change disease/query, same pipeline; Part III lists honest gaps."
+    )
+    pdf.bullet(
+        "Optional deep dive: Step 3 CUA graded6 as proof-of-concept for grant-scale Agent 6 output."
+    )
+
+    pdf.h2("Estimated Rubric Strength by Criterion")
+    widths = [95, 35, 50]
+    pdf.table_row(["Criterion", "Weight", "Team confidence"], widths, bold=True)
+    pdf.table_row(["Problem Identification & Significance", "20%", "High (4-5)"], widths)
+    pdf.table_row(["Technical Implementation", "25%", "High (4-5)"], widths)
+    pdf.table_row(["Creativity & Innovation", "20%", "High (4-5)"], widths)
+    pdf.table_row(["Team Composition & Collaboration", "10%", "Very high (5)"], widths)
+    pdf.table_row(["Presentation Skills", "15%", "Strong (4)"], widths)
+    pdf.table_row(["Execution & Professionalism", "10%", "High (4-5)"], widths)
+
+
 def main() -> None:
     pdf = GuidePDF()
     pdf.set_auto_page_break(auto=True, margin=18)
@@ -346,6 +632,8 @@ def main() -> None:
     pdf.title_page()
     build_plain_language(pdf)
     build_technical(pdf)
+    build_demo_vs_generalizable(pdf)
+    build_hackathon_rubric(pdf)
     pdf.output(str(OUT))
     print(OUT)
 
