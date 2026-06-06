@@ -2,7 +2,7 @@
 layout: default
 title: Output examples
 nav_order: 5
-description: "API JSON shapes, recommendations, synthetic cohort, and dashboard panels"
+description: "API JSON shapes, recommendations, ideal candidate profiles, and dashboard panels"
 ---
 
 # Output examples

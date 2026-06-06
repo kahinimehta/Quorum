@@ -213,7 +213,7 @@ Where `confidence = evidence_strength * 0.55 + commercial_potential * 0.45` and:
 
 Plus `agent_outputs`.
 
-### CUA package — grant proposal (separate I/O path)
+### CUA package — grant proposal (separate I/O path, Amy He)
 
 The standalone **`cua/`** Conclusion Update Agent reads the same blackboard **SELECT-only** (via `cua/src/cua/nih/adapters/neurodiscover.py`) but does **not** apply the `evidence_strength IS NOT NULL AND commercial_potential IS NOT NULL` filter — it reads all connections and maps NULL grades to `minimal`. It writes **no** SQL; output is local JSON/HTML under `cua/outputs/`. Entrypoint: `python -m cua.nih.run_db --db <url|path>`. See [Conclusion Update workflow](../workflow/conclusion-update#cua-package--nih-grant-proposal).
 

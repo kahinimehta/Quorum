@@ -14,7 +14,7 @@ Agent 6 has **two implementations**. They share the name and read the same upstr
 |---|---|---|
 | **Purpose** | Rank treatments for the dashboard | Write a full **NIH R01 grant proposal** from the evidence |
 | **Module** | `neurodiscover/orchestrator.py` | `cua/src/cua/` (standalone package) |
-| **Owner** | Amy He (orchestrator) | Alia Merchant (CUA) |
+| **Owner** | Amy He (orchestrator) | Amy He (CUA) |
 | **Runs when** | Every `demo` / `scan` / `full` / `agents-only` pipeline run | **Manually** — not part of the dashboard pipeline |
 | **Uses LLMs** | No | Yes — Blueprint, Synthesizer, Critic, Reviser, etc. |
 | **Writes DB** | `recommendations` + `agent_outputs` | **Nothing** — read-only consumer |
@@ -88,7 +88,7 @@ confidence = evidence_strength × 0.55 + commercial_potential × 0.45
 ### Downstream
 
 - Dashboard **Ranked treatments** panel reads `recommendations`
-- **Synthetic cohort** (Patients A–E) generated from top recommendations — not persisted
+- **Ideal candidate profiles** (Patient Cluster A–E) generated from top recommendations — not persisted
 
 See [Output examples](../output) for full JSON shapes.
 
@@ -154,4 +154,4 @@ Set `SUPABASE_DATABASE_URL` from [Supabase setup](../developer-reference/supabas
 - CUA is a **read-only downstream consumer** of the same data the dashboard pipeline writes
 - PR #12 added `neurodiscover/frontend/supabase_dashboard.html` for viewing Supabase evidence/connections/recommendations — that page does not invoke CUA
 - Full CUA architecture, contracts, and honest limits: `cua/README.md`
-- **Dashboard:** Step 3 **Grant Proposal** tab inlines the static bundled `graded6` report — **The proposal** expanded at top (above data loop), then one collapsed **Pipeline trace & audit** group (single click, no nested collapses); **Jump to** scrolls to Proposal or opens supporting details — not tied to Step 1/2 `run_id` (see [Dashboard — Step 3 report structure](../dashboard#step-3--report-structure))
+- **Dashboard:** Step 3 **Grant Proposal** tab inlines the static bundled `graded6` report — **The proposal** expanded at top (aims + **Grant pipeline** diagram), then one collapsed **Pipeline trace & audit** group; **Jump to** scrolls to Proposal or opens supporting details — not tied to Step 1/2 `run_id` (see [Dashboard — Step 3 report structure](../dashboard#step-3--report-structure))

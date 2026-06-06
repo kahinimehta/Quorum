@@ -119,8 +119,8 @@ The **Internal Critic** (Opus, blind to writer self-scores) is the authoritative
 
 | UI component | Innovation-related content |
 |--------------|----------------------------|
-| **Critic F1** KPI | Aggregate F1 score (includes innovation) |
-| **Audit status chips** | `Critic F1 = 7`, obligation counts |
+| **Critic F1** KPI | Aggregate F1 score (includes innovation), shown as `n/9` |
+| **Report toolbar** | `17/21 obligations satisfied` (example from `graded6`) |
 | **The proposal** | Innovation section in NIH text (always visible) |
 | **The contract** | Full F1-3 requirement |
 | **Explored & dropped** | Selection Scorer rationale comparing candidates’ F1 (incl. innovation) |
