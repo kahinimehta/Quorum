@@ -37,7 +37,7 @@ At the top, **This run** shows:
 ![Step 3 — CUA grant proposal tab](/assets/images/dashboard/step3-cua-grant-proposal.png)
 {: .doc-screenshot }
 
-*Step 3 — central hypothesis, specific aims, KPI strip (corpus → writer view, critic scores), and the interactive CUA pipeline report.*
+*Step 3 — static demo banner, KPI strip (corpus → writer view, critic scores), and the full CUA pipeline report inlined in the page.*
 
 To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)).
 

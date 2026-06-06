@@ -46,7 +46,7 @@ The launcher will:
 3. Run one pipeline pass before serving (unless `--skip-pipeline`):
    - **Local SQLite:** **Demo sample** with `max_papers=10`
    - **Team Supabase:** **Rescore DB** (`agents-only`) on all existing evidence
-4. Start FastAPI on **5000** and static UI on **8080**
+4. Start FastAPI (default **5000**, auto-fallback if busy) and static UI on **8080** — browser URL includes `?api=` when alternate API port is used
 
 ### Platform notes
 
@@ -114,7 +114,7 @@ flowchart LR
 | **Agent pipeline stepper** | On **Step 1** sidebar during a run: weighted progress bar, per-agent **Running…** / **Done**, literature sub-progress from live commits (polled every ~500ms). Step 2 shows results only — no duplicate stepper. |
 | **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
 | **Step 2** | **This run** report (settings + signature + support table), pipeline diagram, synthetic cohort, ranked outputs, audit trace |
-| **Step 3** | **Grant Proposal (CUA)** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hypothesis, aims, full HTML report in iframe. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
+| **Step 3** | **Grant Proposal (CUA)** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Full report **inlined** in the page (single scroll, no nested frame). Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
 
 Timestamps display in **US Eastern** (`America/New_York`).
 

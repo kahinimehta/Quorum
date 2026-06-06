@@ -30,6 +30,8 @@ The dashboard reads these routes when browser Supabase keys are unset. Full JSON
 | GET | `/api/runs` | Recent runs (`limit`) |
 | GET | `/api/run-stats` | Per-run processed vs DB totals; requires `run_id` |
 | GET | `/api/synthetic-cohort` | Ephemeral profiles; requires `run_id` |
+| GET | `/api/cua/demo` | Static bundled CUA summary (`graded6`; not run-scoped) |
+| GET | `/cua-demo/graded6.html` | Pre-rendered CUA HTML report (served by API static mount) |
 | POST | `/api/run-discovery` | Pipeline run; returns `runStats`, `synthetic_cohort` |
 
 ## Quick verify

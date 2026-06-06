@@ -106,8 +106,8 @@ This will:
 3. Run one pipeline pass before serving (unless `--skip-pipeline`):
    - **Local SQLite:** offline **demo** with `max_papers=10`
    - **Team Supabase:** **agents-only** on all existing evidence (no literature pull)
-4. Start API on **5000** and UI on **8080**
-5. Open **http://127.0.0.1:8080** in your default browser (unless `--no-browser`)
+4. Start API (default **5000**, auto-fallback if busy) and UI on **8080**
+5. Open **http://127.0.0.1:8080** in your default browser (unless `--no-browser`); alternate API ports add `?api=` to the URL automatically
 
 Press **Ctrl+C** to stop.
 
@@ -150,6 +150,7 @@ python3 cli.py dashboard --skip-install --no-browser
 1. **Step 1 — Configure & Run** — pick **pipeline mode** (Rescore DB / Demo sample / Incremental scan / Full live pull), disease (default **Parkinson's**), max papers, keywords, extraction backend.
 2. Click the **run button** (label matches the selected mode). The **agent pipeline stepper** shows one agent **Running…** at a time; others **Waiting…** until **Done**.
 3. **Step 2 — Discovery Results** — synthetic cohort, ranked treatments, hypotheses, agent trace, evidence table (scores from **this run’s** recommendations).
+4. **Step 3 — Grant Proposal (CUA)** — static bundled `graded6` demo (not tied to your `run_id`). Full NIH report inlined in the page. For a live run: `cd cua && pip install -e .` then `python -m cua.nih.run_db` with `ANTHROPIC_API_KEY` + `CUA_LIVE=1` (see `cua/README.md`).
 
 `make dashboard` only runs demo once at startup. Change settings and rerun from Step 1 while the servers stay up.
 

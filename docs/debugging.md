@@ -41,7 +41,7 @@ python3 cli.py dashboard --no-browser
 
 | Error | Fix |
 |-------|-----|
-| Port 5000 or 8080 in use | Stop other processes or use `python3 cli.py dashboard --port-api 5001 --port-ui 8081` |
+| Port 5000 or 8080 in use | Launcher auto-tries the next free port (e.g. 5001). Or stop other processes: `lsof -i :8080`. Manual override: `python3 cli.py dashboard --port-api 5001 --port-ui 8081` |
 | `make: command not found` | Use `python3 cli.py dashboard` instead |
 | Browser does not open | Expected on SSH/WSL — use `--no-browser` and open the URL manually |
 | Module not found | Run from `neurodiscover/`; Python **3.10–3.12**; `pip install -r requirements.txt` or `conda env update -f environment.yml --prune` |
