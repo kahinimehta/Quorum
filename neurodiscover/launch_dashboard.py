@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import os
 import signal
+import socket
 import subprocess
 import sys
 import time
@@ -17,6 +18,33 @@ import webbrowser
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FRONTEND = os.path.join(HERE, "frontend")
+
+
+def _port_available(port: int, host: str = "127.0.0.1") -> bool:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        try:
+            sock.bind((host, port))
+            return True
+        except OSError:
+            return False
+
+
+def _resolve_port(preferred: int, label: str, *, max_tries: int = 10) -> int:
+    for offset in range(max_tries):
+        port = preferred + offset
+        if _port_available(port):
+            if offset:
+                print(
+                    f"[dashboard] {label} port {preferred} busy "
+                    f"(often AirPlay on macOS) — using {port}"
+                )
+            return port
+    print(
+        f"[dashboard] No free port found near {preferred} for {label}. "
+        f"Stop the blocking process (lsof -i :{preferred}) or pass --port-api / --port-ui.",
+        file=sys.stderr,
+    )
+    raise SystemExit(1)
 
 
 def _popen(cmd: list[str], **kwargs) -> subprocess.Popen:
@@ -99,8 +127,14 @@ def main(argv: list[str] | None = None) -> int:
             f"synthetic={len(result.get('synthetic_cohort', []))}"
         )
 
+    args.port_api = _resolve_port(args.port_api, "API")
+    args.port_ui = _resolve_port(args.port_ui, "UI")
+
     print(f"[dashboard] Starting API on http://127.0.0.1:{args.port_api}")
-    api = _popen([py, "api_server.py"], cwd=HERE)
+    api = _popen(
+        [py, "-m", "uvicorn", "api_server:app", "--host", "127.0.0.1", "--port", str(args.port_api)],
+        cwd=HERE,
+    )
     procs.append(api)
     time.sleep(1.2)
 
@@ -111,11 +145,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     procs.append(ui)
 
-    ui_url = f"http://127.0.0.1:{args.port_ui}/"
+    api_base = f"http://127.0.0.1:{args.port_api}"
+    ui_url = f"http://127.0.0.1:{args.port_ui}/?api={api_base}"
     print()
     print("  NeuroDiscover dashboard is running")
     print(f"  Open:  {ui_url}")
-    print(f"  API:   http://127.0.0.1:{args.port_api}")
+    print(f"  API:   {api_base}")
+    if args.port_api != 5000 or args.port_ui != 8080:
+        print("  Note: alternate ports — UI URL includes ?api= so the browser reaches the API.")
     print("  Press Ctrl+C to stop")
     print()
 
@@ -132,7 +169,11 @@ def main(argv: list[str] | None = None) -> int:
                 print("[dashboard] API process exited.", file=sys.stderr)
                 return 1
             if ui.poll() is not None:
-                print("[dashboard] UI process exited.", file=sys.stderr)
+                print(
+                    "[dashboard] UI process exited (port conflict?). "
+                    f"Check lsof -i :{args.port_ui}",
+                    file=sys.stderr,
+                )
                 return 1
             time.sleep(0.5)
     except KeyboardInterrupt:

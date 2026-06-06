@@ -129,7 +129,7 @@ Timestamps display in **US Eastern** (`America/New_York`).
 | Agent trace | `GET /api/agents?run_id=` |
 | Evidence table | `GET /api/evidence?offset=&limit=` |
 | Synthetic patients | `GET /api/synthetic-cohort?run_id=` |
-| CUA demo tab | `GET /api/cua/demo` · report iframe `GET /cua-demo/graded6.html` |
+| CUA demo tab | `GET /api/cua/demo` · report inlined from `GET /cua-demo/graded6.html` |
 
 ## Run discovery
 

@@ -71,10 +71,9 @@ def main() -> int:
         # Step 3 — CUA grant proposal tab
         page.locator('[data-view="cua"]').click()
         page.wait_for_selector("#viewCua:not(.hidden)", timeout=30_000)
-        page.wait_for_selector("#cuaReportFrame", timeout=30_000)
+        page.wait_for_selector("#cuaReportHost", timeout=30_000)
         time.sleep(2.5)
         shot(page, "#viewCua", os.path.join(OUT, "step3-cua-grant-proposal.png"))
-        shot(page, ".cua-report-wrap", os.path.join(OUT, "step3-cua-report-frame.png"))
 
         browser.close()
     return 0

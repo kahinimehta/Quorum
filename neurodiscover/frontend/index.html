@@ -307,47 +307,19 @@
     }
     .cua-kpi .val { font-size: 1.2rem; font-weight: 700; color: #5b21b6; }
     .cua-kpi .lbl { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
-    .cua-grid { display: grid; grid-template-columns: 360px 1fr; gap: 1rem; align-items: start; }
-    @media (max-width: 1000px) { .cua-grid { grid-template-columns: 1fr; } }
-    .cua-side .card { margin-bottom: 0.85rem; }
-    .cua-hyp { font-size: 0.82rem; color: #312e81; line-height: 1.55; margin: 0; }
-    .cua-aim {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.65rem 0.75rem;
-      margin-bottom: 0.5rem;
-      background: #fafbff;
-      font-size: 0.78rem;
-      line-height: 1.45;
-    }
-    .cua-aim-h { font-weight: 700; color: #5b21b6; font-size: 0.72rem; margin-bottom: 0.25rem; }
-    .cua-sec { font-size: 0.78rem; margin-bottom: 0.65rem; line-height: 1.45; }
-    .cua-sec-h { font-weight: 700; text-transform: capitalize; color: var(--navy); font-size: 0.72rem; }
-    .cua-report-wrap {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      background: #fff;
-      box-shadow: var(--shadow);
-      min-height: 720px;
-    }
-    .cua-report-head {
+    .cua-report-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0.75rem;
-      padding: 0.65rem 1rem;
-      border-bottom: 1px solid var(--border);
-      background: #f8fafc;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 0.75rem;
       font-size: 0.78rem;
+      color: var(--muted);
     }
-    .cua-report-frame {
+    .cua-report-inline {
       width: 100%;
-      height: 78vh;
-      min-height: 640px;
-      border: 0;
-      display: block;
-      background: #f6f7fb;
+      margin-top: 0.25rem;
     }
     .cua-cli {
       font-size: 0.72rem;
@@ -1392,15 +1364,6 @@
           Steps 1–2 are run-scoped; Step&nbsp;3 is a fixed showcase. Generate a new proposal with the CLI below.
         </span>
       </div>
-      <div class="card cua-banner">
-        <h2 style="margin-top:0;">Separate from Step 2 rankings</h2>
-        <p style="margin:0;font-size:0.85rem;color:var(--muted);line-height:1.5;">
-          The dashboard pipeline writes <strong>Prioritize / Monitor / Reject</strong> tiers (formula, no LLM).
-          <strong>CUA</strong> is an optional Agent&nbsp;6 package that can read evidence and produce a
-          multi-round, citation-grounded <strong>NIH grant proposal</strong>. The iframe here is the shipped
-          <code>graded6</code> artifact only — not your latest <code>run_id</code>.
-        </p>
-      </div>
       <div class="cua-kpi-row" id="cuaKpis">
         <div class="cua-kpi"><div class="val" id="cuaKpiCorpus">—</div><div class="lbl">Corpus papers</div></div>
         <div class="cua-kpi"><div class="val" id="cuaKpiView">—</div><div class="lbl">Writer view</div></div>
@@ -1411,35 +1374,23 @@
       <div id="cuaUnavailable" class="cua-unavail hidden">
         CUA demo artifacts not found. Ensure <code>cua/outputs/graded6.*</code> exists in the repo.
       </div>
-      <div class="cua-grid" id="cuaMain">
-        <aside class="cua-side">
-          <div class="card">
-            <h2>Central hypothesis</h2>
-            <p class="cua-hyp" id="cuaHypothesis">Loading…</p>
-          </div>
-          <div class="card">
-            <h2>Specific aims</h2>
-            <div id="cuaAims"></div>
-          </div>
-          <div class="card">
-            <h2>Run live (CLI)</h2>
-            <p style="font-size:0.75rem;color:var(--muted);margin:0 0 0.5rem;">
-              To replace this static demo, run CUA yourself. Read-only against Supabase or local SQLite —
-              writes local JSON only (not <code>recommendations</code>). <code>--run-id</code> labels the CUA output folder, not a dashboard pipeline run.
-            </p>
-            <pre class="cua-cli">cd cua &amp;&amp; pip install -e .
+      <div id="cuaMain">
+        <div class="cua-report-toolbar">
+          <span><strong id="cuaReportTitle">Grant proposal report</strong> · <span id="cuaReportMeta">graded6 static demo</span></span>
+          <a class="btn btn-secondary" id="cuaReportOpen" href="#" target="_blank" rel="noopener" style="font-size:0.72rem;padding:0.35rem 0.65rem;">Open standalone HTML</a>
+        </div>
+        <div id="cuaReportHost" class="cua-report-inline" aria-live="polite">Loading grant proposal…</div>
+        <div class="card" style="margin-top:1.25rem;">
+          <h2 style="margin-top:0;">Run live (CLI)</h2>
+          <p style="font-size:0.75rem;color:var(--muted);margin:0 0 0.5rem;">
+            To generate a new proposal, run CUA yourself. Read-only against Supabase or local SQLite —
+            writes local JSON only (not <code>recommendations</code>). <code>--run-id</code> labels the CUA output folder, not a dashboard pipeline run.
+          </p>
+          <pre class="cua-cli">cd cua &amp;&amp; pip install -e .
 export CUA_LIVE=1 ANTHROPIC_API_KEY=...
 python -m cua.nih.run_db \
   --db "$SUPABASE_DATABASE_URL" \
   --run-id my-cua-run --capture-content</pre>
-          </div>
-        </aside>
-        <div class="cua-report-wrap">
-          <div class="cua-report-head">
-            <span><strong id="cuaReportTitle">Full pipeline report</strong> · <span id="cuaReportMeta">graded6 demo</span></span>
-            <a class="btn btn-secondary" id="cuaReportOpen" href="#" target="_blank" rel="noopener" style="font-size:0.72rem;padding:0.35rem 0.65rem;">Open in new tab</a>
-          </div>
-          <iframe id="cuaReportFrame" class="cua-report-frame" title="CUA grant proposal report" src="about:blank"></iframe>
         </div>
       </div>
     </div>
@@ -1447,7 +1398,9 @@ python -m cua.nih.run_db \
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script>
-    const API_BASE = window.NEURODISCOVER_API || 'http://127.0.0.1:5000';
+    const API_BASE = window.NEURODISCOVER_API
+      || new URLSearchParams(window.location.search).get('api')
+      || 'http://127.0.0.1:5000';
     const SUPABASE_URL = window.SUPABASE_URL || localStorage.getItem('SUPABASE_URL') || '';
     const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || localStorage.getItem('SUPABASE_ANON_KEY') || '';
 
@@ -3422,6 +3375,22 @@ python -m cua.nih.run_db \
     const CUA_STATIC_REPORT_URL = `${API_BASE}/cua-demo/${CUA_STATIC_DEMO_ID}.html`;
     let cuaLoaded = false;
 
+    async function loadCuaReportInline() {
+      const host = document.getElementById('cuaReportHost');
+      const htmlRes = await fetch(CUA_STATIC_REPORT_URL);
+      if (!htmlRes.ok) throw new Error(`Report fetch failed (${htmlRes.status})`);
+      const html = await htmlRes.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const shadow = host.shadowRoot || host.attachShadow({ mode: 'open' });
+      shadow.innerHTML = '';
+      const style = doc.querySelector('style');
+      if (style) shadow.appendChild(style.cloneNode(true));
+      Array.from(doc.body.childNodes).forEach(node => {
+        shadow.appendChild(node.cloneNode(true));
+      });
+      host.textContent = '';
+    }
+
     async function loadCuaTab() {
       const unavail = document.getElementById('cuaUnavailable');
       const main = document.getElementById('cuaMain');
@@ -3438,23 +3407,16 @@ python -m cua.nih.run_db \
         unavail.classList.add('hidden');
         main.classList.remove('hidden');
         kpis.classList.remove('hidden');
-        document.getElementById('cuaHypothesis').textContent = d.central_hypothesis || '—';
         document.getElementById('cuaKpiCorpus').textContent = d.ingestion?.corpus_n ?? '—';
         document.getElementById('cuaKpiView').textContent = d.ingestion?.top_k ?? '—';
         document.getElementById('cuaKpiCites').textContent = d.audit?.citations ?? '—';
         document.getElementById('cuaKpiF1').textContent = d.audit?.scores?.F1 ?? '—';
         document.getElementById('cuaKpiF2').textContent = d.audit?.scores?.F2 ?? '—';
-        document.getElementById('cuaReportTitle').textContent = d.project_title || 'Full pipeline report';
+        document.getElementById('cuaReportTitle').textContent = d.project_title || 'Grant proposal report';
         document.getElementById('cuaReportMeta').textContent =
           `static demo ${CUA_STATIC_DEMO_ID} · ${d.audit?.obligations_satisfied ?? '—'} obligations satisfied · not run-scoped`;
-        const reportUrl = CUA_STATIC_REPORT_URL;
-        const frame = document.getElementById('cuaReportFrame');
-        if (!frame.src || frame.src === 'about:blank') frame.src = reportUrl;
-        document.getElementById('cuaReportOpen').href = reportUrl;
-        const aimsEl = document.getElementById('cuaAims');
-        aimsEl.innerHTML = (d.aims || []).map(a =>
-          `<div class="cua-aim"><div class="cua-aim-h">${a.id || 'aim'} · ${a.citation_count || 0} cites</div>${a.hypothesis || ''}</div>`,
-        ).join('') || '<p class="cua-unavail">No aims in demo artifact.</p>';
+        document.getElementById('cuaReportOpen').href = CUA_STATIC_REPORT_URL;
+        await loadCuaReportInline();
         cuaLoaded = true;
       } catch (e) {
         unavail.textContent = 'Could not load CUA demo: ' + (e.message || e);
