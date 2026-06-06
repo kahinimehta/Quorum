@@ -17,16 +17,17 @@ After a run completes, **Step 2** shows pipeline outputs: ideal candidate profil
 
 Layout top-to-bottom:
 
-1. **Pipeline complete** badge beside the Step 2 title when a run finishes successfully.
-2. Subtitle: *Cohort, ranked outputs, & hypotheses*.
-3. **Three panels** — **Ideal candidate profiles** · **Ranked outputs** · **Research hypotheses** (with confidence-by-treatment strip).
-4. **Discovery pipeline** — flow diagram (inputs → six agents → outputs).
-5. **Audit & provenance** — collapsed by default; expand for agent run trace + paginated evidence preview.
+1. **KPI strip** — papers · trials · grants · subgroups · connections (database totals, or **this run** after a pipeline).
+2. **Pipeline complete** badge beside the Step 2 title when a run finishes successfully.
+3. Subtitle: *Cohort, ranked outputs, & hypotheses*.
+4. **Three panels** — **Ideal candidate profiles** · **Ranked outputs** · **Research hypotheses** (with confidence-by-treatment strip).
+5. **Discovery pipeline** — flow diagram (inputs → six agents → outputs).
+6. **Audit & provenance** — collapsed by default; expand for agent run trace + paginated evidence preview.
 
 ![Step 2 — Discovery results overview](/assets/images/dashboard/step2-discovery-results.png)
 {: .doc-screenshot }
 
-*Step 2 — ideal candidate profiles and ranked outputs cap at research hypotheses body height (borders wrap content; scroll when longer); discovery pipeline and audit & provenance below.*
+*Step 2 — KPI strip above title; ideal candidate profiles and ranked outputs cap at research hypotheses body height (borders wrap content; scroll when longer); discovery pipeline and audit & provenance below.*
 
 ---
 
