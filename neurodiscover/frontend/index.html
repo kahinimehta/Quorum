@@ -104,34 +104,6 @@
     .kpi-item .kpi-sub { font-size: 0.6rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.2; }
     .kpi-item.run-context { border-color: #93c5fd; background: #eff6ff; }
     .kpi-item.run-context .val { color: var(--primary); }
-    .evidence-summary-bar {
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      padding: 0.6rem 1.5rem;
-      box-shadow: var(--shadow);
-    }
-    .evidence-summary-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem 2rem;
-      align-items: center;
-      font-size: 0.78rem;
-    }
-    .es-col { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; }
-    .es-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-right: 0.25rem;
-    }
-    .es-col.es-run { padding: 0.35rem 0.65rem; border-radius: 8px; background: #eff6ff; border: 1px solid #bfdbfe; }
-    .es-col.es-run .es-val { font-weight: 700; color: var(--primary); }
-    .es-col.es-db .es-val { font-weight: 600; color: var(--navy); }
-    .es-sep { color: #cbd5e1; }
     .run-status-strip {
       border-bottom: 1px solid var(--border);
       padding: 0.65rem 1.5rem;
@@ -1381,9 +1353,6 @@
       </div>
       <div class="header-meta">
         <span class="badge live" id="dbBadge">Connecting…</span>
-        <span class="badge badge-pill-blue" id="evidenceTotalBadge">— Evidence Rows</span>
-        <span class="badge badge-pill-amber" id="synLayerBadge">Ideal Candidate Profiles</span>
-        <span class="badge badge-pill-db" id="dbTypeBadge">—</span>
         <span class="badge" id="runIdChip" style="display:none;">Run —</span>
       </div>
     </div>
@@ -1395,30 +1364,6 @@
       <div class="kpi-item" id="kpiBoxGrant"><div class="val" id="kpiGrant">—</div><div class="lbl">Grants</div><div class="kpi-sub" id="kpiGrantSub">in database</div></div>
       <div class="kpi-item" id="kpiBoxSg"><div class="val" id="kpiSg">—</div><div class="lbl">Subgroups</div><div class="kpi-sub" id="kpiSgSub">from this run</div></div>
       <div class="kpi-item" id="kpiBoxConn"><div class="val" id="kpiConn">5</div><div class="lbl">Connections</div><div class="kpi-sub" id="kpiConnSub">from this run</div></div>
-    </div>
-  </div>
-  <div class="evidence-summary-bar" id="evidenceSummaryBar">
-    <div class="evidence-summary-inner">
-      <div class="es-col es-run hidden" id="esRunCol">
-        <span class="es-label">This run</span>
-        <span><span class="es-val" id="esRunLit">—</span> papers</span>
-        <span class="es-sep">·</span>
-        <span><span class="es-val" id="esRunTrial">—</span> trials</span>
-        <span class="es-sep">·</span>
-        <span><span class="es-val" id="esRunGrant">—</span> grants</span>
-        <span class="es-sep">·</span>
-        <span><strong id="esRunTotal">—</strong> used</span>
-      </div>
-      <div class="es-col es-db">
-        <span class="es-label">In database</span>
-        <span><span class="es-val" id="esDbLit">—</span> papers</span>
-        <span class="es-sep">·</span>
-        <span><span class="es-val" id="esDbTrial">—</span> trials</span>
-        <span class="es-sep">·</span>
-        <span><span class="es-val" id="esDbGrant">—</span> grants</span>
-        <span class="es-sep">·</span>
-        <span><strong id="esDbTotal">—</strong> total</span>
-      </div>
     </div>
   </div>
   <div class="run-status-strip idle" id="globalRunStatus">
@@ -2292,36 +2237,6 @@ python -m cua.nih.run_db \
       if (localDetail) localDetail.textContent = detail || '';
     }
 
-    function updateEvidenceSummaryBar(rs, dbFallback) {
-      const db = rs?.databaseTotals || dbFallback || {
-        literature: statsCache.literature ?? 0,
-        trial: statsCache.trial ?? 0,
-        grant: statsCache.grant ?? 0,
-        total: statsCache.totalEvidence ?? 0,
-      };
-      const set = (id, v) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = String(v ?? '—');
-      };
-      set('esDbLit', db.literature);
-      set('esDbTrial', db.trial);
-      set('esDbGrant', db.grant);
-      set('esDbTotal', db.total ?? ((db.literature || 0) + (db.trial || 0) + (db.grant || 0)));
-
-      const runCol = document.getElementById('esRunCol');
-      if (!rs) {
-        if (runCol) runCol.classList.add('hidden');
-        return;
-      }
-      const proc = rs.processed || rs.evidenceUsed || {};
-      const runTotal = (proc.literature ?? 0) + (proc.trial ?? 0) + (proc.grant ?? 0);
-      if (runCol) runCol.classList.remove('hidden');
-      set('esRunLit', proc.literature ?? 0);
-      set('esRunTrial', proc.trial ?? 0);
-      set('esRunGrant', proc.grant ?? 0);
-      set('esRunTotal', runTotal);
-    }
-
     const AGENTS = [
       'Literature Synthesis Agent',
       'Patient Subgroup Agent',
@@ -2335,12 +2250,10 @@ python -m cua.nih.run_db \
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
         useApiFallback = true;
         document.getElementById('dbBadge').textContent = 'DB LIVE';
-        document.getElementById('dbTypeBadge').textContent = 'Local API';
         return;
       }
       sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       document.getElementById('dbBadge').textContent = 'DB LIVE';
-      document.getElementById('dbTypeBadge').textContent = 'Supabase Postgres';
     }
 
     async function sbSelect(table, opts = {}) {
@@ -2422,25 +2335,17 @@ python -m cua.nih.run_db \
       const mode = formatRunMode(rs.mode, rs.modeLabel);
       const max = rs.maxPapersRequested ?? '—';
       setKpiSubtitles(
-        `${db.literature ?? 0} in DB · +${added.literature ?? 0} new`,
-        `${db.trial ?? 0} in DB · +${added.trial ?? 0} new`,
-        `${db.grant ?? 0} in DB · +${added.grant ?? 0} new`,
+        'this run',
+        'this run',
+        'this run',
         `${mode} · max ${max} papers`,
-        `${added.total ?? 0} evidence added`,
+        'ranked outputs',
       );
 
-      const total = db.total ?? statsCache.totalEvidence;
-      const eb = document.getElementById('evidenceTotalBadge');
-      if (eb) {
-        const procTotal = (proc.literature ?? 0) + (proc.trial ?? 0) + (proc.grant ?? 0);
-        eb.textContent = `${procTotal} used this run · ${total} in DB`;
-      }
       const chip = document.getElementById('runIdChip');
       if (chip && chip.style.display !== 'none') {
         chip.textContent = `Run ${latestRunId} · ${proc.literature ?? 0} papers`;
       }
-      updateEvidenceSummaryBar(rs);
-      const addedTotal = added.total ?? 0;
       const procTotal = (proc.literature ?? 0) + (proc.trial ?? 0) + (proc.grant ?? 0);
       const traceMeta = analyzeRunTraceFromStats(rs);
       const statusState = (rs.status || traceMeta.status || 'complete').toLowerCase();
@@ -2450,7 +2355,7 @@ python -m cua.nih.run_db \
         rs.statusDetail || traceMeta.detail || (norm === 'complete' ? 'Pipeline complete' : 'Pipeline partial'),
         `${mode} run ${latestRunId || '—'}: using ${proc.literature ?? 0} papers, `
           + `${proc.trial ?? 0} trials, ${proc.grant ?? 0} grants (${procTotal} in this run).`,
-        `Agents ${rs.agentsDone ?? traceMeta.done}/${rs.agentsTotal ?? 6} · max ${max} papers · +${addedTotal} new in DB`,
+        `Agents ${rs.agentsDone ?? traceMeta.done}/${rs.agentsTotal ?? 6} · ${mode}`,
       );
       if (rs.settings) lastRunConfig = { ...rs.settings };
       renderRunReport(latestRunId, lastRunConfig, rs, null, false);
@@ -2490,7 +2395,6 @@ python -m cua.nih.run_db \
       syncKpi(lit, trial, grant, sg, conn, true);
       setKpiSubtitles('in database', 'in database', 'in database', 'in database', 'in database');
       updateHeaderFromStats(s);
-      updateEvidenceSummaryBar(null, { literature: lit, trial, grant, total });
       if (!document.getElementById('globalRunStatus')?.classList.contains('running')
         && !document.getElementById('globalRunStatus')?.classList.contains('finalizing')) {
         setRunStatus(
@@ -2533,9 +2437,6 @@ python -m cua.nih.run_db \
         trial: s.trial,
         grant: s.grant,
       };
-      const total = s.totalEvidence ?? ((s.literature || 0) + (s.trial || 0) + (s.grant || 0));
-      const eb = document.getElementById('evidenceTotalBadge');
-      if (eb && kpiView === 'database') eb.textContent = `${total} Evidence Rows`;
       const scanEl = document.getElementById('lastScanMeta');
       if (scanEl) scanEl.textContent = 'Last scan: ' + formatScanTime(s.lastScanAt);
       const pub = document.getElementById('srcCntPubmed');
@@ -2549,9 +2450,6 @@ python -m cua.nih.run_db \
         banner.textContent = 'Rescore DB reruns agents 2–6 on existing evidence; use Incremental scan or Full live pull to add new papers.';
       }
       syncDefaultMode(s);
-      if (s.supabaseConfigured && document.getElementById('dbTypeBadge')) {
-        document.getElementById('dbTypeBadge').textContent = 'Supabase Postgres';
-      }
       const diseaseEl = document.getElementById('disease');
       if (diseaseEl && s.disease && !diseaseEl.dataset.userEdited) {
         const legacy = s.disease.trim();

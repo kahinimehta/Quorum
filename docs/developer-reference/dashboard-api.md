@@ -52,8 +52,8 @@ flowchart LR
 
 | Area | Content |
 |------|---------|
-| Header | DB status, evidence totals, ideal candidate profiles badge, run id |
-| KPI strip + summary bar | Per-type counts; **this run** vs **in database** after a pipeline run |
+| Header | DB status badge and optional run id chip |
+| KPI strip | Per-type counts; subtitles switch to **this run** after a pipeline completes |
 | Run status strip | Ready / Running / Complete / Partial / Failed |
 | **Step 1** | Configure & run — pipeline mode (Rescore / Demo / Incremental / Full), disease, max papers, extraction; single run button. Mode FAQ: [Inputs — pipeline modes](../input#recommended-workflow) |
 | **Step 2** | **Pipeline complete** badge beside title; ideal candidate profiles, ranked outputs, and hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed (agent trace + evidence table inside) |

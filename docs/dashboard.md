@@ -124,8 +124,8 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 
 | Area | Content |
 |------|---------|
-| Header | DB status, evidence totals, ideal candidate profiles badge, run id |
-| KPI strip | Per-type counts; **this run** vs **in database** |
+| Header | DB status badge and optional run id chip |
+| KPI strip | Per-type counts (papers, trials, grants, subgroups, connections) |
 | Run status | Ready / Running / Complete / Partial / Failed |
 | **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
 | **Step 2** | **Pipeline complete** badge beside title; **ideal candidate profiles**, ranked outputs, and research hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed by default (agent trace + evidence preview inside) |

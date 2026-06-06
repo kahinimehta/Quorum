@@ -165,7 +165,7 @@ python3 cli.py dashboard --skip-install --no-browser
 
 **Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, then run `make dashboard` — same command. The launcher runs **agents-only** (agents 2–6 on the full corpus) so connections and recommendations appear on first load.
 
-After each run, the KPI strip and summary bar show **this run** counts (e.g. 5 papers used) separately from **in database** totals.
+After each run, the KPI strip switches to **this run** counts (papers, trials, grants used by agents 2–6).
 
 ---
 
@@ -186,7 +186,7 @@ cd neurodiscover/frontend
 python3 -m http.server 8080
 ```
 
-Badge should read **Local API** when browser Supabase keys are unset.
+Header shows **DB LIVE** when the API is connected (local SQLite or Supabase backend).
 
 ---
 
