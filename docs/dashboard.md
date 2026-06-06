@@ -125,10 +125,9 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 | Area | Content |
 |------|---------|
 | Header | DB status badge and optional run id chip |
-| KPI strip | Per-type counts (papers, trials, grants, subgroups, connections) |
-| Run status | Ready / Running / Complete / Partial / Failed |
+| Run status | Ready / Running / Complete / Partial / Failed (all tabs) |
 | **Step 1** | Full-width **Discovery run configuration** only (no sidebar, local-mode banner, or demo-mode hint clutter) — pipeline mode, disease, max papers, extraction; short rescore banner; **Recent runs** table |
-| **Step 2** | Subtitle *Cohort, ranked outputs, & hypotheses*; **Pipeline complete** badge beside title; three output panels — **research hypotheses** sets the scroll cap; **ideal candidate profiles** and **ranked outputs** borders fit their content (up to that cap) and scroll when longer; discovery pipeline diagram; **Audit & provenance** collapsed by default |
+| **Step 2** | **KPI strip** (papers · trials · grants · subgroups · connections — database totals or **this run** after a pipeline); subtitle *Cohort, ranked outputs, & hypotheses*; **Pipeline complete** badge beside title; three output panels — **research hypotheses** sets the scroll cap; **ideal candidate profiles** and **ranked outputs** borders fit their content (up to that cap) and scroll when longer; discovery pipeline diagram; **Audit & provenance** collapsed by default |
 | **Step 3** | **Grant Proposal** — static `graded6` demo. Hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3); **The proposal** expanded (aims + **PubMed ID** citations); **Grant pipeline** in its own collapsed block; toolbar **`x/y obligations satisfied`**; pipeline/audit prose behind collapsed **Pipeline trace & audit**. **Jump to** → Proposal · Grant pipeline · Supporting details. |
 
 ### Step 3 — report structure

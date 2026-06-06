@@ -389,7 +389,7 @@ Database overview for dashboard KPI tiles:
 
 | Panel | Source |
 |-------|--------|
-| KPI strip | `GET /api/stats` + `runStats` from last run |
+| Step 2 KPI strip | `GET /api/stats` + `runStats` from last run (Tab 2 only) |
 | Run status strip | Complete / Partial / Running / Failed |
 | Step 1 — Configure & run | `POST /api/run-discovery` |
 | Step 2 — Pipeline diagram | Agent trace from `GET /api/agents?run_id=` |

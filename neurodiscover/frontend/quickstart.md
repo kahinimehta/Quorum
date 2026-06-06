@@ -165,7 +165,7 @@ python3 cli.py dashboard --skip-install --no-browser
 
 **Team Supabase:** set `SUPABASE_DATABASE_URL` in `.env`, then run `make dashboard` — same command. The launcher runs **agents-only** (agents 2–6 on the full corpus) so connections and recommendations appear on first load.
 
-After each run, the KPI strip switches to **this run** counts (papers, trials, grants used by agents 2–6).
+On **Step 2**, the KPI strip above Discovery Results switches to **this run** counts (papers, trials, grants used by agents 2–6).
 
 ---
 

@@ -84,6 +84,14 @@
       padding: 0.65rem 1.5rem;
       box-shadow: var(--shadow);
     }
+    #viewResults > .kpi-strip {
+      border-bottom: none;
+      box-shadow: none;
+      padding: 1rem 1.5rem 0;
+    }
+    #viewResults .results-title-row {
+      padding-top: 0.65rem;
+    }
     .kpi-inner {
       max-width: 1400px;
       margin: 0 auto;
@@ -1308,15 +1316,6 @@
       </div>
     </div>
   </header>
-  <div class="kpi-strip">
-    <div class="kpi-inner" id="kpiStrip">
-      <div class="kpi-item" id="kpiBoxLit"><div class="val" id="kpiLit">—</div><div class="lbl">Papers</div><div class="kpi-sub" id="kpiLitSub">in database</div></div>
-      <div class="kpi-item" id="kpiBoxTrial"><div class="val" id="kpiTrial">—</div><div class="lbl">Trials</div><div class="kpi-sub" id="kpiTrialSub">in database</div></div>
-      <div class="kpi-item" id="kpiBoxGrant"><div class="val" id="kpiGrant">—</div><div class="lbl">Grants</div><div class="kpi-sub" id="kpiGrantSub">in database</div></div>
-      <div class="kpi-item" id="kpiBoxSg"><div class="val" id="kpiSg">—</div><div class="lbl">Subgroups</div><div class="kpi-sub" id="kpiSgSub">from this run</div></div>
-      <div class="kpi-item" id="kpiBoxConn"><div class="val" id="kpiConn">5</div><div class="lbl">Connections</div><div class="kpi-sub" id="kpiConnSub">from this run</div></div>
-    </div>
-  </div>
   <div class="run-status-strip idle" id="globalRunStatus">
     <div class="run-status-inner">
       <span class="run-status-pill" id="globalRunStatusPill">Ready</span>
@@ -1442,6 +1441,15 @@
   </div>
 
   <div id="viewResults" class="hidden">
+    <div class="kpi-strip">
+      <div class="kpi-inner" id="kpiStrip">
+        <div class="kpi-item" id="kpiBoxLit"><div class="val" id="kpiLit">—</div><div class="lbl">Papers</div><div class="kpi-sub" id="kpiLitSub">in database</div></div>
+        <div class="kpi-item" id="kpiBoxTrial"><div class="val" id="kpiTrial">—</div><div class="lbl">Trials</div><div class="kpi-sub" id="kpiTrialSub">in database</div></div>
+        <div class="kpi-item" id="kpiBoxGrant"><div class="val" id="kpiGrant">—</div><div class="lbl">Grants</div><div class="kpi-sub" id="kpiGrantSub">in database</div></div>
+        <div class="kpi-item" id="kpiBoxSg"><div class="val" id="kpiSg">—</div><div class="lbl">Subgroups</div><div class="kpi-sub" id="kpiSgSub">from this run</div></div>
+        <div class="kpi-item" id="kpiBoxConn"><div class="val" id="kpiConn">5</div><div class="lbl">Connections</div><div class="kpi-sub" id="kpiConnSub">from this run</div></div>
+      </div>
+    </div>
     <div class="results-title-row">
       <p class="view-page-title">Step 2 — Discovery Results <span>Cohort, ranked outputs, &amp; hypotheses</span></p>
       <span class="badge ok" id="pillPipeline">Pipeline —</span>
