@@ -110,12 +110,12 @@ flowchart LR
 | Step | Tab | What to show |
 |------|-----|--------------|
 | 1 | **Configure & Run** | Demo mode, max papers 10, run button — global run status strip shows progress |
-| 2 | **Discovery Results** | **Ideal candidate profiles** · ranked outputs (scrollable confidence list) · research hypotheses first; then pipeline diagram; expand **Audit & provenance** for agent trace + evidence table |
+| 2 | **Discovery Results** | **Ideal candidate profiles** · ranked outputs (same panel height, scrolls when longer) · research hypotheses first; then pipeline diagram; expand **Audit & provenance** for agent trace + evidence table |
 | 3 | **Grant Proposal** (last tab, static) | Hero KPIs → **The proposal** (expanded NIH text) → expand **Grant pipeline** for diagram → expand **Pipeline trace & audit** for audit sections |
 
 Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant Proposal**. Step 3 is **not run-scoped** — same `graded6` demo regardless of Step 2.
 
-**Collapsed by default (demo-friendly):** Step 2 **Audit & provenance** · Step 3 **Grant pipeline** and **Pipeline trace & audit** (Jump to opens each). Ranked outputs scroll inside their panel when long; the NIH proposal body stays visible without extra clicks.
+**Collapsed by default (demo-friendly):** Step 2 **Audit & provenance** · Step 3 **Grant pipeline** and **Pipeline trace & audit** (Jump to opens each). Ranked outputs match the ideal candidate profiles panel height and scroll inside when the confidence list is longer; the NIH proposal body stays visible without extra clicks.
 
 {: .important }
 **Stage safety:** Pre-run `make dashboard` before presenting. Use **demo** mode — no live PubMed pull on stage. See [Debugging — safe demo checklist](debugging#safe-demo-checklist-stage).
@@ -128,7 +128,7 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 | KPI strip | Per-type counts (papers, trials, grants, subgroups, connections) |
 | Run status | Ready / Running / Complete / Partial / Failed |
 | **Step 1** | Full-width **Discovery run configuration** only (no sidebar, local-mode banner, or demo-mode hint clutter) — pipeline mode, disease, max papers, extraction; short rescore banner; **Recent runs** table |
-| **Step 2** | Subtitle *Cohort, ranked outputs, & hypotheses*; **Pipeline complete** badge beside title; **ideal candidate profiles**, ranked outputs (scrollable panel), and research hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed by default |
+| **Step 2** | Subtitle *Cohort, ranked outputs, & hypotheses*; **Pipeline complete** badge beside title; **ideal candidate profiles**, ranked outputs (matched height, scrolls when longer), and research hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed by default |
 | **Step 3** | **Grant Proposal** — static `graded6` demo. Hero KPIs (corpus · verified papers · citations · Critic F1/F2/F3); **The proposal** expanded (aims + **PubMed ID** citations); **Grant pipeline** in its own collapsed block; toolbar **`x/y obligations satisfied`**; pipeline/audit prose behind collapsed **Pipeline trace & audit**. **Jump to** → Proposal · Grant pipeline · Supporting details. |
 
 ### Step 3 — report structure

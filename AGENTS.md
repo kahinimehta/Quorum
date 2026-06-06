@@ -63,7 +63,7 @@ make dashboard
 # → launcher prints Open: URL (UI :8080/?api=... ; Ctrl+C to stop)
 ```
 
-Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip). UI has three tabs: **Step 1** configure & run (full-width config panel + global run status strip); **Step 2** discovery results (ideal candidate profiles · scrollable ranked outputs · hypotheses, then pipeline diagram + collapsed **Audit & provenance**); **Step 3** static grant proposal (`graded6`, corpus vs verified-papers KPIs, expanded proposal + collapsed **Grant pipeline** and **Pipeline trace & audit**, not run-scoped).
+Same as `python3 cli.py dashboard` or `./dashboard`. Opens the browser automatically (`--no-browser` to skip). UI has three tabs: **Step 1** configure & run (full-width config panel + global run status strip); **Step 2** discovery results (ideal candidate profiles · ranked outputs matched to profiles height · hypotheses, then pipeline diagram + collapsed **Audit & provenance**); **Step 3** static grant proposal (`graded6`, corpus vs verified-papers KPIs, expanded proposal + collapsed **Grant pipeline** and **Pipeline trace & audit**, not run-scoped).
 
 - **Local:** leave `SUPABASE_DATABASE_URL` unset — builds seed DB, runs demo (`max_papers=10`).
 - **Team Supabase:** set `SUPABASE_DATABASE_URL` — skips `build`, runs **agents-only** (agents 2–6 on all existing evidence).

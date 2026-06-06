@@ -869,6 +869,8 @@
       overflow: hidden;
       box-shadow: var(--shadow);
       min-height: 320px;
+      display: flex;
+      flex-direction: column;
     }
     .output-panel-head {
       padding: 0.65rem 0.85rem;
@@ -882,7 +884,8 @@
     .panel-hyp .output-panel-head { background: #eff6ff; border-top: 3px solid var(--primary); }
     .output-panel-body { padding: 0.75rem 0.85rem 1rem; }
     .panel-rank .output-panel-body {
-      max-height: min(52vh, 480px);
+      flex: 1;
+      min-height: 0;
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
@@ -3037,6 +3040,27 @@ python -m cua.nih.run_db \
       }
     }
 
+    let rankPanelResizeObs = null;
+
+    function syncRankPanelHeight() {
+      const syn = document.querySelector('.outputs-three .panel-syn.output-panel');
+      const rank = document.querySelector('.outputs-three .panel-rank.output-panel');
+      if (!syn || !rank) return;
+      if (window.matchMedia('(max-width: 1100px)').matches) {
+        rank.style.height = '';
+        return;
+      }
+      rank.style.height = `${syn.offsetHeight}px`;
+    }
+
+    function initRankPanelHeightSync() {
+      const syn = document.querySelector('.outputs-three .panel-syn.output-panel');
+      if (!syn || rankPanelResizeObs) return;
+      rankPanelResizeObs = new ResizeObserver(() => syncRankPanelHeight());
+      rankPanelResizeObs.observe(syn);
+      window.addEventListener('resize', syncRankPanelHeight);
+    }
+
     function renderSyntheticCohort(cohort) {
       const box = document.getElementById('syntheticCohort');
       box.innerHTML = '';
@@ -3073,6 +3097,7 @@ python -m cua.nih.run_db \
           <span class="pill-phi">🔒 Synthetic · no PHI</span>`;
         box.appendChild(card);
       });
+      requestAnimationFrame(syncRankPanelHeight);
     }
 
     function renderHypotheses(recommendations) {
@@ -3293,6 +3318,7 @@ python -m cua.nih.run_db \
 
       renderHypotheses(displayRanked);
       renderContinuousUpdate(displayRanked);
+      requestAnimationFrame(syncRankPanelHeight);
 
       const rid = runId || latestRunId;
       renderRunReport(rid, lastRunConfig, rs, recommendations, false);
@@ -4916,6 +4942,7 @@ python -m cua.nih.run_db \
         b.classList.toggle('active', b.dataset.view === name);
       });
       if (name === 'cua' && !cuaLoaded) loadCuaTab();
+      if (name === 'results') requestAnimationFrame(syncRankPanelHeight);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -4940,6 +4967,7 @@ python -m cua.nih.run_db \
     document.getElementById('evNext').addEventListener('click', () => { evPage++; loadEvidencePage(); });
 
     async function boot() {
+      initRankPanelHeightSync();
       initSupabase();
       await loadCounts();
       await loadSubgroups();
