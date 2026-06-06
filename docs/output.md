@@ -32,12 +32,12 @@ At the top, **This run** shows:
 
 ## Dashboard — Step 3 (Grant Proposal · CUA)
 
-**Step 3** is separate from pipeline rankings and **not run-scoped**. It always loads the static bundled CUA demo (`graded6`) via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html` in the page (single scroll, no nested frame) — unchanged no matter which pipeline run you view in Step 2.
+**Step 3** is separate from pipeline rankings and **not run-scoped**. It always loads the static bundled CUA demo (`graded6`) via `GET /api/cua/demo` and inlines `/cua-demo/graded6.html` in the page — hero KPIs, audit status chips, jump-to section nav, and a numbered pipeline diagram (single scroll, no nested frame) — unchanged no matter which pipeline run you view in Step 2.
 
 ![Step 3 — CUA grant proposal tab](/assets/images/dashboard/step3-cua-grant-proposal.png)
 {: .doc-screenshot }
 
-*Step 3 — static demo banner, KPI strip (corpus → writer view, critic scores), and the full CUA pipeline report inlined in the page.*
+*Step 3 — hero KPIs, audit status chips (PASS / at-risk / critic scores), Jump to nav, inlined CUA report, and expanded live-CLI instructions.*
 
 To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)).
 

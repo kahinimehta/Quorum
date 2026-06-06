@@ -150,7 +150,7 @@ python3 cli.py dashboard --skip-install --no-browser
 1. **Step 1 — Configure & Run** — pick **pipeline mode** (Rescore DB / Demo sample / Incremental scan / Full live pull), disease (default **Parkinson's**), max papers, keywords, extraction backend.
 2. Click the **run button** (label matches the selected mode). The **agent pipeline stepper** shows one agent **Running…** at a time; others **Waiting…** until **Done**.
 3. **Step 2 — Discovery Results** — synthetic cohort, ranked treatments, hypotheses, agent trace, evidence table (scores from **this run’s** recommendations).
-4. **Step 3 — Grant Proposal (CUA)** — static bundled `graded6` demo (not tied to your `run_id`). Full NIH report inlined in the page. For a live run: `cd cua && pip install -e .` then `python -m cua.nih.run_db` with `ANTHROPIC_API_KEY` + `CUA_LIVE=1` (see `cua/README.md`).
+4. **Step 3 — Grant Proposal (CUA)** — static bundled `graded6` demo (not tied to your `run_id`). Hero KPIs, audit status chips, jump-to section nav, and the full NIH report inlined (numbered data-loop diagram). The **Run a live CUA proposal (CLI)** panel is open by default. For a live run: `cd cua && pip install -e .` then `python -m cua.nih.run_db` with `ANTHROPIC_API_KEY` + `CUA_LIVE=1` (see `cua/README.md`).
 
 `make dashboard` only runs demo once at startup. Change settings and rerun from Step 1 while the servers stay up.
 

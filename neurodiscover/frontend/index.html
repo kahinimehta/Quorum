@@ -283,8 +283,8 @@
     }
     .tab-btn-results.active { border-color: #22c55e; background: linear-gradient(135deg, #f0fdf4 0%, #fff 100%); box-shadow: 0 4px 16px rgba(34, 197, 94, 0.18); }
     .tab-btn-results.active .tab-step { background: #16a34a; }
-    .tab-btn-cua.active { border-color: #7c3aed; background: linear-gradient(135deg, #f5f3ff 0%, #fff 100%); box-shadow: 0 4px 16px rgba(124, 58, 237, 0.18); }
-    .tab-btn-cua.active .tab-step { background: #7c3aed; color: #fff; }
+    .tab-btn-cua.active { border-color: var(--primary); background: linear-gradient(135deg, #eff6ff 0%, #fff 100%); box-shadow: 0 4px 16px rgba(37, 99, 235, 0.18); }
+    .tab-btn-cua.active .tab-step { background: var(--primary); color: #fff; }
     .cua-wide { max-width: 1400px; margin: 0 auto; padding: 0.75rem 1.5rem 2rem; overflow-x: hidden; }
     .cua-shell-card {
       background: var(--card);
@@ -300,46 +300,130 @@
       font-weight: 700;
       color: var(--navy);
     }
-    .cua-banner {
-      border-left: 4px solid #7c3aed;
-      background: linear-gradient(90deg, #f5f3ff 0%, #fff 14%);
+    .cua-hero {
+      border-left: 4px solid var(--primary);
+      background: linear-gradient(90deg, #eff6ff 0%, #fff 14%);
+      padding: 1.15rem 1.4rem 1.25rem;
+    }
+    .cua-hero-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      flex-wrap: wrap;
       margin-bottom: 1rem;
+      padding-bottom: 0.95rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cua-hero-desc {
+      flex: 1;
+      min-width: 14rem;
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+    .cua-hero-desc code {
+      font-size: 0.86em;
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
     }
     .cua-kpi-row {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 0.85rem;
+      gap: 0.75rem;
       margin-bottom: 0;
     }
     @media (max-width: 900px) { .cua-kpi-row { grid-template-columns: repeat(2, 1fr); } }
     .cua-kpi {
       text-align: center;
-      padding: 0.85rem 0.65rem;
-      border-radius: 10px;
-      background: var(--card);
+      padding: 0.75rem 0.55rem;
+      border-radius: 8px;
+      background: var(--bg);
       border: 1px solid var(--border);
-      box-shadow: var(--shadow);
     }
-    .cua-kpi .val { font-size: 1.5rem; font-weight: 700; color: #5b21b6; }
+    .cua-kpi .val { font-size: 1.35rem; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; }
     .cua-kpi .lbl {
-      font-size: 0.8rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.04em;
       color: var(--muted);
       line-height: 1.3;
+      margin-top: 0.15rem;
       overflow-wrap: anywhere;
     }
+    .cua-kpi-good { border-color: #86efac !important; background: #f0fdf4 !important; }
+    .cua-kpi-good .val { color: #166534 !important; }
+    .cua-kpi-warn { border-color: #fcd34d !important; background: #fffbeb !important; }
+    .cua-kpi-warn .val { color: #b45309 !important; }
+    .cua-kpi-risk { border-color: #fca5a5 !important; background: #fef2f2 !important; }
+    .cua-kpi-risk .val { color: #b91c1c !important; }
+    .cua-status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.85rem;
+    }
+    .cua-status-row.hidden { display: none; }
+    .cua-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.28rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+    .cua-status.ok { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .cua-status.warn { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
+    .cua-status.risk { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+    .cua-status.neutral { background: #fff; color: var(--navy); border-color: var(--border); }
+    .cua-toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+      padding: 0.65rem 0.85rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .cua-toc.hidden { display: none; }
+    .cua-toc-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      align-self: center;
+      margin-right: 0.35rem;
+    }
+    .cua-toc a {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--border);
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+    }
+    .cua-toc a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
     .cua-report-toolbar {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 1rem;
       flex-wrap: wrap;
-      margin: 0 0 1rem;
+      margin: 0 0 1.1rem;
       font-size: 0.92rem;
       color: var(--text);
-      padding-bottom: 0.85rem;
-      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #eff6ff 0%, #fff 55%);
+      border: 1px solid #bfdbfe;
     }
     .cua-report-toolbar-text { flex: 1; min-width: 0; }
     .cua-report-toolbar strong {
@@ -350,33 +434,41 @@
       overflow-wrap: anywhere;
       word-break: break-word;
     }
-    .cua-report-meta { font-size: 0.9rem; color: var(--muted); font-weight: 400; line-height: 1.45; overflow-wrap: anywhere; }
+    .cua-report-meta { font-size: 0.88rem; color: var(--muted); font-weight: 400; line-height: 1.45; margin-top: 0.2rem; overflow-wrap: anywhere; }
     .cua-report-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 12px;
       box-shadow: var(--shadow);
-      padding: 1.2rem 1.4rem 1.5rem;
+      padding: 1rem 1.15rem 1.35rem;
       overflow: visible;
     }
     .cua-report-inline {
       width: 100%;
       margin-top: 0;
       min-height: 120px;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 0.25rem 0;
     }
     .cua-report-inline::part(host),
     #cuaReportHost { display: block; width: 100%; }
-    .cua-cli-wrap { margin-top: 1rem; }
+    .cua-cli-wrap {
+      margin-top: 1rem;
+      border-left: 4px solid #16a34a;
+      background: linear-gradient(90deg, #f0fdf4 0%, #fff 18%);
+    }
     .cua-cli-wrap summary {
       cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--navy);
-      padding: 0.5rem 0;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #166534;
+      padding: 0.55rem 0;
       list-style: none;
     }
     .cua-cli-wrap summary::-webkit-details-marker { display: none; }
-    .cua-cli-wrap summary::before { content: '▸ '; color: var(--purple); }
+    .cua-cli-wrap summary::before { content: '▸ '; color: #16a34a; }
     .cua-cli-wrap[open] summary::before { content: '▾ '; }
     .cua-cli-hint {
       font-size: 0.88rem;
@@ -395,21 +487,6 @@
       line-height: 1.55;
     }
     .cua-unavail { color: var(--muted); font-size: 0.92rem; padding: 1rem 0; }
-    .cua-static-bar {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      padding: 1rem 1.35rem 1rem 1.5rem;
-      margin-bottom: 0;
-      border-radius: 10px;
-      border: 1px solid #c4b5fd;
-      background: linear-gradient(90deg, #f5f3ff 0%, #faf8ff 100%);
-      font-size: 0.95rem;
-      line-height: 1.55;
-      color: #4c1d95;
-    }
-    .cua-static-text { flex: 1; min-width: 12rem; padding-left: 0.15rem; }
     .cua-static-badge {
       flex-shrink: 0;
       display: inline-flex;
@@ -420,7 +497,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      background: #7c3aed;
+      background: var(--primary);
       color: #fff;
     }
     .tab-static-tag {
@@ -432,8 +509,8 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.03em;
-      background: #ede9fe;
-      color: #6d28d9;
+      background: #eff6ff;
+      color: var(--primary);
       vertical-align: middle;
     }
     .view-page-title {
@@ -1420,13 +1497,11 @@
   <div id="viewCua" class="hidden">
     <p class="view-page-title">Step 3 — Grant Proposal (CUA) <span id="cuaSubtitle">Static NIH demo · independent of Steps 1–2</span></p>
     <div class="cua-wide">
-      <div class="cua-shell-card">
-        <div class="cua-static-bar" role="note">
+      <div class="cua-shell-card cua-hero" id="cuaKpis">
+        <div class="cua-hero-top" role="note">
           <span class="cua-static-badge">Static demo</span>
-          <span class="cua-static-text">Pre-rendered <code>graded6</code> sample: 400-paper corpus, 60-paper writer view. Fixed showcase (not run-scoped).</span>
+          <p class="cua-hero-desc">Pre-rendered <code>graded6</code> sample — 400-paper corpus, 60-paper writer view. Fixed NIH showcase; not tied to Steps 1–2.</p>
         </div>
-      </div>
-      <div class="cua-shell-card" id="cuaKpis">
         <h2>Run at a glance</h2>
         <div class="cua-kpi-row">
           <div class="cua-kpi"><div class="val" id="cuaKpiCorpus">—</div><div class="lbl">Corpus papers</div></div>
@@ -1435,11 +1510,13 @@
           <div class="cua-kpi"><div class="val" id="cuaKpiF1">—</div><div class="lbl">Critic F1</div></div>
           <div class="cua-kpi"><div class="val" id="cuaKpiF2">—</div><div class="lbl">Critic F2</div></div>
         </div>
+        <div class="cua-status-row hidden" id="cuaStatusRow" aria-label="Audit status"></div>
       </div>
       <div id="cuaUnavailable" class="cua-unavail hidden">
         CUA demo artifacts not found. Ensure <code>cua/outputs/graded6.*</code> exists in the repo.
       </div>
       <div id="cuaMain">
+        <nav class="cua-toc hidden" id="cuaToc" aria-label="Report sections"></nav>
         <div class="cua-report-card">
           <div class="cua-report-toolbar">
             <div class="cua-report-toolbar-text">
@@ -1450,7 +1527,7 @@
           </div>
           <div id="cuaReportHost" class="cua-report-inline" aria-live="polite">Loading grant proposal…</div>
         </div>
-        <details class="cua-cli-wrap card">
+        <details class="cua-cli-wrap card" open>
           <summary>Run a live CUA proposal (CLI)</summary>
           <p class="cua-cli-hint">
             Read-only against Supabase or local SQLite — writes local JSON only (not <code>recommendations</code>).
@@ -3446,155 +3523,561 @@ python -m cua.nih.run_db \
     let cuaLoaded = false;
 
     const CUA_INLINE_OVERRIDES = `
-      :host { display: block; width: 100%; color: #1a1f2e; }
-      header { margin: 0 0 1.5rem; border-radius: 12px; overflow: hidden; }
-      header .wrap { padding: 0 1.75rem 0 !important; max-width: none !important; }
-      .wrap { max-width: none; padding: 0 1.25rem 2.5rem !important; }
-      body { font-size: 17px; line-height: 1.65; font-weight: 400; }
-      h1 { font-size: 1.45rem !important; font-weight: 700 !important; }
-      .sub { font-size: 1rem !important; line-height: 1.55 !important; color: #e0e7ff !important; padding-right: 0.5rem; }
-      header .badges { padding-left: 0.15rem; gap: 10px !important; }
-      .badge { font-size: 0.88rem !important; padding: 7px 14px !important; font-weight: 600 !important; }
+      :host {
+        display: block;
+        width: 100%;
+        color: #0f172a;
+        --c-navy: #0f2044;
+        --c-primary: #2563eb;
+        --c-border: #e2e8f0;
+        --c-muted: #64748b;
+        --c-bg: #eef2f7;
+      }
+      header {
+        margin: 0 0 1.25rem;
+        border-radius: 12px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #0f2044 0%, #1a3270 100%) !important;
+        box-shadow: 0 4px 16px rgba(15, 32, 68, 0.15);
+      }
+      header .wrap { padding: 1.35rem 1.75rem 1.2rem !important; max-width: none !important; }
+      .wrap { max-width: none; padding: 0 1.35rem 2rem !important; }
+      body { font-size: 16px; line-height: 1.62; font-weight: 400; color: #1e293b; }
+      h1 { font-size: 1.38rem !important; font-weight: 700 !important; letter-spacing: -0.02em; }
+      .sub { font-size: 0.95rem !important; line-height: 1.55 !important; color: #e0e7ff !important; max-width: 52rem; }
+      header .badges { padding-left: 0; gap: 8px !important; margin-bottom: 1rem !important; }
+      .badge { font-size: 0.82rem !important; padding: 6px 12px !important; font-weight: 600 !important; }
       header .badge.ok {
-        background: #10b981 !important;
+        background: #16a34a !important;
         color: #ffffff !important;
-        border-color: #059669 !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        border-color: #15803d !important;
+        box-shadow: 0 1px 4px rgba(22, 163, 74, 0.35) !important;
       }
       header .badge.warn {
-        background: #fbbf24 !important;
-        color: #78350f !important;
-        border-color: #f59e0b !important;
+        background: #f59e0b !important;
+        color: #fff !important;
+        border-color: #d97706 !important;
+        box-shadow: 0 1px 4px rgba(245, 158, 11, 0.35) !important;
       }
       header .badge:not(.ok):not(.warn) {
-        background: rgba(255,255,255,0.2) !important;
+        background: rgba(255,255,255,0.18) !important;
         color: #fff !important;
-        border-color: rgba(255,255,255,0.35) !important;
+        border-color: rgba(255,255,255,0.3) !important;
       }
-      .chips { padding-left: 0.15rem; gap: 12px !important; }
-      .chip { min-width: 6.5rem; padding: 12px 16px !important; background: rgba(255,255,255,0.14) !important; }
-      .chip .k { font-size: 0.78rem !important; color: #e0e7ff !important; }
-      .chip .v { font-size: 1.25rem !important; }
-      h2 { font-size: 1.2rem !important; font-weight: 700; margin-bottom: 0.5rem !important; }
-      .lead { font-size: 1rem !important; line-height: 1.6 !important; font-weight: 400 !important; }
-      .dim { font-size: 0.88rem !important; }
-      .card {
-        padding: 1.15rem 1.25rem !important;
-        margin-bottom: 1rem !important;
+      .chips { padding-left: 0; gap: 10px !important; }
+      .chip {
+        min-width: 5.5rem;
+        padding: 10px 14px !important;
+        background: rgba(255,255,255,0.12) !important;
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 10px !important;
+      }
+      .chip .k { font-size: 0.7rem !important; color: #c7d2fe !important; letter-spacing: 0.06em !important; }
+      .chip .v { font-size: 1.15rem !important; font-weight: 800 !important; }
+      section.cua-sec {
+        margin: 1.35rem 0 !important;
+        padding: 1.25rem 1.35rem 1.35rem !important;
+        background: #fff !important;
+        border: 1px solid #e2e8f0 !important;
         border-radius: 12px !important;
+        overflow: visible !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
       }
-      .card p { font-size: 0.98rem !important; line-height: 1.65 !important; font-weight: 400 !important; }
-      .card-h { font-size: 1rem !important; margin-bottom: 0.65rem !important; }
-      .diagram {
-        width: 776px !important;
-        height: 916px !important;
-        margin: 0 auto !important;
-        position: relative !important;
+      section.cua-sec-loop { border-left: 4px solid var(--c-primary) !important; }
+      section.cua-sec-contract { border-left: 4px solid var(--c-navy) !important; }
+      section.cua-sec-dropped { border-left: 4px solid #f87171 !important; background: #fffbfb !important; }
+      section.cua-sec-rounds { border-left: 4px solid #f59e0b !important; background: #fffef7 !important; }
+      section.cua-sec-booster { border-left: 4px solid #0d9488 !important; background: #f0fdfa !important; }
+      section.cua-sec-ab { border-left: 4px solid #d97706 !important; background: #fffbeb !important; }
+      section.cua-sec-trace { border-left: 4px solid #64748b !important; }
+      section.cua-sec-proposal { border-left: 4px solid #16a34a !important; background: #f0fdf4 !important; }
+      section.cua-sec-audit { border-left: 4px solid #0284c7 !important; background: #f0f9ff !important; }
+      section.cua-sec-ingest { border-left: 4px solid #94a3b8 !important; }
+      h2 {
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        margin: 0 0 0.55rem !important;
+        color: var(--c-navy) !important;
+        letter-spacing: -0.02em;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .lead {
+        font-size: 0.94rem !important;
+        line-height: 1.62 !important;
+        color: #64748b !important;
+        margin: 0 0 1rem !important;
+      }
+      .dim { font-size: 0.82rem !important; color: #94a3b8 !important; }
+      .card {
+        padding: 1rem 1.15rem !important;
+        margin-bottom: 0.85rem !important;
+        border-radius: 10px !important;
+        border: 1px solid var(--c-border) !important;
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+      .card:last-child { margin-bottom: 0 !important; }
+      .card p { font-size: 0.93rem !important; line-height: 1.65 !important; color: #334155 !important; }
+      .card-h {
+        font-size: 0.92rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 0.55rem !important;
+        color: #1e293b !important;
+      }
+      .aim.card {
+        background: #fff !important;
+        border-color: #bfdbfe !important;
+      }
+      .aim .card-h {
+        font-size: 1rem !important;
+        color: var(--c-primary) !important;
+        padding-bottom: 0.35rem;
+        border-bottom: 1px dashed #bfdbfe;
+        margin-bottom: 0.75rem !important;
+      }
+      .aim .field {
+        margin: 0.75rem 0 !important;
+        padding: 0.65rem 0.75rem !important;
+        background: var(--c-bg) !important;
+        border-radius: 8px !important;
+        border-left: 3px solid #93c5fd !important;
+      }
+      .aim .field span {
+        display: block !important;
+        font-size: 0.68rem !important;
+        letter-spacing: 0.07em !important;
+        color: var(--c-primary) !important;
+        margin-bottom: 0.25rem !important;
+      }
+      .aim .field p { margin: 0 !important; font-size: 0.91rem !important; }
+      .cites { margin-top: 0.65rem !important; padding-top: 0.5rem !important; border-top: 1px dashed #e2e8f0; }
+      code {
+        font-size: 0.78rem !important;
+        background: #eff6ff !important;
+        color: #1d4ed8 !important;
+        padding: 0.12rem 0.4rem !important;
+        border-radius: 4px !important;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+      }
+      .callout {
+        font-size: 0.92rem !important;
+        line-height: 1.62 !important;
+        padding: 0.9rem 1rem !important;
+        border-radius: 8px !important;
+        margin: 0.65rem 0 !important;
+        background: #eff6ff !important;
+        border-left-color: var(--c-primary) !important;
+        color: #1e3a5f !important;
+      }
+      .callout.sky { background: #e0f2fe !important; }
+      .obl { margin: 0.35rem 0 0 !important; padding-left: 0 !important; list-style: none !important; }
+      .obl li {
+        font-size: 0.9rem !important;
+        line-height: 1.58 !important;
+        margin: 0.45rem 0 !important;
+        padding: 0.5rem 0.65rem 0.5rem 0.75rem !important;
+        background: #f8fafc !important;
+        border-radius: 6px !important;
+        border-left: 3px solid #93c5fd !important;
+      }
+      .obl li code { margin-right: 0.35rem !important; font-weight: 600 !important; }
+      .cands { gap: 0.75rem !important; }
+      .cand {
+        padding: 0.85rem 1rem !important;
+        border-radius: 10px !important;
+        border: 1px solid #e2e8f0 !important;
+      }
+      .cand.won { border-color: #22c55e !important; background: #ecfdf5 !important; }
+      .cand.won .cand-h span { color: #15803d !important; font-weight: 700 !important; }
+      .cand.drop { background: #fef2f2 !important; border-color: #fecaca !important; opacity: 1 !important; }
+      .cand.drop .cand-h span { color: #b91c1c !important; }
+      .cand-h { font-size: 0.82rem !important; margin-bottom: 0.45rem !important; }
+      .cand .rat {
+        font-size: 0.8rem !important;
+        color: #64748b !important;
+        margin-top: 0.55rem !important;
+        padding-top: 0.5rem !important;
+      }
+      table {
+        font-size: 0.88rem !important;
+        border-radius: 10px !important;
         overflow: hidden !important;
+        border: 1px solid #e2e8f0 !important;
       }
+      th {
+        font-size: 0.75rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.04em !important;
+        background: #f1f5f9 !important;
+        color: #64748b !important;
+        padding: 0.65rem 0.85rem !important;
+      }
+      td { padding: 0.6rem 0.85rem !important; font-size: 0.88rem !important; }
+      tr.flag td { background: #fef3c7 !important; color: #92400e !important; font-weight: 600 !important; }
+      td.flag, td .flag { color: #b45309 !important; }
+      tr:nth-child(even) td { background: #fafbfc; }
+      tr.flag:nth-child(even) td { background: #fef3c7 !important; }
+      tr td.flag { color: #b45309 !important; font-weight: 700 !important; }
+      tr td:last-child:not(.flag) { color: #15803d !important; font-weight: 600 !important; }
+      .prov {
+        padding: 0.75rem 0.9rem !important;
+        margin: 0.5rem 0 !important;
+        background: #f0f9ff !important;
+        border-color: #bae6fd !important;
+        border-radius: 8px !important;
+      }
+      .prov-h { font-size: 0.82rem !important; color: #0369a1 !important; }
+      .provp code { margin: 0.15rem 0.2rem 0.15rem 0 !important; }
+      .abrow { margin: 0.45rem 0 !important; }
+      .ablabel { font-size: 0.82rem !important; }
+      .abtag.boost { background: #dbeafe !important; color: #1d4ed8 !important; }
+      .abtag.base { background: #f1f5f9 !important; color: #64748b !important; }
+      .abfill.boost { background: #38bdf8 !important; }
+      .abfill.base { background: #94a3b8 !important; }
+      .diagram-wrap {
+        width: 100%;
+        overflow-x: auto;
+        padding: 0.5rem 0 0.75rem;
+        display: flex;
+        justify-content: center;
+        background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        margin-top: 0.35rem;
+      }
+      .diagram { margin: 0 auto !important; position: relative !important; overflow: visible !important; }
       .d-node {
         box-sizing: border-box !important;
         align-items: center !important;
-        overflow: hidden !important;
+        overflow: visible !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06) !important;
+        border-left-color: var(--c-primary) !important;
+      }
+      .d-node.code, .d-node.gate { border-left-color: #94a3b8 !important; }
+      .d-node .dn { background: var(--c-primary) !important; }
+      .d-node.code .dn, .d-node.gate .dn { background: #64748b !important; }
+      .d-node.flag { border-left-color: #f59e0b !important; }
+      .d-node.flag .dn { background: #f59e0b !important; }
+      .d-node.out { border-left-color: #22c55e !important; }
+      .d-node.out .dn { background: #16a34a !important; }
+      .d-node.boost { border-left-color: #0d9488 !important; }
+      .d-node.boost .dn { background: #0d9488 !important; }
+      .dn {
+        font-size: 10px !important;
+        font-weight: 800 !important;
+        flex: 0 0 26px !important;
+        width: 26px !important;
+        height: 26px !important;
       }
       .dnl { overflow-wrap: anywhere !important; word-break: break-word !important; }
+      .dnl b { font-size: 0.88rem !important; color: #0f172a !important; }
+      .dm { font-size: 0.75rem !important; color: #64748b !important; }
       .d-panel {
         box-sizing: border-box !important;
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
-        scrollbar-width: thin;
-        scrollbar-color: #cbd2de transparent;
-        padding: 8px 12px !important;
-        -webkit-overflow-scrolling: touch;
+        overflow: visible !important;
+        padding: 0.65rem 0.85rem !important;
+        border-radius: 10px !important;
+        box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05) !important;
       }
-      .d-panel:hover { z-index: 35 !important; }
-      .d-panel.out { min-height: 78px !important; }
+      .d-panel.gen { background: #eff6ff !important; border-color: #bfdbfe !important; }
+      .d-panel.code { background: var(--c-bg) !important; }
+      .d-panel.bestofn { background: #fffbeb !important; border-color: #fde68a !important; }
+      .d-panel.gate { background: var(--c-bg) !important; }
+      .d-panel.flag { background: #fffbeb !important; border-color: #fde68a !important; }
+      .d-panel.boost { background: #f0fdfa !important; border-color: #5eead4 !important; }
+      .d-panel.loop { background: #eff6ff !important; border-color: #93c5fd !important; }
+      .d-panel.out { background: #f0fdf4 !important; border-color: #86efac !important; }
+      .d-panel:hover { z-index: 35 !important; box-shadow: 0 6px 20px rgba(15, 23, 42, 0.1) !important; }
+      .dp-h {
+        font-size: 0.68rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.07em !important;
+        color: var(--c-primary) !important;
+        margin-bottom: 0.45rem !important;
+        padding-bottom: 0.35rem !important;
+        border-bottom: 1px solid var(--c-border) !important;
+      }
+      .dp-c { font-size: 0.84rem !important; line-height: 1.52 !important; color: #334155 !important; }
+      .dp-row {
+        display: block;
+        padding: 0.35rem 0 0.35rem 0.45rem !important;
+        margin: 0.2rem 0 !important;
+        border-left: 2px solid #bfdbfe !important;
+        border-radius: 0 4px 4px 0 !important;
+      }
+      .dp-row code {
+        display: inline-block !important;
+        min-width: 4.2rem !important;
+        font-size: 0.68rem !important;
+        font-weight: 700 !important;
+        margin-right: 0.35rem !important;
+        vertical-align: top !important;
+      }
+      .dp-c b { display: inline !important; font-weight: 700 !important; color: #1e293b !important; }
+      .dp-c .pmore { display: block; margin-top: 0.35rem; font-style: italic; color: #64748b !important; }
       .d-edge { z-index: 4 !important; }
-      .d-el { white-space: normal !important; max-width: 9.5rem !important; line-height: 1.25 !important; text-align: center !important; }
-      .dp-h { font-size: 0.78rem !important; }
-      .dp-c { font-size: 0.92rem !important; line-height: 1.5 !important; font-weight: 400 !important; overflow-wrap: anywhere !important; word-break: break-word !important; }
-      .dp-c b { display: block; line-height: 1.35 !important; }
-      .dm { font-size: 0.82rem !important; }
-      .dnl b { font-size: 0.95rem !important; line-height: 1.25 !important; }
+      .d-el {
+        white-space: normal !important;
+        max-width: 10rem !important;
+        line-height: 1.22 !important;
+        text-align: center !important;
+        font-size: 0.68rem !important;
+        padding: 4px 8px !important;
+        background: #eff6ff !important;
+        color: #1d4ed8 !important;
+        border-color: #bfdbfe !important;
+      }
       .round {
         display: grid !important;
-        grid-template-columns: 5.25rem 1fr !important;
-        gap: 12px 16px !important;
+        grid-template-columns: 4.5rem 1fr !important;
+        gap: 10px 14px !important;
         align-items: start !important;
-        margin-bottom: 14px !important;
+        margin-bottom: 12px !important;
+        padding: 0.65rem 0.75rem !important;
+        background: #f8fafc !important;
+        border-radius: 10px !important;
+        border: 1px solid #e2e8f0 !important;
       }
       .round-h {
         flex: unset !important;
-        padding-top: 8px !important;
+        padding-top: 6px !important;
         text-align: right !important;
-        font-size: 0.92rem !important;
+        font-size: 0.82rem !important;
+        font-weight: 700 !important;
+        color: var(--c-primary) !important;
       }
       .evs {
         display: grid !important;
-        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)) !important;
-        gap: 10px !important;
-        align-items: stretch !important;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+        gap: 8px !important;
       }
       .ev {
         min-width: 0 !important;
         max-width: none !important;
         width: 100% !important;
-        box-sizing: border-box !important;
+        padding: 0.55rem 0.7rem !important;
+        border-radius: 8px !important;
+        background: #fff !important;
       }
-      .obl li { font-size: 0.94rem !important; line-height: 1.6 !important; font-weight: 400 !important; }
-      .ev-role { font-size: 0.92rem !important; }
-      .ev-dec { font-size: 0.86rem !important; }
+      .ev.llm { border-left-width: 3px !important; border-left-color: var(--c-primary) !important; }
+      .ev.code { border-left-width: 3px !important; border-left-color: #94a3b8 !important; }
+      .ev-role { font-size: 0.8rem !important; font-weight: 700 !important; }
+      .ev-model { font-size: 0.68rem !important; color: #94a3b8 !important; }
+      .ev-dec { font-size: 0.78rem !important; line-height: 1.45 !important; }
       .ev-dec.ok { color: #047857 !important; font-weight: 600 !important; }
-      .pmore { font-size: 0.84rem !important; }
-      code { font-size: 0.86rem !important; }
-      table { font-size: 0.94rem !important; }
-      th { font-size: 0.86rem !important; }
-      td { font-size: 0.94rem !important; }
-      .diagram-wrap {
-        width: 100%;
-        overflow-x: auto;
-        padding: 0.25rem 0 0.5rem;
-        display: flex;
-        justify-content: center;
-      }
-      section {
-        margin: 1.5rem 0 !important;
-        padding: 1.15rem 1.25rem !important;
-        background: #fafbff !important;
-        border: 1px solid #e4e7ee !important;
-        border-radius: 12px !important;
-        overflow: hidden !important;
-      }
-      .obl li, .cand p, .card p, .callout, .prov, .provp, .ev-dec, table td, table th {
+      .ev-dec.warn { color: #b45309 !important; font-weight: 600 !important; }
+      .pmore { font-size: 0.8rem !important; color: #64748b !important; }
+      .obl li, .cand p, .card p, .callout, .prov, .provp, .ev-dec, table td, table th, .dp-c {
         overflow-wrap: anywhere !important;
         word-break: break-word !important;
       }
       .ablabel { overflow-wrap: anywhere !important; min-width: 0 !important; flex: 1 1 8rem !important; }
       .funnel { flex-wrap: wrap !important; gap: 10px !important; }
       section > h2:first-child { margin-top: 0 !important; }
-      .grid2 { gap: 1rem !important; }
-      .cand p { font-size: 0.94rem !important; line-height: 1.6 !important; }
-      .callout { font-size: 0.96rem !important; line-height: 1.6 !important; padding: 1rem 1.15rem !important; }
-      footer { font-size: 0.9rem; padding-top: 1.25rem; }
+      .grid2 { gap: 0.85rem !important; }
+      footer {
+        font-size: 0.82rem !important;
+        color: #94a3b8 !important;
+        padding: 1rem 0 0.5rem !important;
+        margin-top: 1.5rem !important;
+        border-top: 1px solid #e2e8f0 !important;
+        line-height: 1.55 !important;
+      }
     `;
+
+    const CUA_DIAGRAM_CFG = {
+      nodeLeft: 60,
+      nodeW: 250,
+      nodeH: 50,
+      spineX: 185,
+      panelLeft: 390,
+      panelW: 580,
+      rowGap: 14,
+      startY: 12,
+    };
+
+    function panelForNode(panels, nodeTop) {
+      return panels.find((p) => Math.abs((parseFloat(p.style.top) || 0) - nodeTop) < 6);
+    }
+
+    function rebuildCuaDiagramWires(diagram, rows, cfg) {
+      const svg = diagram.querySelector('.dwire');
+      if (!svg) return;
+      const defs = svg.querySelector('defs');
+      const marker = defs ? defs.outerHTML : '';
+      const totalW = parseFloat(diagram.style.width) || 1000;
+      const totalH = parseFloat(diagram.style.height) || 1200;
+      const spineX = cfg.spineX;
+      const panelX = cfg.panelLeft;
+      let html = marker;
+
+      if (rows.length > 5) {
+        const loopStart = rows[5].top - 17;
+        const loopEnd = rows[Math.min(8, rows.length - 1)];
+        const loopBottom = loopEnd.top + loopEnd.height + 17;
+        html += `<rect x="${cfg.nodeLeft - 14}" y="${loopStart}" width="${cfg.nodeW + 28}" height="${loopBottom - loopStart}" rx="13" fill="#f4fbff" stroke="#7dd3fc" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+      }
+
+      for (let i = 0; i < rows.length - 1; i += 1) {
+        const y1 = rows[i].top + rows[i].height;
+        const y2 = rows[i + 1].top;
+        html += `<line x1="${spineX}" y1="${y1}" x2="${spineX}" y2="${y2}" stroke="#c2c9d6" stroke-width="2" marker-end="url(#ah)"/>`;
+      }
+
+      rows.forEach((row) => {
+        const y = row.top + Math.min(cfg.nodeH, row.height) / 2;
+        html += `<line x1="${cfg.nodeLeft + cfg.nodeW}" y1="${y}" x2="${panelX}" y2="${y}" stroke="#e4e7ee" stroke-width="1.5" stroke-dasharray="2 3"/>`;
+      });
+
+      const loopRow = rows[6];
+      if (loopRow) {
+        const y = loopRow.top + loopRow.height / 2;
+        html += `<path d="M ${cfg.nodeLeft + cfg.nodeW + 60} ${y} H ${cfg.nodeLeft + cfg.nodeW + 100} V ${rows[5].top + rows[5].height / 2} H ${cfg.nodeLeft + cfg.nodeW + 64}" fill="none" stroke="#7dd3fc" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ah)"/>`;
+      }
+
+      svg.setAttribute('width', totalW);
+      svg.setAttribute('height', totalH);
+      svg.innerHTML = html;
+    }
 
     function syncCuaDiagramLayout(root) {
       const diagram = root.querySelector('.diagram');
       if (!diagram) return;
-      const nodes = [...diagram.querySelectorAll('.d-node')];
+      const cfg = CUA_DIAGRAM_CFG;
       const panels = [...diagram.querySelectorAll('.d-panel')];
-      nodes.forEach((node) => {
-        const nodeTop = parseFloat(node.style.top) || 0;
-        const panel = panels.find((p) => Math.abs((parseFloat(p.style.top) || 0) - nodeTop) < 6);
-        if (!panel) return;
-        const nodeH = parseFloat(node.style.height) || 50;
-        const panelH = parseFloat(panel.style.height) || 81;
-        panel.style.top = `${nodeTop}px`;
-        const targetH = panel.classList.contains('out')
-          ? Math.max(panelH, 78, panel.scrollHeight + 4)
-          : Math.max(panelH, nodeH + 24);
-        panel.style.height = `${targetH}px`;
+      const nodes = [...diagram.querySelectorAll('.d-node')].sort(
+        (a, b) => (parseFloat(a.style.top) || 0) - (parseFloat(b.style.top) || 0),
+      );
+      const edges = [...diagram.querySelectorAll('.d-edge')].sort(
+        (a, b) => (parseFloat(a.style.top) || 0) - (parseFloat(b.style.top) || 0),
+      );
+
+      nodes.forEach((node, idx) => {
+        const dn = node.querySelector('.dn');
+        if (dn) dn.textContent = String(idx + 1);
+        node.style.left = `${cfg.nodeLeft}px`;
+        node.style.width = `${cfg.nodeW}px`;
+        node.style.height = `${cfg.nodeH}px`;
       });
+
+      nodes.forEach((node) => {
+        const origTop = parseFloat(node.style.top) || 0;
+        const panel = panelForNode(panels, origTop);
+        if (!panel) return;
+        panel.style.left = `${cfg.panelLeft}px`;
+        panel.style.width = `${cfg.panelW}px`;
+        panel.style.overflow = 'visible';
+        panel.style.height = 'auto';
+      });
+
+      const rows = [];
+      let y = cfg.startY;
+      nodes.forEach((node) => {
+        const origTop = parseFloat(node.style.top) || 0;
+        const panel = panelForNode(panels, origTop);
+        node.style.top = `${y}px`;
+        let panelH = cfg.nodeH;
+        if (panel) {
+          panel.style.top = `${y}px`;
+          panelH = Math.max(cfg.nodeH, panel.scrollHeight + 6);
+          panel.style.height = `${panelH}px`;
+        }
+        const rowH = Math.max(cfg.nodeH, panelH);
+        rows.push({ top: y, height: rowH, node, panel });
+        y += rowH + cfg.rowGap;
+      });
+
+      const totalW = cfg.panelLeft + cfg.panelW + 48;
+      const totalH = y + 24;
+      diagram.style.width = `${totalW}px`;
+      diagram.style.height = `${totalH}px`;
+      diagram.style.overflow = 'visible';
+
+      edges.forEach((edge, idx) => {
+        if (idx >= rows.length - 1) {
+          edge.style.display = 'none';
+          return;
+        }
+        edge.style.display = '';
+        edge.style.left = `${cfg.spineX}px`;
+        const y1 = rows[idx].top + rows[idx].height;
+        const y2 = rows[idx + 1].top;
+        edge.style.top = `${(y1 + y2) / 2}px`;
+      });
+
+      rebuildCuaDiagramWires(diagram, rows, cfg);
+    }
+
+    const CUA_SECTION_SLUGS = [
+      { match: /data loop/i, cls: 'cua-sec-loop', short: 'Data loop' },
+      { match: /contract/i, cls: 'cua-sec-contract', short: 'Contract' },
+      { match: /explored/i, cls: 'cua-sec-dropped', short: 'Dropped args' },
+      { match: /loop, round/i, cls: 'cua-sec-rounds', short: 'Rounds' },
+      { match: /road not taken/i, cls: 'cua-sec-booster', short: 'Booster' },
+      { match: /outcomes/i, cls: 'cua-sec-ab', short: 'A/B outcomes' },
+      { match: /raw trace/i, cls: 'cua-sec-trace', short: 'Trace' },
+      { match: /^the proposal$/i, cls: 'cua-sec-proposal', short: 'Proposal' },
+      { match: /^audit/i, cls: 'cua-sec-audit', short: 'Audit' },
+      { match: /ingestion/i, cls: 'cua-sec-ingest', short: 'Ingestion' },
+    ];
+
+    function slugifyCuaHeading(text) {
+      return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
+    }
+
+    function formatCuaPanelRows(root) {
+      root.querySelectorAll('.d-panel .dp-c').forEach((dp) => {
+        if (dp.querySelector('.dp-row')) return;
+        const html = dp.innerHTML;
+        if (!html.includes('<br')) return;
+        const parts = html.split(/<br\s*\/?>/i).map((s) => s.trim()).filter(Boolean);
+        if (parts.length < 2) return;
+        dp.innerHTML = parts.map((p) => `<span class="dp-row">${p}</span>`).join('');
+      });
+    }
+
+    function formatCuaSections(root) {
+      root.querySelectorAll('.wrap > section').forEach((sec) => {
+        const h2 = sec.querySelector(':scope > h2');
+        if (!h2) return;
+        const title = h2.textContent.trim();
+        const slug = slugifyCuaHeading(title);
+        sec.id = `cua-sec-${slug}`;
+        sec.classList.add('cua-sec');
+        const spec = CUA_SECTION_SLUGS.find((s) => s.match.test(title));
+        if (spec) sec.classList.add(spec.cls);
+      });
+    }
+
+    function buildCuaToc(root) {
+      const toc = document.getElementById('cuaToc');
+      if (!toc) return;
+      const sections = [...root.querySelectorAll('.wrap > section.cua-sec')];
+      if (!sections.length) {
+        toc.classList.add('hidden');
+        return;
+      }
+      toc.innerHTML = '<span class="cua-toc-label">Jump to</span>';
+      sections.forEach((sec) => {
+        const h2 = sec.querySelector(':scope > h2');
+        if (!h2) return;
+        const title = h2.textContent.trim();
+        const spec = CUA_SECTION_SLUGS.find((s) => s.match.test(title));
+        const label = spec?.short || title.split('—')[0].trim().slice(0, 28);
+        const a = document.createElement('a');
+        a.href = `#${sec.id}`;
+        a.textContent = label;
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const host = document.getElementById('cuaReportHost');
+          const target = host.shadowRoot?.getElementById(sec.id);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        toc.appendChild(a);
+      });
+      toc.classList.remove('hidden');
     }
 
     function polishCuaInlineContent(root, meta) {
@@ -3602,10 +4085,9 @@ python -m cua.nih.run_db \
       if (outTitle && meta?.projectTitle && /research p$/i.test(outTitle.textContent.trim())) {
         outTitle.textContent = meta.projectTitle;
       }
-      root.querySelectorAll('.d-panel .dp-c b').forEach((el) => {
-        el.style.whiteSpace = 'normal';
-        el.style.lineHeight = '1.35';
-      });
+      formatCuaPanelRows(root);
+      formatCuaSections(root);
+      buildCuaToc(root);
     }
 
     function wrapCuaDiagram(root) {
@@ -3650,9 +4132,50 @@ python -m cua.nih.run_db \
       });
       fixCuaHtmlEntities(shadow);
       wrapCuaDiagram(shadow);
-      syncCuaDiagramLayout(shadow);
       host.textContent = '';
       return shadow;
+    }
+
+    function finalizeCuaReportLayout(shadow, meta) {
+      polishCuaInlineContent(shadow, meta);
+      syncCuaDiagramLayout(shadow);
+    }
+
+    function cuaScoreTone(n) {
+      if (Number.isNaN(n)) return 'neutral';
+      if (n >= 7) return 'ok';
+      if (n >= 5) return 'warn';
+      return 'risk';
+    }
+
+    function paintCuaKpiCard(kpiId, tone) {
+      const card = document.getElementById(kpiId)?.closest('.cua-kpi');
+      if (!card) return;
+      card.classList.remove('cua-kpi-good', 'cua-kpi-warn', 'cua-kpi-risk');
+      if (tone === 'ok') card.classList.add('cua-kpi-good');
+      else if (tone === 'warn') card.classList.add('cua-kpi-warn');
+      else if (tone === 'risk') card.classList.add('cua-kpi-risk');
+    }
+
+    function renderCuaStatusRow(d) {
+      const row = document.getElementById('cuaStatusRow');
+      if (!row) return;
+      const audit = d.audit || {};
+      const scores = audit.scores || {};
+      const chips = [];
+      chips.push({
+        cls: audit.all_in_corpus ? 'ok' : 'risk',
+        label: audit.all_in_corpus ? 'inv-1 citation integrity PASS' : 'inv-1 orphans flagged',
+      });
+      chips.push({ cls: 'ok', label: `inv-2 · ${audit.obligations_satisfied ?? '—'} obligations met` });
+      if (audit.obligations_at_risk > 0) {
+        chips.push({ cls: 'warn', label: `${audit.obligations_at_risk} at risk` });
+      }
+      if (scores.F1 != null) chips.push({ cls: cuaScoreTone(Number(scores.F1)), label: `Critic F1 = ${scores.F1}` });
+      if (scores.F2 != null) chips.push({ cls: cuaScoreTone(Number(scores.F2)), label: `Critic F2 = ${scores.F2}` });
+      if (scores.F3 != null) chips.push({ cls: cuaScoreTone(Number(scores.F3)), label: `Critic F3 = ${scores.F3}` });
+      row.innerHTML = chips.map((c) => `<span class="cua-status ${c.cls}">${c.label}</span>`).join('');
+      row.classList.remove('hidden');
     }
 
     async function loadCuaTab() {
@@ -3676,13 +4199,17 @@ python -m cua.nih.run_db \
         document.getElementById('cuaKpiCites').textContent = d.audit?.citations ?? '—';
         document.getElementById('cuaKpiF1').textContent = d.audit?.scores?.F1 ?? '—';
         document.getElementById('cuaKpiF2').textContent = d.audit?.scores?.F2 ?? '—';
+        paintCuaKpiCard('cuaKpiF1', cuaScoreTone(Number(d.audit?.scores?.F1)));
+        paintCuaKpiCard('cuaKpiF2', cuaScoreTone(Number(d.audit?.scores?.F2)));
+        paintCuaKpiCard('cuaKpiCites', (d.audit?.citations ?? 0) >= 10 ? 'ok' : 'warn');
+        renderCuaStatusRow(d);
         const title = d.project_title || 'Grant proposal report';
         document.getElementById('cuaReportTitle').textContent = title;
         document.getElementById('cuaReportMeta').textContent =
           `Static demo ${CUA_STATIC_DEMO_ID} · ${d.audit?.obligations_satisfied ?? '—'} obligations satisfied · not run-scoped`;
         document.getElementById('cuaReportOpen').href = CUA_STATIC_REPORT_URL;
         const shadow = await loadCuaReportInline();
-        if (shadow) polishCuaInlineContent(shadow, { projectTitle: title });
+        if (shadow) finalizeCuaReportLayout(shadow, { projectTitle: title });
         cuaLoaded = true;
       } catch (e) {
         unavail.textContent = 'Could not load CUA demo: ' + (e.message || e);
