@@ -3793,9 +3793,9 @@ python -m cua.nih.run_db \
       }
       summary.cua-group-summary {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.12rem;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem 0.75rem;
         cursor: pointer;
         list-style: none;
         padding: 0.72rem 1rem;
@@ -3808,13 +3808,6 @@ python -m cua.nih.run_db \
         background: #f8fafc;
       }
       summary.cua-group-summary::-webkit-details-marker { display: none; }
-      summary.cua-group-summary::before {
-        content: '▸ ';
-        color: var(--c-primary);
-        font-weight: 700;
-        font-size: 0.82rem;
-      }
-      details.cua-group-details[open] > summary.cua-group-summary::before { content: '▾ '; }
       .cua-group-title {
         font-size: 0.92rem;
         font-weight: 700;
