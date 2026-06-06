@@ -116,7 +116,7 @@ Full setup, platform notes, and flags → [Run the dashboard](dashboard) · [Deb
 | `neurodiscover/orchestrator.py` | Wires agents 1→6 for API runs |
 | `neurodiscover/api_server.py` | FastAPI backend (:5000) |
 | `neurodiscover/frontend/index.html` | Dashboard UI (:8080) — Steps 1–3 |
-| `cua/` | Optional grant-proposal Agent 6 (CLI; dashboard Step 3 = static demo) |
+| `cua/` | Grant-proposal Agent 6 (CLI; dashboard **Step 3 — Grant Proposal** = static `graded6` demo) |
 | `docs/` | This documentation site |
 
 ## Next steps

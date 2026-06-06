@@ -43,7 +43,7 @@ Layout top-to-bottom:
 | **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims |
 | **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion |
 
-To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)).
+To generate a new proposal from your database, run `python -m cua.nih.run_db` (see [Conclusion Update → CUA](workflow/conclusion-update#cua-package--nih-grant-proposal)).
 
 Section-by-section tour (contract, best-of-N, data loop, audit, …): [Dashboard — Step 3 report structure](dashboard#step-3--report-structure).
 

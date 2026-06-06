@@ -129,7 +129,7 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 | Run status | Ready / Running / Complete / Partial / Failed |
 | **Step 1** | Configure & run — **pipeline mode** (Rescore / Demo / Incremental scan / Full live pull), disease, max papers, extraction; **Recent runs** table with human-readable mode labels |
 | **Step 2** | **Pipeline complete** badge beside title; **ideal candidate profiles**, ranked outputs, and research hypotheses panels first; discovery pipeline diagram; **Audit & provenance** collapsed by default (agent trace + evidence preview inside) |
-| **Step 3** | **Grant Proposal** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **The proposal** fully expanded at the top (above the data loop); all pipeline/audit sections behind **one** collapsed **Pipeline trace & audit** block (single click — no nested collapses). **Jump to** scrolls to Proposal or opens supporting details. **Run a live grant proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal)) |
+| **Step 3** | **Grant Proposal** — **static** bundled `graded6` NIH R01 demo (never changes with Step 1/2 `run_id`). Hero KPIs + audit status chips; **The proposal** fully expanded at the top (above the data loop); all pipeline/audit sections behind **one** collapsed **Pipeline trace & audit** block (single click — no nested collapses). **Jump to** scrolls to Proposal or opens supporting details. **Run a live grant proposal (CLI)** is collapsible. Live runs: `python -m cua.nih.run_db` (see [Conclusion Update](workflow/conclusion-update#cua-package--nih-grant-proposal)) |
 
 ### Step 3 — report structure
 
@@ -138,7 +138,7 @@ Tabs run left-to-right: **Configure & Run** · **Discovery Results** · **Grant 
 | **Proposal** | Always visible (first in report) | NIH R01 proposal — significance, innovation, three aims |
 | **Supporting details** | One collapsed group | Data loop · contract · dropped args · revise rounds · booster · A/B outcomes · raw trace · audit · ingestion (all expanded inside the group) |
 
-Step 3 is **not run-scoped** — it always shows bundled `graded6`, independent of Step 1/2 `run_id`. See [Conclusion Update — CUA package](workflow/conclusion-update#cua-package-optional--nih-grant-proposal) for live CLI runs.
+Step 3 is **not run-scoped** — it always shows bundled `graded6`, independent of Step 1/2 `run_id`. See [Conclusion Update — CUA package](workflow/conclusion-update#cua-package--nih-grant-proposal) for live CLI runs.
 
 #### Tab shell (outside the report)
 

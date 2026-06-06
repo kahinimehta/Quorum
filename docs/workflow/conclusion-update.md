@@ -3,7 +3,7 @@ layout: default
 title: Conclusion Update
 parent: Workflow
 nav_order: 6
-description: "Agent 6 — dashboard rankings and optional CUA grant proposal"
+description: "Agent 6 — dashboard rankings and CUA NIH grant proposal"
 ---
 
 # Agent 6 — Conclusion Update
@@ -18,9 +18,9 @@ Agent 6 has **two implementations**. They share the name and read the same upstr
 | **Runs when** | Every `demo` / `scan` / `full` / `agents-only` pipeline run | **Manually** — not part of the dashboard pipeline |
 | **Uses LLMs** | No | Yes — Blueprint, Synthesizer, Critic, Reviser, etc. |
 | **Writes DB** | `recommendations` + `agent_outputs` | **Nothing** — read-only consumer |
-| **Output** | Ranked Prioritize / Monitor / Reject cards | Local files: proposal, trace, audit, ingestion (+ optional HTML report) |
+| **Output** | Ranked Prioritize / Monitor / Reject cards | Local files: proposal, trace, audit, ingestion (+ HTML report) |
 
-The dashboard demo uses the **orchestrator path** only. CUA is an optional, heavier Agent 6 that you run separately after the pipeline has populated evidence.
+The dashboard pipeline run uses the **orchestrator path** for ranked recommendations. **CUA** is the grant-proposal path for Agent 6 — bundled on **Step 3 — Grant Proposal** (`graded6`) and runnable live via CLI after the pipeline has populated evidence.
 
 ---
 
@@ -94,13 +94,13 @@ See [Output examples](../output) for full JSON shapes.
 
 ---
 
-## CUA package (optional — NIH grant proposal)
+## CUA package — NIH grant proposal
 
 **Package:** `cua/` at repo root  
 **Entrypoint:** `python -m cua.nih.run_db`  
 **Design docs:** `cua/files/conclusion_update_agent_design.md`, `cua/README.md`
 
-CUA (Conclusion Update Agent) reads the NeuroDiscover blackboard and produces a **written NIH R01 grant proposal** with citation grounding, multi-round self-correction, and a full audit trail. It does **not** write to `recommendations` and does **not** run when you `make dashboard` or `cli.py demo`.
+CUA (Conclusion Update Agent) reads the NeuroDiscover blackboard and produces a **written NIH R01 grant proposal** with citation grounding, multi-round self-correction, and a full audit trail. The dashboard **Step 3 — Grant Proposal** tab shows the bundled `graded6` output; live runs use the CLI below. CUA does **not** write to `recommendations` or run inside the Steps 1–2 pipeline (`make dashboard` / `cli.py demo`).
 
 ### What it does (step by step)
 
@@ -110,7 +110,15 @@ CUA (Conclusion Update Agent) reads the NeuroDiscover blackboard and produces a 
 4. **Writes** — Synthesizer drafts the argument (best-of-N), Aim Architect structures specific aims
 5. **Grounds** — hard gate: every citation must exist in the corpus
 6. **Critiques** — blind Critic scores against NIH criteria; flags overclaims vs evidence grades
-7. **Revises** — Reviser fixes problems; optional **F2 Rigor Booster** injects papers the writer did not see
+7. **Revises** — Reviser fixes problems; **F2 Rigor Booster** (when enabled) injects papers the writer did not see
+8. **Outputs local files** (not DB rows):
+   - `<run>.proposal.json` — grant text
+   - `<run>.trace.jsonl` — per-subagent calls
+   - `<run>.audit.json` — citation integrity, critic scores, overclaim check
+   - `<run>.ingestion.json` — corpus rank-and-bound report
+   - `<run>.content.json` + HTML visual report when `--capture-content` is set (`cua/outputs/graded6.html` ships pre-rendered for the dashboard)
+
+Evidence grades come from Agent 4 logic replayed into a **local read-only SQLite snapshot** — CUA never writes to the shared Supabase/SQLite blackboard.
 
 ### Critic score scale (F1 / F2 / F3)
 
@@ -123,14 +131,6 @@ The Internal Critic scores **F1**, **F2**, and **F3** on an integer **1–9** sc
 | 7–9 | Strong |
 
 The revise loop typically stops when **F1 ≥ 5** and **F2 ≥ 5**. Bundled `graded6` final scores: **F1 = 7**, **F2 = 5**, **F3 = 6**. See [Dashboard — Critic score scale](../dashboard#critic-score-scale-f1--f2--f3).
-8. **Outputs local files** (not DB rows):
-   - `<run>.proposal.json` — grant text
-   - `<run>.trace.jsonl` — per-subagent calls
-   - `<run>.audit.json` — citation integrity, critic scores, overclaim check
-   - `<run>.ingestion.json` — corpus rank-and-bound report
-   - optional `<run>.content.json` + HTML visual report (`cua/outputs/graded6.html` ships pre-rendered)
-
-Evidence grades come from Agent 4 logic replayed into a **local read-only SQLite snapshot** — CUA never writes to the shared Supabase/SQLite blackboard.
 
 ### How to run
 

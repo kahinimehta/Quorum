@@ -32,7 +32,7 @@ description: "Quorum — interdisciplinary team for NeuroDiscover AI"
 
 Healthcare and life sciences strategist with an MBA and MSIT. Brings a business and venture lens (Harvard BioVenture, Nucleate finalist, Enventure first-place winner) and HSIL Hackathon 2026 experience. The team's commercialization and strategy voice.
 
-**On this project:** Product framing, Pfizer-track problem narrative, downstream agent ownership (subgroups, connections, scoring), optional **CUA** NIH grant-proposal path (`cua/`), and demo readiness.
+**On this project:** Product framing, Pfizer-track problem narrative, downstream agent ownership (subgroups, connections, scoring), **CUA** NIH grant-proposal path (`cua/`) — Step 3 Grant Proposal tab, and demo readiness.
 
 ---
 
@@ -103,4 +103,4 @@ flowchart TB
 - **Schema-first:** `schema.sql` + `developer-reference/agent-io.md` before agent code diverged  
 - **Shared `run_id`:** every agent appends to `agent_outputs` for audit  
 - **Safe demo path:** offline seed + synthetic cohort agreed early for showcase reliability  
-- **Dual Agent 6:** orchestrator formula rankings in the pipeline; optional **`cua/`** NIH proposal on dashboard Step 3 (static `graded6` demo — proposal at top, single **Pipeline trace & audit** collapse). Step 2 keeps agent trace under collapsed **Audit & provenance**.  
+- **Dual Agent 6:** orchestrator formula rankings in the pipeline; **`cua/`** NIH proposal on dashboard Step 3 — Grant Proposal (static `graded6` demo — proposal at top, single **Pipeline trace & audit** collapse). Step 2 keeps agent trace under collapsed **Audit & provenance**.  

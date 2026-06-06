@@ -80,7 +80,7 @@ cp .env.example .env
 | `ANTHROPIC_API_KEY` | Optional — live CUA runs only (`cua/`) |
 | `CUA_LIVE=1` | Optional — enable live LLM roles in CUA |
 
-## CUA (optional grant proposal)
+## CUA — NIH grant proposal (Step 3)
 
 Dashboard **Step 3** shows a **static** bundled demo (`graded6`) with hero KPIs, audit status chips, jump-to nav (Proposal + supporting details), and an inlined report with **The proposal** expanded at the top and all pipeline/audit sections behind one collapsed **Pipeline trace & audit** group. To generate a new proposal from your DB:
 
@@ -90,7 +90,7 @@ export ANTHROPIC_API_KEY=... CUA_LIVE=1
 python -m cua.nih.run_db --db "$SUPABASE_DATABASE_URL" --run-id my-run --capture-content
 ```
 
-See [Conclusion Update](workflow/conclusion-update#cua-package-optional--nih-grant-proposal) and `cua/README.md`.
+See [Conclusion Update](workflow/conclusion-update#cua-package--nih-grant-proposal) and `cua/README.md`.
 
 See [Supabase setup](developer-reference/supabase) and [Team env sharing](developer-reference/team-env-sharing).
 
