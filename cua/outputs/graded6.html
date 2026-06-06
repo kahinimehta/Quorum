@@ -52,7 +52,7 @@ tr.flag td{background:var(--warnbg)}tr:last-child td{border-bottom:none}
 .prov{border:1px solid var(--line);border-radius:9px;padding:10px 13px;margin:8px 0;background:#fafdff}
 .prov-h{font-weight:700;font-size:13px;margin-bottom:6px}.provp{line-height:2}
 .funnel{display:flex;align-items:center;gap:14px;font-weight:700;font-size:20px}.funnel .arrow{color:var(--mut)}.funnel .small{font-size:13px;color:var(--mut);font-weight:500}
-.diagram{position:relative;overflow:visible;margin:8px 0}
+.diagram{position:relative;overflow:hidden;margin:8px auto;width:776px;height:916px}
 .dwire{position:absolute;left:0;top:0;overflow:visible}
 .d-node{position:absolute;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--ind);border-radius:10px;padding:0 13px;box-shadow:0 1px 3px rgba(16,24,40,.07);cursor:help;outline:none;z-index:2}
 .d-node.code,.d-node.gate{border-left-color:#94a3b8}.d-node.flag{border-left-color:var(--warn)}.d-node.out{border-left-color:var(--ok)}
@@ -78,7 +78,7 @@ tr.flag td{background:var(--warnbg)}tr:last-child td{border-bottom:none}
 .cand .rat{margin-top:7px;padding-top:6px;border-top:1px dashed var(--line);font-size:11.5px;color:var(--mut)}
 .cand .rat b{color:var(--ind)}
 .obl{margin:4px 0 0;padding-left:18px}.obl li{font-size:14px;color:#3a4254;margin:5px 0;line-height:1.45}
-.d-panel{position:absolute;background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 12px;overflow:visible;z-index:1}
+.d-panel{position:absolute;background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 12px;overflow-y:auto;overflow-x:hidden;z-index:1;box-sizing:border-box}
 .d-panel::-webkit-scrollbar{width:6px}.d-panel::-webkit-scrollbar-thumb{background:#cbd2de;border-radius:3px}.d-panel:hover{z-index:30;box-shadow:0 4px 16px rgba(16,24,40,.12)}
 .d-panel.boost{background:#f4fbff;border-color:#cce9f8}.d-panel.out{background:#f3fbf6;border-color:#cde4d8}.d-panel.flag{background:#fffdf7}
 .dp-h{font-weight:700;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}

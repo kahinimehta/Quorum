@@ -3465,11 +3465,54 @@ python -m cua.nih.run_db \
       }
       .card p { font-size: 0.98rem !important; line-height: 1.65 !important; font-weight: 400 !important; }
       .card-h { font-size: 1rem !important; margin-bottom: 0.65rem !important; }
-      .d-panel { overflow: visible !important; height: auto !important; min-height: 5rem; padding: 10px 14px !important; }
+      .diagram {
+        width: 776px !important;
+        height: 916px !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        overflow: hidden !important;
+      }
+      .d-node {
+        box-sizing: border-box !important;
+        align-items: center !important;
+      }
+      .d-panel {
+        box-sizing: border-box !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        scrollbar-width: thin;
+        padding: 8px 12px !important;
+      }
+      .d-edge { z-index: 4 !important; }
       .dp-h { font-size: 0.78rem !important; }
-      .dp-c { font-size: 0.92rem !important; line-height: 1.55 !important; font-weight: 400 !important; }
+      .dp-c { font-size: 0.92rem !important; line-height: 1.5 !important; font-weight: 400 !important; }
       .dm { font-size: 0.82rem !important; }
       .dnl b { font-size: 0.95rem !important; }
+      .round {
+        display: grid !important;
+        grid-template-columns: 5.25rem 1fr !important;
+        gap: 12px 16px !important;
+        align-items: start !important;
+        margin-bottom: 14px !important;
+      }
+      .round-h {
+        flex: unset !important;
+        padding-top: 8px !important;
+        text-align: right !important;
+        font-size: 0.92rem !important;
+      }
+      .evs {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)) !important;
+        gap: 10px !important;
+        align-items: stretch !important;
+      }
+      .ev {
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
       .obl li { font-size: 0.94rem !important; line-height: 1.6 !important; font-weight: 400 !important; }
       .ev-role { font-size: 0.92rem !important; }
       .ev-dec { font-size: 0.86rem !important; }
@@ -3479,7 +3522,13 @@ python -m cua.nih.run_db \
       table { font-size: 0.94rem !important; }
       th { font-size: 0.86rem !important; }
       td { font-size: 0.94rem !important; }
-      .diagram { max-width: 100%; margin: 0 auto; overflow-x: auto; overflow-y: visible; }
+      .diagram-wrap {
+        width: 100%;
+        overflow-x: auto;
+        padding: 0.25rem 0 0.5rem;
+        display: flex;
+        justify-content: center;
+      }
       section {
         margin: 2rem 0 !important;
         padding: 1.1rem 1.15rem !important;
@@ -3493,6 +3542,31 @@ python -m cua.nih.run_db \
       .callout { font-size: 0.96rem !important; line-height: 1.6 !important; padding: 1rem 1.15rem !important; }
       footer { font-size: 0.9rem; padding-top: 1.25rem; }
     `;
+
+    function syncCuaDiagramLayout(root) {
+      const diagram = root.querySelector('.diagram');
+      if (!diagram) return;
+      const nodes = [...diagram.querySelectorAll('.d-node')];
+      const panels = [...diagram.querySelectorAll('.d-panel')];
+      nodes.forEach((node) => {
+        const nodeTop = parseFloat(node.style.top) || 0;
+        const panel = panels.find((p) => Math.abs((parseFloat(p.style.top) || 0) - nodeTop) < 6);
+        if (!panel) return;
+        const nodeH = parseFloat(node.style.height) || 50;
+        const panelH = parseFloat(panel.style.height) || 81;
+        panel.style.top = `${nodeTop}px`;
+        panel.style.height = `${Math.max(panelH, nodeH + 24)}px`;
+      });
+    }
+
+    function wrapCuaDiagram(root) {
+      const diagram = root.querySelector('.diagram');
+      if (!diagram || diagram.parentElement?.classList.contains('diagram-wrap')) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'diagram-wrap';
+      diagram.parentNode.insertBefore(wrap, diagram);
+      wrap.appendChild(diagram);
+    }
 
     function fixCuaHtmlEntities(root) {
       const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
@@ -3526,6 +3600,8 @@ python -m cua.nih.run_db \
         shadow.appendChild(node.cloneNode(true));
       });
       fixCuaHtmlEntities(shadow);
+      wrapCuaDiagram(shadow);
+      syncCuaDiagramLayout(shadow);
       host.textContent = '';
     }
 
